@@ -8,6 +8,28 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <bitset>
+
+using Trait = int;
+
+enum class Traits : int{
+    vegetarian    = 0x0001,
+    vegan         = 0x0002,
+    lowCarb       = 0x0004,
+    keto          = 0x0008,
+    trait5        = 0x0010,
+    trait6        = 0x0020,
+    trait7        = 0x0040,
+    trait8        = 0x0080,
+    trait9        = 0x0100,
+    trait10       = 0x0200,
+    trait11       = 0x0400,
+    trait12       = 0x0800,
+    trait13       = 0x1000,
+    trait14       = 0x2000,
+    trait15       = 0x4000,
+    trait16       = 0x8000
+};
 
 class User{
 private:
@@ -15,6 +37,7 @@ private:
 	std::string m_name{};
 	std::string m_pass{};
 	std::string m_email{};
+	Trait m_preferences{};
 
 public:
 	User(int uid = -1, std::string name = "Guest", std::string pass = "", std::string email = ""):
@@ -25,22 +48,27 @@ public:
 	std::string name() const {return m_name;}
 	std::string pass() const {return m_pass;}
 	std::string email() const {return m_email;}
+	Trait pref() const {return m_preferences;}
 
-	User& setUid(int id){
+	User& setUid(const int id){
         m_uid = id;
         return *this;
 	}
-	User& setPass(std::string_view pass){
+	User& setPass(const std::string_view pass){
         m_pass = pass;
         return *this;
     }
-    User& setEmail(std::string_view email){
+    User& setEmail(const std::string_view email){
         m_email = email;
         return *this;
     }
-	User& setName(std::string_view n){
+	User& setName(const std::string_view n){
 		m_name = n;
 		return *this;
+	}
+	User& setPref(const Trait& tr){
+        m_preferences = tr;
+        return *this;
 	}
 };
 
@@ -48,107 +76,111 @@ void userConnect(const User& user){
     std::cout << "User connected.\n Name: " << user.name() << "\n Email: " << user.email() << "\n User ID: " << user.uid() << "\n";
 }
 
-User getUserSQL(const std::string& name){
-    std::cout << name << "\n";
-    User user{};
+namespace DBCore{
+    User getUser(const std::string& name){
+        std::cout << name << "\n";
+        User user{};
+        using namespace std::literals::string_literals;
+        sqlite3* db{};
+        if(sqlite3_open("core.db", &db) == SQLITE_OK){
+            sqlite3_stmt* statement{};
+            const char* tail{};
+            std::string s{
+            ("SELECT * "s)+
+            ("FROM Users "s)+
+            ("WHERE username = '"s)+name+("';"s)
+            };
+            std::cout << s << "\n";
+            const char* st{s.c_str()};
+            int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
+            if (prepstmt != SQLITE_OK){
+                std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
+            }
+            int res{};
+            while(res != SQLITE_DONE){
+                res = sqlite3_step(statement);
+                if (res == SQLITE_ROW){
+                    const int id{sqlite3_column_int(statement, 0)};
+                    const std::string uname{reinterpret_cast<const char*>(sqlite3_column_text(statement, 1))};
+                    const std::string passw{reinterpret_cast<const char*>(sqlite3_column_text(statement, 2))};
+                    const std::string email{reinterpret_cast<const char*>(sqlite3_column_text(statement, 3))};
+                    const Trait traits{sqlite3_column_int(statement, 0)};
+                    user.setUid(id).setName(uname).setPass(passw).setEmail(email);
+                } else if (res = SQLITE_DONE){
+                    std::cout << "Query Complete!\n";
+                } else {
+                    std::cerr << "Bad step. Code: " << res << "\n";
+                }
+            }
+            sqlite3_close(db);
+        }
+        return user;
+    }
+
+    bool addUser(const User& user){
     using namespace std::literals::string_literals;
-    sqlite3* db{};
-    if(sqlite3_open("core.db", &db) == SQLITE_OK){
-        sqlite3_stmt* statement{};
-        const char* tail{};
-        std::string s{
-        ("SELECT * "s)+
-        ("FROM Users "s)+
-        ("WHERE username = '"s)+name+("';"s)
-        };
-        std::cout << s << "\n";
-        const char* st{s.c_str()};
-        int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
-        if (prepstmt != SQLITE_OK){
-            std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
-        }
-        int res{};
-        while(res != SQLITE_DONE){
-            res = sqlite3_step(statement);
-            //std::cout << "SQLITE DONE: " << SQLITE_DONE << "\n"; 101
-            //std::cout << "SQLITE ROW: " << SQLITE_ROW << "\n"; 100
-            if (res == SQLITE_ROW){
-                const std::string uname{reinterpret_cast<const char*>(sqlite3_column_text(statement, 1))};
-                const std::string passw{reinterpret_cast<const char*>(sqlite3_column_text(statement, 2))};
-                const std::string email{reinterpret_cast<const char*>(sqlite3_column_text(statement, 3))};
-                const int id{sqlite3_column_int(statement, 0)};
-                user.setUid(id).setName(uname).setPass(passw).setEmail(email);
-                //std::cout << "Name: " << sqlite3_column_text(getAll, 1) << " | " << "SSN: " << sqlite3_column_int(getAll, 0) << "\n";
-            } else if (res = SQLITE_DONE){
-                std::cout << "Query Complete!\n";
-            } else {
-                std::cerr << "Bad step. Code: " << res << "\n";
+        sqlite3* db{};
+        if(sqlite3_open("core.db", &db) == SQLITE_OK){
+            sqlite3_stmt* statement{};
+            const char* tail{};
+            std::string s{
+            ("INSERT INTO Users VALUES ("s) +
+            std::to_string(user.uid()) + ", '"s +
+            user.name() + "', '"s +
+            user.pass() + "', '"s +
+            user.email() + "',"s +
+            std::to_string(user.pref()) + ");"s
+            };
+            std::cout << s << "\n";
+            const char* st{s.c_str()};
+            int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
+            if (prepstmt != SQLITE_OK){
+                std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
+                return false;
             }
+            int res{};
+            while(res != SQLITE_DONE){
+                res = sqlite3_step(statement);
+                if (res = SQLITE_DONE){
+                    std::cout << "Insert Complete!\n";
+                } else {
+                    std::cerr << "Bad step. Code: " << res << "\n";
+                    return false;
+                }
+            }
+            sqlite3_close(db);
+            return true;
         }
-        sqlite3_close(db);
+        return false;
     }
-    return user;
-}
 
-void addUserSql(const User& user){
-using namespace std::literals::string_literals;
-    sqlite3* db{};
-    if(sqlite3_open("core.db", &db) == SQLITE_OK){
-        sqlite3_stmt* statement{};
-        const char* tail{};
-        std::string s{
-        ("INSERT INTO Users VALUES ('"s) +
-        std::to_string(user.uid()) + "', '"s +
-        user.name() + "', '"s +
-        user.pass() + "', '"s +
-        user.email() + "');"s
-        };
-        std::cout << s << "\n";
-        const char* st{s.c_str()};
-        int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
-        if (prepstmt != SQLITE_OK){
-            std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
-        }
-        int res{};
-        while(res != SQLITE_DONE){
-            res = sqlite3_step(statement);
-            if (res = SQLITE_DONE){
-                std::cout << "Insert Complete!\n";
-            } else {
-                std::cerr << "Bad step. Code: " << res << "\n";
+    void deleteUser(const User& user){
+    using namespace std::literals::string_literals;
+        sqlite3* db{};
+        if(sqlite3_open("core.db", &db) == SQLITE_OK){
+            sqlite3_stmt* statement{};
+            const char* tail{};
+            std::string s{("DELETE FROM Users WHERE uid = '"s) + std::to_string(user.uid()) + "';"s};
+            std::cout << s << "\n";
+            const char* st{s.c_str()};
+            int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
+            if (prepstmt != SQLITE_OK){
+                std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
             }
+            int res{};
+            while(res != SQLITE_DONE){
+                res = sqlite3_step(statement);
+                if (res = SQLITE_DONE){
+                    std::cout << "Delete Complete!\n";
+                } else {
+                    std::cerr << "Bad step. Code: " << res << "\n";
+                }
+            }
+            sqlite3_close(db);
         }
-        sqlite3_close(db);
     }
 }
-
-void deleteUserSql(const User& user){
-using namespace std::literals::string_literals;
-    sqlite3* db{};
-    if(sqlite3_open("core.db", &db) == SQLITE_OK){
-        sqlite3_stmt* statement{};
-        const char* tail{};
-        std::string s{("DELETE FROM Users WHERE uid = '"s) + std::to_string(user.uid()) + "';"s};
-        std::cout << s << "\n";
-        const char* st{s.c_str()};
-        int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
-        if (prepstmt != SQLITE_OK){
-            std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
-        }
-        int res{};
-        while(res != SQLITE_DONE){
-            res = sqlite3_step(statement);
-            if (res = SQLITE_DONE){
-                std::cout << "Delete Complete!\n";
-            } else {
-                std::cerr << "Bad step. Code: " << res << "\n";
-            }
-        }
-        sqlite3_close(db);
-    }
-}
-
-std::string url_decode(const std::string& str){
+std::string urlDecode(const std::string& str){
     std::ostringstream decoded;
     for(int i = 0; i < str.length(); i++){
         if(str[i] == '%' && i + 2 < str.length()){
@@ -167,7 +199,7 @@ std::string url_decode(const std::string& str){
     return decoded.str();
 }
 
-std::unordered_map<std::string, std::string> url_parse(const std::string& str){
+std::unordered_map<std::string, std::string> urlParse(const std::string& str){
     std::unordered_map<std::string, std::string> result{};
     std::istringstream iss(str);
     std::string token{};
@@ -175,8 +207,8 @@ std::unordered_map<std::string, std::string> url_parse(const std::string& str){
     while(std::getline(iss, token, '&')){
         auto delimiter_pos = token.find('=');
         if(delimiter_pos != std::string::npos){
-            std::string key = url_decode(token.substr(0, delimiter_pos));
-            std::string value = url_decode(token.substr(delimiter_pos+1));
+            std::string key = urlDecode(token.substr(0, delimiter_pos));
+            std::string value = urlDecode(token.substr(delimiter_pos+1));
             result[key] = value;
         }
     }
@@ -200,11 +232,8 @@ int genId(){
         int res{};
         while(res != SQLITE_DONE){
             res = sqlite3_step(statement);
-            //std::cout << "SQLITE DONE: " << SQLITE_DONE << "\n"; 101
-            //std::cout << "SQLITE ROW: " << SQLITE_ROW << "\n"; 100
             if (res == SQLITE_ROW){
                 id = sqlite3_column_int(statement, 0);
-                //std::cout << "Name: " << sqlite3_column_text(getAll, 1) << " | " << "SSN: " << sqlite3_column_int(getAll, 0) << "\n";
             } else if (res = SQLITE_DONE){
                 std::cout << "Query Complete!\n";
             } else {
@@ -230,25 +259,25 @@ int main(){
 	});
 
 	CROW_ROUTE(app, "/signup").methods("POST"_method)([](const crow::request& req){
-        std::unordered_map<std::string, std::string> body = url_parse(req.body);
-
-        //std::cout << body << "\n";
+        std::unordered_map<std::string, std::string> body = urlParse(req.body);
 
         std::string username = body["username"];
         std::string email = body["email"];
         std::string pass = body["psw"];
 
         std::cout << username << " | " << email << " | " << pass << "\n";
-        //std::cout << req.url_params.get("username") << " : " << req.url_params.get("email") << " : " << req.url_params.get("psw") << "\n";
-        std::cout << req.body << "\n";
-        std::cout << req.get_header_value("Content-Type") << "\n";
 
         if (username.empty() || email.empty() || pass.empty()){
             return crow::response(400, "Username or Password cannot be empty.");
         }
+        if (DBCore::getUser(username).uid() != -1){
+            return crow::response(400, "User already exists");
+        }
 
         User newUser{genId(), username, pass, email};
-        addUserSql(newUser);
+        if (!DBCore::addUser(newUser)){
+            return crow::response(500, "Internal Server Error. Account creation failed.");
+        }
         std::string result = "User sign up completed for: " + newUser.name();
 
         return crow::response(result);
@@ -256,13 +285,12 @@ int main(){
 
 	CROW_ROUTE(app, "/<string>")([](std::string name){
 		auto page = crow::mustache::load("testpage.html");
-		User activeUser{getUserSQL(name)};
+		User activeUser{DBCore::getUser(name)};
 		userConnect(activeUser);
 		std::string username {activeUser.name()};
 		crow::mustache::context ctx ({{"person", username}});
 		return page.render(ctx);
 	});
-
 
 	app.port(18080).multithreaded().run();
 	return 0;
