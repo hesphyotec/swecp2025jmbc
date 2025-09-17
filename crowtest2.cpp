@@ -9,8 +9,9 @@
 #include <sstream>
 #include <iomanip>
 #include <bitset>
+#include "bcrypt.h"
 
-using Trait = int;
+using Trait = int;              //Traits of food. Each trait is identified by a particular bit in an integer.
 
 enum class Traits : int{
     vegetarian    = 0x0001,
@@ -31,7 +32,7 @@ enum class Traits : int{
     trait16       = 0x8000
 };
 
-class User{
+class User{                     //User class, used to store information about Users.
 private:
     int m_uid{};
 	std::string m_name{};
@@ -70,14 +71,20 @@ public:
         m_preferences = tr;
         return *this;
 	}
+	bool checkPref(const Trait& tr){
+        if(m_preferences & tr == tr){
+            return true;
+        }
+        return false;
+	}
 };
 
-void userConnect(const User& user){
+void userConnect(const User& user){             //Mostly just a test function to show that user was found in database.
     std::cout << "User connected.\n Name: " << user.name() << "\n Email: " << user.email() << "\n User ID: " << user.uid() << "\n";
 }
 
-namespace DBCore{
-    User getUser(const std::string& name){
+namespace DBCore{                               //List of functions for interacting with the DB.
+    User getUser(const std::string& name){      //getUser: retrieves user information from database.
         std::cout << name << "\n";
         User user{};
         using namespace std::literals::string_literals;
@@ -263,18 +270,23 @@ int main(){
 
         std::string username = body["username"];
         std::string email = body["email"];
-        std::string pass = body["psw"];
 
-        std::cout << username << " | " << email << " | " << pass << "\n";
+        //char hash[61];
+        //char salt[61];
+        //bcrypt_gensalt(12, salt);
+        //bcrypt_hashpw(body["psw"].c_str(), salt, hash);
+        std::string h_pass{bcrypt::generateHash(body["psw"].c_str())};
 
-        if (username.empty() || email.empty() || pass.empty()){
+        std::cout << username << " | " << email << " | " << h_pass << "\n";
+
+        if (username.empty() || email.empty() || h_pass.empty()){
             return crow::response(400, "Username or Password cannot be empty.");
         }
         if (DBCore::getUser(username).uid() != -1){
             return crow::response(400, "User already exists");
         }
 
-        User newUser{genId(), username, pass, email};
+        User newUser{genId(), username, h_pass, email};
         if (!DBCore::addUser(newUser)){
             return crow::response(500, "Internal Server Error. Account creation failed.");
         }
