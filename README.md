@@ -39,3 +39,5 @@ https://docs.google.com/document/d/1GSfdcmZhjYBJgXmvQsQvdkJkBmFdrjWTRWw-1bpUonU/
 - Added password hashing via BCrypt
 - Implemented Crow backend
 
+# Jeremy Weekly Reports:
+https://docs.google.com/document/d/1cldIee9icy9o2BwWOrfc_NAH7IJmvoTYr9CJFAxBIjM/edit?usp=sharing
