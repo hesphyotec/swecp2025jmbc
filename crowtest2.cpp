@@ -72,10 +72,7 @@ public:
         return *this;
 	}
 	bool checkPref(const Trait& tr){
-        if(m_preferences & tr == tr){
-            return true;
-        }
-        return false;
+        return (m_preferences & tr) == tr;
 	}
 };
 
@@ -113,7 +110,7 @@ namespace DBCore{                               //List of functions for interact
                     const std::string email{reinterpret_cast<const char*>(sqlite3_column_text(statement, 3))};
                     const Trait traits{sqlite3_column_int(statement, 0)};
                     user.setUid(id).setName(uname).setPass(passw).setEmail(email);
-                } else if (res = SQLITE_DONE){
+                } else if (res == SQLITE_DONE){
                     std::cout << "Query Complete!\n";
                 } else {
                     std::cerr << "Bad step. Code: " << res << "\n";
@@ -148,7 +145,7 @@ namespace DBCore{                               //List of functions for interact
             int res{};
             while(res != SQLITE_DONE){
                 res = sqlite3_step(statement);
-                if (res = SQLITE_DONE){
+                if (res == SQLITE_DONE){
                     std::cout << "Insert Complete!\n";
                 } else {
                     std::cerr << "Bad step. Code: " << res << "\n";
@@ -177,7 +174,7 @@ namespace DBCore{                               //List of functions for interact
             int res{};
             while(res != SQLITE_DONE){
                 res = sqlite3_step(statement);
-                if (res = SQLITE_DONE){
+                if (res == SQLITE_DONE){
                     std::cout << "Delete Complete!\n";
                 } else {
                     std::cerr << "Bad step. Code: " << res << "\n";
@@ -241,7 +238,7 @@ int genId(){
             res = sqlite3_step(statement);
             if (res == SQLITE_ROW){
                 id = sqlite3_column_int(statement, 0);
-            } else if (res = SQLITE_DONE){
+            } else if (res == SQLITE_DONE){
                 std::cout << "Query Complete!\n";
             } else {
                 std::cerr << "Bad step. Code: " << res << "\n";
