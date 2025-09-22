@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Recipe Builder</string>
+    <string name="title_activity_main">Recipe Builder</string>
+    <string name="package_name">com.bgez.recipeapp</string>
+    <string name="custom_url_scheme">com.bgez.recipeapp</string>
+</resources>
