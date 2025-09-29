@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src ="https:/code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="acc">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<script>
+      var sock = new WebSocket("ws://localhost:18080/login");
+
+      sock.onopen = ()=>{
+        console.log('open');
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        const result = JSON.parse(m.data);
+        if (result.status === "success") {
+            localStorage.setItem("activeuserid", result.id);
+            localStorage.setItem("activeusername", result.name);
+            window.location.href = "Homepage.html"
+        } else {
+            alert("Login failed: " + result.message);
+        }
+        }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+
+      $("#acc").on("submit", function(e) {
+        e.preventDefault();
+        
+        const sendData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        }
+        const stringData = JSON.stringify(sendData);
+        sock.send(stringData);
+      });
+
+  </script>
+
+</body>
+</html>

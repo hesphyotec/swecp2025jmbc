@@ -85,12 +85,13 @@
       background: #e68900;
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
   <header>Manual Ingredient Input</header>
   
   <main>
-    <form>
+    <form id="addi">
       <label for="ingredient">Enter Ingredient:</label>
       <input type="text" id="ingredient" placeholder="e.g. 2 tomatoes, 1 onion" />
       <button type="button" id="add-btn">Add Ingredient</button>
@@ -103,12 +104,92 @@
   
   <footer>
     <nav class="bottom-nav">
-      <button onclick="location.href='Homepage.html'">Back</button>
-      <button onclick="location.href='barcode.html'">Barcode</button>
-      <button onclick="location.href='receipt.html'">Receipt</button>
-      <button class="active" onclick="location.href='ScanFood.html'">Scan Food</button>
+      <button type="button" onclick="location.href='Homepage.html'">Back</button>
+      <button type="button" onclick="location.href='barcode.html'">Barcode</button>
+      <button type="button" onclick="location.href='receipt.html'">Receipt</button>
+      <button type="button" class="active" onclick="location.href='ScanFood.html'">Scan Food</button>
     </nav>
   </footer>
 
+  <script>
+      var sock = new WebSocket("ws://localhost:18080/inventory");
+
+      sock.onopen = ()=>{
+        console.log('open');
+        const getlist = {
+            op: "getlist",
+            uid: localStorage.getItem("activeuserid")
+        }
+        const strgetlist = JSON.stringify(getlist)
+        sock.send(strgetlist)
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        var result;
+        try {
+          result = JSON.parse(m.data);
+        } catch (err) {
+          console.error("JSON parse failed:", err, m.data);
+          return;
+        }
+
+        if (result.status === "success") {
+            console.log(result.name);
+            console.log(result.desc);
+            $("#ingredient").val("")
+            $("#ingredients-list").append(`<div>${result.name} : ${result.desc}</div>`)
+        } else {
+            alert("Failed to add item. Reason : " + result.message);
+        }
+      }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+        $(document).ready(function () {
+        $("#add-btn").on("click", function(e) {
+          console.log("Submitted");
+          e.preventDefault();
+          
+          const sendData = {
+              op : "additem",
+              uid : localStorage.getItem("activeuserid"),
+              name : $("#ingredient").val()
+          }
+          const stringData = JSON.stringify(sendData);
+          if (sock.readyState === WebSocket.OPEN){
+            sock.send(stringData);  
+          } else {
+            alert("Server Not Responding");
+          }
+        });
+
+        $("#addi").on("submit", function(e) {
+          console.log("Submitted");
+            e.preventDefault();
+            
+            const sendData = {
+                uid : localStorage.getItem("activeuserid"),
+                name : $("#ingredient").val()
+            }
+            const stringData = JSON.stringify(sendData);
+            if (sock.readyState === WebSocket.OPEN){
+              sock.send(stringData);  
+            } else {
+              alert("Server Not Responding");
+            }
+        });
+      });
+
+      window.addEventListener('beforeunload', () => {
+        console.log("Page is unloading (possibly reloading)");
+      });
+
+  </script>
 </body>
 </html>
