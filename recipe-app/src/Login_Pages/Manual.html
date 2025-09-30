@@ -135,10 +135,15 @@
         }
 
         if (result.status === "success") {
-            console.log(result.name);
-            console.log(result.desc);
-            $("#ingredient").val("")
-            $("#ingredients-list").append(`<div>${result.name} : ${result.desc}</div>`)
+            const container = $("#ingredients-list");
+            container.empty();
+
+            if (Array.isArray(result.data)){
+              result.data.forEach(item =>{
+                const line = `<div>${item.name} : ${item.desc}</div>`;
+                container.append(line);
+              })
+            }
         } else {
             alert("Failed to add item. Reason : " + result.message);
         }

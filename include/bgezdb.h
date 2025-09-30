@@ -127,20 +127,6 @@ namespace DBCore{                               //List of functions for interact
         return accessDB(s, [](sqlite3_stmt*){});
     }
 
-    inline std::vector<int> getItemList(const User& user){
-    using namespace std::literals::string_literals;
-        std::vector<int> items{};
-        std::string s{
-            ("SELECT iid "s)+
-            ("FROM UserItems "s)+
-            ("WHERE uid = "s)+std::to_string(user.uid())+(";"s)
-        };
-        accessDB(s, [&items](sqlite3_stmt* statement){
-            items.push_back(sqlite3_column_int(statement, 0));
-        });
-        return items;
-    }
-
     inline Item getItem(const std::string& name){
     using namespace std::literals::string_literals;
         Item item{};
@@ -177,6 +163,41 @@ namespace DBCore{                               //List of functions for interact
             item.setId(id).setName(name).setDesc(desc).setType(type);
         });
         return item;
+    }
+
+    inline crow::json::wvalue getItemList(const User& user){
+    using namespace std::literals::string_literals;
+        std::vector<int> ids{};
+        std::string s{
+            ("SELECT iid "s)+
+            ("FROM UserItems "s)+
+            ("WHERE uid = "s)+std::to_string(user.uid())+(";"s)
+        };
+        accessDB(s, [&ids](sqlite3_stmt* statement){
+            ids.push_back(sqlite3_column_int(statement, 0));
+        });
+
+        std::vector<Item> items{};
+        for (int i : ids){
+            items.push_back(getItem(i));
+        }
+
+        crow::json::wvalue res;
+        std::vector<crow::json::wvalue> datalist = crow::json::wvalue::list();
+
+        res["status"] = "success";
+
+        for (const auto& item : items){
+            datalist.push_back(item.toJson());
+        }
+        res["data"] = std::move(datalist);
+        return res;
+    }
+
+    inline bool deleteItem(const Item& item){
+        using namespace std::literals::string_literals;
+        std::string s{"DELETE FROM UserItems WHERE iid = "s + std::to_string(item.id() + ";"s};
+        return accessDB(s, [](sqlite3_stmt*){});
     }
 }
 

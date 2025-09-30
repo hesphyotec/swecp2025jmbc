@@ -224,43 +224,44 @@ int main(){
         crow::json::rvalue parsed;
 
         parsed = crow::json::load(data);
+        if (parsed.has("op")){
+            if (parsed["op"] == "additem"){
+                if (!parsed.has("uid")){
+                    conn.send_text("{\"status\":\"error\",\"message\":\"Please sign in\"}");
+                    return;
+                }
 
-        if (!parsed.has("uid")){
-            conn.send_text("{\"status\":\"error\",\"message\":\"Please sign in\"}");
-            return;
+                if (!parsed.has("name")){
+                    conn.send_text("{\"status\":\"error\",\"message\":\"Name cannot be empty\"}");
+                    return;
+                }
+
+                std::string name{parsed["name"].s()};
+                int uid{static_cast<int>(parsed["uid"].i())};
+
+                Item item = DBCore::getItem(name);
+                if (item.id() == -1){
+                    conn.send_text("{\"status\":\"error\",\"message\":\"Ingredient does not exist.\"}");
+                    return;
+                }
+
+                User activeUser = DBCore::getUser(uid);
+                try {
+                    CROW_LOG_DEBUG << DBCore::addItem(activeUser, item);
+                } catch (const std::exception& e) {
+                    CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
+                    conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
+                    return;
+                }
+                crow::json::wvalue response = item.toJson();
+            } else if (parsed["op"] == "getlist"){
+                int uid{static_cast<int>(parsed["uid"].i())};
+                User activeUser = DBCore::getUser(uid);
+                crow::json::wvalue response = DBCore::getItemList(activeUser);
+                response["status"] = "success";
+                conn.send_text(response.dump());
+            }
         }
-
-        if (!parsed.has("name")){
-            conn.send_text("{\"status\":\"error\",\"message\":\"Name cannot be empty\"}");
-            return;
-        }
-
-        std::string name{parsed["name"].s()};
-        int uid{static_cast<int>(parsed["uid"].i())};
-
-        Item item = DBCore::getItem(name);
-        if (item.id() == -1){
-            conn.send_text("{\"status\":\"error\",\"message\":\"Ingredient does not exist.\"}");
-            return;
-        }
-
-        User activeUser = DBCore::getUser(uid);
-        try {
-            // Your addItem function or equivalent insertion code here
-            User activeUser = DBCore::getUser(uid);
-            CROW_LOG_DEBUG << DBCore::addItem(activeUser, item);
-        } catch (const std::exception& e) {
-            CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
-            conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
-            return;
-        }
-
-
-        crow::json::wvalue response = item.toJson();
-
-        response["status"] = "success";
-
-        conn.send_text(response.dump());
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
