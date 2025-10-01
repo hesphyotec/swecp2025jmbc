@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Saved Ingredients</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    header {
+        background: #4CAF50;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+    }
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    main h2 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        font-weight: bold;
+        color: #4CAF50;
+        text-align: center;
+        border-bottom: 2px solid #4CAF50;
+        padding-bottom: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Ingredients Box */
+    .ingredients-list {
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #f9f9f9;
+    }
+
+    .ingredient-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: white;
+        font-size: 16px;
+    }
+
+    .remove-btn {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+        background: #c0392b;
+    }
+
+    /* Bottom navigation bar */
+    footer {
+        display: flex;
+        justify-content: space-around;
+        background: #f0f0f0;
+        padding: 12px;
+        border-top: 2px solid #ccc;
+    }
+    footer button {
+        flex: 1;
+        margin: 0 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    footer button:hover {
+        background: #388E3C;
+    }
+</style>
+</head>
+<body>
+<header>My Ingredients</header>
+<main>
+    <h2>Saved Ingredients</h2>
+    <div class="ingredients-list" id="ingredientsList">
+        <div class="ingredient-item">
+            Tomatoes
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+        <div class="ingredient-item">
+            Onions
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+        <div class="ingredient-item">
+            Garlic
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+    </div>
+</main>
+
+<!-- Bottom Navigation -->
+<footer>
+    <button onclick="location.href='homepage.html'">🏠 Home</button>
+    <button onclick="location.href='account.html'">👤 Account</button>
+</footer>
+
+<script>
+    function removeIngredient(button) {
+        button.parentElement.remove();
+    }
+</script>
+</body>
+</html>

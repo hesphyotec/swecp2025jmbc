@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Builder App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-green-600">Recipe Builder</h1>
+    <nav>
+      <ul class="flex space-x-4 text-gray-600 font-medium">
+        <li><a href="home.html" class="hover:text-green-600">Home</a></li>
+        <li><a href="Saved.html" class="hover:text-green-600">Saved</a></li>
+        <li><a href="Account.html" class="hover:text-green-600">Account</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center p-6">
+    <h2 class="text-2xl font-bold mb-8 text-gray-800">
+      Hi Blakenator 👋, what’s in your kitchen today? (YOUR DATA SPECIFICALLY BLAKE IS SOLD TO THE CHINESE)
+    </h2>
+
+    <!-- Action Buttons -->
+    <div class="grid grid-cols-2 gap-6 w-full max-w-md">
+      <a href="Barcode.html" class="p-8 bg-green-500 text-white rounded-2xl shadow-lg hover:scale-105 hover:bg-green-600 transition text-lg font-semibold flex flex-col items-center">
+        📷
+        <span class="mt-2">Scan Barcode</span></a>
+      </button>
+
+      <a href="Receipt.html" class="p-8 bg-blue-500 text-white rounded-2xl shadow-lg hover:scale-105 hover:bg-blue-600 transition text-lg font-semibold flex flex-col items-center">
+        🧾
+        <span class="mt-2">Scan Receipt</span></a>
+      </button>
+
+      <a href="ScanFood.html" class="p-8 bg-purple-500 text-white rounded-2xl shadow-lg hover:scale-105 hover:bg-purple-600 transition text-lg font-semibold flex flex-col items-center">
+        🍎
+        <span class="mt-2">Scan Food</span></a>
+      </button>
+
+      <a href="Manual.html" class="p-8 bg-gray-700 text-white rounded-2xl shadow-lg hover:scale-105 hover:bg-gray-800 transition text-lg font-semibold flex flex-col items-center">
+        ✍️
+        <span class="mt-2">Manual Input</span></a>
+      </button>
+    </div>
+
+    <!-- Quick Access -->
+    <section class="mt-12 w-full max-w-md">
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Quick Access</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <a href="Favorites.html" class="flex flex-col items-center p-6 bg-white rounded-xl shadow hover:scale-105 transition">
+          ⭐
+          <span class="mt-2 text-gray-700 font-medium">Favorites</span>
+        </a>
+        <a href="Recent.html" class="flex flex-col items-center p-6 bg-white rounded-xl shadow hover:scale-105 transition">
+          🕒
+          <span class="mt-2 text-gray-700 font-medium">Recent</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner p-4 text-center text-gray-500 text-sm">
+    WE SELL YOUR DATA
+  </footer>
+
+</body>
+</html>
