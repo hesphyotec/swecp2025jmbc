@@ -124,14 +124,43 @@
 
 <!-- Bottom Navigation -->
 <footer>
-    <button onclick="location.href='homepage.html'">🏠 Home</button>
-    <button onclick="location.href='account.html'">👤 Account</button>
+    <button onclick="location.href='homepage.html'">Back</button>
+    <button onclick="location.href='Manual.html'">Manual</button>
+    <button onclick="location.href='Barcode.html'">Barcode</button>
+    <button onclick="location.href='ScanFood.html'">Scan Food</button>
+    <button onclick="location.href='Receipt.html'">Receipt</button>
 </footer>
 
 <script>
-    function removeIngredient(button) {
-        button.parentElement.remove();
+  const list = document.getElementById("ingredientsList");
+  let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+  function renderIngredients() {
+    list.innerHTML = "";
+    if (ingredients.length === 0) {
+      list.textContent = "No ingredients saved yet.";
+      return;
     }
+    ingredients.forEach((ingredient, index) => {
+      const item = document.createElement("div");
+      item.textContent = ingredient;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "✕";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = () => {
+        ingredients.splice(index, 1);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderIngredients();
+      };
+
+      item.appendChild(removeBtn);
+      list.appendChild(item);
+    });
+  }
+
+  renderIngredients();
 </script>
+
 </body>
 </html>
