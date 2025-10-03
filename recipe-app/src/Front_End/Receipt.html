@@ -25,7 +25,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 20px;
       padding: 20px;
     }
@@ -33,7 +33,7 @@
     #camera-preview {
       width: 95%;
       max-width: 500px;
-      height: 350px;
+      height: 250px;
       border: 2px dashed #2196F3;
       border-radius: 10px;
       display: flex;
@@ -57,12 +57,24 @@
       text-align: center;
     }
 
+    #ingredients-list {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      min-height: 100px;
+      background: #fafafa;
+      font-size: 15px;
+      color: #555;
+    }
+
     footer {
       padding: 10px;
       text-align: center;
       background: #f0f0f0;
     }
-    
 
     button {
       padding: 10px 20px;
@@ -77,6 +89,20 @@
 
     button:hover {
       background: #1976D2;
+    }
+
+    .remove-btn {
+      margin-left: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+      background: #d32f2f;
     }
   </style>
 </head>
@@ -95,6 +121,9 @@
     <button id="scan-btn">Capture Receipt</button>
     
     <div id="result">Scanned text will show here</div>
+
+    <h3>Your Ingredients</h3>
+    <div id="ingredients-list">Your ingredients will appear here.</div>
   </main>
   
   <footer>
@@ -105,5 +134,56 @@
       <button class="active" onclick="location.href='manual.html'">Manual</button>
     </nav>
   </footer>
+
+  <script>
+    const scanBtn = document.getElementById("scan-btn");
+    const resultDiv = document.getElementById("result");
+    const list = document.getElementById("ingredients-list");
+
+    // Load ingredients from localStorage
+    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          ingredients.splice(index, 1);
+          localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          renderList();
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+
+    scanBtn.addEventListener("click", () => {
+      // Simulate OCR (replace later with real OCR)
+      const simulatedScan = ["Milk", "Bread", "Eggs"];
+
+      resultDiv.textContent = "Scanned items: " + simulatedScan.join(", ");
+
+      // Save to localStorage
+      ingredients.push(...simulatedScan);
+      localStorage.setItem("ingredients", JSON.stringify(ingredients));
+      renderList();
+    });
+
+    // Render list on page load
+    renderList();
+  </script>
 </body>
 </html>

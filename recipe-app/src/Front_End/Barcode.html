@@ -47,6 +47,7 @@
     #result {
       font-size: 18px;
       color: #333;
+      text-align: center;
     }
 
     footer {
@@ -55,7 +56,8 @@
       background: #f0f0f0;
     }
 
-    button {
+    nav.bottom-nav button {
+      margin: 5px;
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
@@ -66,7 +68,11 @@
       transition: background 0.2s ease;
     }
 
-    button:hover {
+    nav.bottom-nav button.active {
+      background: #2196F3;
+    }
+
+    nav.bottom-nav button:hover {
       background: #45a049;
     }
   </style>
@@ -87,9 +93,21 @@
     <nav class="bottom-nav">
       <button onclick="location.href='Homepage.html'">Back</button>
       <button onclick="location.href='ScanFood.html'">Scan Food</button>
-      <button onclick="location.href='receipt.html'">Receipt</button>
+      <button onclick="location.href='Receipt.html'">Receipt</button>
       <button class="active" onclick="location.href='manual.html'">Manual</button>
     </nav>
   </footer>
+
+  <script>
+    const scanBtn = document.getElementById("scan-btn");
+    const resultDiv = document.getElementById("result");
+
+    scanBtn.addEventListener("click", () => {
+      // Simulate scanning a barcode
+      const fakeCodes = ["0123456789012", "9783161484100", "4006381333931"];
+      const scanned = fakeCodes[Math.floor(Math.random() * fakeCodes.length)];
+      resultDiv.textContent = `Scanned code: ${scanned}`;
+    });
+  </script>
 </body>
 </html>

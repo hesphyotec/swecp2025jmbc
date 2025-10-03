@@ -84,6 +84,20 @@
     button:hover {
       background: #e68900;
     }
+
+    .remove-btn {
+      margin-left: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+      background: #d32f2f;
+    }
   </style>
 </head>
 <body>
@@ -110,5 +124,53 @@
     </nav>
   </footer>
 
+  <script>
+    const addBtn = document.getElementById("add-btn");
+    const input = document.getElementById("ingredient");
+    const list = document.getElementById("ingredients-list");
+
+    // Load ingredients from localStorage
+    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          ingredients.splice(index, 1);
+          localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          renderList();
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+
+    addBtn.addEventListener("click", () => {
+      const value = input.value.trim();
+      if (value) {
+        ingredients.push(value);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderList();
+        input.value = "";
+      }
+    });
+
+    // Render on page load
+    renderList();
+  </script>
 </body>
 </html>

@@ -25,7 +25,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 20px;
       padding: 20px;
     }
@@ -33,7 +33,7 @@
     #camera-preview {
       width: 90%;
       max-width: 400px;
-      height: 300px;
+      height: 250px;
       border: 2px dashed #4CAF50;
       border-radius: 10px;
       display: flex;
@@ -57,6 +57,19 @@
       text-align: center;
     }
 
+    #ingredients-list {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      min-height: 100px;
+      background: #fafafa;
+      font-size: 15px;
+      color: #555;
+    }
+
     footer {
       background: #f0f0f0;
       padding: 10px;
@@ -75,18 +88,25 @@
     }
 
     button.scan-btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
       background: #4CAF50;
-      color: white;
-      transition: background 0.2s ease;
     }
 
     button.scan-btn:hover {
       background: #45a049;
+    }
+
+    .remove-btn {
+      margin-left: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+      background: #d32f2f;
     }
   </style>
 </head>
@@ -102,9 +122,12 @@
       Point the camera at a food item and press Scan.
     </div>
     
-    <button class="scan-btn">Scan Food</button>
+    <button class="scan-btn" id="scan-btn">Scan Food</button>
     
     <div id="result">Identified food will show here</div>
+
+    <h3>Your Ingredients</h3>
+    <div id="ingredients-list">Your ingredients will appear here.</div>
   </main>
   
   <footer>
@@ -115,5 +138,56 @@
       <button class="active" onclick="location.href='Receipt.html'">Receipt</button>
     </nav>
   </footer>
+
+  <script>
+    const scanBtn = document.getElementById("scan-btn");
+    const resultDiv = document.getElementById("result");
+    const list = document.getElementById("ingredients-list");
+
+    // Load ingredients from localStorage
+    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          ingredients.splice(index, 1);
+          localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          renderList();
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+
+    scanBtn.addEventListener("click", () => {
+      // Simulate scanning food (replace with real detection later)
+      const simulatedFood = "Apple";
+
+      resultDiv.textContent = "Identified food: " + simulatedFood;
+
+      // Save to localStorage
+      ingredients.push(simulatedFood);
+      localStorage.setItem("ingredients", JSON.stringify(ingredients));
+      renderList();
+    });
+
+    // Render on page load
+    renderList();
+  </script>
 </body>
 </html>
