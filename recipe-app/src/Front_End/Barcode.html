@@ -93,9 +93,9 @@
   <header>Barcode Scanner</header>
   
   <main>
-    <div id="scanner-preview">
+    <video id="scanner-preview">
       Camera feed will appear here
-    </div>
+    </video>
     
     <button id="scan-btn">Start Scan</button>
     <div id="result">Scanned code will show here</div>
@@ -112,13 +112,72 @@
     </nav>
   </footer>
 
+  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
   <script>
     const scanBtn = document.getElementById("scan-btn");
     const resultDiv = document.getElementById("result");
     const list = document.getElementById("ingredients-list");
+    let scanning = false;
 
     // Load ingredients from localStorage
     let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    window.addEventListener('load', function () {
+      let deviceId;
+      const codeReader = new ZXing.BrowserMultiFormatReader()
+      codeReader.listVideoInputDevices()
+        .then((videoInputDevices) => {
+          deviceId = videoInputDevices[0].deviceId
+        })
+        scanBtn.addEventListener("click", () => {
+          if (!scanning) {
+            scanning = true;
+            scanBtn.textContent = "Stop Scan"
+            resultDiv.textContent = "Scanned code will show here"
+            codeReader.decodeFromVideoDevice(deviceId, 'scanner-preview', (result, err) => {
+              if (result) {
+                scanning = false;
+                scanBtn.textContent = "Start Scan"
+                resultDiv.textContent = "Identified barcode: " + result.text
+                lookupItem(result.text)
+                codeReader.reset()
+              }
+            })
+          } else {
+            scanning = false;
+            scanBtn.textContent = "Start Scan"
+            resultDiv.textContent = "Scanned code will show here"
+            codeReader.reset()
+          }
+
+          // // Simulate scanning food (replace with real detection later)
+          // const simulatedBarcode = "Apple";
+
+          // resultDiv.textContent = "Identified food: " + simulatedBarcode;
+
+          // // Save to localStorage
+          // ingredients.push(simulatedBarcode);
+          // localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          // renderList();
+        });
+    })
+
+    async function lookupItem(barcode) {
+      try {
+        const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json?fields=product_name,brands`)
+
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        resultDiv.textContent = `Identified food: ${data.product.brands} ${data.product.product_name}`
+
+      } catch (error) {
+        console.error('Error fetching data: ', error)
+      }
+    }
 
     function renderList() {
       list.innerHTML = "";
@@ -146,18 +205,6 @@
         list.appendChild(item);
       });
     }
-
-    scanBtn.addEventListener("click", () => {
-      // Simulate scanning food (replace with real detection later)
-      const simulatedBarcode = "Apple";
-
-      resultDiv.textContent = "Identified food: " + simulatedBarcode;
-
-      // Save to localStorage
-      ingredients.push(simulatedBarcode);
-      localStorage.setItem("ingredients", JSON.stringify(ingredients));
-      renderList();
-    });
 
     // Render on page load
     renderList();
