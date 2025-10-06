@@ -149,16 +149,6 @@
             resultDiv.textContent = "Scanned code will show here"
             codeReader.reset()
           }
-
-          // // Simulate scanning food (replace with real detection later)
-          // const simulatedBarcode = "Apple";
-
-          // resultDiv.textContent = "Identified food: " + simulatedBarcode;
-
-          // // Save to localStorage
-          // ingredients.push(simulatedBarcode);
-          // localStorage.setItem("ingredients", JSON.stringify(ingredients));
-          // renderList();
         });
     })
 
@@ -173,6 +163,10 @@
         const data = await response.json();
 
         resultDiv.textContent = `Identified food: ${data.product.brands} ${data.product.product_name}`
+
+        ingredients.push(data.product.product_name)
+        localStorage.setItem('ingredients', JSON.stringify(ingredients));
+        renderList();
 
       } catch (error) {
         console.error('Error fetching data: ', error)
