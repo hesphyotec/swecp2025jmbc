@@ -52,12 +52,13 @@
             background-color: #45a049;
         }
     </style>
+    <script src ="https:/code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
 
 <div class="signup-container">
     <h2>Create Account</h2>
-    <form action="signup.php" method="post">
+    <form id="acc">
         <label for="new-username">Username</label>
         <input type="text" id="new-username" name="username" required>
 
@@ -70,6 +71,49 @@
         <input type="submit" value="Create Account">
     </form>
 </div>
+
+    <script>
+      var sock = new WebSocket("ws://localhost:18080/signup");
+
+      sock.onopen = ()=>{
+        console.log('open');
+
+
+        sock.send()
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        const result = JSON.parse(m.data);
+        if (result.status === "success") {
+            localStorage.setItem("activeuserid", result.id);
+            localStorage.setItem("activeusername", result.name);
+            window.location.href = "Homepage.html"
+        } else {
+            alert("Signup failed: " + result.message);
+        }
+        }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+
+      $("#acc").on("submit", function(e) {
+        e.preventDefault();
+        
+        const sendData = {
+            username: $("#new-username").val(),
+            password: $("#new-password").val()
+        }
+        const stringData = JSON.stringify(sendData);
+        sock.send(stringData);
+      });
+
+  </script>
 
 </body>
 </html>
