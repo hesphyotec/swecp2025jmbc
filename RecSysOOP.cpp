@@ -2,7 +2,6 @@
 #include <sqlite3.h>
 #include <fstream>
 #include <string>
-#include <list>
 #include <cmath>
 #include <utility>
 #include <vector>
@@ -11,7 +10,8 @@
 #include <chrono>
 #include <tuple>
 #include <sstream>
-#include <ranges>
+#include "crow.h"
+#include "asio.hpp"
 
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
@@ -406,6 +406,29 @@ class Recommend {
 			return results;
 		}
 
+	void toJson(recommendVec finalRec) {
+			crow::json::wvalue json_array = crow::json::wvalue::list();
+			int i = 0;
+
+			for (const auto& [name, image, dist] : finalRec) {
+				crow::json::wvalue item;
+				item["name"] = name;
+				item["image"] = image;
+				json_array[i] = (std::move(item));
+				i++;
+			}
+			std::string json_string = json_array.dump();
+
+			std::ofstream output_file("output.json");
+			if (output_file.is_open()) {
+				output_file << json_string;
+				output_file.close();
+			} else {
+				// Handle error: unable to open file
+				std::cerr << "Error: Could not open file for writing." << std::endl;
+			}
+		}
+
 	recommendVec doIt (std::string keyword, double searchedVector) {
 			if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
 				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
@@ -428,8 +451,10 @@ class Recommend {
 				quickSort(finalRec, 0, finalRec.size()-1);
 			}
 			sqlite3_close(db);
+			toJson(finalRec);
 			return finalRec;
 		}
+
 };
 
 void test() {
