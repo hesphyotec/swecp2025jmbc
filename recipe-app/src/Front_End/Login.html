@@ -52,6 +52,7 @@
             background-color: #45a049;
         }
     </style>
+    <script src ="https:/code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
 
@@ -67,6 +68,46 @@
         <input type="submit" value="Login">
     </form>
 </div>
+
+<script>
+      var sock = new WebSocket("ws://localhost:18080/login");
+
+      sock.onopen = ()=>{
+        console.log('open');
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        const result = JSON.parse(m.data);
+        if (result.status === "success") {
+            localStorage.setItem("activeuserid", result.id);
+            localStorage.setItem("activeusername", result.name);
+            window.location.href = "Homepage.html"
+        } else {
+            alert("Login failed: " + result.message);
+        }
+        }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+
+      $("#acc").on("submit", function(e) {
+        e.preventDefault();
+        
+        const sendData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        }
+        const stringData = JSON.stringify(sendData);
+        sock.send(stringData);
+      });
+
+  </script>
 
 </body>
 </html>

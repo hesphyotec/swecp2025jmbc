@@ -55,31 +55,11 @@ std::unordered_map<std::string, std::string> urlParse(const std::string& str){
 
 int genId(){
     int id{};
-    using namespace std::literals::string_literals;
-    sqlite3* db{};
-    if(sqlite3_open("core.db", &db) == SQLITE_OK){
-        sqlite3_stmt* statement{};
-        const char* tail{};
-        std::string s{"SELECT MAX(uid) FROM Users "};
-        std::cout << s << "\n";
-        const char* st{s.c_str()};
-        int prepstmt{sqlite3_prepare_v2(db, st, -1, &statement, &tail)};
-        if (prepstmt != SQLITE_OK){
-            std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << "\n";
-        }
-        int res{};
-        while(res != SQLITE_DONE){
-            res = sqlite3_step(statement);
-            if (res == SQLITE_ROW){
-                id = sqlite3_column_int(statement, 0);
-            } else if (res == SQLITE_DONE){
-                std::cout << "Query Complete!\n";
-            } else {
-                std::cerr << "Bad step. Code: " << res << "\n";
-            }
-        }
-        sqlite3_close(db);
-    }
+    std::string s{"SELECT MAX(uid) FROM Users "};
+    DBArgList arg{};
+    DBCore::accessDB(s, arg, [&](sqlite3_stmt* stmt){
+        id = sqlite3_column_int(stmt, 0);
+    });
     return ++id;
 }
 
@@ -260,6 +240,19 @@ int main(){
                 crow::json::wvalue response = DBCore::getItemList(activeUser);
                 response["status"] = "success";
                 conn.send_text(response.dump());
+            } else if (parsed["op"] == "delitem"){
+                int uid{static_cast<int>(parsed["uid"].i())};
+                int iid{static_cast<int>(parsed["iid"].i())};
+                User activeUser = DBCore::getUser(uid);
+                Item toDelete = DBCore::getItem(iid);
+                if (DBCore::deleteItem(toDelete)){
+                    crow::json::wvalue response = DBCore::getItemList(activeUser);
+                    response["status"] = "success";
+                    conn.send_text(response.dump());
+                } else {
+                    CROW_LOG_ERROR << "Error deleting item from inventory: ";
+                    conn.send_text("{\"status\":\"error\",\"message\":\"Server error removing item.\"}");
+                }
             }
         }
     })

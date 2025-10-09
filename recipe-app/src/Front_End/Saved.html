@@ -101,6 +101,7 @@
         background: #388E3C;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
 <header>My Ingredients</header>
@@ -130,8 +131,113 @@
     <button onclick="location.href='ScanFood.html'">Scan Food</button>
     <button onclick="location.href='Receipt.html'">Receipt</button>
 </footer>
-
 <script>
+    const addBtn = document.getElementById("scan-btn");
+    const input = document.getElementById("ingredient-add");
+    const list = document.getElementById("ingredients-list");
+
+    let ingredients = [];
+    // Socket Handling
+    
+    var sock = new WebSocket("ws://localhost:18080/inventory");
+
+      sock.onopen = ()=>{
+        console.log('open');
+        const getlist = {
+            op: "getlist",
+            uid: localStorage.getItem("activeuserid")
+        }
+        const strgetlist = JSON.stringify(getlist);
+        sock.send(strgetlist)
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        var result;
+        try {
+          result = JSON.parse(m.data);
+        } catch (err) {
+          console.error("JSON parse failed:", err, m.data);
+          return;
+        }
+
+        if (result.status === "success") {
+            const container = $("#ingredients-list");
+            container.empty();
+
+            if (Array.isArray(result.data)){
+              ingredients = result.data;
+            }
+        } else {
+            alert("Failed to add item. Reason : " + result.message);
+        }
+        renderList();
+      }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+      
+      window.addEventListener('beforeunload', () => {
+        console.log("Page is unloading (possibly reloading)");
+      });
+
+      
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient.name;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          const sendData = {
+              op : "delitem",
+              uid : localStorage.getItem("activeuserid"),
+              iid : ingredient.id
+          }
+          const stringData = JSON.stringify(sendData);
+          if (sock.readyState === WebSocket.OPEN){
+            sock.send(stringData);  
+          } else {
+            alert("Server Not Responding");
+          }
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+    /*
+    addBtn.addEventListener("click", () => {
+      const value = input.value.trim();
+      if (value) {
+        ingredients.push(value);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderList();
+        input.value = "";
+      }
+        
+    });*/
+
+    // Render on page load
+    renderList();
+  </script>
+<script>/*
   const list = document.getElementById("ingredientsList");
   let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
 
@@ -159,7 +265,7 @@
     });
   }
 
-  renderIngredients();
+  renderIngredients();*/
 </script>
 
 </body>

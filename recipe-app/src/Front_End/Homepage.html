@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recipe Builder App</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src ="https:/code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
@@ -22,7 +23,7 @@
   <!-- Main Content -->
   <main class="flex-1 flex flex-col items-center p-6">
     <h2 class="text-2xl font-bold mb-8 text-gray-800">
-      Hi Caleb 👋, what’s in your kitchen today?
+      Hi <span id="username">Guest</span> 👋, what’s in your kitchen today?
     </h2>
 
     <!-- Action Buttons -->
@@ -76,6 +77,34 @@
   <footer class="bg-white shadow-inner p-4 text-center text-gray-500 text-sm">
     (™) Recipe Builder 2025
   </footer>
+
+  <script>
+      var sock = new WebSocket("ws://localhost:18080/home");
+      var username = "Guest";
+      if (localStorage.getItem("activeusername") !== null){
+        username = localStorage.getItem("activeusername");
+      }
+      $("#username").text(username);
+      sock.onopen = ()=>{
+        console.log('open');
+        if (localStorage.getItem("activeuser") !== null){
+          sock.send(localStorage.getItem("activeuser"));
+        }
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+      }
+
+      sock.onerror = (e) =>{
+        console.log('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+
+  </script>
 
 </body>
 </html>

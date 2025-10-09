@@ -99,14 +99,15 @@
       background: #d32f2f;
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
   <header>Manual Ingredient Input</header>
   
   <main>
-    <form>
+    <form id="addi">
       <label for="ingredient">Enter Ingredient:</label>
-      <input type="text" id="ingredient" placeholder="e.g. 2 tomatoes, 1 onion" />
+      <input type="text" id="ingredient-add" placeholder="e.g. 2 tomatoes, 1 onion" />
       <button type="button" id="add-btn">Add Ingredient</button>
     </form>
     
@@ -127,11 +128,78 @@
 
   <script>
     const addBtn = document.getElementById("add-btn");
-    const input = document.getElementById("ingredient");
+    const input = document.getElementById("ingredient-add");
     const list = document.getElementById("ingredients-list");
 
-    // Load ingredients from localStorage
-    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+    let ingredients = [];
+    // Socket Handling
+    
+    var sock = new WebSocket("ws://localhost:18080/inventory");
+
+      sock.onopen = ()=>{
+        console.log('open');
+        const getlist = {
+            op: "getlist",
+            uid: localStorage.getItem("activeuserid")
+        }
+        const strgetlist = JSON.stringify(getlist);
+        sock.send(strgetlist)
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        var result;
+        try {
+          result = JSON.parse(m.data);
+        } catch (err) {
+          console.error("JSON parse failed:", err, m.data);
+          return;
+        }
+
+        if (result.status === "success") {
+            const container = $("#ingredients-list");
+            container.empty();
+
+            if (Array.isArray(result.data)){
+              ingredients = result.data;
+            }
+        } else {
+            alert("Failed to add item. Reason : " + result.message);
+        }
+        renderList();
+      }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+        $(document).ready(function () {
+        $("#add-btn").on("click", function(e) {
+          console.log("Submitted");
+          e.preventDefault();
+          console.log($("#ingredient-add").val());
+          const sendData = {
+              op : "additem",
+              uid : localStorage.getItem("activeuserid"),
+              name : $("#ingredient-add").val()
+          }
+          const stringData = JSON.stringify(sendData);
+          if (sock.readyState === WebSocket.OPEN){
+            sock.send(stringData);  
+          } else {
+            alert("Server Not Responding");
+          }
+        });
+      });
+
+      window.addEventListener('beforeunload', () => {
+        console.log("Page is unloading (possibly reloading)");
+      });
+
+      
 
     function renderList() {
       list.innerHTML = "";
@@ -143,23 +211,31 @@
 
       ingredients.forEach((ingredient, index) => {
         const item = document.createElement("div");
-        item.textContent = ingredient;
+        item.textContent = ingredient.name;
 
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "✕";
         removeBtn.className = "remove-btn";
 
         removeBtn.onclick = () => {
-          ingredients.splice(index, 1);
-          localStorage.setItem("ingredients", JSON.stringify(ingredients));
-          renderList();
+          const sendData = {
+              op : "delitem",
+              uid : localStorage.getItem("activeuserid"),
+              iid : ingredient.id
+          }
+          const stringData = JSON.stringify(sendData);
+          if (sock.readyState === WebSocket.OPEN){
+            sock.send(stringData);  
+          } else {
+            alert("Server Not Responding");
+          }
         };
 
         item.appendChild(removeBtn);
         list.appendChild(item);
       });
     }
-
+    /*
     addBtn.addEventListener("click", () => {
       const value = input.value.trim();
       if (value) {
@@ -168,7 +244,8 @@
         renderList();
         input.value = "";
       }
-    });
+        
+    });*/
 
     // Render on page load
     renderList();
