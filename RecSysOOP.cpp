@@ -10,8 +10,11 @@
 #include <chrono>
 #include <tuple>
 #include <sstream>
+#include <mutex>
+#include <unordered_set>
 #include "crow.h"
 #include "asio.hpp"
+#include "bgezdb.h"
 
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
@@ -131,7 +134,7 @@ class CreateWord2Vec {// Creates vectors
 
 	void getResults (pairVec& results) {//this puts vectors into the db
 		sqlite3_stmt* stmt;
-			const char* sql = "UPDATE Ingredients SET vectors = ? WHERE id = ?;";
+		const char* sql = "UPDATE Ingredients SET vectors = ? WHERE id = ?;";
 		sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);//This preps the statement to have values added to it
 			for (auto& [id, name] : results) {
 			try {
@@ -231,8 +234,8 @@ class CreateWord2Vec {// Creates vectors
 };
 
 class User {
-	private:
-		sqlite3 * db;
+private:
+	sqlite3 * db;
 
 	static int callbackIID(void *ingredientList, int columns, char **columnValue, char **colName) {//callback for userIngredientParser
 		auto* results = static_cast<std::vector<int>*>(ingredientList);
@@ -240,19 +243,45 @@ class User {
 		return 0; // Return 0 to continue processing rows, non-zero to stop
 	}
 
-	public:
-		User() {
-			std::cout << "Hello!\n";
-			if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
-				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
-				db = nullptr;
-			}
+public:
+	User() {
+		std::cout << "Hello!\n";
+		if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
+			std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+			db = nullptr;
 		}
+	}
 
-	int getUserID(int userID) {
-			return userID;
-		}
+	int getUserID() {
+		crow::SimpleApp app;
+		std::mutex mtx;
+		std::unordered_set<crow::websocket::connection*> users;
+		int userID = 0;
+		CROW_WEBSOCKET_ROUTE(app, "/Recipes") .onopen([&](crow::websocket::connection& conn){
+			CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
+			std::lock_guard<std::mutex> _(mtx);
+			users.insert(&conn);
+		})
+		.onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
+			std::lock_guard<std::mutex> _(mtx);
+			//int id = std::stoi(data);
+			CROW_LOG_DEBUG << "Received Data: " << data;
 
+			crow::json::rvalue parsed = crow::json::load(data);
+
+			if (!parsed.has("uid")){
+				conn.send_text("{\"status\":\"error\",\"message\":\"Please sign in\"}");
+				return;}
+			if (!parsed.has("name")){
+				conn.send_text("{\"status\":\"error\",\"message\":\"Name cannot be empty\"}");
+				return;}
+
+			std::string name{parsed["name"].s()};
+			int uid{static_cast<int>(parsed["uid"].i())};
+			userID = uid;
+		});
+		return userID;
+	}
 
 	std::vector<int> userIngredientParser (int userID) {//gets all ingredients stored by user
 			std::vector<int> ingredientID;
@@ -321,8 +350,8 @@ class User {
 			return (ingredientVector + mealVector) / avg;
 		}
 
-	double userGather (int userID) {
-			int uID = getUserID(userID);
+	double userGather () {
+			int uID = getUserID();
 			double ingVec = ingredientToVector(userIngredientParser(uID));
 			double mealVec = mealToVector(userMealParser(uID));
 			double totVec = outputVector(ingVec, mealVec);
@@ -458,17 +487,11 @@ class Recommend {
 };
 
 void test() {
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	User user;
 	Recommend rec;
-	double foundVec = user.userGather(4);
-	std::cout << foundVec << "\n";
-	recommendVec output = rec.doIt("Chicken",foundVec);
-	for (const auto &[name, img, vec]: output) {
-		std::cout << name << ", " << img << ", " << vec << "\n";
-	}
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	std::cout << "\n" << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+	int uID = user.getUserID();
+	std::cout << uID;
+
 }
 
 int main() {
