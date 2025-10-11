@@ -104,39 +104,38 @@
     <button onclick="location.href='Saved.html'">Ingredients</button>
     <button onclick="location.href='account.html'">Account</button>
   </nav>
+<script>
+  async function loadRecipes() {
+    const container = document.getElementById('recipes-container');
 
-  <script>
-    async function loadRecipes() {
-      const container = document.getElementById('recipes-container');
-      try {
-        const response = await fetch('https://example.com/api/recommendations'); // placeholder
-        const recipes = await response.json();
-
-        if (recipes.length === 0) {
-          container.innerHTML = '<p style="text-align:center;">No recommendations yet.</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        recipes.forEach(recipe => {
-          const card = document.createElement('div');
-          card.className = 'recipe-card';
-          card.innerHTML = `
-            <img src="${recipe.image_url || 'placeholder.jpg'}" alt="${recipe.title}" class="recipe-image">
-            <div class="recipe-content">
-              <h3 class="recipe-title">${recipe.title}</h3>
-              <p class="recipe-description">${recipe.description || 'No description available.'}</p>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      } catch (error) {
-        container.innerHTML = '<p style="text-align:center;color:red;">Failed to load recipes.</p>';
-        console.error(error);
+    // temporary placeholder recipe
+    const recipes = [
+      {
+        title: "Sample Recipe", // you can rename this
+        description: "This is a delicious dish made from fresh ingredients and love.",
+        image_url: "https://www.themealdb.com/images/media/meals/wuvryu1468232995.jpg" // <-- your given link
       }
-    }
+    ];
 
-    loadRecipes();
-  </script>
+    // Display recipes
+    container.innerHTML = '';
+    recipes.forEach(recipe => {
+      const card = document.createElement('div');
+      card.className = 'recipe-card';
+      card.innerHTML = `
+        <img src="${recipe.image_url}" alt="${recipe.title}" class="recipe-image">
+        <div class="recipe-content">
+          <h3 class="recipe-title">${recipe.title}</h3>
+          <p class="recipe-description">${recipe.description}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  loadRecipes();
+</script>
+
+  
 </body>
 </html>
