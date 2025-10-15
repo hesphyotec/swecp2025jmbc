@@ -19,6 +19,10 @@
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
 
+crow::SimpleApp app;
+std::mutex mtx;
+std::unordered_set<crow::websocket::connection*> users;
+
 class CreateWord2Vec {// Creates vectors
 	private:
 		std::string file = "C:/Users/blake/swecp2025jmbc/word2vec.txt";
@@ -233,7 +237,7 @@ class CreateWord2Vec {// Creates vectors
 		}
 };
 
-class User {
+class UserRecSys {
 private:
 	sqlite3 * db;
 
@@ -244,7 +248,7 @@ private:
 	}
 
 public:
-	User() {
+	UserRecSys() {
 		std::cout << "Hello!\n";
 		if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
 			std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
@@ -253,11 +257,8 @@ public:
 	}
 
 	int getUserID() {
-		crow::SimpleApp app;
-		std::mutex mtx;
-		std::unordered_set<crow::websocket::connection*> users;
 		int userID = 0;
-		CROW_WEBSOCKET_ROUTE(app, "/Recipes") .onopen([&](crow::websocket::connection& conn){
+		CROW_WEBSOCKET_ROUTE(app, "/recipe") .onopen([&](crow::websocket::connection& conn){
 			CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
 			std::lock_guard<std::mutex> _(mtx);
 			users.insert(&conn);
@@ -279,7 +280,12 @@ public:
 			std::string name{parsed["name"].s()};
 			int uid{static_cast<int>(parsed["uid"].i())};
 			userID = uid;
-		});
+		})
+		.onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+		CROW_LOG_INFO << "WS Connection closed: " << reason;
+		std::lock_guard<std::mutex> _(mtx);
+		users.erase(&conn);
+	});
 		return userID;
 	}
 
@@ -487,10 +493,12 @@ class Recommend {
 };
 
 void test() {
-	User user;
+	UserRecSys user;
 	Recommend rec;
+	app.port(18080).multithreaded().run();
 	int uID = user.getUserID();
 	std::cout << uID;
+
 
 }
 
