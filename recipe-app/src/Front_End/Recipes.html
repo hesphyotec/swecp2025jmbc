@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recommended Recipes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #d2b48c; /* light brown background */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #8b5e3c; /* darker brown for contrast */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+
+    main {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .recipe-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 15px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .recipe-card:hover {
+      transform: scale(1.02);
+    }
+
+    .recipe-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .recipe-content {
+      padding: 12px;
+    }
+
+    .recipe-title {
+      font-size: 1.2em;
+      margin: 0 0 8px 0;
+      color: #4b2e05;
+    }
+
+    .recipe-description {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    nav {
+      background-color: #8b5e3c;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    nav button:hover {
+      color: #ffe4b5;
+    }
+
+    @media (min-width: 600px) {
+      main {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Recommended Recipes</header>
+
+  <main id="recipes-container">
+    <p style="text-align:center;">Loading recipes...</p>
+  </main>
+
+  <nav>
+    <button onclick="location.href='Homepage.html'">Home</button>
+    <button onclick="location.href='Saved.html'">Ingredients</button>
+    <button onclick="location.href='account.html'">Account</button>
+  </nav>
+
+  <script>
+    async function loadRecipes() {
+      const container = document.getElementById('recipes-container');
+      try {
+        const response = await fetch('https://example.com/api/recommendations'); // placeholder
+        const recipes = await response.json();
+
+        if (recipes.length === 0) {
+          container.innerHTML = '<p style="text-align:center;">No recommendations yet.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        recipes.forEach(recipe => {
+          const card = document.createElement('div');
+          card.className = 'recipe-card';
+          card.innerHTML = `
+            <img src="${recipe.image_url || 'placeholder.jpg'}" alt="${recipe.title}" class="recipe-image">
+            <div class="recipe-content">
+              <h3 class="recipe-title">${recipe.title}</h3>
+              <p class="recipe-description">${recipe.description || 'No description available.'}</p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        container.innerHTML = '<p style="text-align:center;color:red;">Failed to load recipes.</p>';
+        console.error(error);
+      }
+    }
+
+    loadRecipes();
+  </script>
+</body>
+</html>
