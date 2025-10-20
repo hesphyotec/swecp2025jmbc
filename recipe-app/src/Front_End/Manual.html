@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manual Ingredient Input</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: rgb(23, 219, 219);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #FF9800;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    #ingredients-list {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      min-height: 100px;
+      background: #fafafa;
+      font-size: 15px;
+      color: #555;
+    }
+
+    footer {
+      padding: 10px;
+      text-align: center;
+      background: #f0f0f0;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #FF9800;
+      color: white;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background: #e68900;
+    }
+
+    .remove-btn {
+      margin-left: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <header>Manual Ingredient Input</header>
+  
+  <main>
+    <form>
+      <label for="ingredient">Enter Ingredient:</label>
+      <input type="text" id="ingredient" placeholder="e.g. 2 tomatoes, 1 onion" />
+      <button type="button" id="add-btn">Add Ingredient</button>
+    </form>
+    
+    <div id="ingredients-list">
+      Your ingredients will appear here.
+    </div>
+  </main>
+  
+  <footer>
+    <nav class="bottom-nav">
+      <button onclick="location.href='Homepage.html'">Back</button>
+      <button onclick="location.href='Barcode.html'">Barcode</button>
+      <button onclick="location.href='Receipt.html'">Receipt</button>
+      <button onclick="location.href='Saved.html'">Ingredients</button>
+      <button class="active" onclick="location.href='ScanFood.html'">Scan Food</button>
+    </nav>
+  </footer>
+
+  <script>
+    const addBtn = document.getElementById("add-btn");
+    const input = document.getElementById("ingredient");
+    const list = document.getElementById("ingredients-list");
+
+    // Load ingredients from localStorage
+    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          ingredients.splice(index, 1);
+          localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          renderList();
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+
+    addBtn.addEventListener("click", () => {
+      const value = input.value.trim();
+      if (value) {
+        ingredients.push(value);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderList();
+        input.value = "";
+      }
+    });
+
+    // Render on page load
+    renderList();
+  </script>
+</body>
+</html>

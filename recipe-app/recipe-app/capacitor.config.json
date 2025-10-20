@@ -1,0 +1,10 @@
+{
+  "appId": "com.bgez.recipe_builder",
+  "appName": "Recipe Builder",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}

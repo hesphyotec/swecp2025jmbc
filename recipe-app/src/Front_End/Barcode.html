@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Barcode Scanner</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    #scanner-preview {
+      width: 90%;
+      max-width: 400px;
+      height: 300px;
+      border: 2px dashed #4CAF50;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    #result {
+      font-size: 18px;
+      color: #333;
+      text-align: center;
+    }
+    #ingredients-list {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      min-height: 100px;
+      background: #fafafa;
+      font-size: 15px;
+      color: #555;
+    }
+
+    footer {
+      padding: 10px;
+      text-align: center;
+      background: #f0f0f0;
+    }
+
+    nav.bottom-nav button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      transition: background 0.2s ease;
+    }
+
+    nav.bottom-nav button.active {
+      background: #2196F3;
+    }
+
+    nav.bottom-nav button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>Barcode Scanner</header>
+  
+  <main>
+    <div id="scanner-preview">
+      Camera feed will appear here
+    </div>
+    
+    <button id="scan-btn">Start Scan</button>
+    <div id="result">Scanned code will show here</div>
+    <div id="ingredients-list">Your ingredients will appear here</div>
+  </main>
+  
+  <footer>
+    <nav class="bottom-nav">
+      <button onclick="location.href='Homepage.html'">Back</button>
+      <button onclick="location.href='ScanFood.html'">Scan Food</button>
+      <button onclick="location.href='Receipt.html'">Receipt</button>
+      <button onclick="location.href='Saved.html'">Ingredients</button>
+      <button class="active" onclick="location.href='manual.html'">Manual</button>
+    </nav>
+  </footer>
+
+  <script>
+    const scanBtn = document.getElementById("scan-btn");
+    const resultDiv = document.getElementById("result");
+    const list = document.getElementById("ingredients-list");
+
+    // Load ingredients from localStorage
+    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          ingredients.splice(index, 1);
+          localStorage.setItem("ingredients", JSON.stringify(ingredients));
+          renderList();
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+
+    scanBtn.addEventListener("click", () => {
+      // Simulate scanning food (replace with real detection later)
+      const simulatedBarcode = "Apple";
+
+      resultDiv.textContent = "Identified food: " + simulatedBarcode;
+
+      // Save to localStorage
+      ingredients.push(simulatedBarcode);
+      localStorage.setItem("ingredients", JSON.stringify(ingredients));
+      renderList();
+    });
+
+    // Render on page load
+    renderList();
+  </script>
+</body>
+</html>
