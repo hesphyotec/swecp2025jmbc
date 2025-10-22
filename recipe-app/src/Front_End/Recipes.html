@@ -105,36 +105,56 @@
     <button onclick="location.href='account.html'">Account</button>
   </nav>
 <script>
-  async function loadRecipes() {
-    const container = document.getElementById('recipes-container');
+    const recipeList = document.getElementById("recipeList");
+    const loadingMsg = document.createElement("p");
+    loadingMsg.textContent = "Loading recommendations...";
+    loadingMsg.className = "loading";
+    recipeList.appendChild(loadingMsg);
 
-    // temporary placeholder recipe
-    const recipes = [
-      {
-        title: "Sample Recipe", // you can rename this
-        description: "This is a delicious dish made from fresh ingredients and love.",
-        image_url: "https://www.themealdb.com/images/media/meals/wuvryu1468232995.jpg" // <-- your given link
-      }
-    ];
+    // Connect to your Crow WebSocket server
+    const socket = new WebSocket("ws://localhost:18080/recipes");
 
-    // Display recipes
-    container.innerHTML = '';
-    recipes.forEach(recipe => {
-      const card = document.createElement('div');
-      card.className = 'recipe-card';
-      card.innerHTML = `
-        <img src="${recipe.image_url}" alt="${recipe.title}" class="recipe-image">
-        <div class="recipe-content">
-          <h3 class="recipe-title">${recipe.title}</h3>
-          <p class="recipe-description">${recipe.description}</p>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  }
+    socket.onopen = () => {
+        console.log("Connected to recommendation server");
 
-  loadRecipes();
+        // Request recipes — backend already knows user id
+        socket.send(JSON.stringify({
+            op: "getrecipes",
+            uid: localStorage.getItem("activeuserid")
+        }));
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        recipeList.innerHTML = ""; // clear loading text
+
+        if (data.status !== "success" || !data.recipes || data.recipes.length === 0) {
+            recipeList.innerHTML = "<p>No recipes found.</p>";
+            return;
+        }
+
+        // Display each recommended recipe
+        data.recipes.forEach(recipe => {
+            const card = document.createElement("div");
+            card.className = "recipe-card";
+            card.innerHTML = `
+                <img src="${recipe.image}" alt="${recipe.name}" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                <h3>${recipe.name}</h3>
+            `;
+            recipeList.appendChild(card);
+        });
+    };
+
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        recipeList.innerHTML = "<p>Error loading recommendations.</p>";
+    };
+
+    socket.onclose = () => {
+        console.log("Disconnected from recommendation server");
+    };
 </script>
+
 
   
 </body>
