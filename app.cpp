@@ -16,6 +16,7 @@
 #include "bgezuser.h"
 #include "bgeztraits.h"
 #include "bgezdb.h"
+#include "bgezrecs.h"
 
 
 std::string urlDecode(const std::string& str){
@@ -57,9 +58,9 @@ int genId(){
     int id{};
     std::string s{"SELECT MAX(uid) FROM Users "};
     DBArgList arg{};
-    DBCore::accessDB(s, arg, [&](sqlite3_stmt* stmt){
-        id = sqlite3_column_int(stmt, 0);
-    });
+    //DBCore::accessDB(s, arg, [&](sqlite3_stmt* stmt){
+        //id = sqlite3_column_int(stmt, 0);
+    //});
     return ++id;
 }
 
@@ -84,9 +85,9 @@ int main(){
         std::lock_guard<std::mutex> _(mtx);
         users.insert(&conn);
     })
-    .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
+    .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
         std::lock_guard<std::mutex> _(mtx);
-        //int id = std::stoi(data);
+        DBConnection db;
         CROW_LOG_DEBUG << "Received Data: " << data;
 
         crow::json::rvalue parsed;
@@ -106,13 +107,13 @@ int main(){
             conn.send_text("{\"status\":\"error\",\"message\":\"Username or password empty\"}");
             return;
         }
-        if (DBCore::getUser(username).uid() != -1){
+        if (DBCore::getUser(username, db).uid() != -1){
             conn.send_text("{\"status\":\"error\",\"message\":\"User already exists.\"}");
             return;
         }
 
         User newUser{genId(), username, h_pass};
-        if (!DBCore::addUser(newUser)){
+        if (!DBCore::addUser(newUser, db)){
             conn.send_text("{\"status\":\"error\",\"message\":\"Server failed to create user.\"}");
             return;
         }
@@ -139,12 +140,12 @@ int main(){
     })
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
         std::lock_guard<std::mutex> _(mtx);
-        //int id = std::stoi(data);
+        DBConnection db;
         crow::json::rvalue parsed;
 
         parsed = crow::json::load(data);
 
-        User activeUser = DBCore::getUser(parsed["username"].s());
+        User activeUser = DBCore::getUser(parsed["username"].s(), db);
         if (activeUser.uid() == -1){
             conn.send_text("{\"status\":\"error\",\"message\":\"Invalid Username or Password.\"}");
             return;
@@ -176,8 +177,8 @@ int main(){
     })
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
         std::lock_guard<std::mutex> _(mtx);
-        //int id = std::stoi(data);
-        User activeUser = DBCore::getUser(std::stoi(data));
+        DBConnection db;
+        User activeUser = DBCore::getUser(std::stoi(data), db);
         if (is_binary){
             conn.send_binary(activeUser.name());
         } else {
@@ -198,7 +199,7 @@ int main(){
     })
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
         std::lock_guard<std::mutex> _(mtx);
-        //int id = std::stoi(data);
+        DBConnection db;
         CROW_LOG_DEBUG << "Received Data: " << data;
 
         crow::json::rvalue parsed;
@@ -219,15 +220,15 @@ int main(){
                 std::string name{parsed["name"].s()};
                 int uid{static_cast<int>(parsed["uid"].i())};
 
-                Item item = DBCore::getItem(name);
+                Item item = DBCore::getItem(name, db);
                 if (item.id() == -1){
                     conn.send_text("{\"status\":\"error\",\"message\":\"Ingredient does not exist.\"}");
                     return;
                 }
 
-                User activeUser = DBCore::getUser(uid);
+                User activeUser = DBCore::getUser(uid, db);
                 try {
-                    CROW_LOG_DEBUG << DBCore::addItem(activeUser, item);
+                    CROW_LOG_DEBUG << DBCore::addItem(activeUser, item, db);
                 } catch (const std::exception& e) {
                     CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
@@ -236,17 +237,17 @@ int main(){
                 crow::json::wvalue response = item.toJson();
             } else if (parsed["op"] == "getlist"){
                 int uid{static_cast<int>(parsed["uid"].i())};
-                User activeUser = DBCore::getUser(uid);
-                crow::json::wvalue response = DBCore::getItemList(activeUser);
+                User activeUser = DBCore::getUser(uid, db);
+                crow::json::wvalue response = DBCore::getItemList(activeUser, db);
                 response["status"] = "success";
                 conn.send_text(response.dump());
             } else if (parsed["op"] == "delitem"){
                 int uid{static_cast<int>(parsed["uid"].i())};
                 int iid{static_cast<int>(parsed["iid"].i())};
-                User activeUser = DBCore::getUser(uid);
-                Item toDelete = DBCore::getItem(iid);
-                if (DBCore::deleteItem(toDelete)){
-                    crow::json::wvalue response = DBCore::getItemList(activeUser);
+                User activeUser = DBCore::getUser(uid, db);
+                Item toDelete = DBCore::getItem(iid, db);
+                if (DBCore::deleteItem(toDelete, db)){
+                    crow::json::wvalue response = DBCore::getItemList(activeUser, db);
                     response["status"] = "success";
                     conn.send_text(response.dump());
                 } else {
@@ -254,6 +255,38 @@ int main(){
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error removing item.\"}");
                 }
             }
+        }
+    })
+    .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+        CROW_LOG_INFO << "WS Connection closed: " << reason;
+        std::lock_guard<std::mutex> _(mtx);
+        users.erase(&conn);
+    });
+
+    CROW_WEBSOCKET_ROUTE(app, "/recipes")
+    .onopen([&](crow::websocket::connection& conn){
+        CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
+        std::lock_guard<std::mutex> _(mtx);
+        users.insert(&conn);
+    })
+    .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
+        std::lock_guard<std::mutex> _(mtx);
+        DBConnection db;
+
+        crow::json::rvalue parsed;
+
+        parsed = crow::json::load(data);
+
+        if (parsed["op"] == "getrecipes"){
+            int uid = parsed["uid"].i();
+            User activeUser = DBCore::getUser(uid, db);
+            Recommend rec;
+            UserRecSys urs;
+            auto recipes = rec.doIt(uid, urs.userGather(uid));
+            crow::json::wvalue result;
+            result["status"] = "success";
+            result["recipes"] = std::move(recipes);
+            conn.send_text(result.dump());
         }
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){

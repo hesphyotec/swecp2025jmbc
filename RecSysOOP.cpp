@@ -10,16 +10,17 @@
 #include <chrono>
 #include <tuple>
 #include <sstream>
+
 #include "crow.h"
 #include "asio.hpp"
+#include "bgez.h"
 
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
 
-class CreateWord2Vec {// Creates vectors
+class CreateWord2Vec : public DBConnection{// Creates vectors
 	private:
 		std::string file = "C:/Users/blake/swecp2025jmbc/word2vec.txt";
-		sqlite3 * db;
 
 	std::vector<std::string> seperateIngredients(std::string input){
 		std::vector<std::string> output;
@@ -68,8 +69,9 @@ class CreateWord2Vec {// Creates vectors
 	public:
 		CreateWord2Vec() {
 			std::cout << "started!\n";
-			if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
+			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
 				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+				sqlite3_close(db);
 				db = nullptr;
 			}
 		}
@@ -130,30 +132,24 @@ class CreateWord2Vec {// Creates vectors
 	}
 
 	void getResults (pairVec& results) {//this puts vectors into the db
-		sqlite3_stmt* stmt;
-			const char* sql = "UPDATE Ingredients SET vectors = ? WHERE id = ?;";
-		sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);//This preps the statement to have values added to it
-			for (auto& [id, name] : results) {
+	    std::string sql = "UPDATE Ingredients SET vectors = ? WHERE id = ?;";
+	    std::vector<DBArgList> args = {};
+	    for (auto& [id, name] : results) {
 			try {
 				double got = vectorSimplify(search(toKeyword(name)));//for all names do this
 
 				if (got == 0.000000) {
 					throw name;
 				}
-				const char* idC = id.c_str();
 
-				sqlite3_bind_double(stmt, 1, got);
-				sqlite3_bind_text(stmt, 2, idC, -1, SQLITE_TRANSIENT);
-
-				if (sqlite3_step(stmt) != SQLITE_DONE) {std::cerr << "Insert failed: " << sqlite3_errmsg(db) << std::endl;} //This preforms the insert
-				else{std::cout << "Inserted " << std::to_string(got) << " for " << name <<"\n";}
+				DBArgList arg{got, id};
+				args.push_back(arg);
 			}
 			catch (...) {
 				std::cerr << "Uh Oh. Unexpected error occured on key" << id << "\n";
-			}
-				sqlite3_reset(stmt); // Reset statement for next row
-		}
-			sqlite3_finalize(stmt);
+            }
+	    }
+	    accessDB(sql, args, [](sqlite3_stmt*){});
 	}
 
 	void start() {//super easy way to use this class
@@ -165,7 +161,6 @@ class CreateWord2Vec {// Creates vectors
 			sqlite3_exec(db, "SELECT id, name FROM Ingredients WHERE vectors IS NULL", callback, &results, nullptr);
 			getResults(results);
 			std::cout << "Done! \n";
-			sqlite3_close(db);
 		}
 
 	std::vector<std::string> getMeals() {
@@ -175,55 +170,47 @@ class CreateWord2Vec {// Creates vectors
 		}
 
 	std::vector<std::pair<std::string, std::vector<std::string>>> getIngredient(std::vector<std::string> meals){
-		sqlite3_stmt *stmt;
 		std::string result;
 		std::vector<std::pair<std::string, std::vector<std::string>>> output;
+		std::string sql = "SELECT ingredients FROM Recipes WHERE id = ?;";
+        std::vector<DBArgList> args{};
 
 		for (const auto& recipe : meals) {
-			const char *sql = "SELECT ingredients FROM Recipes WHERE id = ?;";
-			sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
-			sqlite3_bind_text(stmt, 1, recipe.c_str(), -1, nullptr);
-
-			sqlite3_step(stmt);
-			result = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)); //add that vector value to result
-
-			sqlite3_reset(stmt); // Reset statement for next row //call db for vector value
-
-			std::vector<std::string> temp = individualIngredients(seperateIngredients(result));
-			output.push_back({recipe, temp});
+			DBArgList arg{recipe};
+			args.push_back(arg);
 		}
+		size_t ind{0};
+		accessDB(sql, args, [&](sqlite3_stmt* stmt){
+			result = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)); //add that vector value to result
+			std::vector<std::string> temp = individualIngredients(seperateIngredients(result));
+			output.push_back({meals[ind], temp});
+			++ind;
+        });
+
 		return output;
 	}
 
 	void vectorify (std::vector<std::pair<std::string, std::vector<std::string>>> input) {
-			sqlite3_stmt* stmt;
-			for (const auto &items : input) {
-				double sum = 0.0;
-				double avg = 0.0;
-				for (const auto &list : items.second) {
-					const char *sql = "SELECT vectors FROM Ingredients WHERE name = ? COLLATE NOCASE;";
-					sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
-					sqlite3_bind_text(stmt, 1, list.c_str(), -1, nullptr);
-
-					sqlite3_step(stmt);
-					sum += sqlite3_column_double(stmt, 0); //add that vector value to result
-					avg +=1;
-
-					sqlite3_reset(stmt); // Reset statement for next row //call db for vector value
-				}
-				double finalVec = sum/avg;
-				if (finalVec != 0) {
-					const char* sql = "UPDATE Recipes SET vector = ? WHERE id = ?;";
-					sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
-
-					sqlite3_bind_double(stmt, 1, finalVec);
-					sqlite3_bind_text(stmt, 2, (items.first).c_str(), -1, nullptr);
-
-					sqlite3_step(stmt);
-					sqlite3_reset(stmt);
-				}
-			}
-		}
+        std::vector<DBArgList> args{};
+        std::string getVecs = "SELECT vectors FROM Ingredients WHERE name = ? COLLATE NOCASE;";
+        for (const auto& items : input) {
+            double sum = 0.0;
+            double avg = 0.0;
+            for (const auto& list : items.second) {
+                args.push_back(list);
+            }
+            accessDB(getVecs, args, [&](sqlite3_stmt* stmt){
+                sum += sqlite3_column_double(stmt, 0);
+                ++avg;
+            });
+            double finalVec = sum/avg;
+            if (finalVec != 0) {
+                std::string setVecs = "UPDATE Recipes SET vector = ? WHERE id = ?;";
+                DBArgList args2{finalVec, items.first};
+                accessDB(setVecs, args2, [&](sqlite3_stmt* stmt){});
+            }
+        }
+    }
 
 	void vectorInMeals() {
 			vectorify(getIngredient(getMeals()));
