@@ -18,7 +18,7 @@ private:
 
 public:
 	User(int uid = -1, std::string name = "Guest", std::string pass = "", std::string email = ""):
-	m_uid{uid}, m_name{name}, m_pass{pass}, m_email{email}
+	m_uid{uid}, m_name{name}, m_pass{pass}, m_email{email}, m_preferences{0}
 	{}
 
 	int uid() const {return m_uid;}

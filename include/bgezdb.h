@@ -180,9 +180,8 @@ namespace DBCore{
     }
 
     inline bool addUser(const User& user, DBConnection& con){
-        std::string s{"INSERT INTO Users VALUES (?, ?, ?, ?, ?); "};
+        std::string s{"INSERT INTO Users (username, password, email, pref) VALUES (?, ?, ?, ?); "};
         DBArgList args{
-            user.uid(),
             user.name(),
             user.pass(),
             user.email(),

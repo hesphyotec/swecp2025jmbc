@@ -282,11 +282,14 @@ int main(){
             User activeUser = DBCore::getUser(uid, db);
             Recommend rec;
             UserRecSys urs;
+            CROW_LOG_DEBUG << "Retrieving Recipes";
             auto recipes = rec.doIt(uid, urs.userGather(uid));
             crow::json::wvalue result;
             result["status"] = "success";
             result["recipes"] = std::move(recipes);
             conn.send_text(result.dump());
+        } else {
+            CROW_LOG_DEBUG << "Malformed Operation";
         }
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){

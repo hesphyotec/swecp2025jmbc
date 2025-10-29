@@ -88,7 +88,7 @@
         if (result.status === "success") {
             localStorage.setItem("activeuserid", result.id);
             localStorage.setItem("activeusername", result.name);
-            window.location.href = "Homepage.html"
+            window.location.href = "Homepage.html";
         } else {
             alert("Signup failed: " + result.message);
         }

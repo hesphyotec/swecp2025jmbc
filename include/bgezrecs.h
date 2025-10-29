@@ -20,8 +20,10 @@
 
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
+char* errmsg = nullptr;
 
-class UserRecSys : public DBConnection{
+
+class UserRecSys {
 private:
 	sqlite3 * db;
 
@@ -32,21 +34,29 @@ private:
 	}
 
 public:
+	UserRecSys() {
+		std::cout << "Hello!\n";
+		if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+			std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+			db = nullptr;
+		}
+	}
+
 	std::vector<int> userIngredientParser (int userID) {//gets all ingredients stored by user
-			std::vector<int> ingredientID;
+			std::vector<int> ingredientID{};
 			std::string sqlPre = "SELECT iid FROM UserItems WHERE uid=";
 			std::string sqlFix = sqlPre + std::to_string(userID);
 			const char* sql = sqlFix.c_str();
-			sqlite3_exec(db, sql, callbackIID, &ingredientID, nullptr);
+			sqlite3_exec(db, sql, callbackIID, &ingredientID,  &errmsg);
 			return ingredientID;
 		}
 
 	std::vector<int> userMealParser (int userID) {//gets all ingredients stored by user
-			std::vector<int> mealID;
+			std::vector<int> mealID{};
 			std::string sqlPre = "SELECT mid FROM UserMeals WHERE uid=";
 			std::string sqlFix = sqlPre + std::to_string(userID);
 			const char* sql = sqlFix.c_str();
-			sqlite3_exec(db, sql, callbackIID, &mealID, nullptr);
+			sqlite3_exec(db, sql, callbackIID, &mealID,  &errmsg);
 			return mealID;
 		}
 
@@ -107,9 +117,10 @@ public:
 		}
 };
 
-class Recommend : public DBConnection{
-private:
-    sqlite3 * db;
+class Recommend {
+	private:
+		sqlite3 * db;
+
 	static int callbackKeyword(void *mealList, int columns, char **columnValue, char **colName) {//callback for keyword function
 		auto* results = static_cast<std::vector<std::pair<std::string, std::string>>*>(mealList);
 		results->push_back({columnValue[0],columnValue[1]});
@@ -146,48 +157,57 @@ private:
 		}
 	}
 
-public:
+	public:
+		Recommend() {
+			std::cout << "Recommending!\n";
+			}
+
 	pairVec fromKeyword(int uID) { //this returns all the meals with a certain keyword
-        pairVec meals;
-        sqlite3_stmt* stmt;
-        std::string keyword;
+			pairVec meals{};
+			sqlite3_stmt* stmt;
+			std::string keyword;
 
-        const char* sql1 = "SELECT pref FROM Users WHERE uid = ?";
-        sqlite3_prepare_v2(db, sql1, -1, &stmt, nullptr);
-        sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_step(stmt);
-        int keywordInt = sqlite3_column_double(stmt, 0);
-        sqlite3_reset(stmt);
+			const char* sql1 = "SELECT pref FROM Users WHERE uid = ?";
+			sqlite3_prepare_v2(db, sql1, -1, &stmt, nullptr);
+			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_step(stmt);
+			int keywordInt = sqlite3_column_double(stmt, 0);
+			sqlite3_reset(stmt);
 
-        const char* sql2 = "SELECT name, image FROM Recipes WHERE category = ? COLLATE NOCASE;";;
-        sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
-        sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_exec(db, keyword.c_str(), callbackKeyword, &meals, nullptr);
+			const char* sql2 = "SELECT name, image FROM Recipes WHERE category = ? COLLATE NOCASE;";;
+			sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
+			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
+			sqlite3_exec(db, keyword.c_str(), callbackKeyword, &meals,  &errmsg);
 
-        return meals;
-    }
+			return meals;
+		}
 
 	recommendVec euclidean (double searchedVector, pairVec toSearch) {//this returns a list of
-        recommendVec results;//ids and euclidean distances from a provided vector and provided search list
-        sqlite3_stmt* stmt;
-        const char* sql = "SELECT vector FROM Recipes WHERE name = ?";
+			recommendVec results{};//ids and euclidean distances from a provided vector and provided search list
+			sqlite3_stmt* stmt;
+			const char* sql = "SELECT vector FROM Recipes WHERE name = ?";
+            CROW_LOG_DEBUG << "Starting calculations";
+			for (const auto &[id,img] : toSearch) {
+				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
 
-        for (const auto &[id,img] : toSearch) {
-            sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+				sqlite3_bind_text(stmt, 1, id.c_str(), -1, SQLITE_TRANSIENT);
 
-            sqlite3_bind_text(stmt, 1, id.c_str(), -1, SQLITE_TRANSIENT);
-
-            sqlite3_step(stmt);
-            double recipeVec = sqlite3_column_double(stmt, 0);
-
-            double dist = std::sqrt(pow((searchedVector - recipeVec),2));
-            results.push_back(std::tuple(id, img, dist));
-            sqlite3_reset(stmt);
-            sqlite3_clear_bindings(stmt);
-        }
-        sqlite3_finalize(stmt);
-        return results;
-    }
+				sqlite3_step(stmt);
+				double recipeVec = sqlite3_column_double(stmt, 0);
+                CROW_LOG_DEBUG << "Vector received";
+				double dist = std::sqrt(pow((searchedVector - recipeVec),2));
+				CROW_LOG_DEBUG << "Distance calculated";
+				results.push_back(std::tuple(id, img, dist));
+				CROW_LOG_DEBUG << "Distance pushed to results";
+				sqlite3_reset(stmt);
+				CROW_LOG_DEBUG << "Statement reset";
+				//sqlite3_clear_bindings(stmt);
+				CROW_LOG_DEBUG << "Bindings cleared";
+			}
+			CROW_LOG_DEBUG << "Calculation complete, returning";
+			sqlite3_finalize(stmt);
+			return results;
+		}
 
 	crow::json::wvalue toJson(recommendVec finalRec) {
 			crow::json::wvalue json_array = crow::json::wvalue::list();
@@ -205,13 +225,13 @@ public:
 		}
 
 	crow::json::wvalue doIt (int uID, double searchedVector) {
-			if (sqlite3_open("C:/Users/blake/swecp2025jmbc/core.db", &db)!=SQLITE_OK) {
+			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
 				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
 				db = nullptr;
 			}
 
-			recommendVec finalRec;
-			pairVec filteredRec; //= fromKeyword(uID); have to fix fromKeyword
+			recommendVec finalRec{};
+			pairVec filteredRec{}; //= fromKeyword(uID); have to fix fromKeyword
 
 			if (!filteredRec.empty()) {
 				finalRec = euclidean(searchedVector, filteredRec);
@@ -219,17 +239,19 @@ public:
 			}
 			else {
 				std::cout << "TO DB!\n";
-
-				sqlite3_exec(db, "SELECT name, image FROM Recipes", callbackKeyword, &filteredRec, nullptr); //get all meals from DB
-
+                CROW_LOG_DEBUG << "Getting names and images from recipes";
+				sqlite3_exec(db, "SELECT name, image FROM Recipes", callbackKeyword, &filteredRec,  &errmsg); //get all meals from DB
+                CROW_LOG_DEBUG << "Success! Getting euclidean distance";
 				finalRec = euclidean(searchedVector, filteredRec);
+				CROW_LOG_DEBUG << "Success! Sorting";
 				quickSort(finalRec, 0, finalRec.size()-1);
+				CROW_LOG_DEBUG << "Success! Converting to json";
 			}
 			sqlite3_close(db);
 			crow::json::wvalue json_array = toJson(finalRec);
+			CROW_LOG_DEBUG << "Success!!!";
 			return json_array;
 		}
 
 };
-
 #endif
