@@ -7,14 +7,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
-const db = new sqlite3.Database((path.join(__dirname, "BRHitting.sqlite")), sqlite3.OPEN_READONLY, (err) => {
-    if (err){
-        console.error("Error: ", err.message);
-    }
-    else{
-        console.log("Opened DB")
-    }
-});
 const executeCPP = async (script, args) =>{
   const cpp = spawn("cpp", [script, args]);
 

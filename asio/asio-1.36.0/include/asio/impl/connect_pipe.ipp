@@ -26,7 +26,9 @@
 #if defined(ASIO_HAS_IOCP)
 # include <cstdio>
 # if _WIN32_WINNT >= 0x601
-#  include <bcrypt.h>
+#include <asio.hpp> // Include Asio headers first
+#include <windows.h>      // Include Windows headers after Asio
+#  include <my_bcrypt.h>
 #  if !defined(ASIO_NO_DEFAULT_LINKED_LIBS)
 #   if defined(_MSC_VER)
 #    pragma comment(lib, "bcrypt.lib")

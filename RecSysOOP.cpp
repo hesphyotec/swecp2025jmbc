@@ -1,3 +1,9 @@
+#ifdef _WIN32
+#include <windows.h>
+#include <bcrypt.h>
+#endif
+#include "bgezdb.h"
+#include "my_bcrypt.h"
 #include <iostream>
 #include <sqlite3.h>
 #include <fstream>
@@ -14,7 +20,8 @@
 #include <unordered_set>
 #include "crow.h"
 #include "asio.hpp"
-#include "bgezdb.h"
+
+
 
 typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
@@ -458,11 +465,11 @@ class Recommend {
 
 };
 
-int main() {
-	UserRecSys recUser;
-	Recommend rec;
-	//rec.doIt(uID, recUser.userGather(uID));
-
-	return 0;
-	//need to send instructions and ingredients to Caleb
-}
+// int main() {
+// 	UserRecSys recUser;
+// 	Recommend rec;
+// 	//rec.doIt(uID, recUser.userGather(uID));
+//
+// 	return 0;
+// 	//need to send instructions and ingredients to Caleb
+// }

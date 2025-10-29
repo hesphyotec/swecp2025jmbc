@@ -196,7 +196,7 @@ namespace DBCore{                               //List of functions for interact
 
     inline bool deleteItem(const Item& item){
         using namespace std::literals::string_literals;
-        std::string s{"DELETE FROM UserItems WHERE iid = "s + std::to_string(item.id() + ";"s};
+        std::string s{"DELETE FROM UserItems WHERE iid = "s + std::to_string(item.id())+ ";"};
         return accessDB(s, [](sqlite3_stmt*){});
     }
 }

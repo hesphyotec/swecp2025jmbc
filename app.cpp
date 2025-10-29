@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#include <windows.h>
+#include <bcrypt.h>
+#endif
 #include <iostream>
 #include <string>
 #include <iostream>
@@ -9,8 +13,7 @@
 #include <bitset>
 #include <mutex>
 #include <unordered_set>
-
-#include "bcrypt.h"
+#include "my_bcrypt.h"
 #include "sqlite3.h"
 #include "crow.h"
 #include "bgezuser.h"
@@ -269,6 +272,6 @@ int main(){
         users.erase(&conn);
     });
 
-	app.port(18080).multithreaded().run();
+	app.port(3000).multithreaded().run();
 	return 0;
 }

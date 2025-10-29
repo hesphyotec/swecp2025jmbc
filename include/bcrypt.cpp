@@ -30,7 +30,12 @@
  * 6. RETURN Concatenate (salt, ctext);
  *
  */
+#ifdef _WIN32
+#define snprintf _snprintf
+#include <windows.h>
+#endif
 
+#include "my_bcrypt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -42,9 +47,6 @@
 #include "bcrypt.h"
 #include "openbsd.h"
 
-#ifdef _WIN32
-#define snprintf _snprintf
-#endif
 
 //#if !defined(__APPLE__) && !defined(__MACH__)
 //#include "bsd/stdlib.h"
