@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Saved Ingredients</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    header {
+        background: #4CAF50;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+    }
+    main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    main h2 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        font-weight: bold;
+        color: #4CAF50;
+        text-align: center;
+        border-bottom: 2px solid #4CAF50;
+        padding-bottom: 5px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Ingredients Box */
+    .ingredients-list {
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #f9f9f9;
+    }
+
+    .ingredient-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: white;
+        font-size: 16px;
+    }
+
+    .remove-btn {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 2px 6px;
+    }
+
+    .remove-btn:hover {
+        background: #c0392b;
+    }
+
+    /* Bottom navigation bar */
+    footer {
+        display: flex;
+        justify-content: space-around;
+        background: #f0f0f0;
+        padding: 12px;
+        border-top: 2px solid #ccc;
+    }
+    footer button {
+        flex: 1;
+        margin: 0 8px;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    footer button:hover {
+        background: #388E3C;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+<header>My Ingredients</header>
+<main>
+    <h2>Saved Ingredients</h2>
+    <div class="ingredients-list" id="ingredientsList">
+        <div class="ingredient-item">
+            Tomatoes
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+        <div class="ingredient-item">
+            Onions
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+        <div class="ingredient-item">
+            Garlic
+            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
+        </div>
+    </div>
+</main>
+
+<!-- Bottom Navigation -->
+<footer>
+    <button onclick="location.href='homepage.html'">Back</button>
+    <button onclick="location.href='Manual.html'">Manual</button>
+    <button onclick="location.href='Barcode.html'">Barcode</button>
+    <button onclick="location.href='ScanFood.html'">Scan Food</button>
+    <button onclick="location.href='Receipt.html'">Receipt</button>
+</footer>
+<script>
+    const addBtn = document.getElementById("scan-btn");
+    const input = document.getElementById("ingredient-add");
+    const list = document.getElementById("ingredients-list");
+
+    let ingredients = [];
+    // Socket Handling
+    
+    var sock = new WebSocket("ws://localhost:18080/inventory");
+
+      sock.onopen = ()=>{
+        console.log('open');
+        const getlist = {
+            op: "getlist",
+            uid: localStorage.getItem("activeuserid")
+        }
+        const strgetlist = JSON.stringify(getlist);
+        sock.send(strgetlist)
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        var result;
+        try {
+          result = JSON.parse(m.data);
+        } catch (err) {
+          console.error("JSON parse failed:", err, m.data);
+          return;
+        }
+
+        if (result.status === "success") {
+            const container = $("#ingredients-list");
+            container.empty();
+
+            if (Array.isArray(result.data)){
+              ingredients = result.data;
+            }
+        } else {
+            alert("Failed to add item. Reason : " + result.message);
+        }
+        renderList();
+      }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+      
+      window.addEventListener('beforeunload', () => {
+        console.log("Page is unloading (possibly reloading)");
+      });
+
+      
+
+    function renderList() {
+      list.innerHTML = "";
+
+      if (ingredients.length === 0) {
+        list.textContent = "Your ingredients will appear here.";
+        return;
+      }
+
+      ingredients.forEach((ingredient, index) => {
+        const item = document.createElement("div");
+        item.textContent = ingredient.name;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "✕";
+        removeBtn.className = "remove-btn";
+
+        removeBtn.onclick = () => {
+          const sendData = {
+              op : "delitem",
+              uid : localStorage.getItem("activeuserid"),
+              iid : ingredient.id
+          }
+          const stringData = JSON.stringify(sendData);
+          if (sock.readyState === WebSocket.OPEN){
+            sock.send(stringData);  
+          } else {
+            alert("Server Not Responding");
+          }
+        };
+
+        item.appendChild(removeBtn);
+        list.appendChild(item);
+      });
+    }
+    /*
+    addBtn.addEventListener("click", () => {
+      const value = input.value.trim();
+      if (value) {
+        ingredients.push(value);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderList();
+        input.value = "";
+      }
+        
+    });*/
+
+    // Render on page load
+    renderList();
+  </script>
+<script>/*
+  const list = document.getElementById("ingredientsList");
+  let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+
+  function renderIngredients() {
+    list.innerHTML = "";
+    if (ingredients.length === 0) {
+      list.textContent = "No ingredients saved yet.";
+      return;
+    }
+    ingredients.forEach((ingredient, index) => {
+      const item = document.createElement("div");
+      item.textContent = ingredient;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "✕";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = () => {
+        ingredients.splice(index, 1);
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
+        renderIngredients();
+      };
+
+      item.appendChild(removeBtn);
+      list.appendChild(item);
+    });
+  }
+
+  renderIngredients();*/
+</script>
+
+</body>
+</html>
