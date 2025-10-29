@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create Account</title>
+    <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,12 +13,12 @@
             align-items: center;
         }
 
-        .signup-container {
+        .login-container {
             background-color: white;
             padding: 30px 40px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 320px;
+            width: 300px;
         }
 
         h2 {
@@ -56,24 +56,21 @@
 </head>
 <body>
 
-<div class="signup-container">
-    <h2>Create Account</h2>
+<div class="login-container">
+    <h2>Login</h2>
     <form id="acc">
-        <label for="new-username">Username</label>
-        <input type="text" id="new-username" name="username" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
 
-        <label for="new-password">Password</label>
-        <input type="password" id="new-password" name="password" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
 
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" name="confirm_password" required>
-
-        <input type="submit" value="Create Account">
+        <input type="submit" value="Login">
     </form>
 </div>
 
-    <script>
-      var sock = new WebSocket("ws://localhost:18080/signup");
+<script>
+      var sock = new WebSocket("ws://localhost:18080/login");
 
       sock.onopen = ()=>{
         console.log('open');
@@ -87,7 +84,7 @@
             localStorage.setItem("activeusername", result.name);
             window.location.href = "Homepage.html"
         } else {
-            alert("Signup failed: " + result.message);
+            alert("Login failed: " + result.message);
         }
         }
 
@@ -103,8 +100,8 @@
         e.preventDefault();
         
         const sendData = {
-            username: $("#new-username").val(),
-            password: $("#new-password").val()
+            username: $("#username").val(),
+            password: $("#password").val()
         }
         const stringData = JSON.stringify(sendData);
         sock.send(stringData);
