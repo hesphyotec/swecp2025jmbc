@@ -9,7 +9,7 @@
       <jdbc-url>jdbc:sqlite:RecipeDatabases.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="core" uuid="908c071f-8596-464e-ad4f-63eab0431848">
+    <data-source source="LOCAL" name="core" uuid="c0587397-4a42-4ccb-bd9e-b82677acd6ec">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
