@@ -3,18 +3,26 @@ project(swecp2025jmbc)
 
 set(CMAKE_CXX_STANDARD 20)
 
+if(WIN32 AND MINGW)
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0")  # No debug symbols at all
+    set(CMAKE_C_FLAGS_DEBUG "-O0")
+endif()
+
+set(CMAKE_BUILD_TYPE Release)
+
 add_executable(swecp2025jmbc
         include/sqlite3.c
-        RecSysOOP.cpp
         app.cpp
         include/bcrypt.cpp
         include/blowfish.cpp
+#        CW2V2.cpp
+#        include/Word2Vec-master/main.cpp
 )
 
 target_include_directories(swecp2025jmbc PRIVATE
-        "C:/Users/blake/swecp2025jmbc/include/"
-        "C:/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/"
-        "C:/Users/blake/swecp2025jmbc/asio/asio-1.36.0/"
+        include/
+        asio/asio-1.36.0/include/
+        asio/asio-1.36.0/
 )
 
 if(WIN32)
