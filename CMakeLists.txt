@@ -23,6 +23,7 @@ target_include_directories(swecp2025jmbc PRIVATE
         include/
         asio/asio-1.36.0/include/
         asio/asio-1.36.0/
+        armadillo-15.2.1/
 )
 
 if(WIN32)

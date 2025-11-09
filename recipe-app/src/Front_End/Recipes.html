@@ -140,7 +140,7 @@
             const card = document.createElement("div");
             card.className = "recipe-card";
             card.innerHTML = `
-                <img src="${recipe.image}" alt="${recipe.name}" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
                 <h3>${recipe.name}</h3>
             `;
             recipeList.appendChild(card);
@@ -150,6 +150,30 @@
     socket.onerror = (error) => {
         console.error("WebSocket error:", error);
         recipeList.innerHTML = "<p>Error loading recommendations.</p>";
+    };
+
+    function getIns(element) {
+      socket.send(JSON.stringify({
+        op: "getInstructions",
+        name: element.alt
+      }));
+
+        socket.onmessage = (event) => {
+        const instructions = JSON.parse(event.data)[0];
+        if (!instructions || !instructions.ingredients || !instructions.instructions) {
+            recipeList.innerHTML = "<p>No instructions.</p>";
+            return;
+        }
+        localStorage.setItem("instruction", JSON.stringify(instructions));
+        window.open("Homepage.html", "_self")
+          
+        if(localStorage.getItem("instruction") !== null){
+          const instruction = JSON.parse(localStorage.getItem('instruction'));
+          console.log(instruction.instructions);
+          console.log(instruction.ingredients);
+          localStorage.removeItem('myKey');
+        }
+      }
     };
 
     socket.onclose = () => {

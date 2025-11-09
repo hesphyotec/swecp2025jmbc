@@ -24,6 +24,8 @@
 #include "bgezdb.h"
 #include "bgezrecs.h"
 
+crow::json::wvalue recipeCache;
+std::vector<int> ingredientCache = {};
 
 std::string urlDecode(const std::string& str){
     std::ostringstream decoded;
@@ -279,17 +281,27 @@ int main(){
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
         std::lock_guard<std::mutex> _(mtx);
         DBConnection db;
+        Recommend rec;
 
         crow::json::rvalue parsed;
 
         parsed = crow::json::load(data);
 
         if (parsed["op"] == "getrecipes"){
+            UserRecSys urs;
             int uid = parsed["uid"].i();
 
             User activeUser = DBCore::getUser(uid, db);
-            Recommend rec;
-            UserRecSys urs;
+
+            std::vector<int> uIng = urs.userIngredientParser(uid);
+            CROW_LOG_DEBUG << "Checking Cache";
+            if (uIng == ingredientCache && !uIng.empty()) {
+                CROW_LOG_DEBUG << "Using Cache";
+                conn.send_text(recipeCache.dump());
+                CROW_LOG_DEBUG << "SENT CACHE";
+                return;
+            }
+            ingredientCache = uIng;
             CROW_LOG_DEBUG << "Retrieving Recipes";
             auto recipes = rec.doIt(uid, urs.userGather(uid));
             crow::json::wvalue result;
@@ -297,8 +309,18 @@ int main(){
             result["recipes"] = std::move(recipes);
             CROW_LOG_DEBUG << "SENDING";
             conn.send_text(result.dump());
+            recipeCache = std::move(result);
             CROW_LOG_DEBUG << "SENT";
-        } else {
+        }
+        else if (parsed["op"] == "getInstructions") {
+            std::string name = parsed["name"].s();
+            CROW_LOG_DEBUG << "Getting Instructions";
+            crow::json::wvalue instruction = rec.getInstructions(name);
+            CROW_LOG_DEBUG << "Sending";
+            conn.send_text(instruction.dump());
+            CROW_LOG_DEBUG << "Sent";
+        }
+        else {
             CROW_LOG_DEBUG << "Malformed Operation";
         }
     })
@@ -307,7 +329,6 @@ int main(){
         std::lock_guard<std::mutex> _(mtx);
         users.erase(&conn);
     });
-
 	app.port(18080).multithreaded().run();
 	return 0;
 }

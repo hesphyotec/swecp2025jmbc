@@ -71,14 +71,15 @@ public:
 			sqlite3_stmt *stmt;
 
 			for (const int &ingID: ingredientID) {
-				const char *sql = "SELECT vector FROM Ingredients WHERE id = ?;";
+				const char *sql = "SELECT vector, tfidf FROM Ingredients WHERE id = ?;";
 				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
 				sqlite3_bind_int(stmt, 1, ingID);
 				sqlite3_step(stmt);
 				std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
+				double tfidf = sqlite3_column_double(stmt, 1);
 
 				while (std::getline(iss, temp, ' ' ) ) {
-					tempVec.push_back(std::stod(temp));
+					tempVec.push_back((std::stod(temp))*(1.0-tfidf));
 				}
 
 		if (tempVec.size() != 1){ingredient.push_back({tempVec});}
@@ -151,9 +152,15 @@ public:
 		}
 
 	vecVector userGather (int uID) {
+			vecVector totVec;
 			const vecVector ingVec = ingredientToVector(userIngredientParser(uID));
 			const vecVector mealVec = mealToVector(userMealParser(uID));
-			vecVector totVec = outputVector(ingVec, mealVec);
+			 for (auto& vector : ingVec) {
+			 	totVec.push_back(vector);
+			 }
+			for (auto& vector : mealVec) {
+				totVec.push_back(vector);
+			}
 			return totVec;
 		}
 };
@@ -263,17 +270,8 @@ class Recommend {
 
                 CROW_LOG_DEBUG << "Vector received";
 
-				if (tempVec.size() == searchedVector[0].size() && tempVec.size() == searchedVector[1].size()) {
-					double cos1 = cosPriv(searchedVector[0], tempVec);
-					double cos2 = cosPriv(searchedVector[1], tempVec);
-
-					dist = (0.7 * cos1) + (0.3 * cos2);
-				}
-				else if (tempVec.size() == searchedVector[0].size()) {
-					dist = cosPriv(searchedVector[0], tempVec);
-				}
-				else if (tempVec.size() == searchedVector[1].size()) {
-					dist = cosPriv(searchedVector[1], tempVec);
+				for (int i =0; i<searchedVector.size(); i++) {
+					dist += cosPriv(searchedVector[i], tempVec);
 				}
 
 				CROW_LOG_DEBUG << "Distance calculated";
@@ -333,11 +331,43 @@ class Recommend {
 				CROW_LOG_DEBUG << "Success! Converting to json";
 			}
 			sqlite3_close(db);
+			finalRec.resize(10);
 			crow::json::wvalue json_array = toJson(finalRec);
 			CROW_LOG_DEBUG << "Success!!!";
 
 			return json_array;
 		}
 
+	crow::json::wvalue getInstructions(std::string name) {
+			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+				db = nullptr;
+			}
+			crow::json::wvalue json_array = crow::json::wvalue::list();
+			crow::json::wvalue item;
+			sqlite3_stmt* stmt = nullptr;
+			name.erase(0, name.find_first_not_of(" \t\n\r"));
+			name.erase(name.find_last_not_of(" \t\n\r") + 1);
+			std::cout << name;
+
+			const char* sql = "SELECT ingredients, instructions FROM Recipes WHERE name = ?;";
+			if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
+				std::cout << "Prep error " << sqlite3_errmsg(db)<< "\n";
+				return json_array;
+			}
+			if (sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_TRANSIENT) != SQLITE_OK) {
+				std::cout << "Bind error " << sqlite3_errmsg(db) << "\n";
+				return json_array;
+			}
+
+			sqlite3_step(stmt);
+			item["ingredients"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+			item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+			json_array[0] = (std::move(item));
+
+			sqlite3_close(db);
+			sqlite3_finalize(stmt);
+			return json_array;
+		}
 };
 #endif
