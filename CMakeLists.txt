@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(swecp2025jmbc)
 
+set(CMAKE_EXE_LINKER_FLAGS "-static")
 set(CMAKE_CXX_STANDARD 20)
 
 if(WIN32 AND MINGW)
