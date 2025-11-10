@@ -1,0 +1,3 @@
+/mnt/c/Users/blake/swecp2025jmbc/build/CMakeFiles/swecp2025jmbc.dir
+/mnt/c/Users/blake/swecp2025jmbc/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/blake/swecp2025jmbc/build/CMakeFiles/rebuild_cache.dir

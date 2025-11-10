@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.28)
 project(swecp2025jmbc)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static")

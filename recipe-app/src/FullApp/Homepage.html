@@ -92,6 +92,13 @@
         }
       }
 
+      if(localStorage.getItem("saved") !== null){
+          const saved = JSON.parse(localStorage.getItem('saved'));
+          console.log(saved.uid);
+          console.log(saved.saved);
+          localStorage.removeItem('saved');
+        }
+
       sock.onmessage = (m)=>{
         console.log('message');
       }

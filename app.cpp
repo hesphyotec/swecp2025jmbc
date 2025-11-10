@@ -16,7 +16,7 @@
 #include <mutex>
 #include <unordered_set>
 
-#include "bcrypt.h"
+#include "my_bcrypt.h"
 #include "sqlite3.h"
 #include "crow.h"
 #include "bgezuser.h"
@@ -26,6 +26,7 @@
 
 crow::json::wvalue recipeCache;
 std::vector<int> ingredientCache = {};
+std::string prefCache = "";
 
 std::string urlDecode(const std::string& str){
     std::ostringstream decoded;
@@ -294,8 +295,9 @@ int main(){
             User activeUser = DBCore::getUser(uid, db);
 
             std::vector<int> uIng = urs.userIngredientParser(uid);
+            std::string pref = urs.userPrefParser(uid);
             CROW_LOG_DEBUG << "Checking Cache";
-            if (uIng == ingredientCache && !uIng.empty()) {
+            if (uIng == ingredientCache && !uIng.empty() && prefCache == pref) {
                 CROW_LOG_DEBUG << "Using Cache";
                 conn.send_text(recipeCache.dump());
                 CROW_LOG_DEBUG << "SENT CACHE";
@@ -326,6 +328,56 @@ int main(){
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
+        std::lock_guard<std::mutex> _(mtx);
+        users.erase(&conn);
+    });
+
+        CROW_WEBSOCKET_ROUTE(app, "/Account")
+    .onopen([&](crow::websocket::connection& conn){
+        CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
+        std::lock_guard<std::mutex> _(mtx);
+        users.insert(&conn);
+    })
+    .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
+        std::lock_guard<std::mutex> _(mtx);
+        DBConnection db;
+        UserRecSys usr;
+        crow::json::rvalue parsed;
+
+        parsed = crow::json::load(data);
+        if (parsed["op"] == "save" && parsed["uid"]) {
+            std::vector<std::string> saved {};
+            int uid = parsed["uid"].i();
+            for (auto& items: parsed["saved"]) {
+                saved.push_back(items.s());
+                CROW_LOG_DEBUG << "ITEM " << items.s();
+            }
+            usr.save(saved, uid);
+            prefCache = usr.userPrefParser(uid);
+        }
+        // else if (parsed["op"] == "load" && parsed["uid"]) {
+        //     int uid = parsed["uid"].i();
+        //
+        //     std::string toSend = usr.userPrefParser(uid);
+        //
+        //     CROW_LOG_DEBUG << "Finding Preferences";
+        //     if (!toSend.empty()) {
+        //         std::stringstream ss(toSend);
+        //         std::string s;
+        //         std::vector<std::string> tempVec;
+        //         while (getline(ss, s, ' ')) {
+        //             tempVec.push_back(traitToString(std::stoi(s)));
+        //         }
+        //         CROW_LOG_DEBUG << "PREF " << tempVec[0];
+        //         crow::json::wvalue pref;
+        //         pref["pref"] = tempVec;
+        //         conn.send_text(pref.dump());
+        //         CROW_LOG_DEBUG << "Sent Preferences";
+        //     }
+        // }
+    })
+    .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
+        CROW_LOG_INFO << "Account WS Connection closed: " << reason;
         std::lock_guard<std::mutex> _(mtx);
         users.erase(&conn);
     });

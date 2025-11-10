@@ -13,7 +13,7 @@
 #include <tuple>
 #include <sstream>
 #include <mutex>
-#include <unordered_set>
+#include <unordered_map>
 #include "crow.h"
 #include "asio.hpp"
 #include "bgezdb.h"
@@ -22,7 +22,67 @@ typedef std::vector<std::tuple<std::string, std::string, double>> recommendVec;
 typedef std::vector<std::pair<std::string,std::string>> pairVec;
 typedef std::vector<std::vector<double>> vecVector;
 char* errmsg = nullptr;
+static const std::unordered_map<std::string, Traits> traitMap = {
+	{"Breakfast", Traits::Breakfast},
+	{"Dessert", Traits::Dessert},
+	{"Pasta", Traits::Pasta},
+	{"Seafood", Traits::Seafood},
+	{"Vegan", Traits::Vegan},
+	{"Vegetarian", Traits::Vegetarian},
+	{"American", Traits::American},
+	{"British", Traits::British},
+	{"Canadian", Traits::Canadian},
+	{"Chinese", Traits::Chinese},
+	{"Croatian", Traits::Croatian},
+	{"Dutch", Traits::Dutch},
+	{"Egyptian", Traits::Egyptian},
+	{"Filipino", Traits::Filipino},
+	{"French", Traits::French},
+	{"Greek", Traits::Greek},
+	{"Indian", Traits::Indian},
+	{"Irish", Traits::Irish},
+	{"Italian", Traits::Italian},
+	{"Jamaican", Traits::Jamaican},
+	{"Japanese", Traits::Japanese},
+	{"Kenyan", Traits::Kenyan},
+	{"Malaysian", Traits::Malaysian},
+	{"Mexican", Traits::Mexican},
+	{"Moroccan", Traits::Moroccan},
+	{"Polish", Traits::Polish},
+	{"Portuguese", Traits::Portuguese},
+	{"Russian", Traits::Russian},
+	{"Spanish", Traits::Spanish},
+	{"Thai", Traits::Thai},
+	{"Tunisian", Traits::Tunisian},
+	{"Turkish", Traits::Turkish},
+	{"Ukrainian", Traits::Ukrainian},
+	{"Uruguayan", Traits::Uruguayan},
+	{"Vietnamese", Traits::Vietnamese}
+};
 
+int stringToTrait(const std::string& name) {
+	auto it = traitMap.find(name);
+	if (it != traitMap.end()) {
+		return static_cast<int>(it->second);
+	}
+	return -1; // or handle error case
+}
+
+std::unordered_map<int, std::string> reverseTraitMap = [] {
+	std::unordered_map<int, std::string> m;
+	for (const auto& [key, val] : traitMap) {
+		m[static_cast<int>(val)] = key;
+	}
+	return m;
+}();
+
+std::string traitToString(int val) {
+	auto it = reverseTraitMap.find(val);
+	if (it != reverseTraitMap.end()) {
+		return it->second;
+	}
+	return "Unknown";
+}
 
 class UserRecSys {
 private:
@@ -32,6 +92,14 @@ private:
 		auto* results = static_cast<std::vector<int>*>(ingredientList);
 		results->push_back(std::stoi(columnValue[0]));
 		return 0; // Return 0 to continue processing rows, non-zero to stop
+	}
+
+	int stringToTrait(const std::string& name) {
+		auto it = traitMap.find(name);
+		if (it != traitMap.end()) {
+			return static_cast<int>(it->second);
+		}
+		return -1; // or handle error case
 	}
 
 public:
@@ -60,6 +128,19 @@ public:
 			sqlite3_exec(db, sql, callbackIID, &mealID,  &errmsg);
 			return mealID;
 		}
+
+	std::string userPrefParser (int userID) {//gets all meals stored by user
+		sqlite3_stmt* stmt;
+		std::string prefs = "";
+		const char* sql = "SELECT pref FROM Users WHERE uid = ?;";
+		sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
+		sqlite3_bind_int(stmt, 1, userID);
+		sqlite3_step(stmt);
+		if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) {
+			prefs = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+		}
+		return prefs;
+	}
 
 	vecVector ingredientToVector(const std::vector<int>& ingredientID) {
 			//this takes the user ingredients and vector-ifys them
@@ -163,6 +244,44 @@ public:
 			}
 			return totVec;
 		}
+
+	void save(const std::vector<std::string>& toSave, const int uID) {
+		if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+			std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+			db = nullptr;
+		}
+
+		std::vector<int> tempVec;
+		std::string toEnter;
+		sqlite3_stmt* stmt;
+		std::string keyword;
+
+		const char* sql2 = "UPDATE Users SET pref = ? WHERE uid = ?;";
+		sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
+
+		if (toSave.empty()) {
+			sqlite3_bind_null(stmt, 1);
+		}
+		else{
+			for (auto& item: toSave) {
+				tempVec.push_back(stringToTrait(item));
+			}
+			for (const auto& item: tempVec) {
+				toEnter.append(std::to_string(item) + " ");
+			}
+			toEnter.pop_back();
+			sqlite3_bind_text(stmt, 1, toEnter.c_str(), -1, SQLITE_TRANSIENT);
+		}
+
+		sqlite3_bind_int(stmt, 2, uID);
+		int rc = sqlite3_step(stmt);
+		if (rc != SQLITE_DONE) {
+			CROW_LOG_ERROR << "Error executing update: " << sqlite3_errmsg(db);
+		}
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		CROW_LOG_DEBUG << "Entered Saved Items";
+	}
 };
 
 class Recommend {
@@ -171,7 +290,7 @@ class Recommend {
 
 	static int callbackKeyword(void *mealList, int columns, char **columnValue, char **colName) {//callback for keyword function
 		auto* results = static_cast<std::vector<std::pair<std::string, std::string>>*>(mealList);
-		results->push_back({columnValue[0],columnValue[1]});
+		results->emplace_back(columnValue[0],columnValue[1]);
 		return 0; // Return 0 to continue processing rows, non-zero to stop
 	}
 
@@ -235,24 +354,44 @@ class Recommend {
 			pairVec meals{};
 			sqlite3_stmt* stmt;
 			std::string keyword;
+			std::vector<int> tempVec;
+			std::string toEnter;
+			std::string s;
+			std::string sql2;
 
+			CROW_LOG_DEBUG << "Filtering";
 			const char* sql1 = "SELECT pref FROM Users WHERE uid = ?";
 			sqlite3_prepare_v2(db, sql1, -1, &stmt, nullptr);
 			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
 			sqlite3_step(stmt);
-			int keywordInt = sqlite3_column_double(stmt, 0);
-			sqlite3_reset(stmt);
 
-			const char* sql2 = "SELECT name, image FROM Recipes WHERE category = ? COLLATE NOCASE;";;
-			sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
-			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
-			sqlite3_exec(db, keyword.c_str(), callbackKeyword, &meals,  &errmsg);
+			if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) {
+				keyword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+				CROW_LOG_DEBUG << "FOUND " << keyword;
+				sqlite3_finalize(stmt);
+				std::stringstream ss(keyword);
 
+				while (getline(ss, s, ' ')) {
+					tempVec.push_back(std::stoi(s));
+				}
+
+				for (auto& ing : tempVec) {
+					if (ing < 7) {
+						sql2 = "SELECT name, image FROM Recipes WHERE category = '" + traitToString(ing) + "' COLLATE NOCASE;";;
+					}
+					else {
+						sql2 = "SELECT name, image FROM Recipes WHERE area = '" + traitToString(ing) + "' COLLATE NOCASE;";;
+					}
+					CROW_LOG_DEBUG << "Keyword " << traitToString(ing);
+					sqlite3_exec(db, sql2.c_str(), callbackKeyword, &meals,  &errmsg);
+				}
+			}
+			CROW_LOG_DEBUG << "Returning Filtered List";
 			return meals;
 		}
 
 	recommendVec cosine (vecVector searchedVector, pairVec toSearch) {//this returns a list of
-			recommendVec results{};//ids and euclidean distances from a provided vector and provided search list
+			recommendVec results{};//ids and cosine distances from a provided vector and provided search list
 			sqlite3_stmt* stmt;
 			std::string temp = "";
 			std::vector<double> tempVec = {};
@@ -314,14 +453,16 @@ class Recommend {
 			}
 
 			recommendVec finalRec{};
-			pairVec filteredRec{}; //= fromKeyword(uID); have to fix fromKeyword
+			CROW_LOG_DEBUG << "Creating Filtered List";
+			pairVec filteredRec = fromKeyword(uID);
 
 			if (!filteredRec.empty()) {
+				CROW_LOG_DEBUG << "Using Filtered List";
 				finalRec = cosine(searchedVector, filteredRec);
 				quickSort(finalRec, 0, finalRec.size()-1);
 			}
 			else {
-				std::cout << "TO DB!\n";
+				CROW_LOG_DEBUG << "TO DB!";
                 CROW_LOG_DEBUG << "Getting names and images from recipes";
 				sqlite3_exec(db, "SELECT name, image FROM Recipes", callbackKeyword, &filteredRec,  &errmsg); //get all meals from DB
                 CROW_LOG_DEBUG << "Success! Getting cosine distance";
@@ -331,7 +472,9 @@ class Recommend {
 				CROW_LOG_DEBUG << "Success! Converting to json";
 			}
 			sqlite3_close(db);
-			finalRec.resize(10);
+			if (finalRec.size() > 10) {
+				finalRec.resize(10);
+			}
 			crow::json::wvalue json_array = toJson(finalRec);
 			CROW_LOG_DEBUG << "Success!!!";
 
@@ -365,7 +508,6 @@ class Recommend {
 			item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
 			json_array[0] = (std::move(item));
 
-			sqlite3_close(db);
 			sqlite3_finalize(stmt);
 			return json_array;
 		}

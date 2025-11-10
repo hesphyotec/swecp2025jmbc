@@ -263,7 +263,6 @@ namespace DBCore{
         DBArgList arg{item.id()};
         return con.accessDB(s, arg, [](sqlite3_stmt*){});
     }
-
 }
 
 #endif

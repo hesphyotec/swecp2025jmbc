@@ -129,31 +129,111 @@
 
             <h1>User Preferences</h1>
             <div class="user-preferences">
-                <label class="check-item">
-                    <input type="checkbox"> Vegan
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Breakfast"> Breakfast
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Vegetarian
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Dessert"> Dessert
+                </label class = "check-item">
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Pasta"> Pasta
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Pescatarian
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Seafood"> Seafood
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Gluten Free
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Vegan"> Vegan
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Dairy Free
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Vegetarian"> Vegetarian
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Peanut Allergy
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="American"> American
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Treenut Allergy
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="British"> British
                 </label>
-                <label class="check-item">
-                    <input type="checkbox"> Shellfish Allergy
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Canadian"> Canadian
                 </label>
-
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Chinese"> Chinese
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Croatian"> Croatian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Dutch"> Dutch
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Egyptian"> Egyptian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Filipino"> Filipino
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="French"> French
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Greek"> Greek
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Indian"> Indian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Irish"> Irish
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Italian"> Italian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Jamaican"> Jamaican
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Japanese"> Japanese
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Kenyan"> Kenyan
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Malaysian"> Malaysian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Mexican"> Mexican
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Moroccan"> Moroccan
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Polish"> Polish
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Portuguese"> Portuguese
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Russian"> Russian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Spanish"> Spanish
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Thai"> Thai
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Tunisian"> Tunisian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Turkish"> Turkish
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Ukrainian"> Ukrainian
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Uruguayan"> Uruguayan
+                </label>
+                <label class = "check-item">
+                    <input type="checkbox" class="check-item" value="Vietnamese"> Vietnamese
+                </label>
             </div>
             
         </main>
@@ -164,4 +244,39 @@
             <button class="active" onclick="location.href='Saved.html'">Saved</button>
         </nav>
     </footer>
+    <script>
+        var socket = new WebSocket("ws://localhost:18080/Account");
+        socket.onopen = () => {
+        console.log("Connected to Account server");
+
+        socket.send(JSON.stringify({
+            op: "load",
+            uid: localStorage.getItem("activeuserid"),
+        }));
+
+        const checkedValues = JSON.parse(localStorage.getItem("checked"));
+        if (checkedValues){
+            checkedValues.forEach(value => {
+                document.querySelector(`[value="${value}"]`).checked = true;
+                });
+        }
+        };
+        
+        window.addEventListener('beforeunload', function (event) {
+            const checkboxes = document.querySelectorAll('input[class="check-item"]:checked');
+            const checkedValues = [];
+
+            checkboxes.forEach(checkbox => {
+            checkedValues.push(checkbox.value);
+            });
+        
+            localStorage.setItem("checked", JSON.stringify(checkedValues));
+
+        socket.send(JSON.stringify({
+            op: "save",
+            uid: localStorage.getItem("activeuserid"),
+            saved : checkedValues
+        }));
+    });
+    </script>
 </html>

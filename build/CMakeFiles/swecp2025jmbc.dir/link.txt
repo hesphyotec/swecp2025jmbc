@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -static CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o CMakeFiles/swecp2025jmbc.dir/app.cpp.o CMakeFiles/swecp2025jmbc.dir/include/bcrypt.cpp.o CMakeFiles/swecp2025jmbc.dir/include/blowfish.cpp.o -o swecp2025jmbc 

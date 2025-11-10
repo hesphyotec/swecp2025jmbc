@@ -1,0 +1,15 @@
+services:
+  recipe_builder:
+    build: .
+    ports:
+      - "3000:3000"
+
+  backend:
+    build: ./backend
+    ports:
+      - "18080:18080"
+    volumes:
+      - db:/core.db
+
+volumes:
+  db:
