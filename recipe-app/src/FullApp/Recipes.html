@@ -119,6 +119,24 @@
     socket.onopen = () => {
         console.log("Connected to recommendation server");
 
+        if(localStorage.getItem("recipeCache") !== 'null' || localStorage.getItem("ingredientCache") !== 'null' && localStorage.getItem("pref") !== 'null'){
+          console.log("All have values");
+          if(localStorage.getItem("ingredientCache") === localStorage.getItem("ingredients") && localStorage.getItem("prefCache") === localStorage.getItem("checked")){
+              console.log("using cache");
+              cacheData = JSON.parse(localStorage.getItem("recipeCache"));
+              recipeList.innerHTML = ""; // clear loading text
+              cacheData.recipes.forEach(recipe => {
+              const card = document.createElement("div");
+              card.className = "recipe-card";
+              card.innerHTML = `
+                  <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                  <h3>${recipe.name}</h3>
+              `;
+              recipeList.appendChild(card);
+          });
+          return;
+        }
+      }
         // Request recipes — backend already knows user id
         socket.send(JSON.stringify({
             op: "getrecipes",
@@ -145,6 +163,9 @@
             `;
             recipeList.appendChild(card);
         });
+        localStorage.setItem("recipeCache", JSON.stringify(data));
+        localStorage.setItem("ingredientCache", localStorage.getItem("ingredients"));
+        localStorage.setItem("prefCache", localStorage.getItem("checked"));
     };
 
     socket.onerror = (error) => {
@@ -164,15 +185,11 @@
             recipeList.innerHTML = "<p>No instructions.</p>";
             return;
         }
+
         localStorage.setItem("instruction", JSON.stringify(instructions));
-        window.open("Homepage.html", "_self")
-          
-        if(localStorage.getItem("instruction") !== null){
-          const instruction = JSON.parse(localStorage.getItem('instruction'));
-          console.log(instruction.instructions);
-          console.log(instruction.ingredients);
-          localStorage.removeItem('instruction');
-        }
+        localStorage.setItem("recName", JSON.stringify(element.alt));
+        localStorage.setItem("recImage", JSON.stringify(element.src))
+        window.open("Instructions.html", "_self")
       }
     };
 

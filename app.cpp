@@ -24,9 +24,6 @@
 #include "bgezdb.h"
 #include "bgezrecs.h"
 
-crow::json::wvalue recipeCache;
-std::vector<int> ingredientCache = {};
-std::string prefCache = "";
 
 std::string urlDecode(const std::string& str){
     std::ostringstream decoded;
@@ -134,6 +131,7 @@ int main(){
         response["name"] = newUser.name();
 
         conn.send_text(response.dump());
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -171,6 +169,7 @@ int main(){
         response["name"] = activeUser.name();
 
         conn.send_text(response.dump());
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -193,6 +192,7 @@ int main(){
         } else {
             conn.send_text(activeUser.name());
         }
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -266,6 +266,7 @@ int main(){
                 }
             }
         }
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -294,16 +295,6 @@ int main(){
 
             User activeUser = DBCore::getUser(uid, db);
 
-            std::vector<int> uIng = urs.userIngredientParser(uid);
-            std::string pref = urs.userPrefParser(uid);
-            CROW_LOG_DEBUG << "Checking Cache";
-            if (uIng == ingredientCache && !uIng.empty() && prefCache == pref) {
-                CROW_LOG_DEBUG << "Using Cache";
-                conn.send_text(recipeCache.dump());
-                CROW_LOG_DEBUG << "SENT CACHE";
-                return;
-            }
-            ingredientCache = uIng;
             CROW_LOG_DEBUG << "Retrieving Recipes";
             auto recipes = rec.doIt(uid, urs.userGather(uid));
             crow::json::wvalue result;
@@ -311,20 +302,20 @@ int main(){
             result["recipes"] = std::move(recipes);
             CROW_LOG_DEBUG << "SENDING";
             conn.send_text(result.dump());
-            recipeCache = std::move(result);
             CROW_LOG_DEBUG << "SENT";
         }
         else if (parsed["op"] == "getInstructions") {
-            std::string name = parsed["name"].s();
-            CROW_LOG_DEBUG << "Getting Instructions";
-            crow::json::wvalue instruction = rec.getInstructions(name);
-            CROW_LOG_DEBUG << "Sending";
-            conn.send_text(instruction.dump());
-            CROW_LOG_DEBUG << "Sent";
+           std::string name = parsed["name"].s();
+           CROW_LOG_DEBUG << "Getting Instructions";
+           crow::json::wvalue instruction = rec.getInstructions(name);
+           CROW_LOG_DEBUG << "Sending";
+           conn.send_text(instruction.dump());
+           CROW_LOG_DEBUG << "Sent";
         }
         else {
             CROW_LOG_DEBUG << "Malformed Operation";
         }
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -353,28 +344,8 @@ int main(){
                 CROW_LOG_DEBUG << "ITEM " << items.s();
             }
             usr.save(saved, uid);
-            prefCache = usr.userPrefParser(uid);
         }
-        // else if (parsed["op"] == "load" && parsed["uid"]) {
-        //     int uid = parsed["uid"].i();
-        //
-        //     std::string toSend = usr.userPrefParser(uid);
-        //
-        //     CROW_LOG_DEBUG << "Finding Preferences";
-        //     if (!toSend.empty()) {
-        //         std::stringstream ss(toSend);
-        //         std::string s;
-        //         std::vector<std::string> tempVec;
-        //         while (getline(ss, s, ' ')) {
-        //             tempVec.push_back(traitToString(std::stoi(s)));
-        //         }
-        //         CROW_LOG_DEBUG << "PREF " << tempVec[0];
-        //         crow::json::wvalue pref;
-        //         pref["pref"] = tempVec;
-        //         conn.send_text(pref.dump());
-        //         CROW_LOG_DEBUG << "Sent Preferences";
-        //     }
-        // }
+        db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "Account WS Connection closed: " << reason;

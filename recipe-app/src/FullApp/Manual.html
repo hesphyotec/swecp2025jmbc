@@ -196,6 +196,7 @@
       });
 
       window.addEventListener('beforeunload', () => {
+        localStorage.setItem("ingredients", JSON.stringify(ingredients));
         console.log("Page is unloading (possibly reloading)");
       });
 
