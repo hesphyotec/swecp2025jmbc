@@ -38,7 +38,20 @@
         width: 100%;
         max-width: 300px;
     }
-
+    .status-indicator {
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    .status-online {
+        background: #d4edda;
+        color: #155724;
+    }
+    .status-offline {
+        background: #fff3cd;
+        color: #856404;
+    }
     /* Ingredients Box */
     .ingredients-list {
         width: 300px;
@@ -52,7 +65,6 @@
         gap: 10px;
         background: #f9f9f9;
     }
-
     .ingredient-item {
         display: flex;
         justify-content: space-between;
@@ -63,7 +75,6 @@
         background: white;
         font-size: 16px;
     }
-
     .remove-btn {
         background: #e74c3c;
         color: white;
@@ -73,11 +84,9 @@
         font-size: 14px;
         padding: 2px 6px;
     }
-
     .remove-btn:hover {
         background: #c0392b;
     }
-
     /* Bottom navigation bar */
     footer {
         display: flex;
@@ -107,22 +116,11 @@
 <header>My Ingredients</header>
 <main>
     <h2>Saved Ingredients</h2>
+    <div class="status-indicator" id="statusIndicator">Loading...</div>
     <div class="ingredients-list" id="ingredientsList">
-        <div class="ingredient-item">
-            Tomatoes
-            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
-        </div>
-        <div class="ingredient-item">
-            Onions
-            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
-        </div>
-        <div class="ingredient-item">
-            Garlic
-            <button class="remove-btn" onclick="removeIngredient(this)">❌</button>
-        </div>
+        <div>Loading ingredients...</div>
     </div>
 </main>
-
 <!-- Bottom Navigation -->
 <footer>
     <button onclick="location.href='homepage.html'">Back</button>
@@ -132,141 +130,169 @@
     <button onclick="location.href='Receipt.html'">Receipt</button>
 </footer>
 <script>
-    const addBtn = document.getElementById("scan-btn");
-    const input = document.getElementById("ingredient-add");
-    const list = document.getElementById("ingredients-list");
-
+    const list = document.getElementById("ingredientsList");
+    const statusIndicator = document.getElementById("statusIndicator");
     let ingredients = [];
-    // Socket Handling
-    
-    var sock = new WebSocket("ws://localhost:18080/inventory");
+    let sock = null;
+    let isServerConnected = false;
+    const STORAGE_KEY = 'user-ingredients';
 
-      sock.onopen = ()=>{
-        console.log('open');
-        const getlist = {
-            op: "getlist",
-            uid: localStorage.getItem("activeuserid")
-        }
-        const strgetlist = JSON.stringify(getlist);
-        sock.send(strgetlist)
-      }
-
-      sock.onmessage = (m)=>{
-        console.log('message');
-        var result;
+    // Load ingredients from persistent storage
+    async function loadFromStorage() {
         try {
-          result = JSON.parse(m.data);
-        } catch (err) {
-          console.error("JSON parse failed:", err, m.data);
-          return;
-        }
-
-        if (result.status === "success") {
-            const container = $("#ingredients-list");
-            container.empty();
-
-            if (Array.isArray(result.data)){
-              ingredients = result.data;
+            const result = await window.storage.get(STORAGE_KEY);
+            if (result && result.value) {
+                ingredients = JSON.parse(result.value);
+                console.log('Loaded ingredients from storage:', ingredients);
             }
-        } else {
-            alert("Failed to add item. Reason : " + result.message);
+        } catch (error) {
+            console.log('No stored ingredients found or error loading:', error);
+            ingredients = [];
         }
         renderList();
-      }
+    }
 
-      sock.onerror = (e) =>{
-        console.error('error', e);
-      }
+    // Save ingredients to persistent storage
+    async function saveToStorage() {
+        try {
+            await window.storage.set(STORAGE_KEY, JSON.stringify(ingredients));
+            console.log('Saved ingredients to storage');
+        } catch (error) {
+            console.error('Error saving to storage:', error);
+        }
+    }
 
-      sock.onclose = (e) =>{
-        console.log('close', e);
-      }
-      
-      window.addEventListener('beforeunload', () => {
-        console.log("Page is unloading (possibly reloading)");
-      });
+    // Update status indicator
+    function updateStatus(connected) {
+        isServerConnected = connected;
+        if (connected) {
+            statusIndicator.textContent = '🟢 Connected to server';
+            statusIndicator.className = 'status-indicator status-online';
+        } else {
+            statusIndicator.textContent = '🟡 Offline mode (data saved locally)';
+            statusIndicator.className = 'status-indicator status-offline';
+        }
+    }
 
-      
+    // Initialize WebSocket connection
+    function initWebSocket() {
+        try {
+            sock = new WebSocket("ws://localhost:18080/inventory");
+            
+            sock.onopen = () => {
+                console.log('WebSocket connected');
+                updateStatus(true);
+                const getlist = {
+                    op: "getlist",
+                    uid: localStorage.getItem("activeuserid")
+                };
+                sock.send(JSON.stringify(getlist));
+            };
+            
+            sock.onmessage = async (m) => {
+                console.log('WebSocket message received');
+                var result;
+                try {
+                    result = JSON.parse(m.data);
+                } catch (err) {
+                    console.error("JSON parse failed:", err, m.data);
+                    return;
+                }
+                
+                if (result.status === "success") {
+                    if (Array.isArray(result.data)) {
+                        ingredients = result.data;
+                        // Sync to persistent storage
+                        await saveToStorage();
+                        renderList();
+                    }
+                } else {
+                    alert("Failed to process request. Reason: " + result.message);
+                }
+            };
+            
+            sock.onerror = (e) => {
+                console.error('WebSocket error', e);
+                updateStatus(false);
+            };
+            
+            sock.onclose = (e) => {
+                console.log('WebSocket closed', e);
+                updateStatus(false);
+            };
+        } catch (error) {
+            console.error('Failed to initialize WebSocket:', error);
+            updateStatus(false);
+        }
+    }
 
+    // Render ingredients list
     function renderList() {
-      list.innerHTML = "";
-
-      if (ingredients.length === 0) {
-        list.textContent = "Your ingredients will appear here.";
-        return;
-      }
-
-      ingredients.forEach((ingredient, index) => {
-        const item = document.createElement("div");
-        item.textContent = ingredient.name;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "✕";
-        removeBtn.className = "remove-btn";
-
-        removeBtn.onclick = () => {
-          const sendData = {
-              op : "delitem",
-              uid : localStorage.getItem("activeuserid"),
-              iid : ingredient.id
-          }
-          const stringData = JSON.stringify(sendData);
-          if (sock.readyState === WebSocket.OPEN){
-            sock.send(stringData);  
-          } else {
-            alert("Server Not Responding");
-          }
-        };
-
-        item.appendChild(removeBtn);
-        list.appendChild(item);
-      });
-    }
-    /*
-    addBtn.addEventListener("click", () => {
-      const value = input.value.trim();
-      if (value) {
-        ingredients.push(value);
-        localStorage.setItem("ingredients", JSON.stringify(ingredients));
-        renderList();
-        input.value = "";
-      }
+        list.innerHTML = "";
         
-    });*/
-
-    // Render on page load
-    renderList();
-  </script>
-<script>/*
-  const list = document.getElementById("ingredientsList");
-  let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
-
-  function renderIngredients() {
-    list.innerHTML = "";
-    if (ingredients.length === 0) {
-      list.textContent = "No ingredients saved yet.";
-      return;
+        if (ingredients.length === 0) {
+            list.textContent = "Your ingredients will appear here.";
+            return;
+        }
+        
+        ingredients.forEach((ingredient) => {
+            const item = document.createElement("div");
+            item.className = "ingredient-item";
+            
+            const name = ingredient.name || ingredient;
+            item.textContent = name;
+            
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "❌";
+            removeBtn.className = "remove-btn";
+            removeBtn.onclick = () => removeIngredient(ingredient);
+            
+            item.appendChild(removeBtn);
+            list.appendChild(item);
+        });
     }
-    ingredients.forEach((ingredient, index) => {
-      const item = document.createElement("div");
-      item.textContent = ingredient;
 
-      const removeBtn = document.createElement("button");
-      removeBtn.textContent = "✕";
-      removeBtn.className = "remove-btn";
-      removeBtn.onclick = () => {
-        ingredients.splice(index, 1);
-        localStorage.setItem("ingredients", JSON.stringify(ingredients));
-        renderIngredients();
-      };
+    // Remove ingredient
+    async function removeIngredient(ingredient) {
+        if (isServerConnected && sock && sock.readyState === WebSocket.OPEN) {
+            // Try to remove from server
+            const sendData = {
+                op: "delitem",
+                uid: localStorage.getItem("activeuserid"),
+                iid: ingredient.id
+            };
+            sock.send(JSON.stringify(sendData));
+        } else {
+            // Remove locally
+            const index = ingredients.findIndex(ing => 
+                (ing.id && ing.id === ingredient.id) || 
+                (ing.name && ing.name === ingredient.name) ||
+                ing === ingredient
+            );
+            
+            if (index !== -1) {
+                ingredients.splice(index, 1);
+                await saveToStorage();
+                renderList();
+            }
+        }
+    }
 
-      item.appendChild(removeBtn);
-      list.appendChild(item);
+    // Initialize on page load
+    async function init() {
+        await loadFromStorage();
+        initWebSocket();
+    }
+
+    // Start initialization
+    init();
+
+    // Handle page unload
+    window.addEventListener('beforeunload', () => {
+        if (sock && sock.readyState === WebSocket.OPEN) {
+            sock.close();
+        }
     });
-  }
-
-  renderIngredients();*/
 </script>
-
 </body>
 </html>
