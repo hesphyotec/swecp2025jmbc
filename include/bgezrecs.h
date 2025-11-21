@@ -443,9 +443,8 @@ class Recommend {
 		}
 
 	crow::json::wvalue doIt (int uID, vecVector searchedVector) {
-			if (searchedVector[0].empty() && searchedVector[1].empty()) {
-				CROW_LOG_DEBUG << "SearchedVector cannot be empty";
-				exit(67);
+			if (searchedVector.empty()) {
+				searchedVector = {{}, {}};
 			}
 			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
 				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";

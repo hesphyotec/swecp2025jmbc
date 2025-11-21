@@ -16,8 +16,6 @@ add_executable(swecp2025jmbc
         app.cpp
         include/bcrypt.cpp
         include/blowfish.cpp
-#        CW2V2.cpp
-#        include/Word2Vec-master/main.cpp
 )
 
 target_include_directories(swecp2025jmbc PRIVATE

@@ -134,7 +134,7 @@
     let ingredients = [];
     // Socket Handling
     
-    var sock = new WebSocket("ws://localhost:18080/inventory");
+    var sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
 
       sock.onopen = ()=>{
         console.log('open');

@@ -60,16 +60,6 @@ std::unordered_map<std::string, std::string> urlParse(const std::string& str){
     return result;
 }
 
-int genId(){
-    int id{};
-    std::string s{"SELECT MAX(uid) FROM Users "};
-    DBArgList arg{};
-    //DBCore::accessDB(s, arg, [&](sqlite3_stmt* stmt){
-        //id = sqlite3_column_int(stmt, 0);
-    //});
-    return ++id;
-}
-
 int main(){
 	crow::SimpleApp app;
 	std::mutex mtx;
@@ -118,16 +108,17 @@ int main(){
             return;
         }
 
-        User newUser{genId(), username, h_pass};
+        User newUser{0, username, h_pass};
         if (!DBCore::addUser(newUser, db)){
             conn.send_text("{\"status\":\"error\",\"message\":\"Server failed to create user.\"}");
             return;
         }
 
         crow::json::wvalue response;
+        User activeUser = DBCore::getUser(parsed["username"].s(), db);
 
         response["status"] = "success";
-        response["id"] = newUser.uid();
+        response["id"] = activeUser.uid();
         response["name"] = newUser.name();
 
         conn.send_text(response.dump());
@@ -235,10 +226,8 @@ int main(){
                     return;
                 }
 
-                User activeUser = DBCore::getUser(uid, db);
-
                 try {
-                    CROW_LOG_DEBUG << DBCore::addItem(activeUser, item, db);
+                    CROW_LOG_DEBUG << DBCore::addItem(uid, item, db);
                 } catch (const std::exception& e) {
                     CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
@@ -247,17 +236,15 @@ int main(){
                 crow::json::wvalue response = item.toJson();
             } else if (parsed["op"] == "getlist"){
                 int uid{static_cast<int>(parsed["uid"].i())};
-                User activeUser = DBCore::getUser(uid, db);
-                crow::json::wvalue response = DBCore::getItemList(activeUser, db);
+                crow::json::wvalue response = DBCore::getItemList(uid, db);
                 response["status"] = "success";
                 conn.send_text(response.dump());
             } else if (parsed["op"] == "delitem"){
                 int uid{static_cast<int>(parsed["uid"].i())};
                 int iid{static_cast<int>(parsed["iid"].i())};
-                User activeUser = DBCore::getUser(uid, db);
                 Item toDelete = DBCore::getItem(iid, db);
                 if (DBCore::deleteItem(toDelete, db)){
-                    crow::json::wvalue response = DBCore::getItemList(activeUser, db);
+                    crow::json::wvalue response = DBCore::getItemList(uid, db);
                     response["status"] = "success";
                     conn.send_text(response.dump());
                 } else {
@@ -292,8 +279,6 @@ int main(){
         if (parsed["op"] == "getrecipes"){
             UserRecSys urs;
             int uid = parsed["uid"].i();
-
-            User activeUser = DBCore::getUser(uid, db);
 
             CROW_LOG_DEBUG << "Retrieving Recipes";
             auto recipes = rec.doIt(uid, urs.userGather(uid));

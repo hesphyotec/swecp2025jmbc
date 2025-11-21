@@ -70,7 +70,7 @@
 </div>
 
 <script>
-      var sock = new WebSocket("ws://localhost:18080/login");
+      var sock = new WebSocket(`ws://${window.location.hostname}:18080/login`);
 
       sock.onopen = ()=>{
         console.log('open');
