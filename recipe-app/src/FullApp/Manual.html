@@ -202,6 +202,28 @@
           $("#ingredient-add").val("");
       });
 
+        document.onkeypress = enter;
+        function enter(e) {
+          if (e.which == 13) { 
+            const name = $("#ingredient-add").val().trim();
+          if (!name) return;
+
+          const sendData = {
+              op : "additem",
+              uid : localStorage.getItem("activeuserid"),
+              name : name
+          };
+          const stringData = JSON.stringify(sendData);
+
+          if (sock.readyState === WebSocket.OPEN){
+              sock.send(stringData);  
+          } else {
+              alert("Server Not Responding");
+          }
+        }
+        renderList();
+      }
+
       });
 
       window.addEventListener('beforeunload', () => {
@@ -245,6 +267,7 @@
         list.appendChild(item);
       });
     }
+
     /*
     addBtn.addEventListener("click", () => {
       const value = input.value.trim();
