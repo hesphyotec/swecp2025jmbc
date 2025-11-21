@@ -133,9 +133,9 @@
     const list = document.getElementById("ingredientsList");
     const statusIndicator = document.getElementById("statusIndicator");
     let ingredients = [];
-    let sock = null;
-    let isServerConnected = false;
-    const STORAGE_KEY = 'user-ingredients';
+    // Socket Handling
+    
+    var sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
 
     // Load ingredients from persistent storage
     async function loadFromStorage() {

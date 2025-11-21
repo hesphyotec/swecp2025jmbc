@@ -82,7 +82,7 @@
     <p class="text-xs mt-1">© Recipe Builder 2025</p>
   </footer>
   <script>
-      var sock = new WebSocket("ws://localhost:18080/home");
+      var sock = new WebSocket(`ws://${window.location.hostname}:18080/home`);
       var username = "Guest";
       if (localStorage.getItem("activeusername") !== null){
         username = localStorage.getItem("activeusername");

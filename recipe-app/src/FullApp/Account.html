@@ -245,7 +245,7 @@
         </nav>
     </footer>
     <script>
-        var socket = new WebSocket("ws://localhost:18080/Account");
+        var socket = new WebSocket(`ws://${window.location.hostname}:18080/Account`);
         socket.onopen = () => {
         console.log("Connected to Account server");
 

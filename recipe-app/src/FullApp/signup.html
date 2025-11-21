@@ -104,7 +104,7 @@
 </div>
 
     <script>
-      var sock = new WebSocket("ws://localhost:18080/signup");
+      var sock = new WebSocket(`ws://${window.location.hostname}:18080/signup`);
 
       sock.onopen = ()=>{
         console.log('open');

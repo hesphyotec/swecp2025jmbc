@@ -9,7 +9,7 @@ services:
     ports:
       - "18080:18080"
     volumes:
-      - db:/core.db
+      - ./backend/core.db:/core.db
 
 volumes:
   db:

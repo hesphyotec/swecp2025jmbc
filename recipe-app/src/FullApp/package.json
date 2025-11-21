@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/hesphyotec/swecp2025jmbc#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "ip": "^2.0.1",
+    "neoip": "^3.0.1"
   }
 }

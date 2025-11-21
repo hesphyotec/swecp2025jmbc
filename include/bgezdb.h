@@ -196,10 +196,10 @@ namespace DBCore{
         return con.accessDB(s, arg, [](sqlite3_stmt*){});
     }
 
-    inline bool addItem(const User& user, const Item& item, DBConnection& con){
+    inline bool addItem(const int& userID, const Item& item, DBConnection& con){
         CROW_LOG_DEBUG << "Adding item to db.";
         std::string s{"INSERT INTO UserItems VALUES (?, ?);"};
-        DBArgList args{user.uid(), item.id()};
+        DBArgList args{userID, item.id()};
         return con.accessDB(s, args, [](sqlite3_stmt*){});
     }
 
@@ -233,10 +233,10 @@ namespace DBCore{
         return item;
     }
 
-    inline crow::json::wvalue getItemList(const User& user, DBConnection& con){
+    inline crow::json::wvalue getItemList(const int& userID, DBConnection& con){
         std::vector<int> ids{};
         std::string s{"SELECT iid FROM UserItems WHERE uid = ?;"};
-        DBArgList arg{user.uid()};
+        DBArgList arg{userID};
         con.accessDB(s, arg, [&ids](sqlite3_stmt* statement){
             ids.push_back(sqlite3_column_int(statement, 0));
         });

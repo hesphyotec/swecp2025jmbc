@@ -114,7 +114,7 @@
     recipeList.appendChild(loadingMsg);
 
     // Connect to your Crow WebSocket server
-    const socket = new WebSocket("ws://localhost:18080/recipes");
+    const socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
 
     socket.onopen = () => {
         console.log("Connected to recommendation server");
