@@ -178,21 +178,30 @@
       }
         $(document).ready(function () {
         $("#add-btn").on("click", function(e) {
-          console.log("Submitted");
           e.preventDefault();
-          console.log($("#ingredient-add").val());
+
+          const name = $("#ingredient-add").val().trim();
+          if (!name) return;
+
           const sendData = {
               op : "additem",
               uid : localStorage.getItem("activeuserid"),
-              name : $("#ingredient-add").val()
-          }
+              name : name
+          };
           const stringData = JSON.stringify(sendData);
+
           if (sock.readyState === WebSocket.OPEN){
-            sock.send(stringData);  
+              sock.send(stringData);  
           } else {
-            alert("Server Not Responding");
+              alert("Server Not Responding");
           }
-        });
+
+          // 🔥 Locally update UI immediately
+          ingredients.push({ name: name, id: Date.now() });
+          renderList();
+          $("#ingredient-add").val("");
+      });
+
       });
 
       window.addEventListener('beforeunload', () => {
