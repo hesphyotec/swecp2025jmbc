@@ -7,19 +7,42 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #d2b48c; /* light brown background */
+      background-color: #ffddb4;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
     header {
-      background-color: #8b5e3c; /* darker brown for contrast */
+      background-color: #ff8c00;
       color: white;
       padding: 15px;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 1.4em;
       font-weight: bold;
+    }
+
+    header .title {
+      margin-right: 20px;
+    }
+
+    .header-buttons button {
+      background: none;
+      border: 2px solid white;
+      padding: 4px 6px;
+      margin-left: 10px;
+      border-radius: 6px;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .header-buttons button:hover {
+      background: white;
+      color: #ff8c00;
     }
 
     main {
@@ -62,27 +85,6 @@
       color: #333;
     }
 
-    nav {
-      background-color: #8b5e3c;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 0;
-    }
-
-    nav button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    nav button:hover {
-      color: #ffe4b5;
-    }
-
     @media (min-width: 600px) {
       main {
         display: grid;
@@ -92,20 +94,22 @@
     }
   </style>
 </head>
+
 <body>
-  <header>Recommended Recipes</header>
 
-  <main id="recipes-container">
+  <!-- HEADER WITH NAV BUTTONS -->
+  <header>
+    <span class="title">Recommended Recipes</span>
+    <div class="header-buttons">
+      <button onclick="location.href='Homepage.html'">🏚️</button>
+      <button onclick="location.href='Saved.html'">🥣</button>
+      <button onclick="location.href='account.html'">🙍🏾</button>
+    </div>
+  </header>
 
-  </main>
+  <main id="recipes-container"></main>
 
-  <nav>
-    <button onclick="location.href='Homepage.html'">Home</button>
-    <button onclick="location.href='Saved.html'">Ingredients</button>
-    <button onclick="location.href='account.html'">Account</button>
-  </nav>
-</body>
-<footer>
+  <!-- JAVASCRIPT -->
   <script>
     const recipeList = document.getElementById("recipes-container");
     const loadingMsg = document.createElement("p");
@@ -113,7 +117,7 @@
     loadingMsg.className = "loading";
     recipeList.appendChild(loadingMsg);
 
-    // Connect to your Crow WebSocket server
+    // WebSocket
     const socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
 
     socket.onopen = () => {
@@ -124,20 +128,20 @@
           if(localStorage.getItem("ingredientCache") === localStorage.getItem("ingredients") && localStorage.getItem("prefCache") === localStorage.getItem("checked")){
               console.log("using cache");
               cacheData = JSON.parse(localStorage.getItem("recipeCache"));
-              recipeList.innerHTML = ""; // clear loading text
+              recipeList.innerHTML = "";
               cacheData.recipes.forEach(recipe => {
-              const card = document.createElement("div");
-              card.className = "recipe-card";
-              card.innerHTML = `
-                  <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
-                  <h3>${recipe.name}</h3>
-              `;
-              recipeList.appendChild(card);
-          });
-          return;
+                  const card = document.createElement("div");
+                  card.className = "recipe-card";
+                  card.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                    <h3>${recipe.name}</h3>
+                  `;
+                  recipeList.appendChild(card);
+              });
+              return;
+          }
         }
-      }
-        // Request recipes — backend already knows user id
+
         socket.send(JSON.stringify({
             op: "getrecipes",
             uid: localStorage.getItem("activeuserid")
@@ -146,14 +150,13 @@
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        recipeList.innerHTML = ""; // clear loading text
-        console.log(data.status);
+        recipeList.innerHTML = "";
+
         if (data.status !== "success" || !data.recipes || data.recipes.length === 0) {
             recipeList.innerHTML = "<p>No recipes found.</p>";
             return;
         }
 
-        // Display each recommended recipe
         data.recipes.forEach(recipe => {
             const card = document.createElement("div");
             card.className = "recipe-card";
@@ -163,6 +166,7 @@
             `;
             recipeList.appendChild(card);
         });
+
         localStorage.setItem("recipeCache", JSON.stringify(data));
         localStorage.setItem("ingredientCache", localStorage.getItem("ingredients"));
         localStorage.setItem("prefCache", localStorage.getItem("checked"));
@@ -179,7 +183,7 @@
         name: element.alt
       }));
 
-        socket.onmessage = (event) => {
+      socket.onmessage = (event) => {
         const instructions = JSON.parse(event.data)[0];
         if (!instructions || !instructions.ingredients || !instructions.instructions) {
             recipeList.innerHTML = "<p>No instructions.</p>";
@@ -188,14 +192,15 @@
 
         localStorage.setItem("instruction", JSON.stringify(instructions));
         localStorage.setItem("recName", JSON.stringify(element.alt));
-        localStorage.setItem("recImage", JSON.stringify(element.src))
-        window.open("Instructions.html", "_self")
-      }
-    };
+        localStorage.setItem("recImage", JSON.stringify(element.src));
+        window.location.href = "Instructions.html";
+      };
+    }
 
     socket.onclose = () => {
         console.log("Disconnected from recommendation server");
     };
-</script>
-</footer>
+  </script>
+
+</body>
 </html>
