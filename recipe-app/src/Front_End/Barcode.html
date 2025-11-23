@@ -123,7 +123,6 @@
     const fuse = new Fuse(ingreds, { includeScore: true })
     let scanning = false;
 
-    // Load ingredients from localStorage
     let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
 
     window.addEventListener('load', function () {
@@ -156,35 +155,97 @@
         });
     })
 
-    async function lookupItem(barcode) {
+    async function fetchProduct(barcode, timeout = 8000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
       try {
-        const response = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json?fields=product_name,brands`)
-
-        if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        resultDiv.textContent = `API Response: ${data.product.brands} ${data.product.product_name}`
-
-        const fuzzResult = fuse.search(data.product.product_name, limit=1)[0]
-
-        if (fuzzResult.score > 0.25) {
-          resultDiv.textContent = 'Item could not be matched'
-          return
-        }
-
-        resultDiv.textContent = `Detected item: ${fuzzResult.item}`
-
-        ingredients.push(fuzzResult.item)
-        localStorage.setItem('ingredients', JSON.stringify(ingredients));
-        renderList();
-
-      } catch (error) {
-        console.error('Error fetching data: ', error)
+        const resp = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json?fields=product_name,brands`, {
+          signal: controller.signal
+        });
+        clearTimeout(id);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const json = await resp.json();
+        if (!json || !json.product) throw new Error('Malformed product response');
+        return json.product;
+      } catch (err) {
+        clearTimeout(id);
+        throw err;
       }
     }
+
+    async function lookupItem(barcode) {
+      try {
+          resultDiv.textContent = 'Looking up product...';
+          // Timeout for fetch
+          const controller = new AbortController();
+          const timeoutMs = 10000;
+          const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+          const response = await fetch(
+            `https://world.openfoodfacts.org/api/v2/product/${barcode}.json?fields=product_name,brands`,
+            { signal: controller.signal }
+          );
+          clearTimeout(timeoutId);
+
+          if (!response.ok) {
+            resultDiv.textContent = `Product lookup failed (${response.status})`;
+            return;
+          }
+
+          const data = await response.json();
+          const product = data && data.product;
+          if (!product) {
+            resultDiv.textContent = 'Product not found';
+            return;
+          }
+
+          const productName = (product.product_name || '').trim();
+          const brands = (product.brands || '').trim();
+          resultDiv.textContent = `API Response: ${brands} ${productName}`;
+
+          if (!productName) {
+            resultDiv.textContent = 'Product name not available';
+            return;
+          }
+
+          // Proper fuse.search usage and guard result
+          const fuseResults = fuse.search(productName, { limit: 1 });
+          if (!fuseResults || fuseResults.length === 0) {
+            resultDiv.textContent = 'Item could not be matched';
+            return;
+          }
+
+          const fuzzResult = fuseResults[0];
+          if (!fuzzResult || typeof fuzzResult.score !== 'number') {
+            resultDiv.textContent = 'No valid match';
+            return;
+          }
+
+          if (fuzzResult.score > 0.25) {
+            resultDiv.textContent = 'Item could not be matched';
+            return;
+          }
+
+          resultDiv.textContent = `Detected item: ${fuzzResult.item}`;
+
+          ingredients.push(fuzzResult.item);
+          try {
+            localStorage.setItem('ingredients', JSON.stringify(ingredients));
+          } catch (e) {
+            console.error('Failed to save ingredients', e);
+          }
+          renderList();
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            resultDiv.textContent = 'Product lookup timed out';
+          } else {
+            console.error('Error fetching data: ', error);
+            resultDiv.textContent = 'Error fetching product';
+          }
+        }
+      }
+
+    
 
     function renderList() {
       list.innerHTML = "";
@@ -213,7 +274,6 @@
       });
     }
 
-    // Render on page load
     renderList();
   </script>
 </body>
