@@ -279,11 +279,11 @@
             uid: localStorage.getItem("activeuserid"),
             saved : checkedValues
         }));
-
-        socket.onclose = () => {
-            console.log("Disconnected from Account server");
-        };
+        socket.close(1000, "Disconnecting from Account server");
         }
     });
+    socket.onclose = () => {
+        console.log("Disconnected from Account server");
+        };
     </script>
 </html>

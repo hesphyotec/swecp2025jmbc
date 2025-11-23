@@ -104,6 +104,11 @@
       sock.onclose = (e) =>{
         console.log('close', e);
       }
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Homepage server");
+      }
+    });
   </script>
 </body>
 </html>

@@ -140,6 +140,11 @@
         sock.send(stringData);
       });
 
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Login server");
+      }
+    })
   </script>
 
 </body>
