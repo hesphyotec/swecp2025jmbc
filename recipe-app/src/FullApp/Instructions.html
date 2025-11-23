@@ -114,10 +114,10 @@
     const recipeId = params.get("id");
     const recipeContainer = document.getElementById("recipe-container");
 
-    if(localStorage.getItem("instruction") !== null){
-      const instruction = JSON.parse(localStorage.getItem('instruction'));
-      const name = JSON.parse(localStorage.getItem("recName"))
-      const img = JSON.parse(localStorage.getItem("recImage"))
+    if(sessionStorage.getItem("instruction") !== null){
+      const instruction = JSON.parse(sessionStorage.getItem('instruction'));
+      const name = JSON.parse(sessionStorage.getItem("recName"))
+      const img = JSON.parse(sessionStorage.getItem("recImage"))
       
       ingArray = instruction.ingredients.split(';').filter(s => s.length > 0);
       instArray = instruction.instructions.split('\r\n').filter(s => s.length > 0);
@@ -135,9 +135,6 @@
         <h2>Instructions</h2>
         <ol>${instArray.map(s => `<li>${s}</li>`).join("\r\n")}</ol>
       `;
-      localStorage.removeItem('instruction');
-      localStorage.removeItem('recName');
-      localStorage.removeItem('recImage');
     } else {
       recipeContainer.innerHTML = "<p class='loading'>Failed to load recipe.</p>";
     };
