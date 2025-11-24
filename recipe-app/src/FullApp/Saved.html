@@ -178,7 +178,7 @@
     // Initialize WebSocket connection
     function initWebSocket() {
         try {
-            sock = new WebSocket("ws://localhost:18080/inventory");
+            sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
             
             sock.onopen = () => {
                 console.log('WebSocket connected');
@@ -289,11 +289,11 @@
     init();
 
     // Handle page unload
-    window.addEventListener('beforeunload', () => {
-        if (sock && sock.readyState === WebSocket.OPEN) {
-            sock.close();
-        }
-    });
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Saved server");
+      }
+    })
 </script>
 </body>
 </html>

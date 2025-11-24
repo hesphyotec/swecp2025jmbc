@@ -124,11 +124,11 @@
     socket.onopen = () => {
         console.log("Connected to recommendation server");
 
-        if(localStorage.getItem("recipeCache") !== 'null' || localStorage.getItem("ingredientCache") !== 'null' && localStorage.getItem("pref") !== 'null'){
+        if(sessionStorage.getItem("recipeCache") !== null || sessionStorage.getItem("ingredientCache") !== null && sessionStorage.getItem("pref") !== null){
           console.log("All have values");
-          if(localStorage.getItem("ingredientCache") === localStorage.getItem("ingredients") && localStorage.getItem("prefCache") === localStorage.getItem("checked")){
+          if(sessionStorage.getItem("ingredientCache") === sessionStorage.getItem("ingredients") && sessionStorage.getItem("prefCache") === sessionStorage.getItem("checked")){
               console.log("using cache");
-              cacheData = JSON.parse(localStorage.getItem("recipeCache"));
+              cacheData = JSON.parse(sessionStorage.getItem("recipeCache"));
               recipeList.innerHTML = "";
               cacheData.recipes.forEach(recipe => {
                   const card = document.createElement("div");
@@ -142,7 +142,7 @@
               return;
           }
         }
-
+        
         socket.send(JSON.stringify({
             op: "getrecipes",
             uid: localStorage.getItem("activeuserid")
@@ -168,9 +168,9 @@
             recipeList.appendChild(card);
         });
 
-        localStorage.setItem("recipeCache", JSON.stringify(data));
-        localStorage.setItem("ingredientCache", localStorage.getItem("ingredients"));
-        localStorage.setItem("prefCache", localStorage.getItem("checked"));
+        sessionStorage.setItem("recipeCache", JSON.stringify(data));
+        sessionStorage.setItem("ingredientCache", sessionStorage.getItem("ingredients"));
+        sessionStorage.setItem("prefCache", sessionStorage.getItem("checked"));
     };
 
     socket.onerror = (error) => {
@@ -191,9 +191,9 @@
             return;
         }
 
-        localStorage.setItem("instruction", JSON.stringify(instructions));
-        localStorage.setItem("recName", JSON.stringify(element.alt));
-        localStorage.setItem("recImage", JSON.stringify(element.src));
+        sessionStorage.setItem("instruction", JSON.stringify(instructions));
+        sessionStorage.setItem("recName", JSON.stringify(element.alt));
+        sessionStorage.setItem("recImage", JSON.stringify(element.src));
         window.location.href = "Instructions.html";
       };
     }
@@ -201,6 +201,12 @@
     socket.onclose = () => {
         console.log("Disconnected from recommendation server");
     };
+
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        socket.close(1000, "Disconnecting from Recommendation server");
+      }
+    })
   </script>
 
 </body>

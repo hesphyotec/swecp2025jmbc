@@ -255,7 +255,7 @@
             uid: localStorage.getItem("activeuserid"),
         }));
 
-        const checkedValues = JSON.parse(localStorage.getItem("checked"));
+        const checkedValues = JSON.parse(sessionStorage.getItem("checked"));
         if (checkedValues){
             checkedValues.forEach(value => {
                 document.querySelector(`[value="${value}"]`).checked = true;
@@ -263,7 +263,8 @@
         }
         };
         
-        window.addEventListener('beforeunload', function (event) {
+        document.addEventListener('visibilitychange', function (event) {
+            if(document.hidden){
             const checkboxes = document.querySelectorAll('input[class="check-item"]:checked');
             const checkedValues = [];
 
@@ -271,13 +272,18 @@
             checkedValues.push(checkbox.value);
             });
         
-            localStorage.setItem("checked", JSON.stringify(checkedValues));
+            sessionStorage.setItem("checked", JSON.stringify(checkedValues));
 
         socket.send(JSON.stringify({
             op: "save",
             uid: localStorage.getItem("activeuserid"),
             saved : checkedValues
         }));
+        socket.close(1000, "Disconnecting from Account server");
+        }
     });
+    socket.onclose = () => {
+        console.log("Disconnected from Account server");
+        };
     </script>
 </html>

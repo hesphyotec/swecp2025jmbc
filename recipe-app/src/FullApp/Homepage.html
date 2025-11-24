@@ -82,11 +82,11 @@
           sock.send(localStorage.getItem("activeuser"));
         }
       }
-      if(localStorage.getItem("saved") !== null){
-          const saved = JSON.parse(localStorage.getItem('saved'));
+      if(sessionStorage.getItem("saved") !== null){
+          const saved = JSON.parse(sessionStorage.getItem('saved'));
           console.log(saved.uid);
           console.log(saved.saved);
-          localStorage.removeItem('saved');
+          sessionStorage.removeItem('saved');
         }
       sock.onmessage = (m)=>{
         console.log('message');
@@ -94,9 +94,21 @@
       sock.onerror = (e) =>{
         console.log('error', e);
       }
+      
+      if (sessionStorage.getItem('instruction') != null){
+        sessionStorage.removeItem('instruction');
+        sessionStorage.removeItem('recName');
+        sessionStorage.removeItem('recImage');
+      }
+
       sock.onclose = (e) =>{
         console.log('close', e);
       }
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Homepage server");
+      }
+    });
   </script>
 </body>
 </html>

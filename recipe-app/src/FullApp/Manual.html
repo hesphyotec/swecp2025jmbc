@@ -226,14 +226,15 @@
       }
 
       });
-
-      window.addEventListener('beforeunload', () => {
-        localStorage.setItem("ingredients", JSON.stringify(ingredients));
-        console.log("Page is unloading (possibly reloading)");
-      });
-
       
-
+      document.addEventListener('visibilitychange', function (event) {
+        if(document.hidden){
+          sessionStorage.setItem("ingredients", JSON.stringify(ingredients));
+          console.log("Page is unloading (possibly reloading)");
+          sock.close(1000, "Disconnecting from Manual server");
+        }
+    })
+    
     function renderList() {
       list.innerHTML = "";
 
