@@ -251,6 +251,19 @@ int main(){
                     CROW_LOG_ERROR << "Error deleting item from inventory: ";
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error removing item.\"}");
                 }
+            }else if (parsed["op"] == "addReceipt"){
+                    int uid{static_cast<int>(parsed["uid"].i())};
+                    std::vector<std::string> ingredients{};
+                    for(crow::json::rvalue& ing : parsed["ingredients"].lo()){
+                        Item item = DBCore::getItem(ing.s(), db);
+                        try {
+                            CROW_LOG_DEBUG << DBCore::addItem(uid, item, db);
+                        } catch (const std::exception& e) {
+                            CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
+                            conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
+                            return;
+                        }
+                    }
             }
         }
         db.~DBConnection();
