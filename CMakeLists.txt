@@ -9,6 +9,8 @@ if(WIN32 AND MINGW)
     set(CMAKE_C_FLAGS_DEBUG "-O0")
 endif()
 
+add_definitions(-DCROW_ENABLE_DEBUG -DCROW_ENABLE_LOGGING)
+
 set(CMAKE_BUILD_TYPE Release)
 
 add_executable(swecp2025jmbc

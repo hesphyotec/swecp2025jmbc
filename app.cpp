@@ -343,6 +343,30 @@ int main(){
             }
             usr.save(saved, uid);
         }
+        if (parsed["op"] == "load" && parsed["uid"]) {
+            CROW_LOG_DEBUG << "Loading User Prefs";
+            std::string loadPref;
+            int uid = parsed["uid"].i();
+            loadPref = usr.userPrefParser(uid);
+            if (!loadPref.empty()) {
+                CROW_LOG_DEBUG <<  "User has Prefs";
+                std::vector<std::string> sendData;
+                std::vector<int> tempVec;
+                std::string s;
+                std::istringstream iss(loadPref);
+                while (std::getline(iss, s, ' ' ) ) {
+                    tempVec.push_back(std::stoi(s));
+                  }
+                for (auto& pref : tempVec) {
+                    sendData.push_back(traitToString(pref));
+                }
+                crow::json::wvalue send;
+                send = sendData;
+                std::string jsonOutput = send.dump();
+                CROW_LOG_DEBUG << "Sending User Prefs " << jsonOutput;
+                conn.send_text(jsonOutput);
+            }
+        }
         db.~DBConnection();
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
