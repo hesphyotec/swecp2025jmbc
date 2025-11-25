@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.28)
 project(swecp2025jmbc)
 
-set(CMAKE_EXE_LINKER_FLAGS "-static")
 set(CMAKE_CXX_STANDARD 20)
 
 if(WIN32 AND MINGW)
-    set(CMAKE_CXX_FLAGS_DEBUG "-O0")  # No debug symbols at all
+    set(CMAKE_EXE_LINKER_FLAGS "-static")
+    set(CMAKE_CXX_FLAGS_DEBUG "-O0")
     set(CMAKE_C_FLAGS_DEBUG "-O0")
 endif()
 
