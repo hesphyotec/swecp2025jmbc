@@ -251,6 +251,19 @@ int main(){
                     CROW_LOG_ERROR << "Error deleting item from inventory: ";
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error removing item.\"}");
                 }
+            }else if (parsed["op"] == "addReceipt"){
+                    int uid{static_cast<int>(parsed["uid"].i())};
+                    std::vector<std::string> ingredients{};
+                    for(crow::json::rvalue& ing : parsed["ingredients"].lo()){
+                        Item item = DBCore::getItem(ing.s(), db);
+                        try {
+                            CROW_LOG_DEBUG << DBCore::addItem(uid, item, db);
+                        } catch (const std::exception& e) {
+                            CROW_LOG_ERROR << "Error adding item to inventory: " << e.what();
+                            conn.send_text("{\"status\":\"error\",\"message\":\"Server error adding item.\"}");
+                            return;
+                        }
+                    }
             }
         }
         db.~DBConnection();
@@ -329,6 +342,30 @@ int main(){
                 CROW_LOG_DEBUG << "ITEM " << items.s();
             }
             usr.save(saved, uid);
+        }
+        if (parsed["op"] == "load" && parsed["uid"]) {
+            CROW_LOG_DEBUG << "Loading User Prefs";
+            std::string loadPref;
+            int uid = parsed["uid"].i();
+            loadPref = usr.userPrefParser(uid);
+            if (!loadPref.empty()) {
+                CROW_LOG_DEBUG <<  "User has Prefs";
+                std::vector<std::string> sendData;
+                std::vector<int> tempVec;
+                std::string s;
+                std::istringstream iss(loadPref);
+                while (std::getline(iss, s, ' ' ) ) {
+                    tempVec.push_back(std::stoi(s));
+                  }
+                for (auto& pref : tempVec) {
+                    sendData.push_back(traitToString(pref));
+                }
+                crow::json::wvalue send;
+                send = sendData;
+                std::string jsonOutput = send.dump();
+                CROW_LOG_DEBUG << "Sending User Prefs " << jsonOutput;
+                conn.send_text(jsonOutput);
+            }
         }
         db.~DBConnection();
     })

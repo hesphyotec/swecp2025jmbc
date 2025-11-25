@@ -180,7 +180,7 @@
     // Initialize WebSocket connection
     function initWebSocket() {
         try {
-            sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+            sock = new WebSocket(`wss://${window.location.hostname}:18080/inventory`);
             
             sock.onopen = () => {
                 console.log('WebSocket connected');

@@ -3,13 +3,13 @@
 
 # compile C with /usr/bin/cc
 # compile CXX with /usr/bin/c++
-C_DEFINES = 
+C_DEFINES = -DCROW_ENABLE_DEBUG -DCROW_ENABLE_LOGGING
 
 C_INCLUDES = -I/mnt/c/Users/blake/swecp2025jmbc/include -I/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include -I/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0 -I/mnt/c/Users/blake/swecp2025jmbc/armadillo-15.2.1
 
 C_FLAGS = -O3 -DNDEBUG
 
-CXX_DEFINES = 
+CXX_DEFINES = -DCROW_ENABLE_DEBUG -DCROW_ENABLE_LOGGING
 
 CXX_INCLUDES = -I/mnt/c/Users/blake/swecp2025jmbc/include -I/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include -I/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0 -I/mnt/c/Users/blake/swecp2025jmbc/armadillo-15.2.1
 

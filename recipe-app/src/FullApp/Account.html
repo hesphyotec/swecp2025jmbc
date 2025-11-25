@@ -256,6 +256,15 @@
             uid: localStorage.getItem("activeuserid"),
         }));
 
+        socket.onmessage = (m) => {
+            result = JSON.parse(m.data);
+            if (result){
+                result.forEach(value => {
+                document.querySelector(`[value="${value}"]`).checked = true;
+                });
+            }
+        }
+
         const checkedValues = JSON.parse(sessionStorage.getItem("checked"));
         if (checkedValues){
             checkedValues.forEach(value => {
