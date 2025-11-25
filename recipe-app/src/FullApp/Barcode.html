@@ -11,10 +11,11 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
+      background-color: #ffddb4;
     }
 
     header {
-      background: #4CAF50;
+      background: #ff8c00;
       color: white;
       padding: 15px;
       text-align: center;
@@ -35,7 +36,7 @@
       width: 90%;
       max-width: 400px;
       height: 300px;
-      border: 2px dashed #4CAF50;
+      border: 2px dashed #000000;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -53,12 +54,12 @@
     #ingredients-list {
       margin-top: 20px;
       padding: 10px;
-      border: 1px solid #ddd;
+      border: 1px solid #000000;
       border-radius: 8px;
       width: 90%;
       max-width: 400px;
       min-height: 100px;
-      background: #fafafa;
+      background: #ffffff;
       font-size: 15px;
       color: #555;
     }
@@ -69,25 +70,39 @@
       background: #f0f0f0;
     }
 
-    nav.bottom-nav button {
+    
+
+    button {
       margin: 5px;
       padding: 10px 20px;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-      background: #4CAF50;
+      background: #ff8c00;
       color: white;
       transition: background 0.2s ease;
     }
 
-    nav.bottom-nav button.active {
-      background: #2196F3;
+    button:hover {
+      background: #e68900;
+      color: #000000;
+    }
+    .remove-btn {
+      margin-left: 10px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+    
+    .remove-btn:hover {
+        background: #d32f3f;
     }
 
-    nav.bottom-nav button:hover {
-      background: #45a049;
-    }
+
   </style>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
