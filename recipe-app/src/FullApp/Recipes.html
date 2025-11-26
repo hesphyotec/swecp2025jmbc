@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recommended Recipes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffddb4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #ff8c00;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+
+    header .title {
+      margin-right: 20px;
+    }
+
+    .header-buttons button {
+      background: none;
+      border: 2px solid white;
+      padding: 4px 6px;
+      margin-left: 10px;
+      border-radius: 6px;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .header-buttons button:hover {
+      background: white;
+      color: #ff8c00;
+    }
+
+    main {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .recipe-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 15px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .recipe-card:hover {
+      transform: scale(1.02);
+    }
+
+    .recipe-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .recipe-content {
+      padding: 12px;
+    }
+
+    .recipe-title {
+      font-size: 1.2em;
+      margin: 0 0 8px 0;
+      color: #4b2e05;
+    }
+
+    .recipe-description {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media (min-width: 600px) {
+      main {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER WITH NAV BUTTONS -->
+  <header>
+    <span class="title">Recommended Recipes</span>
+    <div class="header-buttons">
+      <button onclick="location.href='Homepage.html'">🏚️</button>
+      <button onclick="location.href='Saved.html'">🥣</button>
+      <button onclick="location.href='Account.html'">🙍🏾</button>
+    </div>
+  </header>
+
+  <main id="recipes-container"></main>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    const recipeList = document.getElementById("recipes-container");
+    const loadingMsg = document.createElement("p");
+    loadingMsg.textContent = "Loading recommendations...";
+    loadingMsg.className = "loading";
+    recipeList.appendChild(loadingMsg);
+
+    // WebSocket
+    var socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
+
+    socket.onopen = () => {
+        console.log("Connected to recommendation server");
+
+        if(sessionStorage.getItem("recipeCache") !== null || sessionStorage.getItem("ingredientCache") !== null && sessionStorage.getItem("pref") !== null){
+          console.log("All have values");
+          if(sessionStorage.getItem("ingredientCache") === sessionStorage.getItem("ingredients") && sessionStorage.getItem("prefCache") === sessionStorage.getItem("checked")){
+              console.log("using cache");
+              cacheData = JSON.parse(sessionStorage.getItem("recipeCache"));
+              recipeList.innerHTML = "";
+              cacheData.recipes.forEach(recipe => {
+                  const card = document.createElement("div");
+                  card.className = "recipe-card";
+                  card.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                    <h3>${recipe.name}</h3>
+                  `;
+                  recipeList.appendChild(card);
+              });
+              return;
+          }
+        }
+        
+        socket.send(JSON.stringify({
+            op: "getrecipes",
+            uid: localStorage.getItem("activeuserid")
+        }));
+    };
+
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        recipeList.innerHTML = "";
+
+        if (data.status !== "success" || !data.recipes || data.recipes.length === 0) {
+            recipeList.innerHTML = "<p>No recipes found.</p>";
+            return;
+        }
+
+        data.recipes.forEach(recipe => {
+            const card = document.createElement("div");
+            card.className = "recipe-card";
+            card.innerHTML = `
+                <img src="${recipe.image}" alt="${recipe.name}" onclick="getIns(this)" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                <h3>${recipe.name}</h3>
+            `;
+            recipeList.appendChild(card);
+        });
+
+        sessionStorage.setItem("recipeCache", JSON.stringify(data));
+        sessionStorage.setItem("ingredientCache", sessionStorage.getItem("ingredients"));
+        sessionStorage.setItem("prefCache", sessionStorage.getItem("checked"));
+    };
+
+    socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        recipeList.innerHTML = "<p>Error loading recommendations.</p>";
+    };
+
+    function getIns(element) {
+      socket.send(JSON.stringify({
+        op: "getInstructions",
+        name: element.alt
+      }));
+
+      socket.onmessage = (event) => {
+        const instructions = JSON.parse(event.data)[0];
+        if (!instructions || !instructions.ingredients || !instructions.instructions) {
+            recipeList.innerHTML = "<p>No instructions.</p>";
+            return;
+        }
+
+        sessionStorage.setItem("instruction", JSON.stringify(instructions));
+        sessionStorage.setItem("recName", JSON.stringify(element.alt));
+        sessionStorage.setItem("recImage", JSON.stringify(element.src));
+        window.location.href = "Instructions.html";
+      };
+    }
+
+    socket.onclose = () => {
+        console.log("Disconnected from recommendation server");
+    };
+
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        socket.close(1000, "Disconnecting from Recommendation server");
+      }
+      if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+        socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
+        console.log("Reopened Recipe WS");
+      }
+    });
+  </script>
+
+</body>
+</html>
