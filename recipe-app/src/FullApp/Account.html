@@ -291,6 +291,10 @@
             }));
             socket.close(1000, "Disconnecting from Account server");
         }
+        if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+            socket = new WebSocket(`ws://${window.location.hostname}:18080/Account`);
+            console.log("Reopened Account WS");
+        }
     });
     socket.onclose = () => {
         console.log("Disconnected from Account server");

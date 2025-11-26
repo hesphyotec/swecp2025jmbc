@@ -5,7 +5,7 @@ services:
       - "3000:3000"
 
   backend:
-    build: ./backend
+    build: ./Backend
     ports:
       - "18080:18080"
     volumes:

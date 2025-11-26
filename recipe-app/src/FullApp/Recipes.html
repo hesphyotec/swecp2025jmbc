@@ -119,7 +119,7 @@
     recipeList.appendChild(loadingMsg);
 
     // WebSocket
-    const socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
+    var socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
 
     socket.onopen = () => {
         console.log("Connected to recommendation server");
@@ -205,6 +205,10 @@
     document.addEventListener('visibilitychange', function (event) {
       if(document.hidden){
         socket.close(1000, "Disconnecting from Recommendation server");
+      }
+      if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+        socket = new WebSocket(`ws://${window.location.hostname}:18080/recipes`);
+        console.log("Reopened Recipe WS");
       }
     });
   </script>

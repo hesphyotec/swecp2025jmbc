@@ -302,6 +302,10 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Barcode server");
       }
+      if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+          sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+          console.log("Reopened Barcode WS");
+      }
     });
   </script>
 </body>
