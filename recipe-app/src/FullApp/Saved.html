@@ -295,7 +295,10 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Saved server");
       }
-    })
+      if (!document.hidden && WebSocket.CLOSED) {
+        var socket = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+      }
+    });
 </script>
 </body>
 </html>

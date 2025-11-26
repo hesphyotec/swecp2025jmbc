@@ -357,7 +357,7 @@
           console.log("Page is unloading (possibly reloading)");
           sock.close(1000, "Disconnecting from Receipt server");
         }
-    })
+      });
 
     sock.onerror = (e) =>{
         console.error('error', e);
