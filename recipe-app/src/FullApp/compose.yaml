@@ -10,6 +10,3 @@ services:
       - "18080:18080"
     volumes:
       - ./backend/core.db:/core.db
-
-volumes:
-  db:
