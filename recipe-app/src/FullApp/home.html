@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Builder - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffddb4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+        .home-button {
+            background-color: #ff8c00;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        .home-button:hover {
+            background-color: #e07b00;
+        }
+        footer {
+            background-color: #ff8c00;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+        }
+        footer p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+        .floating-icon {
+            position: absolute;
+            font-size: 6em;
+            opacity: 0.5;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .icon1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .icon2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .icon3 { top: 60%; left: 8%; animation-delay: 2s; }
+        .icon4 { top: 70%; right: 10%; animation-delay: 3s; }
+        .icon5 { top: 40%; left: 5%; animation-delay: 1.5s; }
+        .icon6 { top: 50%; right: 5%; animation-delay: 2.5s; }
+        .icon7 { top: 15%; left: 50%; animation-delay: 0.5s; }
+        .icon8 { top: 75%; left: 50%; animation-delay: 3.5s; }
+    </style>
+</head>
+<body>
+    <div class="floating-icon icon1">🍳</div>
+    <div class="floating-icon icon2">🥗</div>
+    <div class="floating-icon icon3">🍕</div>
+    <div class="floating-icon icon4">🥘</div>
+    <div class="floating-icon icon5">🍝</div>
+    <div class="floating-icon icon6">🥖</div>
+    <div class="floating-icon icon7">🧁</div>
+    <div class="floating-icon icon8">☕</div>
+    
+    <div class="content">
+        <h1>Recipe Builder</h1>
+        <div class="button-container">
+            <a href="Login.html" class="home-button">Sign In</a>
+            <a href="signup.html" class="home-button">Create Account</a>
+        </div>
+    </div>
+    <footer>
+        <p><strong>Recipe Builder</strong> - Your personal cooking companion</p>
+        <p>Discover, create, and organize your favorite recipes all in one place.</p>
+    </footer>
+</body>
+</html>
