@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffddb4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .signup-container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 320px;
+            z-index: 10;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #ff8c00;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff8c00;
+        }
+        .floating-icon {
+            position: absolute;
+            font-size: 6em;
+            opacity: 0.5;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .icon1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .icon2 { top: 20%; right: 15%; animation-delay: 1s; }
+        .icon3 { top: 60%; left: 8%; animation-delay: 2s; }
+        .icon4 { top: 70%; right: 10%; animation-delay: 3s; }
+        .icon5 { top: 40%; left: 5%; animation-delay: 1.5s; }
+        .icon6 { top: 50%; right: 5%; animation-delay: 2.5s; }
+        .icon7 { top: 10%; left: 50%; animation-delay: 0.5s; }
+        .icon8 { top: 75%; left: 50%; animation-delay: 3.5s; }
+        
+    </style>
+    <script src ="https:/code.jquery.com/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+    <div class="floating-icon icon1">🍳</div>
+    <div class="floating-icon icon2">🥓</div>
+    <div class="floating-icon icon3">🍕</div>
+    <div class="floating-icon icon4">🥦</div>
+    <div class="floating-icon icon5">🍝</div>
+    <div class="floating-icon icon6">🌮</div>
+    <div class="floating-icon icon7">🥩</div>
+    <div class="floating-icon icon8">🍨</div>
+
+<div class="signup-container">
+    <h2>Create Account</h2>
+    <form id ="acc">
+        <label for="new-username">Username</label>
+        <input type="text" id="new-username" name="username" required>
+
+        <label for="new-password">Password</label>
+        <input type="password" id="new-password" name="password" required>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm_password" required>
+
+        <input type="submit" value="Create Account">
+    </form>
+</div>
+
+    <script>
+      var sock = new WebSocket(`ws://${window.location.hostname}:18080/signup`);
+
+      sock.onopen = ()=>{
+        console.log('open');
+      }
+
+      sock.onmessage = (m)=>{
+        console.log('message');
+        const result = JSON.parse(m.data);
+        if (result.status === "success") {
+            localStorage.setItem("activeuserid", result.id);
+            localStorage.setItem("activeusername", result.name);
+            window.location.href = "Homepage.html";
+        } else {
+            alert("Signup failed: " + result.message);
+        }
+        }
+
+      sock.onerror = (e) =>{
+        console.error('error', e);
+      }
+
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+
+      $("#acc").on("submit", function(e) {
+        e.preventDefault();
+        
+        const sendData = {
+            username: $("#new-username").val(),
+            password: $("#new-password").val()
+        }
+        const stringData = JSON.stringify(sendData);
+        sock.send(stringData);
+      });
+
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Signup server");
+      }
+      if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+        sock = new WebSocket(`ws://${window.location.hostname}:18080/signup`);
+        console.log("Reopened Signup WS");
+      }
+    });
+  </script>
+
+</body>
+</html>
