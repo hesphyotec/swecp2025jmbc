@@ -67,7 +67,7 @@ int main(){
 
 	app.loglevel(crow::LogLevel::Debug);
 
-	CROW_ROUTE(app, "/")([](){
+	CROW_ROUTE(app, "/")([](){ //test, no longer needed
 		auto page = crow::mustache::load_text("testpage.html");
 		char name[256];
 		gethostname(name, 256);
@@ -76,7 +76,7 @@ int main(){
 	});
 
     CROW_WEBSOCKET_ROUTE(app, "/signup")
-    .onopen([&](crow::websocket::connection& conn){
+    .onopen([&](crow::websocket::connection& conn){ //connection to the signup page
         CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
         std::lock_guard<std::mutex> _(mtx);
         users.insert(&conn);
@@ -84,7 +84,7 @@ int main(){
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary){
         std::lock_guard<std::mutex> _(mtx);
         DBConnection db;
-        CROW_LOG_DEBUG << "Received Data: " << data;
+        CROW_LOG_DEBUG << "Received Data: " << data;//JSON data from html
 
         crow::json::rvalue parsed;
 
@@ -97,19 +97,19 @@ int main(){
 
         std::string username{parsed["username"].s()};
         std::string password{parsed["password"].s()};
-        std::string h_pass{bcrypt::generateHash(password.c_str())};
+        std::string h_pass{bcrypt::generateHash(password.c_str())};//this hashes the password for storage
 
-        if (username.empty() || h_pass.empty()){
+        if (username.empty() || h_pass.empty()){ //if no password or username
             conn.send_text("{\"status\":\"error\",\"message\":\"Username or password empty\"}");
             return;
         }
-        if (DBCore::getUser(username, db).uid() != -1){
+        if (DBCore::getUser(username, db).uid() != -1){ //if username already exists
             conn.send_text("{\"status\":\"error\",\"message\":\"User already exists.\"}");
             return;
         }
 
         User newUser{0, username, h_pass};
-        if (!DBCore::addUser(newUser, db)){
+        if (!DBCore::addUser(newUser, db)){  //random failure
             conn.send_text("{\"status\":\"error\",\"message\":\"Server failed to create user.\"}");
             return;
         }
@@ -118,8 +118,8 @@ int main(){
         User activeUser = DBCore::getUser(parsed["username"].s(), db);
 
         response["status"] = "success";
-        response["id"] = activeUser.uid();
-        response["name"] = newUser.name();
+        response["id"] = activeUser.uid();//set uid from active userID
+        response["name"] = newUser.name();//set name from active user name
 
         conn.send_text(response.dump());
         db.~DBConnection();
@@ -127,10 +127,10 @@ int main(){
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
         std::lock_guard<std::mutex> _(mtx);
-        users.erase(&conn);
+        users.erase(&conn);//close websocket and kill connection
     });
 
-    CROW_WEBSOCKET_ROUTE(app, "/login")
+    CROW_WEBSOCKET_ROUTE(app, "/login") //connection to login page
     .onopen([&](crow::websocket::connection& conn){
         CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
         std::lock_guard<std::mutex> _(mtx);
@@ -141,14 +141,14 @@ int main(){
         DBConnection db;
         crow::json::rvalue parsed;
 
-        parsed = crow::json::load(data);
+        parsed = crow::json::load(data);//loads sent data from html
 
         User activeUser = DBCore::getUser(parsed["username"].s(), db);
-        if (activeUser.uid() == -1){
+        if (activeUser.uid() == -1){//username does not exist
             conn.send_text("{\"status\":\"error\",\"message\":\"Invalid Username or Password.\"}");
             return;
         }
-        if (!bcrypt::validatePassword(parsed["password"].s(), activeUser.pass())){
+        if (!bcrypt::validatePassword(parsed["password"].s(), activeUser.pass())){ //password is incorrect
             conn.send_text("{\"status\":\"error\",\"message\":\"Invalid Username or Password.\"}");
             return;
         }
@@ -160,7 +160,7 @@ int main(){
         response["name"] = activeUser.name();
 
         conn.send_text(response.dump());
-        db.~DBConnection();
+        db.~DBConnection();//manually call destructor, this forces db connection to stop
     })
     .onclose([&](crow::websocket::connection& conn, const std::string& reason, uint16_t){
         CROW_LOG_INFO << "WS Connection closed: " << reason;
@@ -168,7 +168,7 @@ int main(){
         users.erase(&conn);
     });
 
-    CROW_WEBSOCKET_ROUTE(app, "/home")
+    CROW_WEBSOCKET_ROUTE(app, "/home")//connection to home page
     .onopen([&](crow::websocket::connection& conn){
         CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();
         std::lock_guard<std::mutex> _(mtx);
@@ -177,7 +177,7 @@ int main(){
     .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
         std::lock_guard<std::mutex> _(mtx);
         DBConnection db;
-        User activeUser = DBCore::getUser(std::stoi(data), db);
+        User activeUser = DBCore::getUser(std::stoi(data), db); //checks if user is active
         if (is_binary){
             conn.send_binary(activeUser.name());
         } else {
@@ -205,14 +205,14 @@ int main(){
         crow::json::rvalue parsed;
 
         parsed = crow::json::load(data);
-        if (parsed.has("op")){
+        if (parsed.has("op")){ //checks if sent data has "op" code
             if (parsed["op"] == "additem"){
-                if (!parsed.has("uid")){
+                if (!parsed.has("uid")){ //not signed in
                     conn.send_text("{\"status\":\"error\",\"message\":\"Please sign in\"}");
                     return;
                 }
 
-                if (!parsed.has("name")){
+                if (!parsed.has("name")){ //no ingredient to enter
                     conn.send_text("{\"status\":\"error\",\"message\":\"Name cannot be empty\"}");
                     return;
                 }
@@ -221,7 +221,7 @@ int main(){
                 int uid{static_cast<int>(parsed["uid"].i())};
 
                 Item item = DBCore::getItem(name, db);
-                if (item.id() == -1){
+                if (item.id() == -1){ //ingredient does not exist
                     conn.send_text("{\"status\":\"error\",\"message\":\"Ingredient does not exist.\"}");
                     return;
                 }
@@ -234,12 +234,12 @@ int main(){
                     return;
                 }
                 crow::json::wvalue response = item.toJson();
-            } else if (parsed["op"] == "getlist"){
+            } else if (parsed["op"] == "getlist"){//this returns list of saved items by user
                 int uid{static_cast<int>(parsed["uid"].i())};
                 crow::json::wvalue response = DBCore::getItemList(uid, db);
                 response["status"] = "success";
                 conn.send_text(response.dump());
-            } else if (parsed["op"] == "delitem"){
+            } else if (parsed["op"] == "delitem"){//this deletes an item from user in db
                 int uid{static_cast<int>(parsed["uid"].i())};
                 int iid{static_cast<int>(parsed["iid"].i())};
                 Item toDelete = DBCore::getItem(iid, db);
@@ -251,10 +251,10 @@ int main(){
                     CROW_LOG_ERROR << "Error deleting item from inventory: ";
                     conn.send_text("{\"status\":\"error\",\"message\":\"Server error removing item.\"}");
                 }
-            }else if (parsed["op"] == "addReceipt"){
+            }else if (parsed["op"] == "addReceipt"){//this is how we add receipt data
                     int uid{static_cast<int>(parsed["uid"].i())};
                     std::vector<std::string> ingredients{};
-                    for(crow::json::rvalue& ing : parsed["ingredients"].lo()){
+                    for(crow::json::rvalue& ing : parsed["ingredients"].lo()){//for loop to allow for multiple scanned items to be added
                         Item item = DBCore::getItem(ing.s(), db);
                         try {
                             CROW_LOG_DEBUG << DBCore::addItem(uid, item, db);
@@ -289,7 +289,7 @@ int main(){
 
         parsed = crow::json::load(data);
 
-        if (parsed["op"] == "getrecipes"){
+        if (parsed["op"] == "getrecipes"){//if op is to get recipes
             UserRecSys urs;
             int uid = parsed["uid"].i();
 
@@ -334,7 +334,7 @@ int main(){
         crow::json::rvalue parsed;
 
         parsed = crow::json::load(data);
-        if (parsed["op"] == "save" && parsed["uid"]) {
+        if (parsed["op"] == "save" && parsed["uid"]) {//this saves prefs if user is logged in
             std::vector<std::string> saved {};
             int uid = parsed["uid"].i();
             for (auto& items: parsed["saved"]) {
@@ -343,7 +343,7 @@ int main(){
             }
             usr.save(saved, uid);
         }
-        if (parsed["op"] == "load" && parsed["uid"]) {
+        if (parsed["op"] == "load" && parsed["uid"]) {//this loads prefs if user is logged in to keep prefs even after logout
             CROW_LOG_DEBUG << "Loading User Prefs";
             std::string loadPref;
             int uid = parsed["uid"].i();
