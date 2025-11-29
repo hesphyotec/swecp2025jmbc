@@ -1,0 +1,98 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/winsock_init.ipp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// detail/impl/winsock_init.ipp
+        -:    3:// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_DETAIL_IMPL_WINSOCK_INIT_IPP
+        -:   12:#define ASIO_DETAIL_IMPL_WINSOCK_INIT_IPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:
+        -:   20:#if defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+        -:   21:
+        -:   22:#include "asio/detail/socket_types.hpp"
+        -:   23:#include "asio/detail/winsock_init.hpp"
+        -:   24:#include "asio/detail/throw_error.hpp"
+        -:   25:#include "asio/error.hpp"
+        -:   26:
+        -:   27:#include "asio/detail/push_options.hpp"
+        -:   28:
+        -:   29:namespace asio {
+        -:   30:namespace detail {
+        -:   31:
+function _ZN4asio6detail17winsock_init_base7startupERNS1_4dataEhh called 1 returned 100% blocks executed 100%
+        1:   32:void winsock_init_base::startup(data& d,
+        -:   33:    unsigned char major, unsigned char minor)
+        -:   34:{
+        1:   35:  if (::InterlockedIncrement(&d.init_count_) == 1)
+        1:   35-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -:   36:  {
+        -:   37:    WSADATA wsa_data;
+        1:   38:    long result = ::WSAStartup(MAKEWORD(major, minor), &wsa_data);
+        1:   38-block  0
+call    0 returned 1
+        1:   39:    ::InterlockedExchange(&d.result_, result);
+        -:   40:  }
+        1:   41:}
+        -:   42:
+        -:   43:void winsock_init_base::manual_startup(data& d)
+        -:   44:{
+        -:   45:  if (::InterlockedIncrement(&d.init_count_) == 1)
+        -:   46:  {
+        -:   47:    ::InterlockedExchange(&d.result_, 0);
+        -:   48:  }
+        -:   49:}
+        -:   50:
+function _ZN4asio6detail17winsock_init_base7cleanupERNS1_4dataE called 0 returned 0% blocks executed 0%
+    #####:   51:void winsock_init_base::cleanup(data& d)
+        -:   52:{
+    #####:   53:  if (::InterlockedDecrement(&d.init_count_) == 0)
+    %%%%%:   53-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -:   54:  {
+    #####:   55:    ::WSACleanup();
+    %%%%%:   55-block  0
+call    0 never executed
+        -:   56:  }
+    #####:   57:}
+        -:   58:
+        -:   59:void winsock_init_base::manual_cleanup(data& d)
+        -:   60:{
+        -:   61:  ::InterlockedDecrement(&d.init_count_);
+        -:   62:}
+        -:   63:
+        -:   64:void winsock_init_base::throw_on_error(data& d)
+        -:   65:{
+        -:   66:  long result = ::InterlockedExchangeAdd(&d.result_, 0);
+        -:   67:  if (result != 0)
+        -:   68:  {
+        -:   69:    asio::error_code ec(result,
+        -:   70:        asio::error::get_system_category());
+        -:   71:    asio::detail::throw_error(ec, "winsock");
+        -:   72:  }
+        -:   73:}
+        -:   74:
+        -:   75:} // namespace detail
+        -:   76:} // namespace asio
+        -:   77:
+        -:   78:#include "asio/detail/pop_options.hpp"
+        -:   79:
+        -:   80:#endif // defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+        -:   81:
+        -:   82:#endif // ASIO_DETAIL_IMPL_WINSOCK_INIT_IPP

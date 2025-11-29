@@ -1,0 +1,8 @@
+# ninja log v6
+7	41146	7860610135777051	CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.obj	68f2bc64b39b3c27
+13	1851	7860610135837062	CMakeFiles/swecp2025jmbc.dir/include/bcrypt.cpp.obj	2fc5537d68896c9f
+18	530	7860610135887058	CMakeFiles/swecp2025jmbc.dir/include/blowfish.cpp.obj	ed27a92dcd04ec3e
+8751	9152	7860800435558537	swecp2025jmbc.exe	b9813ff43218b081
+5	8745	7860800348094240	CMakeFiles/swecp2025jmbc.dir/bgezrecTest.cpp.obj	ddc0395c4c733c6b
+3	245	7860806575128698	build.ninja	6b26fde4d95f2b30
+4	26467	7860790351811790	CMakeFiles/swecp2025jmbc.dir/app.cpp.obj	6d7a6464d06aec27

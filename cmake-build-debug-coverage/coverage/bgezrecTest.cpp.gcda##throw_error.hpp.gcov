@@ -1,0 +1,70 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/throw_error.hpp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// detail/throw_error.hpp
+        -:    3:// ~~~~~~~~~~~~~~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_DETAIL_THROW_ERROR_HPP
+        -:   12:#define ASIO_DETAIL_THROW_ERROR_HPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:#include "asio/detail/throw_exception.hpp"
+        -:   20:#include "asio/error_code.hpp"
+        -:   21:
+        -:   22:#include "asio/detail/push_options.hpp"
+        -:   23:
+        -:   24:namespace asio {
+        -:   25:namespace detail {
+        -:   26:
+        -:   27:ASIO_DECL void do_throw_error(
+        -:   28:    const asio::error_code& err
+        -:   29:    ASIO_SOURCE_LOCATION_PARAM);
+        -:   30:
+        -:   31:ASIO_DECL void do_throw_error(
+        -:   32:    const asio::error_code& err,
+        -:   33:    const char* location
+        -:   34:    ASIO_SOURCE_LOCATION_PARAM);
+        -:   35:
+        -:   36:inline void throw_error(
+        -:   37:    const asio::error_code& err
+        -:   38:    ASIO_SOURCE_LOCATION_DEFAULTED_PARAM)
+        -:   39:{
+        -:   40:  if (err)
+        -:   41:    do_throw_error(err ASIO_SOURCE_LOCATION_ARG);
+        -:   42:}
+        -:   43:
+        -:   44:inline void throw_error(
+        -:   45:    const asio::error_code& err,
+        -:   46:    const char* location
+        -:   47:    ASIO_SOURCE_LOCATION_DEFAULTED_PARAM)
+        -:   48:{
+    #####:   49:  if (err)
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:   50:    do_throw_error(err, location ASIO_SOURCE_LOCATION_ARG);
+    %%%%%:   50-block  0
+call    0 never executed
+        -:   51:}
+        -:   52:
+        -:   53:} // namespace detail
+        -:   54:} // namespace asio
+        -:   55:
+        -:   56:#include "asio/detail/pop_options.hpp"
+        -:   57:
+        -:   58:#if defined(ASIO_HEADER_ONLY)
+        -:   59:# include "asio/detail/impl/throw_error.ipp"
+        -:   60:#endif // defined(ASIO_HEADER_ONLY)
+        -:   61:
+        -:   62:#endif // ASIO_DETAIL_THROW_ERROR_HPP

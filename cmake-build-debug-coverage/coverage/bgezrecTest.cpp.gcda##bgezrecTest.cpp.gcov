@@ -1,0 +1,886 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/bgezrecTest.cpp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#ifdef _WIN32
+        -:    2:#include <windows.h>
+        -:    3:#include <bcrypt.h>
+        -:    4:#endif
+        -:    5:#include <iostream>
+        -:    6:#include <vector>
+        -:    7:#include <String>
+        -:    8:#include "bgezrecs.h"
+        -:    9:#include "crow.h"
+        -:   10:#include "asio.hpp"
+        -:   11:#include "bgezdb.h"
+        -:   12:
+function main called 1 returned 100% blocks executed 60%
+        1:   13:int main () {
+        1:   14:    UserRecSys user;
+        1:   14-block  0
+call    0 returned 1
+        -:   15:    Recommend rec;
+        -:   16:
+        2:   17:    const bool test1 = stringToTrait("Chinese") == 10;
+call    0 returned 1
+        1:   17-block  0
+call    1 returned 1
+call    2 returned 1
+        1:   18:    std::cout << "1: " << test1 << "\n";
+call    0 returned 1
+        2:   19:    const bool test2 = stringToTrait("Breakfast") == 1;
+call    0 returned 1
+        1:   19-block  0
+call    1 returned 1
+call    2 returned 1
+        1:   20:    std::cout << "2: " << test2 << "\n";
+call    0 returned 1
+        2:   21:    const bool test3 = stringToTrait("FISH") == -1;
+call    0 returned 1
+        1:   21-block  0
+call    1 returned 1
+call    2 returned 1
+        1:   22:    std::cout << "3: " << test3 << "\n";
+call    0 returned 1
+        -:   23:
+        1:   24:    const bool test4 = traitToString(10) == "Chinese";
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   25:    std::cout << "4: " << test4 << "\n";
+call    0 returned 1
+        1:   26:    const bool test5 = traitToString(1) == "Breakfast";
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   27:    std::cout << "5: "  << test5 << "\n";
+call    0 returned 1
+        1:   28:    const bool test6 = traitToString(157) == "Unknown";
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   29:    std::cout << "6: " << test6 << "\n";
+call    0 returned 1
+        -:   30:
+        1:   31:    const bool test7 = user.userIngredientParser(5) == std::vector<int>{60}; //These are found in the DB, might be different
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   31-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   31-block  1
+call    7 never executed
+        1:   32:    std::cout << "7: " << test7 << "\n";
+call    0 returned 1
+        1:   33:    const bool test8 = user.userIngredientParser(4)== std::vector<int>{60}; //if you were to test it locally
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   33-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   33-block  1
+call    7 never executed
+        1:   34:    std::cout << "8: " << test8 << "\n";
+call    0 returned 1
+        1:   35:    const bool test9 = user.userIngredientParser(9).empty();
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   36:    std::cout << "9: " << test9 << "\n";
+call    0 returned 1
+        -:   37:
+        1:   38:    const bool test10 = user.userMealParser(1).empty();
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   39:    std::cout << "10: " << test10 << "\n";
+call    0 returned 1
+        1:   40:    const bool test11 = user.userPrefParser(1) == "1 2";
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   41:    std::cout << "11: " << test11 << "\n";
+call    0 returned 1
+        2:   42:    const bool test12 = user.userPrefParser(2).empty();
+call    0 returned 1
+call    1 returned 1
+        1:   43:    std::cout << "12: " << test12 << "\n";
+call    0 returned 1
+        -:   44:
+        3:   45:    const bool test13 = user.ingredientToVector({2}) != std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   45-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   45-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   45-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   45-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   45-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   45-block  5
+call   16 returned 1
+    $$$$$:   45-block  6
+call   17 never executed
+    $$$$$:   45-block  7
+call   18 never executed
+    $$$$$:   45-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   45-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   46:    std::cout << "13: " << test13 << "\n";
+call    0 returned 1
+        3:   47:    const bool test14 = user.ingredientToVector({1,2})!= std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   47-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   47-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   47-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   47-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   47-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   47-block  5
+call   16 returned 1
+    $$$$$:   47-block  6
+call   17 never executed
+    $$$$$:   47-block  7
+call   18 never executed
+    $$$$$:   47-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   47-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   48:    std::cout << "14: " << test14 << "\n";
+call    0 returned 1
+        3:   49:    const bool test15 = user.ingredientToVector({9999}) == std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   49-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   49-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   49-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   49-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   49-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   49-block  5
+call   16 returned 1
+    $$$$$:   49-block  6
+call   17 never executed
+    $$$$$:   49-block  7
+call   18 never executed
+    $$$$$:   49-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   49-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   50:    std::cout << "15: " << test15 << "\n";
+call    0 returned 1
+        3:   51:    const bool test16 = user.ingredientToVector({})== std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   51-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   51-block  1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+        2:   51-block  2
+branch  9 taken 1 (fallthrough)
+branch 10 taken 1
+        1:   51-block  3
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+        1:   51-block  4
+call   13 returned 1
+    $$$$$:   51-block  5
+call   14 never executed
+    $$$$$:   51-block  6
+call   15 never executed
+    $$$$$:   51-block  7
+branch 16 never executed (fallthrough)
+branch 17 never executed
+    $$$$$:   51-block  8
+branch 18 never executed (fallthrough)
+branch 19 never executed
+        1:   52:    std::cout << "16: " << test16 << "\n";
+call    0 returned 1
+        -:   53:
+        3:   54:    const bool test17 = user.mealToVector({52764}) != std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   54-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   54-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   54-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   54-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   54-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   54-block  5
+call   16 returned 1
+    $$$$$:   54-block  6
+call   17 never executed
+    $$$$$:   54-block  7
+call   18 never executed
+    $$$$$:   54-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   54-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   55:    std::cout << "17: " << test17 << "\n";
+call    0 returned 1
+        3:   56:    const bool test18 = user.mealToVector({52764,52765})!= std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   56-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   56-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   56-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   56-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   56-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   56-block  5
+call   16 returned 1
+    $$$$$:   56-block  6
+call   17 never executed
+    $$$$$:   56-block  7
+call   18 never executed
+    $$$$$:   56-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   56-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   57:    std::cout << "18: " << test18 << "\n";
+call    0 returned 1
+        3:   58:    const bool test19 = user.mealToVector({9999}) == std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   58-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   58-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   58-block  2
+call    9 returned 1
+call   10 returned 1
+call   11 returned 1
+        2:   58-block  3
+branch 12 taken 1 (fallthrough)
+branch 13 taken 1
+        1:   58-block  4
+branch 14 taken 0 (fallthrough)
+branch 15 taken 1
+        1:   58-block  5
+call   16 returned 1
+    $$$$$:   58-block  6
+call   17 never executed
+    $$$$$:   58-block  7
+call   18 never executed
+    $$$$$:   58-block  8
+branch 19 never executed (fallthrough)
+branch 20 never executed
+    $$$$$:   58-block  9
+branch 21 never executed (fallthrough)
+branch 22 never executed
+        1:   59:    std::cout << "19: " << test19 << "\n";
+call    0 returned 1
+        3:   60:    const bool test20 = user.mealToVector({})== std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   60-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   60-block  1
+call    6 returned 1
+call    7 returned 1
+call    8 returned 1
+        2:   60-block  2
+branch  9 taken 1 (fallthrough)
+branch 10 taken 1
+        1:   60-block  3
+branch 11 taken 0 (fallthrough)
+branch 12 taken 1
+        1:   60-block  4
+call   13 returned 1
+    $$$$$:   60-block  5
+call   14 never executed
+    $$$$$:   60-block  6
+call   15 never executed
+    $$$$$:   60-block  7
+branch 16 never executed (fallthrough)
+branch 17 never executed
+    $$$$$:   60-block  8
+branch 18 never executed (fallthrough)
+branch 19 never executed
+        1:   61:    std::cout << "20: " << test20 << "\n";
+call    0 returned 1
+        -:   62:
+        3:   63:    const bool test21 = user.outputVector(user.ingredientToVector({2}), user.mealToVector({52764})) != std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   63-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   63-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   63-block  2
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+        1:   63-block  3
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+        1:   63-block  4
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+        1:   63-block  5
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+        2:   63-block  6
+branch 24 taken 1 (fallthrough)
+branch 25 taken 1
+        1:   63-block  7
+branch 26 taken 0 (fallthrough)
+branch 27 taken 1
+        1:   63-block  8
+call   28 returned 1
+    $$$$$:   63-block  9
+call   29 never executed
+    $$$$$:   63-block 10
+call   30 never executed
+    $$$$$:   63-block 11
+call   31 never executed
+    $$$$$:   63-block 12
+call   32 never executed
+    $$$$$:   63-block 13
+call   33 never executed
+    $$$$$:   63-block 14
+branch 34 never executed (fallthrough)
+branch 35 never executed
+    $$$$$:   63-block 15
+branch 36 never executed (fallthrough)
+branch 37 never executed
+        1:   64:    std::cout << "21: " << test21 << "\n";
+call    0 returned 1
+        3:   65:    const bool test22 = user.outputVector(user.ingredientToVector({1,2}),user.mealToVector({52764,52765}))!= std::vector<std::vector<double>>{{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   65-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   65-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   65-block  2
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+        1:   65-block  3
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+        1:   65-block  4
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+        1:   65-block  5
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+        2:   65-block  6
+branch 24 taken 1 (fallthrough)
+branch 25 taken 1
+        1:   65-block  7
+branch 26 taken 0 (fallthrough)
+branch 27 taken 1
+        1:   65-block  8
+call   28 returned 1
+    $$$$$:   65-block  9
+call   29 never executed
+    $$$$$:   65-block 10
+call   30 never executed
+    $$$$$:   65-block 11
+call   31 never executed
+    $$$$$:   65-block 12
+call   32 never executed
+    $$$$$:   65-block 13
+call   33 never executed
+    $$$$$:   65-block 14
+branch 34 never executed (fallthrough)
+branch 35 never executed
+    $$$$$:   65-block 15
+branch 36 never executed (fallthrough)
+branch 37 never executed
+        1:   66:    std::cout << "22: " << test22 << "\n";
+call    0 returned 1
+        4:   67:    const bool test23 = user.outputVector(user.ingredientToVector({9999}), user.mealToVector({9999}))== std::vector<std::vector<double>>{{},{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   67-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   67-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   67-block  2
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+        1:   67-block  3
+call   12 returned 1
+branch 13 taken 1 (fallthrough)
+branch 14 taken 0 (throw)
+        1:   67-block  4
+call   15 returned 1
+branch 16 taken 1 (fallthrough)
+branch 17 taken 0 (throw)
+        1:   67-block  5
+call   18 returned 1
+call   19 returned 1
+call   20 returned 1
+call   21 returned 1
+call   22 returned 1
+call   23 returned 1
+        3:   67-block  6
+branch 24 taken 2 (fallthrough)
+branch 25 taken 1
+        2:   67-block  7
+branch 26 taken 0 (fallthrough)
+branch 27 taken 2
+        1:   67-block  8
+call   28 returned 1
+    $$$$$:   67-block  9
+call   29 never executed
+    $$$$$:   67-block 10
+call   30 never executed
+    $$$$$:   67-block 11
+call   31 never executed
+    $$$$$:   67-block 12
+call   32 never executed
+    $$$$$:   67-block 13
+call   33 never executed
+    $$$$$:   67-block 14
+branch 34 never executed (fallthrough)
+branch 35 never executed
+    $$$$$:   67-block 15
+branch 36 never executed (fallthrough)
+branch 37 never executed
+        1:   68:    std::cout << "23: " << test23 << "\n";
+call    0 returned 1
+        4:   69:    const bool test24 = user.outputVector(user.ingredientToVector({}),user.mealToVector({})) == std::vector<std::vector<double>>{{},{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   69-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   69-block  1
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+        1:   69-block  2
+call    9 returned 1
+branch 10 taken 1 (fallthrough)
+branch 11 taken 0 (throw)
+        1:   69-block  3
+call   12 returned 1
+call   13 returned 1
+call   14 returned 1
+call   15 returned 1
+call   16 returned 1
+call   17 returned 1
+        3:   69-block  4
+branch 18 taken 2 (fallthrough)
+branch 19 taken 1
+        2:   69-block  5
+branch 20 taken 0 (fallthrough)
+branch 21 taken 2
+        1:   69-block  6
+call   22 returned 1
+    $$$$$:   69-block  7
+call   23 never executed
+    $$$$$:   69-block  8
+call   24 never executed
+    $$$$$:   69-block  9
+call   25 never executed
+    $$$$$:   69-block 10
+call   26 never executed
+    $$$$$:   69-block 11
+call   27 never executed
+    $$$$$:   69-block 12
+branch 28 never executed (fallthrough)
+branch 29 never executed
+    $$$$$:   69-block 13
+branch 30 never executed (fallthrough)
+branch 31 never executed
+        1:   70:    std::cout << "24: " << test24 << "\n";
+call    0 returned 1
+        -:   71:
+        4:   72:    const bool test25 = user.userGather(1) != std::vector<std::vector<double>>{{},{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   72-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   72-block  1
+call    6 returned 1
+call    7 returned 1
+        3:   72-block  2
+branch  8 taken 2 (fallthrough)
+branch  9 taken 1
+        2:   72-block  3
+branch 10 taken 0 (fallthrough)
+branch 11 taken 2
+        1:   72-block  4
+call   12 returned 1
+    $$$$$:   72-block  5
+call   13 never executed
+    $$$$$:   72-block  6
+branch 14 never executed (fallthrough)
+branch 15 never executed
+    $$$$$:   72-block  7
+branch 16 never executed (fallthrough)
+branch 17 never executed
+        1:   73:    std::cout << "25: " << test25 << "\n";
+call    0 returned 1
+        4:   74:    const bool test26 = user.userGather(2) == std::vector<std::vector<double>>{{},{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   74-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   74-block  1
+call    6 returned 1
+call    7 returned 1
+        3:   74-block  2
+branch  8 taken 2 (fallthrough)
+branch  9 taken 1
+        2:   74-block  3
+branch 10 taken 0 (fallthrough)
+branch 11 taken 2
+        1:   74-block  4
+call   12 returned 1
+    $$$$$:   74-block  5
+call   13 never executed
+    $$$$$:   74-block  6
+branch 14 never executed (fallthrough)
+branch 15 never executed
+    $$$$$:   74-block  7
+branch 16 never executed (fallthrough)
+branch 17 never executed
+        1:   75:    std::cout << "26: " << test26 << "\n";
+call    0 returned 1
+        4:   76:    const bool test27 = user.userGather(9999) == std::vector<std::vector<double>>{{},{}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   76-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   76-block  1
+call    6 returned 1
+call    7 returned 1
+        3:   76-block  2
+branch  8 taken 2 (fallthrough)
+branch  9 taken 1
+        2:   76-block  3
+branch 10 taken 0 (fallthrough)
+branch 11 taken 2
+        1:   76-block  4
+call   12 returned 1
+    $$$$$:   76-block  5
+call   13 never executed
+    $$$$$:   76-block  6
+branch 14 never executed (fallthrough)
+branch 15 never executed
+    $$$$$:   76-block  7
+branch 16 never executed (fallthrough)
+branch 17 never executed
+        1:   77:    std::cout << "27: " << test27 << "\n";
+call    0 returned 1
+        -:   78:
+        1:   79:    user.save({"Breakfast"}, 3);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   79-block  0
+call    4 returned 1
+    $$$$$:   79-block  1
+call    5 never executed
+        1:   80:    user.save({"Breakfast", "Chinese"}, 3);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   80-block  0
+call    4 returned 1
+    $$$$$:   80-block  1
+call    5 never executed
+        1:   81:    user.save({"Yuck"}, 3);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   81-block  0
+call    4 returned 1
+    $$$$$:   81-block  1
+call    5 never executed
+        1:   82:    user.save({"Breakfast"}, 99999);
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   82-block  0
+call    4 returned 1
+call    5 returned 1
+branch  6 taken 1 (fallthrough)
+branch  7 taken 0 (throw)
+    $$$$$:   82-block  1
+call    8 never executed
+        1:   83:    user.save({}, 3);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   83-block  0
+call    3 returned 1
+    $$$$$:   83-block  1
+call    4 never executed
+        -:   84:
+        2:   85:    const bool test28 = rec.fromKeyword(1) != std::vector<std::pair<std::string, std::string>>{{"",""}};
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   85-block  0
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1:   85-block  1
+call    6 returned 1
+call    7 returned 1
+        2:   85-block  2
+branch  8 taken 1 (fallthrough)
+branch  9 taken 1
+        1:   85-block  3
+call   10 returned 1
+        1:   85-block  4
+call   11 returned 1
+    $$$$$:   85-block  5
+call   12 never executed
+    $$$$$:   85-block  6
+branch 13 never executed (fallthrough)
+branch 14 never executed
+    $$$$$:   85-block  7
+call   15 never executed
+        1:   86:    std::cout << "28: " << test28 << "\n";
+call    0 returned 1
+        1:   87:    const bool test29 = rec.fromKeyword(3).empty();
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   88:    std::cout << "29: " << test29 << "\n";
+call    0 returned 1
+        1:   89:    const bool test30 = rec.fromKeyword(99999).empty();
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   90:    std::cout << "30: " << test30 << "\n";
+call    0 returned 1
+        -:   91:
+        1:   92:    rec.doIt(1,user.userGather(1) );
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   92-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   92-block  1
+call    7 never executed
+        1:   93:    std::cout << "31: 0 0 0 0 0 0 0 0 0 0" << "\n";
+call    0 returned 1
+        1:   94:    rec.doIt(9999, user.userGather(1));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   94-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   94-block  1
+call    7 never executed
+        1:   95:    std::cout << "32: 0 0 0 0 0 0 0 0 0 0" << "\n";
+call    0 returned 1
+        1:   96:    rec.doIt(1,user.userGather(9999));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   96-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   96-block  1
+call    7 never executed
+        1:   97:    std::cout << "33: 0 0 0 0 0 0 0 0 0 0" << "\n";
+call    0 returned 1
+        1:   98:    rec.doIt(9999,user.userGather(9999));
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:   98-block  0
+call    4 returned 1
+call    5 returned 1
+call    6 returned 1
+    $$$$$:   98-block  1
+call    7 never executed
+        1:   99:    std::cout << "34: 0 0 0 0 0 0 0 0 0 0" << "\n";
+call    0 returned 1
+        -:  100:    
+        3:  101:    std::cout << rec.getInstructions("Bread omelette").dump()  << "\n";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:  101-block  0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+    $$$$$:  101-block  1
+call    8 never executed
+        3:  102:    std::cout << rec.getInstructions("Yummy Food").dump() << "\n";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:  102-block  0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+    $$$$$:  102-block  1
+call    8 never executed
+        4:  103:    std::cout << rec.getInstructions("").dump() << "\n";
+call    0 returned 1
+call    1 returned 1
+branch  2 taken 1 (fallthrough)
+branch  3 taken 0 (throw)
+        1:  103-block  0
+call    4 returned 1
+branch  5 taken 1 (fallthrough)
+branch  6 taken 0 (throw)
+call    7 returned 1
+    $$$$$:  103-block  1
+call    8 never executed
+        -:  104:    return 0;
+        1:  105:}
+call    0 returned 1

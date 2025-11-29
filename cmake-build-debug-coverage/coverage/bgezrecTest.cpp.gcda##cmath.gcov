@@ -1,0 +1,3728 @@
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cmath
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1:// -*- C++ -*- C forwarding header.
+        -:    2:
+        -:    3:// Copyright (C) 1997-2023 Free Software Foundation, Inc.
+        -:    4://
+        -:    5:// This file is part of the GNU ISO C++ Library.  This library is free
+        -:    6:// software; you can redistribute it and/or modify it under the
+        -:    7:// terms of the GNU General Public License as published by the
+        -:    8:// Free Software Foundation; either version 3, or (at your option)
+        -:    9:// any later version.
+        -:   10:
+        -:   11:// This library is distributed in the hope that it will be useful,
+        -:   12:// but WITHOUT ANY WARRANTY; without even the implied warranty of
+        -:   13:// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        -:   14:// GNU General Public License for more details.
+        -:   15:
+        -:   16:// Under Section 7 of GPL version 3, you are granted additional
+        -:   17:// permissions described in the GCC Runtime Library Exception, version
+        -:   18:// 3.1, as published by the Free Software Foundation.
+        -:   19:
+        -:   20:// You should have received a copy of the GNU General Public License and
+        -:   21:// a copy of the GCC Runtime Library Exception along with this program;
+        -:   22:// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+        -:   23:// <http://www.gnu.org/licenses/>.
+        -:   24:
+        -:   25:/** @file include/cmath
+        -:   26: *  This is a Standard C++ Library file.  You should @c \#include this file
+        -:   27: *  in your programs, rather than any of the @a *.h implementation files.
+        -:   28: *
+        -:   29: *  This is the C++ version of the Standard C Library header @c math.h,
+        -:   30: *  and its contents are (mostly) the same as that header, but are all
+        -:   31: *  contained in the namespace @c std (except for names which are defined
+        -:   32: *  as macros in C).
+        -:   33: */
+        -:   34:
+        -:   35://
+        -:   36:// ISO C++ 14882: 26.5  C library
+        -:   37://
+        -:   38:
+        -:   39:#pragma GCC system_header
+        -:   40:
+        -:   41:#include <bits/requires_hosted.h>
+        -:   42:
+        -:   43:#include <bits/c++config.h>
+        -:   44:#include <bits/cpp_type_traits.h>
+        -:   45:#include <ext/type_traits.h>
+        -:   46:#define _GLIBCXX_INCLUDE_NEXT_C_HEADERS
+        -:   47:#include_next <math.h>
+        -:   48:#undef _GLIBCXX_INCLUDE_NEXT_C_HEADERS
+        -:   49:#include <bits/std_abs.h>
+        -:   50:
+        -:   51:#ifndef _GLIBCXX_CMATH
+        -:   52:#define _GLIBCXX_CMATH 1
+        -:   53:
+        -:   54:// Get rid of those macros defined in <math.h> in lieu of real functions.
+        -:   55:#undef div
+        -:   56:#undef acos
+        -:   57:#undef asin
+        -:   58:#undef atan
+        -:   59:#undef atan2
+        -:   60:#undef ceil
+        -:   61:#undef cos
+        -:   62:#undef cosh
+        -:   63:#undef exp
+        -:   64:#undef fabs
+        -:   65:#undef floor
+        -:   66:#undef fmod
+        -:   67:#undef frexp
+        -:   68:#undef ldexp
+        -:   69:#undef log
+        -:   70:#undef log10
+        -:   71:#undef modf
+        -:   72:#undef pow
+        -:   73:#undef sin
+        -:   74:#undef sinh
+        -:   75:#undef sqrt
+        -:   76:#undef tan
+        -:   77:#undef tanh
+        -:   78:
+        -:   79:extern "C++"
+        -:   80:{
+        -:   81:namespace std _GLIBCXX_VISIBILITY(default)
+        -:   82:{
+        -:   83:_GLIBCXX_BEGIN_NAMESPACE_VERSION
+        -:   84:
+        -:   85:  using ::acos;
+        -:   86:
+        -:   87:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:   88:  inline _GLIBCXX_CONSTEXPR float
+        -:   89:  acos(float __x)
+        -:   90:  { return __builtin_acosf(__x); }
+        -:   91:
+        -:   92:  inline _GLIBCXX_CONSTEXPR long double
+        -:   93:  acos(long double __x)
+        -:   94:  { return __builtin_acosl(__x); }
+        -:   95:#endif
+        -:   96:
+        -:   97:  template<typename _Tp>
+        -:   98:    inline _GLIBCXX_CONSTEXPR
+        -:   99:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  100:                                    double>::__type
+        -:  101:    acos(_Tp __x)
+        -:  102:    { return __builtin_acos(__x); }
+        -:  103:
+        -:  104:  using ::asin;
+        -:  105:
+        -:  106:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  107:  inline _GLIBCXX_CONSTEXPR float
+        -:  108:  asin(float __x)
+        -:  109:  { return __builtin_asinf(__x); }
+        -:  110:
+        -:  111:  inline _GLIBCXX_CONSTEXPR long double
+        -:  112:  asin(long double __x)
+        -:  113:  { return __builtin_asinl(__x); }
+        -:  114:#endif
+        -:  115:
+        -:  116:  template<typename _Tp>
+        -:  117:    inline _GLIBCXX_CONSTEXPR
+        -:  118:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  119:                                    double>::__type
+        -:  120:    asin(_Tp __x)
+        -:  121:    { return __builtin_asin(__x); }
+        -:  122:
+        -:  123:  using ::atan;
+        -:  124:
+        -:  125:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  126:  inline _GLIBCXX_CONSTEXPR float
+        -:  127:  atan(float __x)
+        -:  128:  { return __builtin_atanf(__x); }
+        -:  129:
+        -:  130:  inline _GLIBCXX_CONSTEXPR long double
+        -:  131:  atan(long double __x)
+        -:  132:  { return __builtin_atanl(__x); }
+        -:  133:#endif
+        -:  134:
+        -:  135:  template<typename _Tp>
+        -:  136:    inline _GLIBCXX_CONSTEXPR
+        -:  137:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  138:                                    double>::__type
+        -:  139:    atan(_Tp __x)
+        -:  140:    { return __builtin_atan(__x); }
+        -:  141:
+        -:  142:  using ::atan2;
+        -:  143:
+        -:  144:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  145:  inline _GLIBCXX_CONSTEXPR float
+        -:  146:  atan2(float __y, float __x)
+        -:  147:  { return __builtin_atan2f(__y, __x); }
+        -:  148:
+        -:  149:  inline _GLIBCXX_CONSTEXPR long double
+        -:  150:  atan2(long double __y, long double __x)
+        -:  151:  { return __builtin_atan2l(__y, __x); }
+        -:  152:#endif
+        -:  153:
+        -:  154:  template<typename _Tp, typename _Up>
+        -:  155:    inline _GLIBCXX_CONSTEXPR
+        -:  156:    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -:  157:    atan2(_Tp __y, _Up __x)
+        -:  158:    {
+        -:  159:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -:  160:      return atan2(__type(__y), __type(__x));
+        -:  161:    }
+        -:  162:
+        -:  163:  using ::ceil;
+        -:  164:
+        -:  165:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  166:  inline _GLIBCXX_CONSTEXPR float
+        -:  167:  ceil(float __x)
+        -:  168:  { return __builtin_ceilf(__x); }
+        -:  169:
+        -:  170:  inline _GLIBCXX_CONSTEXPR long double
+        -:  171:  ceil(long double __x)
+        -:  172:  { return __builtin_ceill(__x); }
+        -:  173:#endif
+        -:  174:
+        -:  175:  template<typename _Tp>
+        -:  176:    inline _GLIBCXX_CONSTEXPR
+        -:  177:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  178:                                    double>::__type
+        -:  179:    ceil(_Tp __x)
+        -:  180:    { return __builtin_ceil(__x); }
+        -:  181:
+        -:  182:  using ::cos;
+        -:  183:
+        -:  184:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  185:  inline _GLIBCXX_CONSTEXPR float
+        -:  186:  cos(float __x)
+        -:  187:  { return __builtin_cosf(__x); }
+        -:  188:
+        -:  189:  inline _GLIBCXX_CONSTEXPR long double
+        -:  190:  cos(long double __x)
+        -:  191:  { return __builtin_cosl(__x); }
+        -:  192:#endif
+        -:  193:
+        -:  194:  template<typename _Tp>
+        -:  195:    inline _GLIBCXX_CONSTEXPR
+        -:  196:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  197:                                    double>::__type
+        -:  198:    cos(_Tp __x)
+        -:  199:    { return __builtin_cos(__x); }
+        -:  200:
+        -:  201:  using ::cosh;
+        -:  202:
+        -:  203:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  204:  inline _GLIBCXX_CONSTEXPR float
+        -:  205:  cosh(float __x)
+        -:  206:  { return __builtin_coshf(__x); }
+        -:  207:
+        -:  208:  inline _GLIBCXX_CONSTEXPR long double
+        -:  209:  cosh(long double __x)
+        -:  210:  { return __builtin_coshl(__x); }
+        -:  211:#endif
+        -:  212:
+        -:  213:  template<typename _Tp>
+        -:  214:    inline _GLIBCXX_CONSTEXPR
+        -:  215:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  216:                                    double>::__type
+        -:  217:    cosh(_Tp __x)
+        -:  218:    { return __builtin_cosh(__x); }
+        -:  219:
+        -:  220:  using ::exp;
+        -:  221:
+        -:  222:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  223:  inline _GLIBCXX_CONSTEXPR float
+        -:  224:  exp(float __x)
+        -:  225:  { return __builtin_expf(__x); }
+        -:  226:
+        -:  227:  inline _GLIBCXX_CONSTEXPR long double
+        -:  228:  exp(long double __x)
+        -:  229:  { return __builtin_expl(__x); }
+        -:  230:#endif
+        -:  231:
+        -:  232:  template<typename _Tp>
+        -:  233:    inline _GLIBCXX_CONSTEXPR
+        -:  234:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  235:                                    double>::__type
+        -:  236:    exp(_Tp __x)
+        -:  237:    { return __builtin_exp(__x); }
+        -:  238:
+        -:  239:  using ::fabs;
+        -:  240:
+        -:  241:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  242:  inline _GLIBCXX_CONSTEXPR float
+        -:  243:  fabs(float __x)
+        -:  244:  { return __builtin_fabsf(__x); }
+        -:  245:
+        -:  246:  inline _GLIBCXX_CONSTEXPR long double
+        -:  247:  fabs(long double __x)
+        -:  248:  { return __builtin_fabsl(__x); }
+        -:  249:#endif
+        -:  250:
+        -:  251:  template<typename _Tp>
+        -:  252:    inline _GLIBCXX_CONSTEXPR
+        -:  253:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  254:                                    double>::__type
+        -:  255:    fabs(_Tp __x)
+        -:  256:    { return __builtin_fabs(__x); }
+        -:  257:
+        -:  258:  using ::floor;
+        -:  259:
+        -:  260:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  261:  inline _GLIBCXX_CONSTEXPR float
+        -:  262:  floor(float __x)
+        -:  263:  { return __builtin_floorf(__x); }
+        -:  264:
+        -:  265:  inline _GLIBCXX_CONSTEXPR long double
+        -:  266:  floor(long double __x)
+        -:  267:  { return __builtin_floorl(__x); }
+        -:  268:#endif
+        -:  269:
+        -:  270:  template<typename _Tp>
+        -:  271:    inline _GLIBCXX_CONSTEXPR
+        -:  272:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  273:                                    double>::__type
+        -:  274:    floor(_Tp __x)
+        -:  275:    { return __builtin_floor(__x); }
+        -:  276:
+        -:  277:  using ::fmod;
+        -:  278:
+        -:  279:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  280:  inline _GLIBCXX_CONSTEXPR float
+        -:  281:  fmod(float __x, float __y)
+        -:  282:  { return __builtin_fmodf(__x, __y); }
+        -:  283:
+        -:  284:  inline _GLIBCXX_CONSTEXPR long double
+        -:  285:  fmod(long double __x, long double __y)
+        -:  286:  { return __builtin_fmodl(__x, __y); }
+        -:  287:#endif
+        -:  288:
+        -:  289:  template<typename _Tp, typename _Up>
+        -:  290:    inline _GLIBCXX_CONSTEXPR
+        -:  291:    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -:  292:    fmod(_Tp __x, _Up __y)
+        -:  293:    {
+        -:  294:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -:  295:      return fmod(__type(__x), __type(__y));
+        -:  296:    }
+        -:  297:
+        -:  298:  using ::frexp;
+        -:  299:
+        -:  300:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  301:  inline float
+        -:  302:  frexp(float __x, int* __exp)
+        -:  303:  { return __builtin_frexpf(__x, __exp); }
+        -:  304:
+        -:  305:  inline long double
+        -:  306:  frexp(long double __x, int* __exp)
+        -:  307:  { return __builtin_frexpl(__x, __exp); }
+        -:  308:#endif
+        -:  309:
+        -:  310:  template<typename _Tp>
+        -:  311:    inline _GLIBCXX_CONSTEXPR
+        -:  312:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  313:                                    double>::__type
+        -:  314:    frexp(_Tp __x, int* __exp)
+        -:  315:    { return __builtin_frexp(__x, __exp); }
+        -:  316:
+        -:  317:  using ::ldexp;
+        -:  318:
+        -:  319:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  320:  inline _GLIBCXX_CONSTEXPR float
+        -:  321:  ldexp(float __x, int __exp)
+        -:  322:  { return __builtin_ldexpf(__x, __exp); }
+        -:  323:
+        -:  324:  inline _GLIBCXX_CONSTEXPR long double
+        -:  325:  ldexp(long double __x, int __exp)
+        -:  326:  { return __builtin_ldexpl(__x, __exp); }
+        -:  327:#endif
+        -:  328:
+        -:  329:  template<typename _Tp>
+        -:  330:    inline _GLIBCXX_CONSTEXPR
+        -:  331:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  332:                                    double>::__type
+        -:  333:    ldexp(_Tp __x, int __exp)
+        -:  334:    { return __builtin_ldexp(__x, __exp); }
+        -:  335:
+        -:  336:  using ::log;
+        -:  337:
+        -:  338:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  339:  inline _GLIBCXX_CONSTEXPR float
+        -:  340:  log(float __x)
+        -:  341:  { return __builtin_logf(__x); }
+        -:  342:
+        -:  343:  inline _GLIBCXX_CONSTEXPR long double
+        -:  344:  log(long double __x)
+        -:  345:  { return __builtin_logl(__x); }
+        -:  346:#endif
+        -:  347:
+        -:  348:  template<typename _Tp>
+        -:  349:    inline _GLIBCXX_CONSTEXPR
+        -:  350:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  351:                                    double>::__type
+        -:  352:    log(_Tp __x)
+        -:  353:    { return __builtin_log(__x); }
+        -:  354:
+        -:  355:  using ::log10;
+        -:  356:
+        -:  357:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  358:  inline _GLIBCXX_CONSTEXPR float
+        -:  359:  log10(float __x)
+        -:  360:  { return __builtin_log10f(__x); }
+        -:  361:
+        -:  362:  inline _GLIBCXX_CONSTEXPR long double
+        -:  363:  log10(long double __x)
+        -:  364:  { return __builtin_log10l(__x); }
+        -:  365:#endif
+        -:  366:
+        -:  367:  template<typename _Tp>
+        -:  368:    inline _GLIBCXX_CONSTEXPR
+        -:  369:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -:  370:                                    double>::__type
+        -:  371:    log10(_Tp __x)
+        -:  372:    { return __builtin_log10(__x); }
+        -:  373:
+        -:  374:  using ::modf;
+        -:  375:
+        -:  376:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  377:  inline float
+        -:  378:  modf(float __x, float* __iptr)
+        -:  379:  { return __builtin_modff(__x, __iptr); }
+        -:  380:
+        -:  381:  inline long double
+        -:  382:  modf(long double __x, long double* __iptr)
+        -:  383:  { return __builtin_modfl(__x, __iptr); }
+        -:  384:#endif
+        -:  385:
+        -:  386:  using ::pow;
+        -:  387:
+        -:  388:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  389:  inline _GLIBCXX_CONSTEXPR float
+        -:  390:  pow(float __x, float __y)
+        -:  391:  { return __builtin_powf(__x, __y); }
+        -:  392:
+        -:  393:  inline _GLIBCXX_CONSTEXPR long double
+        -:  394:  pow(long double __x, long double __y)
+        -:  395:  { return __builtin_powl(__x, __y); }
+        -:  396:
+        -:  397:#if __cplusplus < 201103L
+        -:  398:  // _GLIBCXX_RESOLVE_LIB_DEFECTS
+        -:  399:  // DR 550. What should the return type of pow(float,int) be?
+        -:  400:  inline double
+        -:  401:  pow(double __x, int __i)
+        -:  402:  { return __builtin_powi(__x, __i); }
+        -:  403:
+        -:  404:  inline float
+        -:  405:  pow(float __x, int __n)
+        -:  406:  { return __builtin_powif(__x, __n); }
+        -:  407:
+        -:  408:  inline long double
+        -:  409:  pow(long double __x, int __n)
+        -:  410:  { return __builtin_powil(__x, __n); }
+        -:  411:#endif
+        -:  412:#endif
+        -:  413:
+        -:  414:  template<typename _Tp, typename _Up>
+        -:  415:    inline _GLIBCXX_CONSTEXPR
+        -:  416:    typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -:  417:    pow(_Tp __x, _Up __y)
+        -:  418:    {
+        -:  419:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -:  420:      return pow(__type(__x), __type(__y));
+        -:  421:    }
+        -:  422:
+        -:  423:  using ::sin;
+        -:  424:
+        -:  425:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  426:  inline _GLIBCXX_CONSTEXPR float
+        -:  427:  sin(float __x)
+        -:  428:  { return __builtin_sinf(__x); }
+        -:  429:
+        -:  430:  inline _GLIBCXX_CONSTEXPR long double
+        -:  431:  sin(long double __x)
+        -:  432:  { return __builtin_sinl(__x); }
+        -:  433:#endif
+        -:  434:
+        -:  435:  template<typename _Tp>
+        -:  436:    inline _GLIBCXX_CONSTEXPR
+        -:  437:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  438:                                    double>::__type
+        -:  439:    sin(_Tp __x)
+        -:  440:    { return __builtin_sin(__x); }
+        -:  441:
+        -:  442:  using ::sinh;
+        -:  443:
+        -:  444:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  445:  inline _GLIBCXX_CONSTEXPR float
+        -:  446:  sinh(float __x)
+        -:  447:  { return __builtin_sinhf(__x); }
+        -:  448:
+        -:  449:  inline _GLIBCXX_CONSTEXPR long double
+        -:  450:  sinh(long double __x)
+        -:  451:  { return __builtin_sinhl(__x); }
+        -:  452:#endif
+        -:  453:
+        -:  454:  template<typename _Tp>
+        -:  455:    inline _GLIBCXX_CONSTEXPR
+        -:  456:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  457:                                    double>::__type
+        -:  458:    sinh(_Tp __x)
+        -:  459:    { return __builtin_sinh(__x); }
+        -:  460:
+        -:  461:  using ::sqrt;
+        -:  462:
+        -:  463:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  464:  inline _GLIBCXX_CONSTEXPR float
+        -:  465:  sqrt(float __x)
+        -:  466:  { return __builtin_sqrtf(__x); }
+        -:  467:
+        -:  468:  inline _GLIBCXX_CONSTEXPR long double
+        -:  469:  sqrt(long double __x)
+        -:  470:  { return __builtin_sqrtl(__x); }
+        -:  471:#endif
+        -:  472:
+        -:  473:  template<typename _Tp>
+        -:  474:    inline _GLIBCXX_CONSTEXPR
+        -:  475:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  476:                                    double>::__type
+        -:  477:    sqrt(_Tp __x)
+        -:  478:    { return __builtin_sqrt(__x); }
+        -:  479:
+        -:  480:  using ::tan;
+        -:  481:
+        -:  482:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  483:  inline _GLIBCXX_CONSTEXPR float
+        -:  484:  tan(float __x)
+        -:  485:  { return __builtin_tanf(__x); }
+        -:  486:
+        -:  487:  inline _GLIBCXX_CONSTEXPR long double
+        -:  488:  tan(long double __x)
+        -:  489:  { return __builtin_tanl(__x); }
+        -:  490:#endif
+        -:  491:
+        -:  492:  template<typename _Tp>
+        -:  493:    inline _GLIBCXX_CONSTEXPR
+        -:  494:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  495:                                    double>::__type
+        -:  496:    tan(_Tp __x)
+        -:  497:    { return __builtin_tan(__x); }
+        -:  498:
+        -:  499:  using ::tanh;
+        -:  500:
+        -:  501:#ifndef __CORRECT_ISO_CPP_MATH_H_PROTO
+        -:  502:  inline _GLIBCXX_CONSTEXPR float
+        -:  503:  tanh(float __x)
+        -:  504:  { return __builtin_tanhf(__x); }
+        -:  505:
+        -:  506:  inline _GLIBCXX_CONSTEXPR long double
+        -:  507:  tanh(long double __x)
+        -:  508:  { return __builtin_tanhl(__x); }
+        -:  509:#endif
+        -:  510:
+        -:  511:  template<typename _Tp>
+        -:  512:    inline _GLIBCXX_CONSTEXPR
+        -:  513:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -:  514:                                    double>::__type
+        -:  515:    tanh(_Tp __x)
+        -:  516:    { return __builtin_tanh(__x); }
+        -:  517:
+        -:  518:#if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -:  519:  constexpr _Float16
+        -:  520:  acos(_Float16 __x)
+        -:  521:  { return _Float16(__builtin_acosf(__x)); }
+        -:  522:
+        -:  523:  constexpr _Float16
+        -:  524:  asin(_Float16 __x)
+        -:  525:  { return _Float16(__builtin_asinf(__x)); }
+        -:  526:
+        -:  527:  constexpr _Float16
+        -:  528:  atan(_Float16 __x)
+        -:  529:  { return _Float16(__builtin_atanf(__x)); }
+        -:  530:
+        -:  531:  constexpr _Float16
+        -:  532:  atan2(_Float16 __y, _Float16 __x)
+        -:  533:  { return _Float16(__builtin_atan2f(__y, __x)); }
+        -:  534:
+        -:  535:  constexpr _Float16
+        -:  536:  ceil(_Float16 __x)
+        -:  537:  { return _Float16(__builtin_ceilf(__x)); }
+        -:  538:
+        -:  539:  constexpr _Float16
+        -:  540:  cos(_Float16 __x)
+        -:  541:  { return _Float16(__builtin_cosf(__x)); }
+        -:  542:
+        -:  543:  constexpr _Float16
+        -:  544:  cosh(_Float16 __x)
+        -:  545:  { return _Float16(__builtin_coshf(__x)); }
+        -:  546:
+        -:  547:  constexpr _Float16
+        -:  548:  exp(_Float16 __x)
+        -:  549:  { return _Float16(__builtin_expf(__x)); }
+        -:  550:
+        -:  551:  constexpr _Float16
+        -:  552:  fabs(_Float16 __x)
+        -:  553:  { return _Float16(__builtin_fabsf(__x)); }
+        -:  554:
+        -:  555:  constexpr _Float16
+        -:  556:  floor(_Float16 __x)
+        -:  557:  { return _Float16(__builtin_floorf(__x)); }
+        -:  558:
+        -:  559:  constexpr _Float16
+        -:  560:  fmod(_Float16 __x, _Float16 __y)
+        -:  561:  { return _Float16(__builtin_fmodf(__x, __y)); }
+        -:  562:
+        -:  563:  inline _Float16
+        -:  564:  frexp(_Float16 __x, int* __exp)
+        -:  565:  { return _Float16(__builtin_frexpf(__x, __exp)); }
+        -:  566:
+        -:  567:  constexpr _Float16
+        -:  568:  ldexp(_Float16 __x, int __exp)
+        -:  569:  { return _Float16(__builtin_ldexpf(__x, __exp)); }
+        -:  570:
+        -:  571:  constexpr _Float16
+        -:  572:  log(_Float16 __x)
+        -:  573:  { return _Float16(__builtin_logf(__x)); }
+        -:  574:
+        -:  575:  constexpr _Float16
+        -:  576:  log10(_Float16 __x)
+        -:  577:  { return _Float16(__builtin_log10f(__x)); }
+        -:  578:
+        -:  579:  inline _Float16
+        -:  580:  modf(_Float16 __x, _Float16* __iptr)
+        -:  581:  {
+        -:  582:    float __i, __ret = __builtin_modff(__x, &__i);
+        -:  583:    *__iptr = _Float16(__i);
+        -:  584:    return _Float16(__ret);
+        -:  585:  }
+        -:  586:
+        -:  587:  constexpr _Float16
+        -:  588:  pow(_Float16 __x, _Float16 __y)
+        -:  589:  { return _Float16(__builtin_powf(__x, __y)); }
+        -:  590:
+        -:  591:  constexpr _Float16
+        -:  592:  sin(_Float16 __x)
+        -:  593:  { return _Float16(__builtin_sinf(__x)); }
+        -:  594:
+        -:  595:  constexpr _Float16
+        -:  596:  sinh(_Float16 __x)
+        -:  597:  { return _Float16(__builtin_sinhf(__x)); }
+        -:  598:
+        -:  599:  constexpr _Float16
+        -:  600:  sqrt(_Float16 __x)
+        -:  601:  { return _Float16(__builtin_sqrtf(__x)); }
+        -:  602:
+        -:  603:  constexpr _Float16
+        -:  604:  tan(_Float16 __x)
+        -:  605:  { return _Float16(__builtin_tanf(__x)); }
+        -:  606:
+        -:  607:  constexpr _Float16
+        -:  608:  tanh(_Float16 __x)
+        -:  609:  { return _Float16(__builtin_tanhf(__x)); }
+        -:  610:#endif
+        -:  611:
+        -:  612:#if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -:  613:  constexpr _Float32
+        -:  614:  acos(_Float32 __x)
+        -:  615:  { return __builtin_acosf(__x); }
+        -:  616:
+        -:  617:  constexpr _Float32
+        -:  618:  asin(_Float32 __x)
+        -:  619:  { return __builtin_asinf(__x); }
+        -:  620:
+        -:  621:  constexpr _Float32
+        -:  622:  atan(_Float32 __x)
+        -:  623:  { return __builtin_atanf(__x); }
+        -:  624:
+        -:  625:  constexpr _Float32
+        -:  626:  atan2(_Float32 __y, _Float32 __x)
+        -:  627:  { return __builtin_atan2f(__y, __x); }
+        -:  628:
+        -:  629:  constexpr _Float32
+        -:  630:  ceil(_Float32 __x)
+        -:  631:  { return __builtin_ceilf(__x); }
+        -:  632:
+        -:  633:  constexpr _Float32
+        -:  634:  cos(_Float32 __x)
+        -:  635:  { return __builtin_cosf(__x); }
+        -:  636:
+        -:  637:  constexpr _Float32
+        -:  638:  cosh(_Float32 __x)
+        -:  639:  { return __builtin_coshf(__x); }
+        -:  640:
+        -:  641:  constexpr _Float32
+        -:  642:  exp(_Float32 __x)
+        -:  643:  { return __builtin_expf(__x); }
+        -:  644:
+        -:  645:  constexpr _Float32
+        -:  646:  fabs(_Float32 __x)
+        -:  647:  { return __builtin_fabsf(__x); }
+        -:  648:
+        -:  649:  constexpr _Float32
+        -:  650:  floor(_Float32 __x)
+        -:  651:  { return __builtin_floorf(__x); }
+        -:  652:
+        -:  653:  constexpr _Float32
+        -:  654:  fmod(_Float32 __x, _Float32 __y)
+        -:  655:  { return __builtin_fmodf(__x, __y); }
+        -:  656:
+        -:  657:  inline _Float32
+        -:  658:  frexp(_Float32 __x, int* __exp)
+        -:  659:  { return __builtin_frexpf(__x, __exp); }
+        -:  660:
+        -:  661:  constexpr _Float32
+        -:  662:  ldexp(_Float32 __x, int __exp)
+        -:  663:  { return __builtin_ldexpf(__x, __exp); }
+        -:  664:
+        -:  665:  constexpr _Float32
+        -:  666:  log(_Float32 __x)
+        -:  667:  { return __builtin_logf(__x); }
+        -:  668:
+        -:  669:  constexpr _Float32
+        -:  670:  log10(_Float32 __x)
+        -:  671:  { return __builtin_log10f(__x); }
+        -:  672:
+        -:  673:  inline _Float32
+        -:  674:  modf(_Float32 __x, _Float32* __iptr)
+        -:  675:  {
+        -:  676:    float __i, __ret = __builtin_modff(__x, &__i);
+        -:  677:    *__iptr = __i;
+        -:  678:    return __ret;
+        -:  679:  }
+        -:  680:
+        -:  681:  constexpr _Float32
+        -:  682:  pow(_Float32 __x, _Float32 __y)
+        -:  683:  { return __builtin_powf(__x, __y); }
+        -:  684:
+        -:  685:  constexpr _Float32
+        -:  686:  sin(_Float32 __x)
+        -:  687:  { return __builtin_sinf(__x); }
+        -:  688:
+        -:  689:  constexpr _Float32
+        -:  690:  sinh(_Float32 __x)
+        -:  691:  { return __builtin_sinhf(__x); }
+        -:  692:
+        -:  693:  constexpr _Float32
+        -:  694:  sqrt(_Float32 __x)
+        -:  695:  { return __builtin_sqrtf(__x); }
+        -:  696:
+        -:  697:  constexpr _Float32
+        -:  698:  tan(_Float32 __x)
+        -:  699:  { return __builtin_tanf(__x); }
+        -:  700:
+        -:  701:  constexpr _Float32
+        -:  702:  tanh(_Float32 __x)
+        -:  703:  { return __builtin_tanhf(__x); }
+        -:  704:#endif
+        -:  705:
+        -:  706:#if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
+        -:  707:  constexpr _Float64
+        -:  708:  acos(_Float64 __x)
+        -:  709:  { return __builtin_acos(__x); }
+        -:  710:
+        -:  711:  constexpr _Float64
+        -:  712:  asin(_Float64 __x)
+        -:  713:  { return __builtin_asin(__x); }
+        -:  714:
+        -:  715:  constexpr _Float64
+        -:  716:  atan(_Float64 __x)
+        -:  717:  { return __builtin_atan(__x); }
+        -:  718:
+        -:  719:  constexpr _Float64
+        -:  720:  atan2(_Float64 __y, _Float64 __x)
+        -:  721:  { return __builtin_atan2(__y, __x); }
+        -:  722:
+        -:  723:  constexpr _Float64
+        -:  724:  ceil(_Float64 __x)
+        -:  725:  { return __builtin_ceil(__x); }
+        -:  726:
+        -:  727:  constexpr _Float64
+        -:  728:  cos(_Float64 __x)
+        -:  729:  { return __builtin_cos(__x); }
+        -:  730:
+        -:  731:  constexpr _Float64
+        -:  732:  cosh(_Float64 __x)
+        -:  733:  { return __builtin_cosh(__x); }
+        -:  734:
+        -:  735:  constexpr _Float64
+        -:  736:  exp(_Float64 __x)
+        -:  737:  { return __builtin_exp(__x); }
+        -:  738:
+        -:  739:  constexpr _Float64
+        -:  740:  fabs(_Float64 __x)
+        -:  741:  { return __builtin_fabs(__x); }
+        -:  742:
+        -:  743:  constexpr _Float64
+        -:  744:  floor(_Float64 __x)
+        -:  745:  { return __builtin_floor(__x); }
+        -:  746:
+        -:  747:  constexpr _Float64
+        -:  748:  fmod(_Float64 __x, _Float64 __y)
+        -:  749:  { return __builtin_fmod(__x, __y); }
+        -:  750:
+        -:  751:  inline _Float64
+        -:  752:  frexp(_Float64 __x, int* __exp)
+        -:  753:  { return __builtin_frexp(__x, __exp); }
+        -:  754:
+        -:  755:  constexpr _Float64
+        -:  756:  ldexp(_Float64 __x, int __exp)
+        -:  757:  { return __builtin_ldexp(__x, __exp); }
+        -:  758:
+        -:  759:  constexpr _Float64
+        -:  760:  log(_Float64 __x)
+        -:  761:  { return __builtin_log(__x); }
+        -:  762:
+        -:  763:  constexpr _Float64
+        -:  764:  log10(_Float64 __x)
+        -:  765:  { return __builtin_log10(__x); }
+        -:  766:
+        -:  767:  inline _Float64
+        -:  768:  modf(_Float64 __x, _Float64* __iptr)
+        -:  769:  {
+        -:  770:    double __i, __ret = __builtin_modf(__x, &__i);
+        -:  771:    *__iptr = __i;
+        -:  772:    return __ret;
+        -:  773:  }
+        -:  774:
+        -:  775:  constexpr _Float64
+        -:  776:  pow(_Float64 __x, _Float64 __y)
+        -:  777:  { return __builtin_pow(__x, __y); }
+        -:  778:
+        -:  779:  constexpr _Float64
+        -:  780:  sin(_Float64 __x)
+        -:  781:  { return __builtin_sin(__x); }
+        -:  782:
+        -:  783:  constexpr _Float64
+        -:  784:  sinh(_Float64 __x)
+        -:  785:  { return __builtin_sinh(__x); }
+        -:  786:
+        -:  787:  constexpr _Float64
+        -:  788:  sqrt(_Float64 __x)
+        -:  789:  { return __builtin_sqrt(__x); }
+        -:  790:
+        -:  791:  constexpr _Float64
+        -:  792:  tan(_Float64 __x)
+        -:  793:  { return __builtin_tan(__x); }
+        -:  794:
+        -:  795:  constexpr _Float64
+        -:  796:  tanh(_Float64 __x)
+        -:  797:  { return __builtin_tanh(__x); }
+        -:  798:#endif
+        -:  799:
+        -:  800:#if defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128)
+        -:  801:  constexpr _Float128
+        -:  802:  acos(_Float128 __x)
+        -:  803:  { return __builtin_acosl(__x); }
+        -:  804:
+        -:  805:  constexpr _Float128
+        -:  806:  asin(_Float128 __x)
+        -:  807:  { return __builtin_asinl(__x); }
+        -:  808:
+        -:  809:  constexpr _Float128
+        -:  810:  atan(_Float128 __x)
+        -:  811:  { return __builtin_atanl(__x); }
+        -:  812:
+        -:  813:  constexpr _Float128
+        -:  814:  atan2(_Float128 __y, _Float128 __x)
+        -:  815:  { return __builtin_atan2l(__y, __x); }
+        -:  816:
+        -:  817:  constexpr _Float128
+        -:  818:  ceil(_Float128 __x)
+        -:  819:  { return __builtin_ceill(__x); }
+        -:  820:
+        -:  821:  constexpr _Float128
+        -:  822:  cos(_Float128 __x)
+        -:  823:  { return __builtin_cosl(__x); }
+        -:  824:
+        -:  825:  constexpr _Float128
+        -:  826:  cosh(_Float128 __x)
+        -:  827:  { return __builtin_coshl(__x); }
+        -:  828:
+        -:  829:  constexpr _Float128
+        -:  830:  exp(_Float128 __x)
+        -:  831:  { return __builtin_expl(__x); }
+        -:  832:
+        -:  833:  constexpr _Float128
+        -:  834:  fabs(_Float128 __x)
+        -:  835:  { return __builtin_fabsl(__x); }
+        -:  836:
+        -:  837:  constexpr _Float128
+        -:  838:  floor(_Float128 __x)
+        -:  839:  { return __builtin_floorl(__x); }
+        -:  840:
+        -:  841:  constexpr _Float128
+        -:  842:  fmod(_Float128 __x, _Float128 __y)
+        -:  843:  { return __builtin_fmodl(__x, __y); }
+        -:  844:
+        -:  845:  inline _Float128
+        -:  846:  frexp(_Float128 __x, int* __exp)
+        -:  847:  { return __builtin_frexpl(__x, __exp); }
+        -:  848:
+        -:  849:  constexpr _Float128
+        -:  850:  ldexp(_Float128 __x, int __exp)
+        -:  851:  { return __builtin_ldexpl(__x, __exp); }
+        -:  852:
+        -:  853:  constexpr _Float128
+        -:  854:  log(_Float128 __x)
+        -:  855:  { return __builtin_logl(__x); }
+        -:  856:
+        -:  857:  constexpr _Float128
+        -:  858:  log10(_Float128 __x)
+        -:  859:  { return __builtin_log10l(__x); }
+        -:  860:
+        -:  861:  inline _Float128
+        -:  862:  modf(_Float128 __x, _Float128* __iptr)
+        -:  863:  {
+        -:  864:    long double __i, __ret = __builtin_modfl(__x, &__i);
+        -:  865:    *__iptr = __i;
+        -:  866:    return __ret;
+        -:  867:  }
+        -:  868:
+        -:  869:  constexpr _Float128
+        -:  870:  pow(_Float128 __x, _Float128 __y)
+        -:  871:  { return __builtin_powl(__x, __y); }
+        -:  872:
+        -:  873:  constexpr _Float128
+        -:  874:  sin(_Float128 __x)
+        -:  875:  { return __builtin_sinl(__x); }
+        -:  876:
+        -:  877:  constexpr _Float128
+        -:  878:  sinh(_Float128 __x)
+        -:  879:  { return __builtin_sinhl(__x); }
+        -:  880:
+        -:  881:  constexpr _Float128
+        -:  882:  sqrt(_Float128 __x)
+        -:  883:  { return __builtin_sqrtl(__x); }
+        -:  884:
+        -:  885:  constexpr _Float128
+        -:  886:  tan(_Float128 __x)
+        -:  887:  { return __builtin_tanl(__x); }
+        -:  888:
+        -:  889:  constexpr _Float128
+        -:  890:  tanh(_Float128 __x)
+        -:  891:  { return __builtin_tanhl(__x); }
+        -:  892:#elif defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_HAVE_FLOAT128_MATH)
+        -:  893:  constexpr _Float128
+        -:  894:  acos(_Float128 __x)
+        -:  895:  { return __builtin_acosf128(__x); }
+        -:  896:
+        -:  897:  constexpr _Float128
+        -:  898:  asin(_Float128 __x)
+        -:  899:  { return __builtin_asinf128(__x); }
+        -:  900:
+        -:  901:  constexpr _Float128
+        -:  902:  atan(_Float128 __x)
+        -:  903:  { return __builtin_atanf128(__x); }
+        -:  904:
+        -:  905:  constexpr _Float128
+        -:  906:  atan2(_Float128 __y, _Float128 __x)
+        -:  907:  { return __builtin_atan2f128(__y, __x); }
+        -:  908:
+        -:  909:  constexpr _Float128
+        -:  910:  ceil(_Float128 __x)
+        -:  911:  { return __builtin_ceilf128(__x); }
+        -:  912:
+        -:  913:  constexpr _Float128
+        -:  914:  cos(_Float128 __x)
+        -:  915:  { return __builtin_cosf128(__x); }
+        -:  916:
+        -:  917:  constexpr _Float128
+        -:  918:  cosh(_Float128 __x)
+        -:  919:  { return __builtin_coshf128(__x); }
+        -:  920:
+        -:  921:  constexpr _Float128
+        -:  922:  exp(_Float128 __x)
+        -:  923:  { return __builtin_expf128(__x); }
+        -:  924:
+        -:  925:  constexpr _Float128
+        -:  926:  fabs(_Float128 __x)
+        -:  927:  { return __builtin_fabsf128(__x); }
+        -:  928:
+        -:  929:  constexpr _Float128
+        -:  930:  floor(_Float128 __x)
+        -:  931:  { return __builtin_floorf128(__x); }
+        -:  932:
+        -:  933:  constexpr _Float128
+        -:  934:  fmod(_Float128 __x, _Float128 __y)
+        -:  935:  { return __builtin_fmodf128(__x, __y); }
+        -:  936:
+        -:  937:  inline _Float128
+        -:  938:  frexp(_Float128 __x, int* __exp)
+        -:  939:  { return __builtin_frexpf128(__x, __exp); }
+        -:  940:
+        -:  941:  constexpr _Float128
+        -:  942:  ldexp(_Float128 __x, int __exp)
+        -:  943:  { return __builtin_ldexpf128(__x, __exp); }
+        -:  944:
+        -:  945:  constexpr _Float128
+        -:  946:  log(_Float128 __x)
+        -:  947:  { return __builtin_logf128(__x); }
+        -:  948:
+        -:  949:  constexpr _Float128
+        -:  950:  log10(_Float128 __x)
+        -:  951:  { return __builtin_log10f128(__x); }
+        -:  952:
+        -:  953:  inline _Float128
+        -:  954:  modf(_Float128 __x, _Float128* __iptr)
+        -:  955:  { return __builtin_modff128(__x, __iptr); }
+        -:  956:
+        -:  957:  constexpr _Float128
+        -:  958:  pow(_Float128 __x, _Float128 __y)
+        -:  959:  { return __builtin_powf128(__x, __y); }
+        -:  960:
+        -:  961:  constexpr _Float128
+        -:  962:  sin(_Float128 __x)
+        -:  963:  { return __builtin_sinf128(__x); }
+        -:  964:
+        -:  965:  constexpr _Float128
+        -:  966:  sinh(_Float128 __x)
+        -:  967:  { return __builtin_sinhf128(__x); }
+        -:  968:
+        -:  969:  constexpr _Float128
+        -:  970:  sqrt(_Float128 __x)
+        -:  971:  { return __builtin_sqrtf128(__x); }
+        -:  972:
+        -:  973:  constexpr _Float128
+        -:  974:  tan(_Float128 __x)
+        -:  975:  { return __builtin_tanf128(__x); }
+        -:  976:
+        -:  977:  constexpr _Float128
+        -:  978:  tanh(_Float128 __x)
+        -:  979:  { return __builtin_tanhf128(__x); }
+        -:  980:#endif
+        -:  981:
+        -:  982:#if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -:  983:  constexpr __gnu_cxx::__bfloat16_t
+        -:  984:  acos(__gnu_cxx::__bfloat16_t __x)
+        -:  985:  { return __gnu_cxx::__bfloat16_t(__builtin_acosf(__x)); }
+        -:  986:
+        -:  987:  constexpr __gnu_cxx::__bfloat16_t
+        -:  988:  asin(__gnu_cxx::__bfloat16_t __x)
+        -:  989:  { return __gnu_cxx::__bfloat16_t(__builtin_asinf(__x)); }
+        -:  990:
+        -:  991:  constexpr __gnu_cxx::__bfloat16_t
+        -:  992:  atan(__gnu_cxx::__bfloat16_t __x)
+        -:  993:  { return __gnu_cxx::__bfloat16_t(__builtin_atanf(__x)); }
+        -:  994:
+        -:  995:  constexpr __gnu_cxx::__bfloat16_t
+        -:  996:  atan2(__gnu_cxx::__bfloat16_t __y, __gnu_cxx::__bfloat16_t __x)
+        -:  997:  { return __gnu_cxx::__bfloat16_t(__builtin_atan2f(__y, __x)); }
+        -:  998:
+        -:  999:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1000:  ceil(__gnu_cxx::__bfloat16_t __x)
+        -: 1001:  { return __gnu_cxx::__bfloat16_t(__builtin_ceilf(__x)); }
+        -: 1002:
+        -: 1003:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1004:  cos(__gnu_cxx::__bfloat16_t __x)
+        -: 1005:  { return __gnu_cxx::__bfloat16_t(__builtin_cosf(__x)); }
+        -: 1006:
+        -: 1007:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1008:  cosh(__gnu_cxx::__bfloat16_t __x)
+        -: 1009:  { return __gnu_cxx::__bfloat16_t(__builtin_coshf(__x)); }
+        -: 1010:
+        -: 1011:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1012:  exp(__gnu_cxx::__bfloat16_t __x)
+        -: 1013:  { return __gnu_cxx::__bfloat16_t(__builtin_expf(__x)); }
+        -: 1014:
+        -: 1015:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1016:  fabs(__gnu_cxx::__bfloat16_t __x)
+        -: 1017:  { return __gnu_cxx::__bfloat16_t(__builtin_fabsf(__x)); }
+        -: 1018:
+        -: 1019:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1020:  floor(__gnu_cxx::__bfloat16_t __x)
+        -: 1021:  { return __gnu_cxx::__bfloat16_t(__builtin_floorf(__x)); }
+        -: 1022:
+        -: 1023:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1024:  fmod(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1025:  { return __gnu_cxx::__bfloat16_t(__builtin_fmodf(__x, __y)); }
+        -: 1026:
+        -: 1027:  inline __gnu_cxx::__bfloat16_t
+        -: 1028:  frexp(__gnu_cxx::__bfloat16_t __x, int* __exp)
+        -: 1029:  { return __gnu_cxx::__bfloat16_t(__builtin_frexpf(__x, __exp)); }
+        -: 1030:
+        -: 1031:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1032:  ldexp(__gnu_cxx::__bfloat16_t __x, int __exp)
+        -: 1033:  { return __gnu_cxx::__bfloat16_t(__builtin_ldexpf(__x, __exp)); }
+        -: 1034:
+        -: 1035:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1036:  log(__gnu_cxx::__bfloat16_t __x)
+        -: 1037:  { return __gnu_cxx::__bfloat16_t(__builtin_logf(__x)); }
+        -: 1038:
+        -: 1039:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1040:  log10(__gnu_cxx::__bfloat16_t __x)
+        -: 1041:  { return __gnu_cxx::__bfloat16_t(__builtin_log10f(__x)); }
+        -: 1042:
+        -: 1043:  inline __gnu_cxx::__bfloat16_t
+        -: 1044:  modf(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t* __iptr)
+        -: 1045:  {
+        -: 1046:    float __i, __ret = __builtin_modff(__x, &__i);
+        -: 1047:    *__iptr = __gnu_cxx::__bfloat16_t(__i);
+        -: 1048:    return __gnu_cxx::__bfloat16_t(__ret);
+        -: 1049:  }
+        -: 1050:
+        -: 1051:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1052:  pow(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1053:  { return __gnu_cxx::__bfloat16_t(__builtin_powf(__x, __y)); }
+        -: 1054:
+        -: 1055:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1056:  sin(__gnu_cxx::__bfloat16_t __x)
+        -: 1057:  { return __gnu_cxx::__bfloat16_t(__builtin_sinf(__x)); }
+        -: 1058:
+        -: 1059:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1060:  sinh(__gnu_cxx::__bfloat16_t __x)
+        -: 1061:  { return __gnu_cxx::__bfloat16_t(__builtin_sinhf(__x)); }
+        -: 1062:
+        -: 1063:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1064:  sqrt(__gnu_cxx::__bfloat16_t __x)
+        -: 1065:  { return __gnu_cxx::__bfloat16_t(__builtin_sqrtf(__x)); }
+        -: 1066:
+        -: 1067:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1068:  tan(__gnu_cxx::__bfloat16_t __x)
+        -: 1069:  { return __gnu_cxx::__bfloat16_t(__builtin_tanf(__x)); }
+        -: 1070:
+        -: 1071:  constexpr __gnu_cxx::__bfloat16_t
+        -: 1072:  tanh(__gnu_cxx::__bfloat16_t __x)
+        -: 1073:  { return __gnu_cxx::__bfloat16_t(__builtin_tanhf(__x)); }
+        -: 1074:#endif
+        -: 1075:
+        -: 1076:#if _GLIBCXX_USE_C99_MATH
+        -: 1077:#if !_GLIBCXX_USE_C99_FP_MACROS_DYNAMIC
+        -: 1078:
+        -: 1079:// These are possible macros imported from C99-land.
+        -: 1080:#undef fpclassify
+        -: 1081:#undef isfinite
+        -: 1082:#undef isinf
+        -: 1083:#undef isnan
+        -: 1084:#undef isnormal
+        -: 1085:#undef signbit
+        -: 1086:#undef isgreater
+        -: 1087:#undef isgreaterequal
+        -: 1088:#undef isless
+        -: 1089:#undef islessequal
+        -: 1090:#undef islessgreater
+        -: 1091:#undef isunordered
+        -: 1092:
+        -: 1093:#if __cplusplus >= 201103L
+        -: 1094:
+        -: 1095:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1096:  constexpr int
+        -: 1097:  fpclassify(float __x)
+        -: 1098:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1099:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1100:
+        -: 1101:  constexpr int
+        -: 1102:  fpclassify(double __x)
+        -: 1103:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1104:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1105:
+        -: 1106:  constexpr int
+        -: 1107:  fpclassify(long double __x)
+        -: 1108:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1109:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1110:#endif
+        -: 1111:
+        -: 1112:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1113:  template<typename _Tp>
+        -: 1114:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1115:                                              int>::__type
+        -: 1116:    fpclassify(_Tp __x)
+        -: 1117:    { return __x != 0 ? FP_NORMAL : FP_ZERO; }
+        -: 1118:#endif
+        -: 1119:
+        -: 1120:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1121:  constexpr bool
+        -: 1122:  isfinite(float __x)
+        -: 1123:  { return __builtin_isfinite(__x); }
+        -: 1124:
+        -: 1125:  constexpr bool
+        -: 1126:  isfinite(double __x)
+        -: 1127:  { return __builtin_isfinite(__x); }
+        -: 1128:
+        -: 1129:  constexpr bool
+        -: 1130:  isfinite(long double __x)
+        -: 1131:  { return __builtin_isfinite(__x); }
+        -: 1132:#endif
+        -: 1133:
+        -: 1134:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1135:  template<typename _Tp>
+        -: 1136:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1137:                                              bool>::__type
+        -: 1138:    isfinite(_Tp __x)
+        -: 1139:    { return true; }
+        -: 1140:#endif
+        -: 1141:
+        -: 1142:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1143:  constexpr bool
+        -: 1144:  isinf(float __x)
+        -: 1145:  { return __builtin_isinf(__x); }
+        -: 1146:
+        -: 1147:#if _GLIBCXX_HAVE_OBSOLETE_ISINF \
+        -: 1148:  && !_GLIBCXX_NO_OBSOLETE_ISINF_ISNAN_DYNAMIC
+        -: 1149:  using ::isinf;
+        -: 1150:#else
+        -: 1151:  constexpr bool
+        -: 1152:  isinf(double __x)
+    #####: 1153:  { return __builtin_isinf(__x); }
+    %%%%%: 1153-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1154:#endif
+        -: 1155:
+        -: 1156:  constexpr bool
+        -: 1157:  isinf(long double __x)
+        -: 1158:  { return __builtin_isinf(__x); }
+        -: 1159:#endif
+        -: 1160:
+        -: 1161:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1162:  template<typename _Tp>
+        -: 1163:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1164:                                              bool>::__type
+        -: 1165:    isinf(_Tp __x)
+        -: 1166:    { return false; }
+        -: 1167:#endif
+        -: 1168:
+        -: 1169:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1170:  constexpr bool
+        -: 1171:  isnan(float __x)
+        -: 1172:  { return __builtin_isnan(__x); }
+        -: 1173:
+        -: 1174:#if _GLIBCXX_HAVE_OBSOLETE_ISNAN \
+        -: 1175:  && !_GLIBCXX_NO_OBSOLETE_ISINF_ISNAN_DYNAMIC
+        -: 1176:  using ::isnan;
+        -: 1177:#else
+        -: 1178:  constexpr bool
+        -: 1179:  isnan(double __x)
+        -: 1180:  { return __builtin_isnan(__x); }
+        -: 1181:#endif
+        -: 1182:
+        -: 1183:  constexpr bool
+        -: 1184:  isnan(long double __x)
+        -: 1185:  { return __builtin_isnan(__x); }
+        -: 1186:#endif
+        -: 1187:
+        -: 1188:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1189:  template<typename _Tp>
+        -: 1190:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1191:                                              bool>::__type
+        -: 1192:    isnan(_Tp __x)
+        -: 1193:    { return false; }
+        -: 1194:#endif
+        -: 1195:
+        -: 1196:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1197:  constexpr bool
+        -: 1198:  isnormal(float __x)
+        -: 1199:  { return __builtin_isnormal(__x); }
+        -: 1200:
+        -: 1201:  constexpr bool
+        -: 1202:  isnormal(double __x)
+        -: 1203:  { return __builtin_isnormal(__x); }
+        -: 1204:
+        -: 1205:  constexpr bool
+        -: 1206:  isnormal(long double __x)
+        -: 1207:  { return __builtin_isnormal(__x); }
+        -: 1208:#endif
+        -: 1209:
+        -: 1210:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1211:  template<typename _Tp>
+        -: 1212:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1213:                                              bool>::__type
+        -: 1214:    isnormal(_Tp __x)
+        -: 1215:    { return __x != 0 ? true : false; }
+        -: 1216:#endif
+        -: 1217:
+        -: 1218:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1219:  // Note: middle-end/36757 is fixed, __builtin_signbit is type-generic.
+        -: 1220:  constexpr bool
+        -: 1221:  signbit(float __x)
+        -: 1222:  { return __builtin_signbit(__x); }
+        -: 1223:
+        -: 1224:  constexpr bool
+        -: 1225:  signbit(double __x)
+        -: 1226:  { return __builtin_signbit(__x); }
+        -: 1227:
+        -: 1228:  constexpr bool
+        -: 1229:  signbit(long double __x)
+        -: 1230:  { return __builtin_signbit(__x); }
+        -: 1231:#endif
+        -: 1232:
+        -: 1233:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1234:  template<typename _Tp>
+        -: 1235:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value,
+        -: 1236:                                              bool>::__type
+        -: 1237:    signbit(_Tp __x)
+        -: 1238:    { return __x < 0 ? true : false; }
+        -: 1239:#endif
+        -: 1240:
+        -: 1241:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1242:  constexpr bool
+        -: 1243:  isgreater(float __x, float __y)
+        -: 1244:  { return __builtin_isgreater(__x, __y); }
+        -: 1245:
+        -: 1246:  constexpr bool
+        -: 1247:  isgreater(double __x, double __y)
+        -: 1248:  { return __builtin_isgreater(__x, __y); }
+        -: 1249:
+        -: 1250:  constexpr bool
+        -: 1251:  isgreater(long double __x, long double __y)
+        -: 1252:  { return __builtin_isgreater(__x, __y); }
+        -: 1253:#endif
+        -: 1254:
+        -: 1255:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1256:  template<typename _Tp, typename _Up>
+        -: 1257:    constexpr typename
+        -: 1258:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1259:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1260:    isgreater(_Tp __x, _Up __y)
+        -: 1261:    {
+        -: 1262:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1263:      return __builtin_isgreater(__type(__x), __type(__y));
+        -: 1264:    }
+        -: 1265:#endif
+        -: 1266:
+        -: 1267:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1268:  constexpr bool
+        -: 1269:  isgreaterequal(float __x, float __y)
+        -: 1270:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1271:
+        -: 1272:  constexpr bool
+        -: 1273:  isgreaterequal(double __x, double __y)
+        -: 1274:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1275:
+        -: 1276:  constexpr bool
+        -: 1277:  isgreaterequal(long double __x, long double __y)
+        -: 1278:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1279:#endif
+        -: 1280:
+        -: 1281:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1282:  template<typename _Tp, typename _Up>
+        -: 1283:    constexpr typename
+        -: 1284:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1285:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1286:    isgreaterequal(_Tp __x, _Up __y)
+        -: 1287:    {
+        -: 1288:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1289:      return __builtin_isgreaterequal(__type(__x), __type(__y));
+        -: 1290:    }
+        -: 1291:#endif
+        -: 1292:
+        -: 1293:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1294:  constexpr bool
+        -: 1295:  isless(float __x, float __y)
+        -: 1296:  { return __builtin_isless(__x, __y); }
+        -: 1297:
+        -: 1298:  constexpr bool
+        -: 1299:  isless(double __x, double __y)
+        -: 1300:  { return __builtin_isless(__x, __y); }
+        -: 1301:
+        -: 1302:  constexpr bool
+        -: 1303:  isless(long double __x, long double __y)
+        -: 1304:  { return __builtin_isless(__x, __y); }
+        -: 1305:#endif
+        -: 1306:
+        -: 1307:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1308:  template<typename _Tp, typename _Up>
+        -: 1309:    constexpr typename
+        -: 1310:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1311:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1312:    isless(_Tp __x, _Up __y)
+        -: 1313:    {
+        -: 1314:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1315:      return __builtin_isless(__type(__x), __type(__y));
+        -: 1316:    }
+        -: 1317:#endif
+        -: 1318:
+        -: 1319:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1320:  constexpr bool
+        -: 1321:  islessequal(float __x, float __y)
+        -: 1322:  { return __builtin_islessequal(__x, __y); }
+        -: 1323:
+        -: 1324:  constexpr bool
+        -: 1325:  islessequal(double __x, double __y)
+        -: 1326:  { return __builtin_islessequal(__x, __y); }
+        -: 1327:
+        -: 1328:  constexpr bool
+        -: 1329:  islessequal(long double __x, long double __y)
+        -: 1330:  { return __builtin_islessequal(__x, __y); }
+        -: 1331:#endif
+        -: 1332:
+        -: 1333:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1334:  template<typename _Tp, typename _Up>
+        -: 1335:    constexpr typename
+        -: 1336:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1337:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1338:    islessequal(_Tp __x, _Up __y)
+        -: 1339:    {
+        -: 1340:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1341:      return __builtin_islessequal(__type(__x), __type(__y));
+        -: 1342:    }
+        -: 1343:#endif
+        -: 1344:
+        -: 1345:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1346:  constexpr bool
+        -: 1347:  islessgreater(float __x, float __y)
+        -: 1348:  { return __builtin_islessgreater(__x, __y); }
+        -: 1349:
+        -: 1350:  constexpr bool
+        -: 1351:  islessgreater(double __x, double __y)
+        -: 1352:  { return __builtin_islessgreater(__x, __y); }
+        -: 1353:
+        -: 1354:  constexpr bool
+        -: 1355:  islessgreater(long double __x, long double __y)
+        -: 1356:  { return __builtin_islessgreater(__x, __y); }
+        -: 1357:#endif
+        -: 1358:
+        -: 1359:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1360:  template<typename _Tp, typename _Up>
+        -: 1361:    constexpr typename
+        -: 1362:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1363:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1364:    islessgreater(_Tp __x, _Up __y)
+        -: 1365:    {
+        -: 1366:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1367:      return __builtin_islessgreater(__type(__x), __type(__y));
+        -: 1368:    }
+        -: 1369:#endif
+        -: 1370:
+        -: 1371:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 1372:  constexpr bool
+        -: 1373:  isunordered(float __x, float __y)
+        -: 1374:  { return __builtin_isunordered(__x, __y); }
+        -: 1375:
+        -: 1376:  constexpr bool
+        -: 1377:  isunordered(double __x, double __y)
+        -: 1378:  { return __builtin_isunordered(__x, __y); }
+        -: 1379:
+        -: 1380:  constexpr bool
+        -: 1381:  isunordered(long double __x, long double __y)
+        -: 1382:  { return __builtin_isunordered(__x, __y); }
+        -: 1383:#endif
+        -: 1384:
+        -: 1385:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 1386:  template<typename _Tp, typename _Up>
+        -: 1387:    constexpr typename
+        -: 1388:    __gnu_cxx::__enable_if<(__is_arithmetic<_Tp>::__value
+        -: 1389:			    && __is_arithmetic<_Up>::__value), bool>::__type
+        -: 1390:    isunordered(_Tp __x, _Up __y)
+        -: 1391:    {
+        -: 1392:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 1393:      return __builtin_isunordered(__type(__x), __type(__y));
+        -: 1394:    }
+        -: 1395:#endif
+        -: 1396:
+        -: 1397:#else
+        -: 1398:
+        -: 1399:  template<typename _Tp>
+        -: 1400:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1401:					   int>::__type
+        -: 1402:    fpclassify(_Tp __f)
+        -: 1403:    {
+        -: 1404:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1405:      return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1406:				  FP_SUBNORMAL, FP_ZERO, __type(__f));
+        -: 1407:    }
+        -: 1408:
+        -: 1409:  template<typename _Tp>
+        -: 1410:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1411:					   int>::__type
+        -: 1412:    isfinite(_Tp __f)
+        -: 1413:    {
+        -: 1414:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1415:      return __builtin_isfinite(__type(__f));
+        -: 1416:    }
+        -: 1417:
+        -: 1418:  template<typename _Tp>
+        -: 1419:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1420:					   int>::__type
+        -: 1421:    isinf(_Tp __f)
+        -: 1422:    {
+        -: 1423:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1424:      return __builtin_isinf(__type(__f));
+        -: 1425:    }
+        -: 1426:
+        -: 1427:  template<typename _Tp>
+        -: 1428:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1429:					   int>::__type
+        -: 1430:    isnan(_Tp __f)
+        -: 1431:    {
+        -: 1432:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1433:      return __builtin_isnan(__type(__f));
+        -: 1434:    }
+        -: 1435:
+        -: 1436:  template<typename _Tp>
+        -: 1437:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1438:					   int>::__type
+        -: 1439:    isnormal(_Tp __f)
+        -: 1440:    {
+        -: 1441:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1442:      return __builtin_isnormal(__type(__f));
+        -: 1443:    }
+        -: 1444:
+        -: 1445:  template<typename _Tp>
+        -: 1446:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1447:					   int>::__type
+        -: 1448:    signbit(_Tp __f)
+        -: 1449:    {
+        -: 1450:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1451:      return __builtin_signbit(__type(__f));
+        -: 1452:    }
+        -: 1453:
+        -: 1454:  template<typename _Tp>
+        -: 1455:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1456:					   int>::__type
+        -: 1457:    isgreater(_Tp __f1, _Tp __f2)
+        -: 1458:    {
+        -: 1459:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1460:      return __builtin_isgreater(__type(__f1), __type(__f2));
+        -: 1461:    }
+        -: 1462:
+        -: 1463:  template<typename _Tp>
+        -: 1464:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1465:					   int>::__type
+        -: 1466:    isgreaterequal(_Tp __f1, _Tp __f2)
+        -: 1467:    {
+        -: 1468:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1469:      return __builtin_isgreaterequal(__type(__f1), __type(__f2));
+        -: 1470:    }
+        -: 1471:
+        -: 1472:  template<typename _Tp>
+        -: 1473:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1474:					   int>::__type
+        -: 1475:    isless(_Tp __f1, _Tp __f2)
+        -: 1476:    {
+        -: 1477:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1478:      return __builtin_isless(__type(__f1), __type(__f2));
+        -: 1479:    }
+        -: 1480:
+        -: 1481:  template<typename _Tp>
+        -: 1482:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1483:					   int>::__type
+        -: 1484:    islessequal(_Tp __f1, _Tp __f2)
+        -: 1485:    {
+        -: 1486:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1487:      return __builtin_islessequal(__type(__f1), __type(__f2));
+        -: 1488:    }
+        -: 1489:
+        -: 1490:  template<typename _Tp>
+        -: 1491:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1492:					   int>::__type
+        -: 1493:    islessgreater(_Tp __f1, _Tp __f2)
+        -: 1494:    {
+        -: 1495:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1496:      return __builtin_islessgreater(__type(__f1), __type(__f2));
+        -: 1497:    }
+        -: 1498:
+        -: 1499:  template<typename _Tp>
+        -: 1500:    inline typename __gnu_cxx::__enable_if<__is_arithmetic<_Tp>::__value,
+        -: 1501:					   int>::__type
+        -: 1502:    isunordered(_Tp __f1, _Tp __f2)
+        -: 1503:    {
+        -: 1504:      typedef typename __gnu_cxx::__promote<_Tp>::__type __type;
+        -: 1505:      return __builtin_isunordered(__type(__f1), __type(__f2));
+        -: 1506:    }
+        -: 1507:
+        -: 1508:#endif // C++11
+        -: 1509:
+        -: 1510:#ifdef __STDCPP_FLOAT16_T__
+        -: 1511:  constexpr int
+        -: 1512:  fpclassify(_Float16 __x)
+        -: 1513:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1514:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1515:
+        -: 1516:  constexpr bool
+        -: 1517:  isfinite(_Float16 __x)
+        -: 1518:  { return __builtin_isfinite(__x); }
+        -: 1519:
+        -: 1520:  constexpr bool
+        -: 1521:  isinf(_Float16 __x)
+        -: 1522:  { return __builtin_isinf(__x); }
+        -: 1523:
+        -: 1524:  constexpr bool
+        -: 1525:  isnan(_Float16 __x)
+        -: 1526:  { return __builtin_isnan(__x); }
+        -: 1527:
+        -: 1528:  constexpr bool
+        -: 1529:  isnormal(_Float16 __x)
+        -: 1530:  { return __builtin_isnormal(__x); }
+        -: 1531:
+        -: 1532:  constexpr bool
+        -: 1533:  signbit(_Float16 __x)
+        -: 1534:  { return __builtin_signbit(__x); }
+        -: 1535:
+        -: 1536:  constexpr bool
+        -: 1537:  isgreater(_Float16 __x, _Float16 __y)
+        -: 1538:  { return __builtin_isgreater(__x, __y); }
+        -: 1539:
+        -: 1540:  constexpr bool
+        -: 1541:  isgreaterequal(_Float16 __x, _Float16 __y)
+        -: 1542:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1543:
+        -: 1544:  constexpr bool
+        -: 1545:  isless(_Float16 __x, _Float16 __y)
+        -: 1546:  { return __builtin_isless(__x, __y); }
+        -: 1547:
+        -: 1548:  constexpr bool
+        -: 1549:  islessequal(_Float16 __x, _Float16 __y)
+        -: 1550:  { return __builtin_islessequal(__x, __y); }
+        -: 1551:
+        -: 1552:  constexpr bool
+        -: 1553:  islessgreater(_Float16 __x, _Float16 __y)
+        -: 1554:  { return __builtin_islessgreater(__x, __y); }
+        -: 1555:
+        -: 1556:  constexpr bool
+        -: 1557:  isunordered(_Float16 __x, _Float16 __y)
+        -: 1558:  { return __builtin_isunordered(__x, __y); }
+        -: 1559:#endif
+        -: 1560:
+        -: 1561:#ifdef __STDCPP_FLOAT32_T__
+        -: 1562:  constexpr int
+        -: 1563:  fpclassify(_Float32 __x)
+        -: 1564:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1565:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1566:
+        -: 1567:  constexpr bool
+        -: 1568:  isfinite(_Float32 __x)
+        -: 1569:  { return __builtin_isfinite(__x); }
+        -: 1570:
+        -: 1571:  constexpr bool
+        -: 1572:  isinf(_Float32 __x)
+        -: 1573:  { return __builtin_isinf(__x); }
+        -: 1574:
+        -: 1575:  constexpr bool
+        -: 1576:  isnan(_Float32 __x)
+        -: 1577:  { return __builtin_isnan(__x); }
+        -: 1578:
+        -: 1579:  constexpr bool
+        -: 1580:  isnormal(_Float32 __x)
+        -: 1581:  { return __builtin_isnormal(__x); }
+        -: 1582:
+        -: 1583:  constexpr bool
+        -: 1584:  signbit(_Float32 __x)
+        -: 1585:  { return __builtin_signbit(__x); }
+        -: 1586:
+        -: 1587:  constexpr bool
+        -: 1588:  isgreater(_Float32 __x, _Float32 __y)
+        -: 1589:  { return __builtin_isgreater(__x, __y); }
+        -: 1590:
+        -: 1591:  constexpr bool
+        -: 1592:  isgreaterequal(_Float32 __x, _Float32 __y)
+        -: 1593:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1594:
+        -: 1595:  constexpr bool
+        -: 1596:  isless(_Float32 __x, _Float32 __y)
+        -: 1597:  { return __builtin_isless(__x, __y); }
+        -: 1598:
+        -: 1599:  constexpr bool
+        -: 1600:  islessequal(_Float32 __x, _Float32 __y)
+        -: 1601:  { return __builtin_islessequal(__x, __y); }
+        -: 1602:
+        -: 1603:  constexpr bool
+        -: 1604:  islessgreater(_Float32 __x, _Float32 __y)
+        -: 1605:  { return __builtin_islessgreater(__x, __y); }
+        -: 1606:
+        -: 1607:  constexpr bool
+        -: 1608:  isunordered(_Float32 __x, _Float32 __y)
+        -: 1609:  { return __builtin_isunordered(__x, __y); }
+        -: 1610:#endif
+        -: 1611:
+        -: 1612:#ifdef __STDCPP_FLOAT64_T__
+        -: 1613:  constexpr int
+        -: 1614:  fpclassify(_Float64 __x)
+        -: 1615:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1616:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1617:
+        -: 1618:  constexpr bool
+        -: 1619:  isfinite(_Float64 __x)
+        -: 1620:  { return __builtin_isfinite(__x); }
+        -: 1621:
+        -: 1622:  constexpr bool
+        -: 1623:  isinf(_Float64 __x)
+        -: 1624:  { return __builtin_isinf(__x); }
+        -: 1625:
+        -: 1626:  constexpr bool
+        -: 1627:  isnan(_Float64 __x)
+        -: 1628:  { return __builtin_isnan(__x); }
+        -: 1629:
+        -: 1630:  constexpr bool
+        -: 1631:  isnormal(_Float64 __x)
+        -: 1632:  { return __builtin_isnormal(__x); }
+        -: 1633:
+        -: 1634:  constexpr bool
+        -: 1635:  signbit(_Float64 __x)
+        -: 1636:  { return __builtin_signbit(__x); }
+        -: 1637:
+        -: 1638:  constexpr bool
+        -: 1639:  isgreater(_Float64 __x, _Float64 __y)
+        -: 1640:  { return __builtin_isgreater(__x, __y); }
+        -: 1641:
+        -: 1642:  constexpr bool
+        -: 1643:  isgreaterequal(_Float64 __x, _Float64 __y)
+        -: 1644:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1645:
+        -: 1646:  constexpr bool
+        -: 1647:  isless(_Float64 __x, _Float64 __y)
+        -: 1648:  { return __builtin_isless(__x, __y); }
+        -: 1649:
+        -: 1650:  constexpr bool
+        -: 1651:  islessequal(_Float64 __x, _Float64 __y)
+        -: 1652:  { return __builtin_islessequal(__x, __y); }
+        -: 1653:
+        -: 1654:  constexpr bool
+        -: 1655:  islessgreater(_Float64 __x, _Float64 __y)
+        -: 1656:  { return __builtin_islessgreater(__x, __y); }
+        -: 1657:
+        -: 1658:  constexpr bool
+        -: 1659:  isunordered(_Float64 __x, _Float64 __y)
+        -: 1660:  { return __builtin_isunordered(__x, __y); }
+        -: 1661:#endif
+        -: 1662:
+        -: 1663:#ifdef __STDCPP_FLOAT128_T__
+        -: 1664:  constexpr int
+        -: 1665:  fpclassify(_Float128 __x)
+        -: 1666:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1667:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1668:
+        -: 1669:  constexpr bool
+        -: 1670:  isfinite(_Float128 __x)
+        -: 1671:  { return __builtin_isfinite(__x); }
+        -: 1672:
+        -: 1673:  constexpr bool
+        -: 1674:  isinf(_Float128 __x)
+        -: 1675:  { return __builtin_isinf(__x); }
+        -: 1676:
+        -: 1677:  constexpr bool
+        -: 1678:  isnan(_Float128 __x)
+        -: 1679:  { return __builtin_isnan(__x); }
+        -: 1680:
+        -: 1681:  constexpr bool
+        -: 1682:  isnormal(_Float128 __x)
+        -: 1683:  { return __builtin_isnormal(__x); }
+        -: 1684:
+        -: 1685:  constexpr bool
+        -: 1686:  signbit(_Float128 __x)
+        -: 1687:  { return __builtin_signbit(__x); }
+        -: 1688:
+        -: 1689:  constexpr bool
+        -: 1690:  isgreater(_Float128 __x, _Float128 __y)
+        -: 1691:  { return __builtin_isgreater(__x, __y); }
+        -: 1692:
+        -: 1693:  constexpr bool
+        -: 1694:  isgreaterequal(_Float128 __x, _Float128 __y)
+        -: 1695:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1696:
+        -: 1697:  constexpr bool
+        -: 1698:  isless(_Float128 __x, _Float128 __y)
+        -: 1699:  { return __builtin_isless(__x, __y); }
+        -: 1700:
+        -: 1701:  constexpr bool
+        -: 1702:  islessequal(_Float128 __x, _Float128 __y)
+        -: 1703:  { return __builtin_islessequal(__x, __y); }
+        -: 1704:
+        -: 1705:  constexpr bool
+        -: 1706:  islessgreater(_Float128 __x, _Float128 __y)
+        -: 1707:  { return __builtin_islessgreater(__x, __y); }
+        -: 1708:
+        -: 1709:  constexpr bool
+        -: 1710:  isunordered(_Float128 __x, _Float128 __y)
+        -: 1711:  { return __builtin_isunordered(__x, __y); }
+        -: 1712:#endif
+        -: 1713:
+        -: 1714:#ifdef __STDCPP_BFLOAT16_T__
+        -: 1715:  constexpr int
+        -: 1716:  fpclassify(__gnu_cxx::__bfloat16_t __x)
+        -: 1717:  { return __builtin_fpclassify(FP_NAN, FP_INFINITE, FP_NORMAL,
+        -: 1718:				FP_SUBNORMAL, FP_ZERO, __x); }
+        -: 1719:
+        -: 1720:  constexpr bool
+        -: 1721:  isfinite(__gnu_cxx::__bfloat16_t __x)
+        -: 1722:  { return __builtin_isfinite(__x); }
+        -: 1723:
+        -: 1724:  constexpr bool
+        -: 1725:  isinf(__gnu_cxx::__bfloat16_t __x)
+        -: 1726:  { return __builtin_isinf(__x); }
+        -: 1727:
+        -: 1728:  constexpr bool
+        -: 1729:  isnan(__gnu_cxx::__bfloat16_t __x)
+        -: 1730:  { return __builtin_isnan(__x); }
+        -: 1731:
+        -: 1732:  constexpr bool
+        -: 1733:  isnormal(__gnu_cxx::__bfloat16_t __x)
+        -: 1734:  { return __builtin_isnormal(__x); }
+        -: 1735:
+        -: 1736:  constexpr bool
+        -: 1737:  signbit(__gnu_cxx::__bfloat16_t __x)
+        -: 1738:  { return __builtin_signbit(__x); }
+        -: 1739:
+        -: 1740:  constexpr bool
+        -: 1741:  isgreater(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1742:  { return __builtin_isgreater(__x, __y); }
+        -: 1743:
+        -: 1744:  constexpr bool
+        -: 1745:  isgreaterequal(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1746:  { return __builtin_isgreaterequal(__x, __y); }
+        -: 1747:
+        -: 1748:  constexpr bool
+        -: 1749:  isless(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1750:  { return __builtin_isless(__x, __y); }
+        -: 1751:
+        -: 1752:  constexpr bool
+        -: 1753:  islessequal(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1754:  { return __builtin_islessequal(__x, __y); }
+        -: 1755:
+        -: 1756:  constexpr bool
+        -: 1757:  islessgreater(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1758:  { return __builtin_islessgreater(__x, __y); }
+        -: 1759:
+        -: 1760:  constexpr bool
+        -: 1761:  isunordered(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 1762:  { return __builtin_isunordered(__x, __y); }
+        -: 1763:#endif
+        -: 1764:
+        -: 1765:#endif /* _GLIBCXX_USE_C99_FP_MACROS_DYNAMIC */
+        -: 1766:#endif /* _GLIBCXX_USE_C99_MATH */
+        -: 1767:
+        -: 1768:#if __cplusplus >= 201103L
+        -: 1769:
+        -: 1770:#ifdef _GLIBCXX_USE_C99_MATH_TR1
+        -: 1771:
+        -: 1772:#undef acosh
+        -: 1773:#undef acoshf
+        -: 1774:#undef acoshl
+        -: 1775:#undef asinh
+        -: 1776:#undef asinhf
+        -: 1777:#undef asinhl
+        -: 1778:#undef atanh
+        -: 1779:#undef atanhf
+        -: 1780:#undef atanhl
+        -: 1781:#undef cbrt
+        -: 1782:#undef cbrtf
+        -: 1783:#undef cbrtl
+        -: 1784:#undef copysign
+        -: 1785:#undef copysignf
+        -: 1786:#undef copysignl
+        -: 1787:#undef erf
+        -: 1788:#undef erff
+        -: 1789:#undef erfl
+        -: 1790:#undef erfc
+        -: 1791:#undef erfcf
+        -: 1792:#undef erfcl
+        -: 1793:#undef exp2
+        -: 1794:#undef exp2f
+        -: 1795:#undef exp2l
+        -: 1796:#undef expm1
+        -: 1797:#undef expm1f
+        -: 1798:#undef expm1l
+        -: 1799:#undef fdim
+        -: 1800:#undef fdimf
+        -: 1801:#undef fdiml
+        -: 1802:#undef fma
+        -: 1803:#undef fmaf
+        -: 1804:#undef fmal
+        -: 1805:#undef fmax
+        -: 1806:#undef fmaxf
+        -: 1807:#undef fmaxl
+        -: 1808:#undef fmin
+        -: 1809:#undef fminf
+        -: 1810:#undef fminl
+        -: 1811:#undef hypot
+        -: 1812:#undef hypotf
+        -: 1813:#undef hypotl
+        -: 1814:#undef ilogb
+        -: 1815:#undef ilogbf
+        -: 1816:#undef ilogbl
+        -: 1817:#undef lgamma
+        -: 1818:#undef lgammaf
+        -: 1819:#undef lgammal
+        -: 1820:#ifndef _GLIBCXX_NO_C99_ROUNDING_FUNCS
+        -: 1821:#undef llrint
+        -: 1822:#undef llrintf
+        -: 1823:#undef llrintl
+        -: 1824:#undef llround
+        -: 1825:#undef llroundf
+        -: 1826:#undef llroundl
+        -: 1827:#endif
+        -: 1828:#undef log1p
+        -: 1829:#undef log1pf
+        -: 1830:#undef log1pl
+        -: 1831:#undef log2
+        -: 1832:#undef log2f
+        -: 1833:#undef log2l
+        -: 1834:#undef logb
+        -: 1835:#undef logbf
+        -: 1836:#undef logbl
+        -: 1837:#undef lrint
+        -: 1838:#undef lrintf
+        -: 1839:#undef lrintl
+        -: 1840:#undef lround
+        -: 1841:#undef lroundf
+        -: 1842:#undef lroundl
+        -: 1843:#undef nan
+        -: 1844:#undef nanf
+        -: 1845:#undef nanl
+        -: 1846:#undef nearbyint
+        -: 1847:#undef nearbyintf
+        -: 1848:#undef nearbyintl
+        -: 1849:#undef nextafter
+        -: 1850:#undef nextafterf
+        -: 1851:#undef nextafterl
+        -: 1852:#undef nexttoward
+        -: 1853:#undef nexttowardf
+        -: 1854:#undef nexttowardl
+        -: 1855:#undef remainder
+        -: 1856:#undef remainderf
+        -: 1857:#undef remainderl
+        -: 1858:#undef remquo
+        -: 1859:#undef remquof
+        -: 1860:#undef remquol
+        -: 1861:#undef rint
+        -: 1862:#undef rintf
+        -: 1863:#undef rintl
+        -: 1864:#undef round
+        -: 1865:#undef roundf
+        -: 1866:#undef roundl
+        -: 1867:#undef scalbln
+        -: 1868:#undef scalblnf
+        -: 1869:#undef scalblnl
+        -: 1870:#undef scalbn
+        -: 1871:#undef scalbnf
+        -: 1872:#undef scalbnl
+        -: 1873:#undef tgamma
+        -: 1874:#undef tgammaf
+        -: 1875:#undef tgammal
+        -: 1876:#undef trunc
+        -: 1877:#undef truncf
+        -: 1878:#undef truncl
+        -: 1879:
+        -: 1880:  // types
+        -: 1881:  using ::double_t;
+        -: 1882:  using ::float_t;
+        -: 1883:
+        -: 1884:  // functions
+        -: 1885:  using ::acosh;
+        -: 1886:  using ::acoshf;
+        -: 1887:  using ::acoshl;
+        -: 1888:
+        -: 1889:  using ::asinh;
+        -: 1890:  using ::asinhf;
+        -: 1891:  using ::asinhl;
+        -: 1892:
+        -: 1893:  using ::atanh;
+        -: 1894:  using ::atanhf;
+        -: 1895:  using ::atanhl;
+        -: 1896:
+        -: 1897:  using ::cbrt;
+        -: 1898:  using ::cbrtf;
+        -: 1899:  using ::cbrtl;
+        -: 1900:
+        -: 1901:  using ::copysign;
+        -: 1902:  using ::copysignf;
+        -: 1903:  using ::copysignl;
+        -: 1904:
+        -: 1905:  using ::erf;
+        -: 1906:  using ::erff;
+        -: 1907:  using ::erfl;
+        -: 1908:
+        -: 1909:  using ::erfc;
+        -: 1910:  using ::erfcf;
+        -: 1911:  using ::erfcl;
+        -: 1912:
+        -: 1913:  using ::exp2;
+        -: 1914:  using ::exp2f;
+        -: 1915:  using ::exp2l;
+        -: 1916:
+        -: 1917:  using ::expm1;
+        -: 1918:  using ::expm1f;
+        -: 1919:  using ::expm1l;
+        -: 1920:
+        -: 1921:  using ::fdim;
+        -: 1922:  using ::fdimf;
+        -: 1923:  using ::fdiml;
+        -: 1924:
+        -: 1925:  using ::fma;
+        -: 1926:  using ::fmaf;
+        -: 1927:  using ::fmal;
+        -: 1928:
+        -: 1929:  using ::fmax;
+        -: 1930:  using ::fmaxf;
+        -: 1931:  using ::fmaxl;
+        -: 1932:
+        -: 1933:  using ::fmin;
+        -: 1934:  using ::fminf;
+        -: 1935:  using ::fminl;
+        -: 1936:
+        -: 1937:  using ::hypot;
+        -: 1938:  using ::hypotf;
+        -: 1939:  using ::hypotl;
+        -: 1940:
+        -: 1941:  using ::ilogb;
+        -: 1942:  using ::ilogbf;
+        -: 1943:  using ::ilogbl;
+        -: 1944:
+        -: 1945:  using ::lgamma;
+        -: 1946:  using ::lgammaf;
+        -: 1947:  using ::lgammal;
+        -: 1948:
+        -: 1949:#ifndef _GLIBCXX_NO_C99_ROUNDING_FUNCS
+        -: 1950:  using ::llrint;
+        -: 1951:  using ::llrintf;
+        -: 1952:  using ::llrintl;
+        -: 1953:
+        -: 1954:  using ::llround;
+        -: 1955:  using ::llroundf;
+        -: 1956:  using ::llroundl;
+        -: 1957:#endif
+        -: 1958:
+        -: 1959:  using ::log1p;
+        -: 1960:  using ::log1pf;
+        -: 1961:  using ::log1pl;
+        -: 1962:
+        -: 1963:  using ::log2;
+        -: 1964:  using ::log2f;
+        -: 1965:  using ::log2l;
+        -: 1966:
+        -: 1967:  using ::logb;
+        -: 1968:  using ::logbf;
+        -: 1969:  using ::logbl;
+        -: 1970:
+        -: 1971:  using ::lrint;
+        -: 1972:  using ::lrintf;
+        -: 1973:  using ::lrintl;
+        -: 1974:
+        -: 1975:  using ::lround;
+        -: 1976:  using ::lroundf;
+        -: 1977:  using ::lroundl;
+        -: 1978:
+        -: 1979:  using ::nan;
+        -: 1980:  using ::nanf;
+        -: 1981:  using ::nanl;
+        -: 1982:
+        -: 1983:  using ::nearbyint;
+        -: 1984:  using ::nearbyintf;
+        -: 1985:  using ::nearbyintl;
+        -: 1986:
+        -: 1987:  using ::nextafter;
+        -: 1988:  using ::nextafterf;
+        -: 1989:  using ::nextafterl;
+        -: 1990:
+        -: 1991:  using ::nexttoward;
+        -: 1992:  using ::nexttowardf;
+        -: 1993:  using ::nexttowardl;
+        -: 1994:
+        -: 1995:  using ::remainder;
+        -: 1996:  using ::remainderf;
+        -: 1997:  using ::remainderl;
+        -: 1998:
+        -: 1999:  using ::remquo;
+        -: 2000:  using ::remquof;
+        -: 2001:  using ::remquol;
+        -: 2002:
+        -: 2003:  using ::rint;
+        -: 2004:  using ::rintf;
+        -: 2005:  using ::rintl;
+        -: 2006:
+        -: 2007:  using ::round;
+        -: 2008:  using ::roundf;
+        -: 2009:  using ::roundl;
+        -: 2010:
+        -: 2011:  using ::scalbln;
+        -: 2012:  using ::scalblnf;
+        -: 2013:  using ::scalblnl;
+        -: 2014:
+        -: 2015:  using ::scalbn;
+        -: 2016:  using ::scalbnf;
+        -: 2017:  using ::scalbnl;
+        -: 2018:
+        -: 2019:  using ::tgamma;
+        -: 2020:  using ::tgammaf;
+        -: 2021:  using ::tgammal;
+        -: 2022:
+        -: 2023:  using ::trunc;
+        -: 2024:  using ::truncf;
+        -: 2025:  using ::truncl;
+        -: 2026:
+        -: 2027:  /// Additional overloads.
+        -: 2028:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2029:  constexpr float
+        -: 2030:  acosh(float __x)
+        -: 2031:  { return __builtin_acoshf(__x); }
+        -: 2032:
+        -: 2033:  constexpr long double
+        -: 2034:  acosh(long double __x)
+        -: 2035:  { return __builtin_acoshl(__x); }
+        -: 2036:#endif
+        -: 2037:
+        -: 2038:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2039:  template<typename _Tp>
+        -: 2040:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2041:                                              double>::__type
+        -: 2042:    acosh(_Tp __x)
+        -: 2043:    { return __builtin_acosh(__x); }
+        -: 2044:#endif
+        -: 2045:
+        -: 2046:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2047:  constexpr float
+        -: 2048:  asinh(float __x)
+        -: 2049:  { return __builtin_asinhf(__x); }
+        -: 2050:
+        -: 2051:  constexpr long double
+        -: 2052:  asinh(long double __x)
+        -: 2053:  { return __builtin_asinhl(__x); }
+        -: 2054:#endif
+        -: 2055:
+        -: 2056:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2057:  template<typename _Tp>
+        -: 2058:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2059:                                              double>::__type
+        -: 2060:    asinh(_Tp __x)
+        -: 2061:    { return __builtin_asinh(__x); }
+        -: 2062:#endif
+        -: 2063:
+        -: 2064:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2065:  constexpr float
+        -: 2066:  atanh(float __x)
+        -: 2067:  { return __builtin_atanhf(__x); }
+        -: 2068:
+        -: 2069:  constexpr long double
+        -: 2070:  atanh(long double __x)
+        -: 2071:  { return __builtin_atanhl(__x); }
+        -: 2072:#endif
+        -: 2073:
+        -: 2074:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2075:  template<typename _Tp>
+        -: 2076:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2077:                                              double>::__type
+        -: 2078:    atanh(_Tp __x)
+        -: 2079:    { return __builtin_atanh(__x); }
+        -: 2080:#endif
+        -: 2081:
+        -: 2082:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2083:  constexpr float
+        -: 2084:  cbrt(float __x)
+        -: 2085:  { return __builtin_cbrtf(__x); }
+        -: 2086:
+        -: 2087:  constexpr long double
+        -: 2088:  cbrt(long double __x)
+        -: 2089:  { return __builtin_cbrtl(__x); }
+        -: 2090:#endif
+        -: 2091:
+        -: 2092:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2093:  template<typename _Tp>
+        -: 2094:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2095:                                              double>::__type
+        -: 2096:    cbrt(_Tp __x)
+        -: 2097:    { return __builtin_cbrt(__x); }
+        -: 2098:#endif
+        -: 2099:
+        -: 2100:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2101:  constexpr float
+        -: 2102:  copysign(float __x, float __y)
+        -: 2103:  { return __builtin_copysignf(__x, __y); }
+        -: 2104:
+        -: 2105:  constexpr long double
+        -: 2106:  copysign(long double __x, long double __y)
+        -: 2107:  { return __builtin_copysignl(__x, __y); }
+        -: 2108:#endif
+        -: 2109:
+        -: 2110:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2111:  template<typename _Tp, typename _Up>
+        -: 2112:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2113:    copysign(_Tp __x, _Up __y)
+        -: 2114:    {
+        -: 2115:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2116:      return copysign(__type(__x), __type(__y));
+        -: 2117:    }
+        -: 2118:#endif
+        -: 2119:
+        -: 2120:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2121:  constexpr float
+        -: 2122:  erf(float __x)
+        -: 2123:  { return __builtin_erff(__x); }
+        -: 2124:
+        -: 2125:  constexpr long double
+        -: 2126:  erf(long double __x)
+        -: 2127:  { return __builtin_erfl(__x); }
+        -: 2128:#endif
+        -: 2129:
+        -: 2130:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2131:  template<typename _Tp>
+        -: 2132:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2133:                                              double>::__type
+        -: 2134:    erf(_Tp __x)
+        -: 2135:    { return __builtin_erf(__x); }
+        -: 2136:#endif
+        -: 2137:
+        -: 2138:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2139:  constexpr float
+        -: 2140:  erfc(float __x)
+        -: 2141:  { return __builtin_erfcf(__x); }
+        -: 2142:
+        -: 2143:  constexpr long double
+        -: 2144:  erfc(long double __x)
+        -: 2145:  { return __builtin_erfcl(__x); }
+        -: 2146:#endif
+        -: 2147:
+        -: 2148:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2149:  template<typename _Tp>
+        -: 2150:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2151:                                              double>::__type
+        -: 2152:    erfc(_Tp __x)
+        -: 2153:    { return __builtin_erfc(__x); }
+        -: 2154:#endif
+        -: 2155:
+        -: 2156:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2157:  constexpr float
+        -: 2158:  exp2(float __x)
+        -: 2159:  { return __builtin_exp2f(__x); }
+        -: 2160:
+        -: 2161:  constexpr long double
+        -: 2162:  exp2(long double __x)
+        -: 2163:  { return __builtin_exp2l(__x); }
+        -: 2164:#endif
+        -: 2165:
+        -: 2166:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2167:  template<typename _Tp>
+        -: 2168:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2169:                                              double>::__type
+        -: 2170:    exp2(_Tp __x)
+        -: 2171:    { return __builtin_exp2(__x); }
+        -: 2172:#endif
+        -: 2173:
+        -: 2174:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2175:  constexpr float
+        -: 2176:  expm1(float __x)
+        -: 2177:  { return __builtin_expm1f(__x); }
+        -: 2178:
+        -: 2179:  constexpr long double
+        -: 2180:  expm1(long double __x)
+        -: 2181:  { return __builtin_expm1l(__x); }
+        -: 2182:#endif
+        -: 2183:
+        -: 2184:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2185:  template<typename _Tp>
+        -: 2186:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2187:                                              double>::__type
+        -: 2188:    expm1(_Tp __x)
+        -: 2189:    { return __builtin_expm1(__x); }
+        -: 2190:#endif
+        -: 2191:
+        -: 2192:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2193:  constexpr float
+        -: 2194:  fdim(float __x, float __y)
+        -: 2195:  { return __builtin_fdimf(__x, __y); }
+        -: 2196:
+        -: 2197:  constexpr long double
+        -: 2198:  fdim(long double __x, long double __y)
+        -: 2199:  { return __builtin_fdiml(__x, __y); }
+        -: 2200:#endif
+        -: 2201:
+        -: 2202:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2203:  template<typename _Tp, typename _Up>
+        -: 2204:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2205:    fdim(_Tp __x, _Up __y)
+        -: 2206:    {
+        -: 2207:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2208:      return fdim(__type(__x), __type(__y));
+        -: 2209:    }
+        -: 2210:#endif
+        -: 2211:
+        -: 2212:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2213:  constexpr float
+        -: 2214:  fma(float __x, float __y, float __z)
+        -: 2215:  { return __builtin_fmaf(__x, __y, __z); }
+        -: 2216:
+        -: 2217:  constexpr long double
+        -: 2218:  fma(long double __x, long double __y, long double __z)
+        -: 2219:  { return __builtin_fmal(__x, __y, __z); }
+        -: 2220:#endif
+        -: 2221:
+        -: 2222:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2223:  template<typename _Tp, typename _Up, typename _Vp>
+        -: 2224:    constexpr typename __gnu_cxx::__promote_3<_Tp, _Up, _Vp>::__type
+        -: 2225:    fma(_Tp __x, _Up __y, _Vp __z)
+        -: 2226:    {
+        -: 2227:      typedef typename __gnu_cxx::__promote_3<_Tp, _Up, _Vp>::__type __type;
+        -: 2228:      return fma(__type(__x), __type(__y), __type(__z));
+        -: 2229:    }
+        -: 2230:#endif
+        -: 2231:
+        -: 2232:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2233:  constexpr float
+        -: 2234:  fmax(float __x, float __y)
+        -: 2235:  { return __builtin_fmaxf(__x, __y); }
+        -: 2236:
+        -: 2237:  constexpr long double
+        -: 2238:  fmax(long double __x, long double __y)
+        -: 2239:  { return __builtin_fmaxl(__x, __y); }
+        -: 2240:#endif
+        -: 2241:
+        -: 2242:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2243:  template<typename _Tp, typename _Up>
+        -: 2244:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2245:    fmax(_Tp __x, _Up __y)
+        -: 2246:    {
+        -: 2247:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2248:      return fmax(__type(__x), __type(__y));
+        -: 2249:    }
+        -: 2250:#endif
+        -: 2251:
+        -: 2252:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2253:  constexpr float
+        -: 2254:  fmin(float __x, float __y)
+        -: 2255:  { return __builtin_fminf(__x, __y); }
+        -: 2256:
+        -: 2257:  constexpr long double
+        -: 2258:  fmin(long double __x, long double __y)
+        -: 2259:  { return __builtin_fminl(__x, __y); }
+        -: 2260:#endif
+        -: 2261:
+        -: 2262:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2263:  template<typename _Tp, typename _Up>
+        -: 2264:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2265:    fmin(_Tp __x, _Up __y)
+        -: 2266:    {
+        -: 2267:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2268:      return fmin(__type(__x), __type(__y));
+        -: 2269:    }
+        -: 2270:#endif
+        -: 2271:
+        -: 2272:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2273:  constexpr float
+        -: 2274:  hypot(float __x, float __y)
+        -: 2275:  { return __builtin_hypotf(__x, __y); }
+        -: 2276:
+        -: 2277:  constexpr long double
+        -: 2278:  hypot(long double __x, long double __y)
+        -: 2279:  { return __builtin_hypotl(__x, __y); }
+        -: 2280:#endif
+        -: 2281:
+        -: 2282:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2283:  template<typename _Tp, typename _Up>
+        -: 2284:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2285:    hypot(_Tp __x, _Up __y)
+        -: 2286:    {
+        -: 2287:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2288:      return hypot(__type(__x), __type(__y));
+        -: 2289:    }
+        -: 2290:#endif
+        -: 2291:
+        -: 2292:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2293:  constexpr int
+        -: 2294:  ilogb(float __x)
+        -: 2295:  { return __builtin_ilogbf(__x); }
+        -: 2296:
+        -: 2297:  constexpr int
+        -: 2298:  ilogb(long double __x)
+        -: 2299:  { return __builtin_ilogbl(__x); }
+        -: 2300:#endif
+        -: 2301:
+        -: 2302:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2303:  template<typename _Tp>
+        -: 2304:    constexpr
+        -: 2305:    typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2306:                                    int>::__type
+        -: 2307:    ilogb(_Tp __x)
+        -: 2308:    { return __builtin_ilogb(__x); }
+        -: 2309:#endif
+        -: 2310:
+        -: 2311:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2312:  constexpr float
+        -: 2313:  lgamma(float __x)
+        -: 2314:  { return __builtin_lgammaf(__x); }
+        -: 2315:
+        -: 2316:  constexpr long double
+        -: 2317:  lgamma(long double __x)
+        -: 2318:  { return __builtin_lgammal(__x); }
+        -: 2319:#endif
+        -: 2320:
+        -: 2321:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2322:  template<typename _Tp>
+        -: 2323:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2324:                                              double>::__type
+        -: 2325:    lgamma(_Tp __x)
+        -: 2326:    { return __builtin_lgamma(__x); }
+        -: 2327:#endif
+        -: 2328:
+        -: 2329:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2330:  constexpr long long
+        -: 2331:  llrint(float __x)
+        -: 2332:  { return __builtin_llrintf(__x); }
+        -: 2333:
+        -: 2334:  constexpr long long
+        -: 2335:  llrint(long double __x)
+        -: 2336:  { return __builtin_llrintl(__x); }
+        -: 2337:#endif
+        -: 2338:
+        -: 2339:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2340:  template<typename _Tp>
+        -: 2341:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2342:                                              long long>::__type
+        -: 2343:    llrint(_Tp __x)
+        -: 2344:    { return __builtin_llrint(__x); }
+        -: 2345:#endif
+        -: 2346:
+        -: 2347:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2348:  constexpr long long
+        -: 2349:  llround(float __x)
+        -: 2350:  { return __builtin_llroundf(__x); }
+        -: 2351:
+        -: 2352:  constexpr long long
+        -: 2353:  llround(long double __x)
+        -: 2354:  { return __builtin_llroundl(__x); }
+        -: 2355:#endif
+        -: 2356:
+        -: 2357:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2358:  template<typename _Tp>
+        -: 2359:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2360:                                              long long>::__type
+        -: 2361:    llround(_Tp __x)
+        -: 2362:    { return __builtin_llround(__x); }
+        -: 2363:#endif
+        -: 2364:
+        -: 2365:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2366:  constexpr float
+        -: 2367:  log1p(float __x)
+        -: 2368:  { return __builtin_log1pf(__x); }
+        -: 2369:
+        -: 2370:  constexpr long double
+        -: 2371:  log1p(long double __x)
+        -: 2372:  { return __builtin_log1pl(__x); }
+        -: 2373:#endif
+        -: 2374:
+        -: 2375:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2376:  template<typename _Tp>
+        -: 2377:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2378:                                              double>::__type
+        -: 2379:    log1p(_Tp __x)
+        -: 2380:    { return __builtin_log1p(__x); }
+        -: 2381:#endif
+        -: 2382:
+        -: 2383:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2384:  // DR 568.
+        -: 2385:  constexpr float
+        -: 2386:  log2(float __x)
+        -: 2387:  { return __builtin_log2f(__x); }
+        -: 2388:
+        -: 2389:  constexpr long double
+        -: 2390:  log2(long double __x)
+        -: 2391:  { return __builtin_log2l(__x); }
+        -: 2392:#endif
+        -: 2393:
+        -: 2394:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2395:  template<typename _Tp>
+        -: 2396:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2397:                                              double>::__type
+        -: 2398:    log2(_Tp __x)
+        -: 2399:    { return __builtin_log2(__x); }
+        -: 2400:#endif
+        -: 2401:
+        -: 2402:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2403:  constexpr float
+        -: 2404:  logb(float __x)
+        -: 2405:  { return __builtin_logbf(__x); }
+        -: 2406:
+        -: 2407:  constexpr long double
+        -: 2408:  logb(long double __x)
+        -: 2409:  { return __builtin_logbl(__x); }
+        -: 2410:#endif
+        -: 2411:
+        -: 2412:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2413:  template<typename _Tp>
+        -: 2414:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2415:                                              double>::__type
+        -: 2416:    logb(_Tp __x)
+        -: 2417:    { return __builtin_logb(__x); }
+        -: 2418:#endif
+        -: 2419:
+        -: 2420:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2421:  constexpr long
+        -: 2422:  lrint(float __x)
+        -: 2423:  { return __builtin_lrintf(__x); }
+        -: 2424:
+        -: 2425:  constexpr long
+        -: 2426:  lrint(long double __x)
+        -: 2427:  { return __builtin_lrintl(__x); }
+        -: 2428:#endif
+        -: 2429:
+        -: 2430:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2431:  template<typename _Tp>
+        -: 2432:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2433:                                              long>::__type
+        -: 2434:    lrint(_Tp __x)
+        -: 2435:    { return __builtin_lrint(__x); }
+        -: 2436:#endif
+        -: 2437:
+        -: 2438:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2439:  constexpr long
+        -: 2440:  lround(float __x)
+        -: 2441:  { return __builtin_lroundf(__x); }
+        -: 2442:
+        -: 2443:  constexpr long
+        -: 2444:  lround(long double __x)
+        -: 2445:  { return __builtin_lroundl(__x); }
+        -: 2446:#endif
+        -: 2447:
+        -: 2448:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2449:  template<typename _Tp>
+        -: 2450:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2451:                                              long>::__type
+        -: 2452:    lround(_Tp __x)
+        -: 2453:    { return __builtin_lround(__x); }
+        -: 2454:#endif
+        -: 2455:
+        -: 2456:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2457:  constexpr float
+        -: 2458:  nearbyint(float __x)
+        -: 2459:  { return __builtin_nearbyintf(__x); }
+        -: 2460:
+        -: 2461:  constexpr long double
+        -: 2462:  nearbyint(long double __x)
+        -: 2463:  { return __builtin_nearbyintl(__x); }
+        -: 2464:#endif
+        -: 2465:
+        -: 2466:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2467:  template<typename _Tp>
+        -: 2468:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2469:                                              double>::__type
+        -: 2470:    nearbyint(_Tp __x)
+        -: 2471:    { return __builtin_nearbyint(__x); }
+        -: 2472:#endif
+        -: 2473:
+        -: 2474:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2475:  constexpr float
+        -: 2476:  nextafter(float __x, float __y)
+        -: 2477:  { return __builtin_nextafterf(__x, __y); }
+        -: 2478:
+        -: 2479:  constexpr long double
+        -: 2480:  nextafter(long double __x, long double __y)
+        -: 2481:  { return __builtin_nextafterl(__x, __y); }
+        -: 2482:#endif
+        -: 2483:
+        -: 2484:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2485:  template<typename _Tp, typename _Up>
+        -: 2486:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2487:    nextafter(_Tp __x, _Up __y)
+        -: 2488:    {
+        -: 2489:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2490:      return nextafter(__type(__x), __type(__y));
+        -: 2491:    }
+        -: 2492:#endif
+        -: 2493:
+        -: 2494:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2495:  constexpr float
+        -: 2496:  nexttoward(float __x, long double __y)
+        -: 2497:  { return __builtin_nexttowardf(__x, __y); }
+        -: 2498:
+        -: 2499:  constexpr long double
+        -: 2500:  nexttoward(long double __x, long double __y)
+        -: 2501:  { return __builtin_nexttowardl(__x, __y); }
+        -: 2502:#endif
+        -: 2503:
+        -: 2504:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2505:  template<typename _Tp>
+        -: 2506:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2507:                                              double>::__type
+        -: 2508:    nexttoward(_Tp __x, long double __y)
+        -: 2509:    { return __builtin_nexttoward(__x, __y); }
+        -: 2510:#endif
+        -: 2511:
+        -: 2512:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2513:  constexpr float
+        -: 2514:  remainder(float __x, float __y)
+        -: 2515:  { return __builtin_remainderf(__x, __y); }
+        -: 2516:
+        -: 2517:  constexpr long double
+        -: 2518:  remainder(long double __x, long double __y)
+        -: 2519:  { return __builtin_remainderl(__x, __y); }
+        -: 2520:#endif
+        -: 2521:
+        -: 2522:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2523:  template<typename _Tp, typename _Up>
+        -: 2524:    constexpr typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2525:    remainder(_Tp __x, _Up __y)
+        -: 2526:    {
+        -: 2527:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2528:      return remainder(__type(__x), __type(__y));
+        -: 2529:    }
+        -: 2530:#endif
+        -: 2531:
+        -: 2532:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2533:  inline float
+        -: 2534:  remquo(float __x, float __y, int* __pquo)
+        -: 2535:  { return __builtin_remquof(__x, __y, __pquo); }
+        -: 2536:
+        -: 2537:  inline long double
+        -: 2538:  remquo(long double __x, long double __y, int* __pquo)
+        -: 2539:  { return __builtin_remquol(__x, __y, __pquo); }
+        -: 2540:#endif
+        -: 2541:
+        -: 2542:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2543:  template<typename _Tp, typename _Up>
+        -: 2544:    inline typename __gnu_cxx::__promote_2<_Tp, _Up>::__type
+        -: 2545:    remquo(_Tp __x, _Up __y, int* __pquo)
+        -: 2546:    {
+        -: 2547:      typedef typename __gnu_cxx::__promote_2<_Tp, _Up>::__type __type;
+        -: 2548:      return remquo(__type(__x), __type(__y), __pquo);
+        -: 2549:    }
+        -: 2550:#endif
+        -: 2551:
+        -: 2552:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2553:  constexpr float
+        -: 2554:  rint(float __x)
+        -: 2555:  { return __builtin_rintf(__x); }
+        -: 2556:
+        -: 2557:  constexpr long double
+        -: 2558:  rint(long double __x)
+        -: 2559:  { return __builtin_rintl(__x); }
+        -: 2560:#endif
+        -: 2561:
+        -: 2562:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2563:  template<typename _Tp>
+        -: 2564:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2565:                                              double>::__type
+        -: 2566:    rint(_Tp __x)
+        -: 2567:    { return __builtin_rint(__x); }
+        -: 2568:#endif
+        -: 2569:
+        -: 2570:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2571:  constexpr float
+        -: 2572:  round(float __x)
+        -: 2573:  { return __builtin_roundf(__x); }
+        -: 2574:
+        -: 2575:  constexpr long double
+        -: 2576:  round(long double __x)
+        -: 2577:  { return __builtin_roundl(__x); }
+        -: 2578:#endif
+        -: 2579:
+        -: 2580:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2581:  template<typename _Tp>
+        -: 2582:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2583:                                              double>::__type
+        -: 2584:    round(_Tp __x)
+        -: 2585:    { return __builtin_round(__x); }
+        -: 2586:#endif
+        -: 2587:
+        -: 2588:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2589:  constexpr float
+        -: 2590:  scalbln(float __x, long __ex)
+        -: 2591:  { return __builtin_scalblnf(__x, __ex); }
+        -: 2592:
+        -: 2593:  constexpr long double
+        -: 2594:  scalbln(long double __x, long __ex)
+        -: 2595:  { return __builtin_scalblnl(__x, __ex); }
+        -: 2596:#endif
+        -: 2597:
+        -: 2598:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2599:  template<typename _Tp>
+        -: 2600:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2601:                                              double>::__type
+        -: 2602:    scalbln(_Tp __x, long __ex)
+        -: 2603:    { return __builtin_scalbln(__x, __ex); }
+        -: 2604:#endif
+        -: 2605: 
+        -: 2606:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2607:  constexpr float
+        -: 2608:  scalbn(float __x, int __ex)
+        -: 2609:  { return __builtin_scalbnf(__x, __ex); }
+        -: 2610:
+        -: 2611:  constexpr long double
+        -: 2612:  scalbn(long double __x, int __ex)
+        -: 2613:  { return __builtin_scalbnl(__x, __ex); }
+        -: 2614:#endif
+        -: 2615:
+        -: 2616:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2617:  template<typename _Tp>
+        -: 2618:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2619:                                              double>::__type
+        -: 2620:    scalbn(_Tp __x, int __ex)
+        -: 2621:    { return __builtin_scalbn(__x, __ex); }
+        -: 2622:#endif
+        -: 2623:
+        -: 2624:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2625:  constexpr float
+        -: 2626:  tgamma(float __x)
+        -: 2627:  { return __builtin_tgammaf(__x); }
+        -: 2628:
+        -: 2629:  constexpr long double
+        -: 2630:  tgamma(long double __x)
+        -: 2631:  { return __builtin_tgammal(__x); }
+        -: 2632:#endif
+        -: 2633:
+        -: 2634:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2635:  template<typename _Tp>
+        -: 2636:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2637:                                              double>::__type
+        -: 2638:    tgamma(_Tp __x)
+        -: 2639:    { return __builtin_tgamma(__x); }
+        -: 2640:#endif
+        -: 2641: 
+        -: 2642:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_FP
+        -: 2643:  constexpr float
+        -: 2644:  trunc(float __x)
+        -: 2645:  { return __builtin_truncf(__x); }
+        -: 2646:
+        -: 2647:  constexpr long double
+        -: 2648:  trunc(long double __x)
+        -: 2649:  { return __builtin_truncl(__x); }
+        -: 2650:#endif
+        -: 2651:
+        -: 2652:#ifndef __CORRECT_ISO_CPP11_MATH_H_PROTO_INT
+        -: 2653:  template<typename _Tp>
+        -: 2654:    constexpr typename __gnu_cxx::__enable_if<__is_integer<_Tp>::__value, 
+        -: 2655:                                              double>::__type
+        -: 2656:    trunc(_Tp __x)
+        -: 2657:    { return __builtin_trunc(__x); }
+        -: 2658:#endif
+        -: 2659:
+        -: 2660:#if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 2661:  constexpr _Float16
+        -: 2662:  acosh(_Float16 __x)
+        -: 2663:  { return _Float16(__builtin_acoshf(__x)); }
+        -: 2664:
+        -: 2665:  constexpr _Float16
+        -: 2666:  asinh(_Float16 __x)
+        -: 2667:  { return _Float16(__builtin_asinhf(__x)); }
+        -: 2668:
+        -: 2669:  constexpr _Float16
+        -: 2670:  atanh(_Float16 __x)
+        -: 2671:  { return _Float16(__builtin_atanhf(__x)); }
+        -: 2672:
+        -: 2673:  constexpr _Float16
+        -: 2674:  cbrt(_Float16 __x)
+        -: 2675:  { return _Float16(__builtin_cbrtf(__x)); }
+        -: 2676:
+        -: 2677:  constexpr _Float16
+        -: 2678:  copysign(_Float16 __x, _Float16 __y)
+        -: 2679:  { return __builtin_copysignf16(__x, __y); }
+        -: 2680:
+        -: 2681:  constexpr _Float16
+        -: 2682:  erf(_Float16 __x)
+        -: 2683:  { return _Float16(__builtin_erff(__x)); }
+        -: 2684:
+        -: 2685:  constexpr _Float16
+        -: 2686:  erfc(_Float16 __x)
+        -: 2687:  { return _Float16(__builtin_erfcf(__x)); }
+        -: 2688:
+        -: 2689:  constexpr _Float16
+        -: 2690:  exp2(_Float16 __x)
+        -: 2691:  { return _Float16(__builtin_exp2f(__x)); }
+        -: 2692:
+        -: 2693:  constexpr _Float16
+        -: 2694:  expm1(_Float16 __x)
+        -: 2695:  { return _Float16(__builtin_expm1f(__x)); }
+        -: 2696:
+        -: 2697:  constexpr _Float16
+        -: 2698:  fdim(_Float16 __x, _Float16 __y)
+        -: 2699:  { return _Float16(__builtin_fdimf(__x, __y)); }
+        -: 2700:
+        -: 2701:  constexpr _Float16
+        -: 2702:  fma(_Float16 __x, _Float16 __y, _Float16 __z)
+        -: 2703:  { return _Float16(__builtin_fmaf(__x, __y, __z)); }
+        -: 2704:
+        -: 2705:  constexpr _Float16
+        -: 2706:  fmax(_Float16 __x, _Float16 __y)
+        -: 2707:  { return _Float16(__builtin_fmaxf(__x, __y)); }
+        -: 2708:
+        -: 2709:  constexpr _Float16
+        -: 2710:  fmin(_Float16 __x, _Float16 __y)
+        -: 2711:  { return _Float16(__builtin_fminf(__x, __y)); }
+        -: 2712:
+        -: 2713:  constexpr _Float16
+        -: 2714:  hypot(_Float16 __x, _Float16 __y)
+        -: 2715:  { return _Float16(__builtin_hypotf(__x, __y)); }
+        -: 2716:
+        -: 2717:  constexpr int
+        -: 2718:  ilogb(_Float16 __x)
+        -: 2719:  { return _Float16(__builtin_ilogbf(__x)); }
+        -: 2720:
+        -: 2721:  constexpr _Float16
+        -: 2722:  lgamma(_Float16 __x)
+        -: 2723:  { return _Float16(__builtin_lgammaf(__x)); }
+        -: 2724:
+        -: 2725:  constexpr long long
+        -: 2726:  llrint(_Float16 __x)
+        -: 2727:  { return _Float16(__builtin_llrintf(__x)); }
+        -: 2728:
+        -: 2729:  constexpr long long
+        -: 2730:  llround(_Float16 __x)
+        -: 2731:  { return _Float16(__builtin_llroundf(__x)); }
+        -: 2732:
+        -: 2733:  constexpr _Float16
+        -: 2734:  log1p(_Float16 __x)
+        -: 2735:  { return _Float16(__builtin_log1pf(__x)); }
+        -: 2736:
+        -: 2737:  // DR 568.
+        -: 2738:  constexpr _Float16
+        -: 2739:  log2(_Float16 __x)
+        -: 2740:  { return _Float16(__builtin_log2f(__x)); }
+        -: 2741:
+        -: 2742:  constexpr _Float16
+        -: 2743:  logb(_Float16 __x)
+        -: 2744:  { return _Float16(__builtin_logbf(__x)); }
+        -: 2745:
+        -: 2746:  constexpr long
+        -: 2747:  lrint(_Float16 __x)
+        -: 2748:  { return _Float16(__builtin_lrintf(__x)); }
+        -: 2749:
+        -: 2750:  constexpr long
+        -: 2751:  lround(_Float16 __x)
+        -: 2752:  { return _Float16(__builtin_lroundf(__x)); }
+        -: 2753:
+        -: 2754:  constexpr _Float16
+        -: 2755:  nearbyint(_Float16 __x)
+        -: 2756:  { return _Float16(__builtin_nearbyintf(__x)); }
+        -: 2757:
+        -: 2758:  constexpr _Float16
+        -: 2759:  nextafter(_Float16 __x, _Float16 __y)
+        -: 2760:  {
+        -: 2761:    if (std::__is_constant_evaluated())
+        -: 2762:      return __builtin_nextafterf16(__x, __y);
+        -: 2763:#ifdef __INT16_TYPE__
+        -: 2764:    using __float16_int_type = __INT16_TYPE__;
+        -: 2765:#else
+        -: 2766:    using __float16_int_type = short int;
+        -: 2767:#endif
+        -: 2768:    __float16_int_type __hx, __hy, __ix, __iy;
+        -: 2769:    __builtin_memcpy(&__hx, &__x, sizeof(__x));
+        -: 2770:    __builtin_memcpy(&__hy, &__y, sizeof(__x));
+        -: 2771:    __ix = __hx & 0x7fff;	// |x|
+        -: 2772:    __iy = __hy & 0x7fff;	// |y|
+        -: 2773:    if (__ix > 0x7c00 || __iy > 0x7c00) // x or y is NaN
+        -: 2774:      return __x + __y;
+        -: 2775:    if (__x == __y)
+        -: 2776:      return __y;		// x == y, return y
+        -: 2777:    if (__ix == 0)		// x == 0
+        -: 2778:      {
+        -: 2779:	__hy = (__hy & 0x8000) | 1;	// return +-__FLT16_DENORM_MIN__
+        -: 2780:	__builtin_memcpy(&__x, &__hy, sizeof(__x));
+        -: 2781:	__builtin_nextafterf(0.0f, 1.0f);	// raise underflow
+        -: 2782:	return __x;
+        -: 2783:      }
+        -: 2784:    if (__hx >= 0)		// x > 0
+        -: 2785:      {
+        -: 2786:	if (__hx > __hy)	// x > y, x -= ulp
+        -: 2787:	  --__hx;
+        -: 2788:	else			// x < y, x += ulp
+        -: 2789:	  ++__hx;
+        -: 2790:      }
+        -: 2791:    else			// x < 0
+        -: 2792:      {
+        -: 2793:	if (__hy >= 0 || __hx > __hy)	// x < y, x -= ulp
+        -: 2794:	  --__hx;
+        -: 2795:	else			// x > y, x += ulp
+        -: 2796:	  ++__hx;
+        -: 2797:      }
+        -: 2798:    __hy = __hx & 0x7c00;
+        -: 2799:    if (__hy >= 0x7c00)
+        -: 2800:      __builtin_nextafterf(__FLT_MAX__, __builtin_inff());	// overflow
+        -: 2801:    else if (__hy < 0x0400)
+        -: 2802:      __builtin_nextafterf(__FLT_MIN__, 0.0f);	// underflow
+        -: 2803:    __builtin_memcpy(&__x, &__hx, sizeof(__x));
+        -: 2804:    return __x;
+        -: 2805:  }
+        -: 2806:
+        -: 2807:  constexpr _Float16
+        -: 2808:  remainder(_Float16 __x, _Float16 __y)
+        -: 2809:  { return _Float16(__builtin_remainderf(__x, __y)); }
+        -: 2810:
+        -: 2811:  inline _Float16
+        -: 2812:  remquo(_Float16 __x, _Float16 __y, int* __pquo)
+        -: 2813:  { return _Float16(__builtin_remquof(__x, __y, __pquo)); }
+        -: 2814:
+        -: 2815:  constexpr _Float16
+        -: 2816:  rint(_Float16 __x)
+        -: 2817:  { return _Float16(__builtin_rintf(__x)); }
+        -: 2818:
+        -: 2819:  constexpr _Float16
+        -: 2820:  round(_Float16 __x)
+        -: 2821:  { return _Float16(__builtin_roundf(__x)); }
+        -: 2822:
+        -: 2823:  constexpr _Float16
+        -: 2824:  scalbln(_Float16 __x, long __ex)
+        -: 2825:  { return _Float16(__builtin_scalblnf(__x, __ex)); }
+        -: 2826:
+        -: 2827:  constexpr _Float16
+        -: 2828:  scalbn(_Float16 __x, int __ex)
+        -: 2829:  { return _Float16(__builtin_scalbnf(__x, __ex)); }
+        -: 2830:
+        -: 2831:  constexpr _Float16
+        -: 2832:  tgamma(_Float16 __x)
+        -: 2833:  { return _Float16(__builtin_tgammaf(__x)); }
+        -: 2834:
+        -: 2835:  constexpr _Float16
+        -: 2836:  trunc(_Float16 __x)
+        -: 2837:  { return _Float16(__builtin_truncf(__x)); }
+        -: 2838:#endif
+        -: 2839:
+        -: 2840:#if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 2841:  constexpr _Float32
+        -: 2842:  acosh(_Float32 __x)
+        -: 2843:  { return __builtin_acoshf(__x); }
+        -: 2844:
+        -: 2845:  constexpr _Float32
+        -: 2846:  asinh(_Float32 __x)
+        -: 2847:  { return __builtin_asinhf(__x); }
+        -: 2848:
+        -: 2849:  constexpr _Float32
+        -: 2850:  atanh(_Float32 __x)
+        -: 2851:  { return __builtin_atanhf(__x); }
+        -: 2852:
+        -: 2853:  constexpr _Float32
+        -: 2854:  cbrt(_Float32 __x)
+        -: 2855:  { return __builtin_cbrtf(__x); }
+        -: 2856:
+        -: 2857:  constexpr _Float32
+        -: 2858:  copysign(_Float32 __x, _Float32 __y)
+        -: 2859:  { return __builtin_copysignf(__x, __y); }
+        -: 2860:
+        -: 2861:  constexpr _Float32
+        -: 2862:  erf(_Float32 __x)
+        -: 2863:  { return __builtin_erff(__x); }
+        -: 2864:
+        -: 2865:  constexpr _Float32
+        -: 2866:  erfc(_Float32 __x)
+        -: 2867:  { return __builtin_erfcf(__x); }
+        -: 2868:
+        -: 2869:  constexpr _Float32
+        -: 2870:  exp2(_Float32 __x)
+        -: 2871:  { return __builtin_exp2f(__x); }
+        -: 2872:
+        -: 2873:  constexpr _Float32
+        -: 2874:  expm1(_Float32 __x)
+        -: 2875:  { return __builtin_expm1f(__x); }
+        -: 2876:
+        -: 2877:  constexpr _Float32
+        -: 2878:  fdim(_Float32 __x, _Float32 __y)
+        -: 2879:  { return __builtin_fdimf(__x, __y); }
+        -: 2880:
+        -: 2881:  constexpr _Float32
+        -: 2882:  fma(_Float32 __x, _Float32 __y, _Float32 __z)
+        -: 2883:  { return __builtin_fmaf(__x, __y, __z); }
+        -: 2884:
+        -: 2885:  constexpr _Float32
+        -: 2886:  fmax(_Float32 __x, _Float32 __y)
+        -: 2887:  { return __builtin_fmaxf(__x, __y); }
+        -: 2888:
+        -: 2889:  constexpr _Float32
+        -: 2890:  fmin(_Float32 __x, _Float32 __y)
+        -: 2891:  { return __builtin_fminf(__x, __y); }
+        -: 2892:
+        -: 2893:  constexpr _Float32
+        -: 2894:  hypot(_Float32 __x, _Float32 __y)
+        -: 2895:  { return __builtin_hypotf(__x, __y); }
+        -: 2896:
+        -: 2897:  constexpr int
+        -: 2898:  ilogb(_Float32 __x)
+        -: 2899:  { return __builtin_ilogbf(__x); }
+        -: 2900:
+        -: 2901:  constexpr _Float32
+        -: 2902:  lgamma(_Float32 __x)
+        -: 2903:  { return __builtin_lgammaf(__x); }
+        -: 2904:
+        -: 2905:  constexpr long long
+        -: 2906:  llrint(_Float32 __x)
+        -: 2907:  { return __builtin_llrintf(__x); }
+        -: 2908:
+        -: 2909:  constexpr long long
+        -: 2910:  llround(_Float32 __x)
+        -: 2911:  { return __builtin_llroundf(__x); }
+        -: 2912:
+        -: 2913:  constexpr _Float32
+        -: 2914:  log1p(_Float32 __x)
+        -: 2915:  { return __builtin_log1pf(__x); }
+        -: 2916:
+        -: 2917:  // DR 568.
+        -: 2918:  constexpr _Float32
+        -: 2919:  log2(_Float32 __x)
+        -: 2920:  { return __builtin_log2f(__x); }
+        -: 2921:
+        -: 2922:  constexpr _Float32
+        -: 2923:  logb(_Float32 __x)
+        -: 2924:  { return __builtin_logbf(__x); }
+        -: 2925:
+        -: 2926:  constexpr long
+        -: 2927:  lrint(_Float32 __x)
+        -: 2928:  { return __builtin_lrintf(__x); }
+        -: 2929:
+        -: 2930:  constexpr long
+        -: 2931:  lround(_Float32 __x)
+        -: 2932:  { return __builtin_lroundf(__x); }
+        -: 2933:
+        -: 2934:  constexpr _Float32
+        -: 2935:  nearbyint(_Float32 __x)
+        -: 2936:  { return __builtin_nearbyintf(__x); }
+        -: 2937:
+        -: 2938:  constexpr _Float32
+        -: 2939:  nextafter(_Float32 __x, _Float32 __y)
+        -: 2940:  { return __builtin_nextafterf(__x, __y); }
+        -: 2941:
+        -: 2942:  constexpr _Float32
+        -: 2943:  remainder(_Float32 __x, _Float32 __y)
+        -: 2944:  { return __builtin_remainderf(__x, __y); }
+        -: 2945:
+        -: 2946:  inline _Float32
+        -: 2947:  remquo(_Float32 __x, _Float32 __y, int* __pquo)
+        -: 2948:  { return __builtin_remquof(__x, __y, __pquo); }
+        -: 2949:
+        -: 2950:  constexpr _Float32
+        -: 2951:  rint(_Float32 __x)
+        -: 2952:  { return __builtin_rintf(__x); }
+        -: 2953:
+        -: 2954:  constexpr _Float32
+        -: 2955:  round(_Float32 __x)
+        -: 2956:  { return __builtin_roundf(__x); }
+        -: 2957:
+        -: 2958:  constexpr _Float32
+        -: 2959:  scalbln(_Float32 __x, long __ex)
+        -: 2960:  { return __builtin_scalblnf(__x, __ex); }
+        -: 2961:
+        -: 2962:  constexpr _Float32
+        -: 2963:  scalbn(_Float32 __x, int __ex)
+        -: 2964:  { return __builtin_scalbnf(__x, __ex); }
+        -: 2965:
+        -: 2966:  constexpr _Float32
+        -: 2967:  tgamma(_Float32 __x)
+        -: 2968:  { return __builtin_tgammaf(__x); }
+        -: 2969:
+        -: 2970:  constexpr _Float32
+        -: 2971:  trunc(_Float32 __x)
+        -: 2972:  { return __builtin_truncf(__x); }
+        -: 2973:#endif
+        -: 2974:
+        -: 2975:#if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
+        -: 2976:  constexpr _Float64
+        -: 2977:  acosh(_Float64 __x)
+        -: 2978:  { return __builtin_acosh(__x); }
+        -: 2979:
+        -: 2980:  constexpr _Float64
+        -: 2981:  asinh(_Float64 __x)
+        -: 2982:  { return __builtin_asinh(__x); }
+        -: 2983:
+        -: 2984:  constexpr _Float64
+        -: 2985:  atanh(_Float64 __x)
+        -: 2986:  { return __builtin_atanh(__x); }
+        -: 2987:
+        -: 2988:  constexpr _Float64
+        -: 2989:  cbrt(_Float64 __x)
+        -: 2990:  { return __builtin_cbrt(__x); }
+        -: 2991:
+        -: 2992:  constexpr _Float64
+        -: 2993:  copysign(_Float64 __x, _Float64 __y)
+        -: 2994:  { return __builtin_copysign(__x, __y); }
+        -: 2995:
+        -: 2996:  constexpr _Float64
+        -: 2997:  erf(_Float64 __x)
+        -: 2998:  { return __builtin_erf(__x); }
+        -: 2999:
+        -: 3000:  constexpr _Float64
+        -: 3001:  erfc(_Float64 __x)
+        -: 3002:  { return __builtin_erfc(__x); }
+        -: 3003:
+        -: 3004:  constexpr _Float64
+        -: 3005:  exp2(_Float64 __x)
+        -: 3006:  { return __builtin_exp2(__x); }
+        -: 3007:
+        -: 3008:  constexpr _Float64
+        -: 3009:  expm1(_Float64 __x)
+        -: 3010:  { return __builtin_expm1(__x); }
+        -: 3011:
+        -: 3012:  constexpr _Float64
+        -: 3013:  fdim(_Float64 __x, _Float64 __y)
+        -: 3014:  { return __builtin_fdim(__x, __y); }
+        -: 3015:
+        -: 3016:  constexpr _Float64
+        -: 3017:  fma(_Float64 __x, _Float64 __y, _Float64 __z)
+        -: 3018:  { return __builtin_fma(__x, __y, __z); }
+        -: 3019:
+        -: 3020:  constexpr _Float64
+        -: 3021:  fmax(_Float64 __x, _Float64 __y)
+        -: 3022:  { return __builtin_fmax(__x, __y); }
+        -: 3023:
+        -: 3024:  constexpr _Float64
+        -: 3025:  fmin(_Float64 __x, _Float64 __y)
+        -: 3026:  { return __builtin_fmin(__x, __y); }
+        -: 3027:
+        -: 3028:  constexpr _Float64
+        -: 3029:  hypot(_Float64 __x, _Float64 __y)
+        -: 3030:  { return __builtin_hypot(__x, __y); }
+        -: 3031:
+        -: 3032:  constexpr int
+        -: 3033:  ilogb(_Float64 __x)
+        -: 3034:  { return __builtin_ilogb(__x); }
+        -: 3035:
+        -: 3036:  constexpr _Float64
+        -: 3037:  lgamma(_Float64 __x)
+        -: 3038:  { return __builtin_lgamma(__x); }
+        -: 3039:
+        -: 3040:  constexpr long long
+        -: 3041:  llrint(_Float64 __x)
+        -: 3042:  { return __builtin_llrint(__x); }
+        -: 3043:
+        -: 3044:  constexpr long long
+        -: 3045:  llround(_Float64 __x)
+        -: 3046:  { return __builtin_llround(__x); }
+        -: 3047:
+        -: 3048:  constexpr _Float64
+        -: 3049:  log1p(_Float64 __x)
+        -: 3050:  { return __builtin_log1p(__x); }
+        -: 3051:
+        -: 3052:  // DR 568.
+        -: 3053:  constexpr _Float64
+        -: 3054:  log2(_Float64 __x)
+        -: 3055:  { return __builtin_log2(__x); }
+        -: 3056:
+        -: 3057:  constexpr _Float64
+        -: 3058:  logb(_Float64 __x)
+        -: 3059:  { return __builtin_logb(__x); }
+        -: 3060:
+        -: 3061:  constexpr long
+        -: 3062:  lrint(_Float64 __x)
+        -: 3063:  { return __builtin_lrint(__x); }
+        -: 3064:
+        -: 3065:  constexpr long
+        -: 3066:  lround(_Float64 __x)
+        -: 3067:  { return __builtin_lround(__x); }
+        -: 3068:
+        -: 3069:  constexpr _Float64
+        -: 3070:  nearbyint(_Float64 __x)
+        -: 3071:  { return __builtin_nearbyint(__x); }
+        -: 3072:
+        -: 3073:  constexpr _Float64
+        -: 3074:  nextafter(_Float64 __x, _Float64 __y)
+        -: 3075:  { return __builtin_nextafter(__x, __y); }
+        -: 3076:
+        -: 3077:  constexpr _Float64
+        -: 3078:  remainder(_Float64 __x, _Float64 __y)
+        -: 3079:  { return __builtin_remainder(__x, __y); }
+        -: 3080:
+        -: 3081:  inline _Float64
+        -: 3082:  remquo(_Float64 __x, _Float64 __y, int* __pquo)
+        -: 3083:  { return __builtin_remquo(__x, __y, __pquo); }
+        -: 3084:
+        -: 3085:  constexpr _Float64
+        -: 3086:  rint(_Float64 __x)
+        -: 3087:  { return __builtin_rint(__x); }
+        -: 3088:
+        -: 3089:  constexpr _Float64
+        -: 3090:  round(_Float64 __x)
+        -: 3091:  { return __builtin_round(__x); }
+        -: 3092:
+        -: 3093:  constexpr _Float64
+        -: 3094:  scalbln(_Float64 __x, long __ex)
+        -: 3095:  { return __builtin_scalbln(__x, __ex); }
+        -: 3096:
+        -: 3097:  constexpr _Float64
+        -: 3098:  scalbn(_Float64 __x, int __ex)
+        -: 3099:  { return __builtin_scalbn(__x, __ex); }
+        -: 3100:
+        -: 3101:  constexpr _Float64
+        -: 3102:  tgamma(_Float64 __x)
+        -: 3103:  { return __builtin_tgamma(__x); }
+        -: 3104:
+        -: 3105:  constexpr _Float64
+        -: 3106:  trunc(_Float64 __x)
+        -: 3107:  { return __builtin_trunc(__x); }
+        -: 3108:#endif
+        -: 3109:
+        -: 3110:#if defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128)
+        -: 3111:  constexpr _Float128
+        -: 3112:  acosh(_Float128 __x)
+        -: 3113:  { return __builtin_acoshl(__x); }
+        -: 3114:
+        -: 3115:  constexpr _Float128
+        -: 3116:  asinh(_Float128 __x)
+        -: 3117:  { return __builtin_asinhl(__x); }
+        -: 3118:
+        -: 3119:  constexpr _Float128
+        -: 3120:  atanh(_Float128 __x)
+        -: 3121:  { return __builtin_atanhl(__x); }
+        -: 3122:
+        -: 3123:  constexpr _Float128
+        -: 3124:  cbrt(_Float128 __x)
+        -: 3125:  { return __builtin_cbrtl(__x); }
+        -: 3126:
+        -: 3127:  constexpr _Float128
+        -: 3128:  copysign(_Float128 __x, _Float128 __y)
+        -: 3129:  { return __builtin_copysignl(__x, __y); }
+        -: 3130:
+        -: 3131:  constexpr _Float128
+        -: 3132:  erf(_Float128 __x)
+        -: 3133:  { return __builtin_erfl(__x); }
+        -: 3134:
+        -: 3135:  constexpr _Float128
+        -: 3136:  erfc(_Float128 __x)
+        -: 3137:  { return __builtin_erfcl(__x); }
+        -: 3138:
+        -: 3139:  constexpr _Float128
+        -: 3140:  exp2(_Float128 __x)
+        -: 3141:  { return __builtin_exp2l(__x); }
+        -: 3142:
+        -: 3143:  constexpr _Float128
+        -: 3144:  expm1(_Float128 __x)
+        -: 3145:  { return __builtin_expm1l(__x); }
+        -: 3146:
+        -: 3147:  constexpr _Float128
+        -: 3148:  fdim(_Float128 __x, _Float128 __y)
+        -: 3149:  { return __builtin_fdiml(__x, __y); }
+        -: 3150:
+        -: 3151:  constexpr _Float128
+        -: 3152:  fma(_Float128 __x, _Float128 __y, _Float128 __z)
+        -: 3153:  { return __builtin_fmal(__x, __y, __z); }
+        -: 3154:
+        -: 3155:  constexpr _Float128
+        -: 3156:  fmax(_Float128 __x, _Float128 __y)
+        -: 3157:  { return __builtin_fmaxl(__x, __y); }
+        -: 3158:
+        -: 3159:  constexpr _Float128
+        -: 3160:  fmin(_Float128 __x, _Float128 __y)
+        -: 3161:  { return __builtin_fminl(__x, __y); }
+        -: 3162:
+        -: 3163:  constexpr _Float128
+        -: 3164:  hypot(_Float128 __x, _Float128 __y)
+        -: 3165:  { return __builtin_hypotl(__x, __y); }
+        -: 3166:
+        -: 3167:  constexpr int
+        -: 3168:  ilogb(_Float128 __x)
+        -: 3169:  { return __builtin_ilogbl(__x); }
+        -: 3170:
+        -: 3171:  constexpr _Float128
+        -: 3172:  lgamma(_Float128 __x)
+        -: 3173:  { return __builtin_lgammal(__x); }
+        -: 3174:
+        -: 3175:  constexpr long long
+        -: 3176:  llrint(_Float128 __x)
+        -: 3177:  { return __builtin_llrintl(__x); }
+        -: 3178:
+        -: 3179:  constexpr long long
+        -: 3180:  llround(_Float128 __x)
+        -: 3181:  { return __builtin_llroundl(__x); }
+        -: 3182:
+        -: 3183:  constexpr _Float128
+        -: 3184:  log1p(_Float128 __x)
+        -: 3185:  { return __builtin_log1pl(__x); }
+        -: 3186:
+        -: 3187:  // DR 568.
+        -: 3188:  constexpr _Float128
+        -: 3189:  log2(_Float128 __x)
+        -: 3190:  { return __builtin_log2l(__x); }
+        -: 3191:
+        -: 3192:  constexpr _Float128
+        -: 3193:  logb(_Float128 __x)
+        -: 3194:  { return __builtin_logbl(__x); }
+        -: 3195:
+        -: 3196:  constexpr long
+        -: 3197:  lrint(_Float128 __x)
+        -: 3198:  { return __builtin_lrintl(__x); }
+        -: 3199:
+        -: 3200:  constexpr long
+        -: 3201:  lround(_Float128 __x)
+        -: 3202:  { return __builtin_lroundl(__x); }
+        -: 3203:
+        -: 3204:  constexpr _Float128
+        -: 3205:  nearbyint(_Float128 __x)
+        -: 3206:  { return __builtin_nearbyintl(__x); }
+        -: 3207:
+        -: 3208:  constexpr _Float128
+        -: 3209:  nextafter(_Float128 __x, _Float128 __y)
+        -: 3210:  { return __builtin_nextafterl(__x, __y); }
+        -: 3211:
+        -: 3212:  constexpr _Float128
+        -: 3213:  remainder(_Float128 __x, _Float128 __y)
+        -: 3214:  { return __builtin_remainderl(__x, __y); }
+        -: 3215:
+        -: 3216:  inline _Float128
+        -: 3217:  remquo(_Float128 __x, _Float128 __y, int* __pquo)
+        -: 3218:  { return __builtin_remquol(__x, __y, __pquo); }
+        -: 3219:
+        -: 3220:  constexpr _Float128
+        -: 3221:  rint(_Float128 __x)
+        -: 3222:  { return __builtin_rintl(__x); }
+        -: 3223:
+        -: 3224:  constexpr _Float128
+        -: 3225:  round(_Float128 __x)
+        -: 3226:  { return __builtin_roundl(__x); }
+        -: 3227:
+        -: 3228:  constexpr _Float128
+        -: 3229:  scalbln(_Float128 __x, long __ex)
+        -: 3230:  { return __builtin_scalblnl(__x, __ex); }
+        -: 3231:
+        -: 3232:  constexpr _Float128
+        -: 3233:  scalbn(_Float128 __x, int __ex)
+        -: 3234:  { return __builtin_scalbnl(__x, __ex); }
+        -: 3235:
+        -: 3236:  constexpr _Float128
+        -: 3237:  tgamma(_Float128 __x)
+        -: 3238:  { return __builtin_tgammal(__x); }
+        -: 3239:
+        -: 3240:  constexpr _Float128
+        -: 3241:  trunc(_Float128 __x)
+        -: 3242:  { return __builtin_truncl(__x); }
+        -: 3243:#elif defined(__STDCPP_FLOAT128_T__) && defined(_GLIBCXX_HAVE_FLOAT128_MATH)
+        -: 3244:  constexpr _Float128
+        -: 3245:  acosh(_Float128 __x)
+        -: 3246:  { return __builtin_acoshf128(__x); }
+        -: 3247:
+        -: 3248:  constexpr _Float128
+        -: 3249:  asinh(_Float128 __x)
+        -: 3250:  { return __builtin_asinhf128(__x); }
+        -: 3251:
+        -: 3252:  constexpr _Float128
+        -: 3253:  atanh(_Float128 __x)
+        -: 3254:  { return __builtin_atanhf128(__x); }
+        -: 3255:
+        -: 3256:  constexpr _Float128
+        -: 3257:  cbrt(_Float128 __x)
+        -: 3258:  { return __builtin_cbrtf128(__x); }
+        -: 3259:
+        -: 3260:  constexpr _Float128
+        -: 3261:  copysign(_Float128 __x, _Float128 __y)
+        -: 3262:  { return __builtin_copysignf128(__x, __y); }
+        -: 3263:
+        -: 3264:  constexpr _Float128
+        -: 3265:  erf(_Float128 __x)
+        -: 3266:  { return __builtin_erff128(__x); }
+        -: 3267:
+        -: 3268:  constexpr _Float128
+        -: 3269:  erfc(_Float128 __x)
+        -: 3270:  { return __builtin_erfcf128(__x); }
+        -: 3271:
+        -: 3272:  constexpr _Float128
+        -: 3273:  exp2(_Float128 __x)
+        -: 3274:  { return __builtin_exp2f128(__x); }
+        -: 3275:
+        -: 3276:  constexpr _Float128
+        -: 3277:  expm1(_Float128 __x)
+        -: 3278:  { return __builtin_expm1f128(__x); }
+        -: 3279:
+        -: 3280:  constexpr _Float128
+        -: 3281:  fdim(_Float128 __x, _Float128 __y)
+        -: 3282:  { return __builtin_fdimf128(__x, __y); }
+        -: 3283:
+        -: 3284:  constexpr _Float128
+        -: 3285:  fma(_Float128 __x, _Float128 __y, _Float128 __z)
+        -: 3286:  { return __builtin_fmaf128(__x, __y, __z); }
+        -: 3287:
+        -: 3288:  constexpr _Float128
+        -: 3289:  fmax(_Float128 __x, _Float128 __y)
+        -: 3290:  { return __builtin_fmaxf128(__x, __y); }
+        -: 3291:
+        -: 3292:  constexpr _Float128
+        -: 3293:  fmin(_Float128 __x, _Float128 __y)
+        -: 3294:  { return __builtin_fminf128(__x, __y); }
+        -: 3295:
+        -: 3296:  constexpr _Float128
+        -: 3297:  hypot(_Float128 __x, _Float128 __y)
+        -: 3298:  { return __builtin_hypotf128(__x, __y); }
+        -: 3299:
+        -: 3300:  constexpr int
+        -: 3301:  ilogb(_Float128 __x)
+        -: 3302:  { return __builtin_ilogbf128(__x); }
+        -: 3303:
+        -: 3304:  constexpr _Float128
+        -: 3305:  lgamma(_Float128 __x)
+        -: 3306:  { return __builtin_lgammaf128(__x); }
+        -: 3307:
+        -: 3308:  constexpr long long
+        -: 3309:  llrint(_Float128 __x)
+        -: 3310:  { return __builtin_llrintf128(__x); }
+        -: 3311:
+        -: 3312:  constexpr long long
+        -: 3313:  llround(_Float128 __x)
+        -: 3314:  { return __builtin_llroundf128(__x); }
+        -: 3315:
+        -: 3316:  constexpr _Float128
+        -: 3317:  log1p(_Float128 __x)
+        -: 3318:  { return __builtin_log1pf128(__x); }
+        -: 3319:
+        -: 3320:  // DR 568.
+        -: 3321:  constexpr _Float128
+        -: 3322:  log2(_Float128 __x)
+        -: 3323:  { return __builtin_log2f128(__x); }
+        -: 3324:
+        -: 3325:  constexpr _Float128
+        -: 3326:  logb(_Float128 __x)
+        -: 3327:  { return __builtin_logbf128(__x); }
+        -: 3328:
+        -: 3329:  constexpr long
+        -: 3330:  lrint(_Float128 __x)
+        -: 3331:  { return __builtin_lrintf128(__x); }
+        -: 3332:
+        -: 3333:  constexpr long
+        -: 3334:  lround(_Float128 __x)
+        -: 3335:  { return __builtin_lroundf128(__x); }
+        -: 3336:
+        -: 3337:  constexpr _Float128
+        -: 3338:  nearbyint(_Float128 __x)
+        -: 3339:  { return __builtin_nearbyintf128(__x); }
+        -: 3340:
+        -: 3341:  constexpr _Float128
+        -: 3342:  nextafter(_Float128 __x, _Float128 __y)
+        -: 3343:  { return __builtin_nextafterf128(__x, __y); }
+        -: 3344:
+        -: 3345:  constexpr _Float128
+        -: 3346:  remainder(_Float128 __x, _Float128 __y)
+        -: 3347:  { return __builtin_remainderf128(__x, __y); }
+        -: 3348:
+        -: 3349:  inline _Float128
+        -: 3350:  remquo(_Float128 __x, _Float128 __y, int* __pquo)
+        -: 3351:  { return __builtin_remquof128(__x, __y, __pquo); }
+        -: 3352:
+        -: 3353:  constexpr _Float128
+        -: 3354:  rint(_Float128 __x)
+        -: 3355:  { return __builtin_rintf128(__x); }
+        -: 3356:
+        -: 3357:  constexpr _Float128
+        -: 3358:  round(_Float128 __x)
+        -: 3359:  { return __builtin_roundf128(__x); }
+        -: 3360:
+        -: 3361:  constexpr _Float128
+        -: 3362:  scalbln(_Float128 __x, long __ex)
+        -: 3363:  { return __builtin_scalblnf128(__x, __ex); }
+        -: 3364:
+        -: 3365:  constexpr _Float128
+        -: 3366:  scalbn(_Float128 __x, int __ex)
+        -: 3367:  { return __builtin_scalbnf128(__x, __ex); }
+        -: 3368:
+        -: 3369:  constexpr _Float128
+        -: 3370:  tgamma(_Float128 __x)
+        -: 3371:  { return __builtin_tgammaf128(__x); }
+        -: 3372:
+        -: 3373:  constexpr _Float128
+        -: 3374:  trunc(_Float128 __x)
+        -: 3375:  { return __builtin_truncf128(__x); }
+        -: 3376:#endif
+        -: 3377:
+        -: 3378:#if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3379:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3380:  acosh(__gnu_cxx::__bfloat16_t __x)
+        -: 3381:  { return __gnu_cxx::__bfloat16_t(__builtin_acoshf(__x)); }
+        -: 3382:
+        -: 3383:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3384:  asinh(__gnu_cxx::__bfloat16_t __x)
+        -: 3385:  { return __gnu_cxx::__bfloat16_t(__builtin_asinhf(__x)); }
+        -: 3386:
+        -: 3387:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3388:  atanh(__gnu_cxx::__bfloat16_t __x)
+        -: 3389:  { return __gnu_cxx::__bfloat16_t(__builtin_atanhf(__x)); }
+        -: 3390:
+        -: 3391:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3392:  cbrt(__gnu_cxx::__bfloat16_t __x)
+        -: 3393:  { return __gnu_cxx::__bfloat16_t(__builtin_cbrtf(__x)); }
+        -: 3394:
+        -: 3395:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3396:  copysign(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3397:  { return __gnu_cxx::__bfloat16_t(__builtin_copysignf(__x, __y)); }
+        -: 3398:
+        -: 3399:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3400:  erf(__gnu_cxx::__bfloat16_t __x)
+        -: 3401:  { return __gnu_cxx::__bfloat16_t(__builtin_erff(__x)); }
+        -: 3402:
+        -: 3403:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3404:  erfc(__gnu_cxx::__bfloat16_t __x)
+        -: 3405:  { return __gnu_cxx::__bfloat16_t(__builtin_erfcf(__x)); }
+        -: 3406:
+        -: 3407:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3408:  exp2(__gnu_cxx::__bfloat16_t __x)
+        -: 3409:  { return __gnu_cxx::__bfloat16_t(__builtin_exp2f(__x)); }
+        -: 3410:
+        -: 3411:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3412:  expm1(__gnu_cxx::__bfloat16_t __x)
+        -: 3413:  { return __gnu_cxx::__bfloat16_t(__builtin_expm1f(__x)); }
+        -: 3414:
+        -: 3415:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3416:  fdim(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3417:  { return __gnu_cxx::__bfloat16_t(__builtin_fdimf(__x, __y)); }
+        -: 3418:
+        -: 3419:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3420:  fma(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y, __gnu_cxx::__bfloat16_t __z)
+        -: 3421:  { return __gnu_cxx::__bfloat16_t(__builtin_fmaf(__x, __y, __z)); }
+        -: 3422:
+        -: 3423:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3424:  fmax(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3425:  { return __gnu_cxx::__bfloat16_t(__builtin_fmaxf(__x, __y)); }
+        -: 3426:
+        -: 3427:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3428:  fmin(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3429:  { return __gnu_cxx::__bfloat16_t(__builtin_fminf(__x, __y)); }
+        -: 3430:
+        -: 3431:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3432:  hypot(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3433:  { return __gnu_cxx::__bfloat16_t(__builtin_hypotf(__x, __y)); }
+        -: 3434:
+        -: 3435:  constexpr int
+        -: 3436:  ilogb(__gnu_cxx::__bfloat16_t __x)
+        -: 3437:  { return __gnu_cxx::__bfloat16_t(__builtin_ilogbf(__x)); }
+        -: 3438:
+        -: 3439:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3440:  lgamma(__gnu_cxx::__bfloat16_t __x)
+        -: 3441:  { return __gnu_cxx::__bfloat16_t(__builtin_lgammaf(__x)); }
+        -: 3442:
+        -: 3443:  constexpr long long
+        -: 3444:  llrint(__gnu_cxx::__bfloat16_t __x)
+        -: 3445:  { return __gnu_cxx::__bfloat16_t(__builtin_llrintf(__x)); }
+        -: 3446:
+        -: 3447:  constexpr long long
+        -: 3448:  llround(__gnu_cxx::__bfloat16_t __x)
+        -: 3449:  { return __gnu_cxx::__bfloat16_t(__builtin_llroundf(__x)); }
+        -: 3450:
+        -: 3451:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3452:  log1p(__gnu_cxx::__bfloat16_t __x)
+        -: 3453:  { return __gnu_cxx::__bfloat16_t(__builtin_log1pf(__x)); }
+        -: 3454:
+        -: 3455:  // DR 568.
+        -: 3456:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3457:  log2(__gnu_cxx::__bfloat16_t __x)
+        -: 3458:  { return __gnu_cxx::__bfloat16_t(__builtin_log2f(__x)); }
+        -: 3459:
+        -: 3460:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3461:  logb(__gnu_cxx::__bfloat16_t __x)
+        -: 3462:  { return __gnu_cxx::__bfloat16_t(__builtin_logbf(__x)); }
+        -: 3463:
+        -: 3464:  constexpr long
+        -: 3465:  lrint(__gnu_cxx::__bfloat16_t __x)
+        -: 3466:  { return __gnu_cxx::__bfloat16_t(__builtin_lrintf(__x)); }
+        -: 3467:
+        -: 3468:  constexpr long
+        -: 3469:  lround(__gnu_cxx::__bfloat16_t __x)
+        -: 3470:  { return __gnu_cxx::__bfloat16_t(__builtin_lroundf(__x)); }
+        -: 3471:
+        -: 3472:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3473:  nearbyint(__gnu_cxx::__bfloat16_t __x)
+        -: 3474:  { return __gnu_cxx::__bfloat16_t(__builtin_nearbyintf(__x)); }
+        -: 3475:
+        -: 3476:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3477:  nextafter(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3478:  {
+        -: 3479:    if (std::__is_constant_evaluated())
+        -: 3480:      return __builtin_nextafterf16b(__x, __y);
+        -: 3481:#ifdef __INT16_TYPE__
+        -: 3482:    using __bfloat16_int_type = __INT16_TYPE__;
+        -: 3483:#else
+        -: 3484:    using __bfloat16_int_type = short int;
+        -: 3485:#endif
+        -: 3486:    __bfloat16_int_type __hx, __hy, __ix, __iy;
+        -: 3487:    __builtin_memcpy(&__hx, &__x, sizeof(__x));
+        -: 3488:    __builtin_memcpy(&__hy, &__y, sizeof(__x));
+        -: 3489:    __ix = __hx & 0x7fff;	// |x|
+        -: 3490:    __iy = __hy & 0x7fff;	// |y|
+        -: 3491:    if (__ix > 0x7f80 || __iy > 0x7f80) // x or y is NaN
+        -: 3492:      return __x + __y;
+        -: 3493:    if (__x == __y)
+        -: 3494:      return __y;		// x == y, return y
+        -: 3495:    if (__ix == 0)		// x == 0
+        -: 3496:      {
+        -: 3497:	__hy = (__hy & 0x8000) | 1;	// return +-__BFLT16_DENORM_MIN__
+        -: 3498:	__builtin_memcpy(&__x, &__hy, sizeof(__x));
+        -: 3499:	__builtin_nextafterf(0.0f, 1.0f);	// raise underflow
+        -: 3500:	return __x;
+        -: 3501:      }
+        -: 3502:    if (__hx >= 0)		// x > 0
+        -: 3503:      {
+        -: 3504:	if (__hx > __hy)	// x > y, x -= ulp
+        -: 3505:	  --__hx;
+        -: 3506:	else			// x < y, x += ulp
+        -: 3507:	  ++__hx;
+        -: 3508:      }
+        -: 3509:    else			// x < 0
+        -: 3510:      {
+        -: 3511:	if (__hy >= 0 || __hx > __hy)	// x < y, x -= ulp
+        -: 3512:	  --__hx;
+        -: 3513:	else			// x > y, x += ulp
+        -: 3514:	  ++__hx;
+        -: 3515:      }
+        -: 3516:    __hy = __hx & 0x7f80;
+        -: 3517:    if (__hy >= 0x7f80)
+        -: 3518:      __builtin_nextafterf(__FLT_MAX__, __builtin_inff());	// overflow
+        -: 3519:    else if (__hy < 0x0080)
+        -: 3520:      __builtin_nextafterf(__FLT_MIN__, 0.0f);	// underflow
+        -: 3521:    __builtin_memcpy(&__x, &__hx, sizeof(__x));
+        -: 3522:    return __x;
+        -: 3523:  }
+        -: 3524:
+        -: 3525:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3526:  remainder(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y)
+        -: 3527:  { return __gnu_cxx::__bfloat16_t(__builtin_remainderf(__x, __y)); }
+        -: 3528:
+        -: 3529:  inline __gnu_cxx::__bfloat16_t
+        -: 3530:  remquo(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y, int* __pquo)
+        -: 3531:  { return __gnu_cxx::__bfloat16_t(__builtin_remquof(__x, __y, __pquo)); }
+        -: 3532:
+        -: 3533:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3534:  rint(__gnu_cxx::__bfloat16_t __x)
+        -: 3535:  { return __gnu_cxx::__bfloat16_t(__builtin_rintf(__x)); }
+        -: 3536:
+        -: 3537:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3538:  round(__gnu_cxx::__bfloat16_t __x)
+        -: 3539:  { return __gnu_cxx::__bfloat16_t(__builtin_roundf(__x)); }
+        -: 3540:
+        -: 3541:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3542:  scalbln(__gnu_cxx::__bfloat16_t __x, long __ex)
+        -: 3543:  { return __gnu_cxx::__bfloat16_t(__builtin_scalblnf(__x, __ex)); }
+        -: 3544:
+        -: 3545:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3546:  scalbn(__gnu_cxx::__bfloat16_t __x, int __ex)
+        -: 3547:  { return __gnu_cxx::__bfloat16_t(__builtin_scalbnf(__x, __ex)); }
+        -: 3548:
+        -: 3549:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3550:  tgamma(__gnu_cxx::__bfloat16_t __x)
+        -: 3551:  { return __gnu_cxx::__bfloat16_t(__builtin_tgammaf(__x)); }
+        -: 3552:
+        -: 3553:  constexpr __gnu_cxx::__bfloat16_t
+        -: 3554:  trunc(__gnu_cxx::__bfloat16_t __x)
+        -: 3555:  { return __gnu_cxx::__bfloat16_t(__builtin_truncf(__x)); }
+        -: 3556:#endif
+        -: 3557:
+        -: 3558:
+        -: 3559:#endif // _GLIBCXX_USE_C99_MATH_TR1
+        -: 3560:#endif // C++11
+        -: 3561:
+        -: 3562:#if __cplusplus >= 201703L
+        -: 3563:
+        -: 3564:  // [c.math.hypot3], three-dimensional hypotenuse
+        -: 3565:#define __cpp_lib_hypot 201603L
+        -: 3566:
+        -: 3567:  template<typename _Tp>
+        -: 3568:    inline _Tp
+        -: 3569:    __hypot3(_Tp __x, _Tp __y, _Tp __z)
+        -: 3570:    {
+        -: 3571:      __x = std::abs(__x);
+        -: 3572:      __y = std::abs(__y);
+        -: 3573:      __z = std::abs(__z);
+        -: 3574:      if (_Tp __a = __x < __y ? __y < __z ? __z : __y : __x < __z ? __z : __x)
+        -: 3575:	return __a * std::sqrt((__x / __a) * (__x / __a)
+        -: 3576:			       + (__y / __a) * (__y / __a)
+        -: 3577:			       + (__z / __a) * (__z / __a));
+        -: 3578:      else
+        -: 3579:	return {};
+        -: 3580:    }
+        -: 3581:
+        -: 3582:  inline float
+        -: 3583:  hypot(float __x, float __y, float __z)
+        -: 3584:  { return std::__hypot3<float>(__x, __y, __z); }
+        -: 3585:
+        -: 3586:  inline double
+        -: 3587:  hypot(double __x, double __y, double __z)
+        -: 3588:  { return std::__hypot3<double>(__x, __y, __z); }
+        -: 3589:
+        -: 3590:  inline long double
+        -: 3591:  hypot(long double __x, long double __y, long double __z)
+        -: 3592:  { return std::__hypot3<long double>(__x, __y, __z); }
+        -: 3593:
+        -: 3594:  template<typename _Tp, typename _Up, typename _Vp>
+        -: 3595:    __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>
+        -: 3596:    hypot(_Tp __x, _Up __y, _Vp __z)
+        -: 3597:    {
+        -: 3598:      using __type = __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>;
+        -: 3599:      return std::__hypot3<__type>(__x, __y, __z);
+        -: 3600:    }
+        -: 3601:
+        -: 3602:#if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3603:  inline _Float16
+        -: 3604:  hypot(_Float16 __x, _Float16 __y, _Float16 __z)
+        -: 3605:  { return std::__hypot3<_Float16>(__x, __y, __z); }
+        -: 3606:#endif
+        -: 3607:
+        -: 3608:#if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3609:  inline _Float32
+        -: 3610:  hypot(_Float32 __x, _Float32 __y, _Float32 __z)
+        -: 3611:  { return std::__hypot3<_Float32>(__x, __y, __z); }
+        -: 3612:#endif
+        -: 3613:
+        -: 3614:#if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
+        -: 3615:  inline _Float64
+        -: 3616:  hypot(_Float64 __x, _Float64 __y, _Float64 __z)
+        -: 3617:  { return std::__hypot3<_Float64>(__x, __y, __z); }
+        -: 3618:#endif
+        -: 3619:
+        -: 3620:#if defined(__STDCPP_FLOAT128_T__) \
+        -: 3621:    && (defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128) \
+        -: 3622:	|| defined(_GLIBCXX_HAVE_FLOAT128_MATH))
+        -: 3623:  inline _Float128
+        -: 3624:  hypot(_Float128 __x, _Float128 __y, _Float128 __z)
+        -: 3625:  { return std::__hypot3<_Float128>(__x, __y, __z); }
+        -: 3626:#endif
+        -: 3627:
+        -: 3628:#if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3629:  inline __gnu_cxx::__bfloat16_t
+        -: 3630:  hypot(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y, __gnu_cxx::__bfloat16_t __z)
+        -: 3631:  { return std::__hypot3<__gnu_cxx::__bfloat16_t>(__x, __y, __z); }
+        -: 3632:#endif
+        -: 3633:
+        -: 3634:#endif // C++17
+        -: 3635:
+        -: 3636:#if __cplusplus >= 202002L
+        -: 3637:  // linear interpolation
+        -: 3638:# define __cpp_lib_interpolate 201902L
+        -: 3639:
+        -: 3640:  template<typename _Fp>
+        -: 3641:    constexpr _Fp
+        -: 3642:    __lerp(_Fp __a, _Fp __b, _Fp __t) noexcept
+        -: 3643:    {
+        -: 3644:      if ((__a <= 0 && __b >= 0) || (__a >= 0 && __b <= 0))
+        -: 3645:	return __t * __b + (1 - __t) * __a;
+        -: 3646:
+        -: 3647:      if (__t == 1)
+        -: 3648:	return __b;                        // exact
+        -: 3649:
+        -: 3650:      // Exact at __t=0, monotonic except near __t=1,
+        -: 3651:      // bounded, determinate, and consistent:
+        -: 3652:      const _Fp __x = __a + __t * (__b - __a);
+        -: 3653:      return (__t > 1) == (__b > __a)
+        -: 3654:	? (__b < __x ? __x : __b)
+        -: 3655:	: (__b > __x ? __x : __b);  // monotonic near __t=1
+        -: 3656:    }
+        -: 3657:
+        -: 3658:  constexpr float
+        -: 3659:  lerp(float __a, float __b, float __t) noexcept
+        -: 3660:  { return std::__lerp(__a, __b, __t); }
+        -: 3661:
+        -: 3662:  constexpr double
+        -: 3663:  lerp(double __a, double __b, double __t) noexcept
+        -: 3664:  { return std::__lerp(__a, __b, __t); }
+        -: 3665:
+        -: 3666:  constexpr long double
+        -: 3667:  lerp(long double __a, long double __b, long double __t) noexcept
+        -: 3668:  { return std::__lerp(__a, __b, __t); }
+        -: 3669:
+        -: 3670:  template<typename _Tp, typename _Up, typename _Vp>
+        -: 3671:    constexpr __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>
+        -: 3672:    lerp(_Tp __x, _Up __y, _Vp __z) noexcept
+        -: 3673:    {
+        -: 3674:      using __type = __gnu_cxx::__promoted_t<_Tp, _Up, _Vp>;
+        -: 3675:      return std::__lerp<__type>(__x, __y, __z);
+        -: 3676:    }
+        -: 3677:
+        -: 3678:#if defined(__STDCPP_FLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3679:  inline _Float16
+        -: 3680:  lerp(_Float16 __x, _Float16 __y, _Float16 __z) noexcept
+        -: 3681:  { return std::__lerp<_Float16>(__x, __y, __z); }
+        -: 3682:#endif
+        -: 3683:
+        -: 3684:#if defined(__STDCPP_FLOAT32_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3685:  inline _Float32
+        -: 3686:  lerp(_Float32 __x, _Float32 __y, _Float32 __z) noexcept
+        -: 3687:  { return std::__lerp<_Float32>(__x, __y, __z); }
+        -: 3688:#endif
+        -: 3689:
+        -: 3690:#if defined(__STDCPP_FLOAT64_T__) && defined(_GLIBCXX_DOUBLE_IS_IEEE_BINARY64)
+        -: 3691:  inline _Float64
+        -: 3692:  lerp(_Float64 __x, _Float64 __y, _Float64 __z) noexcept
+        -: 3693:  { return std::__lerp<_Float64>(__x, __y, __z); }
+        -: 3694:#endif
+        -: 3695:
+        -: 3696:#if defined(__STDCPP_FLOAT128_T__) \
+        -: 3697:    && (defined(_GLIBCXX_LDOUBLE_IS_IEEE_BINARY128) \
+        -: 3698:	|| defined(_GLIBCXX_HAVE_FLOAT128_MATH))
+        -: 3699:  inline _Float128
+        -: 3700:  lerp(_Float128 __x, _Float128 __y, _Float128 __z) noexcept
+        -: 3701:  { return std::__lerp<_Float128>(__x, __y, __z); }
+        -: 3702:#endif
+        -: 3703:
+        -: 3704:#if defined(__STDCPP_BFLOAT16_T__) && defined(_GLIBCXX_FLOAT_IS_IEEE_BINARY32)
+        -: 3705:  inline __gnu_cxx::__bfloat16_t
+        -: 3706:  lerp(__gnu_cxx::__bfloat16_t __x, __gnu_cxx::__bfloat16_t __y, __gnu_cxx::__bfloat16_t __z) noexcept
+        -: 3707:  { return std::__lerp<__gnu_cxx::__bfloat16_t>(__x, __y, __z); }
+        -: 3708:#endif
+        -: 3709:
+        -: 3710:#endif // C++20
+        -: 3711:
+        -: 3712:_GLIBCXX_END_NAMESPACE_VERSION
+        -: 3713:} // namespace
+        -: 3714:
+        -: 3715:#if _GLIBCXX_USE_STD_SPEC_FUNCS
+        -: 3716:#  include <bits/specfun.h>
+        -: 3717:#endif
+        -: 3718:
+        -: 3719:} // extern "C++"
+        -: 3720:
+        -: 3721:#endif

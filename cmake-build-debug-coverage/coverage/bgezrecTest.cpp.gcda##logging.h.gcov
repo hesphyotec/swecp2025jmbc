@@ -1,0 +1,585 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/include/crow/logging.h
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include "crow/settings.h"
+        -:    4:
+        -:    5:#include <cstdio>
+        -:    6:#include <cstdlib>
+        -:    7:#include <ctime>
+        -:    8:#include <iostream>
+        -:    9:#include <sstream>
+        -:   10:#include <string>
+        -:   11:
+        -:   12:namespace crow
+        -:   13:{
+        -:   14:    enum class LogLevel
+        -:   15:    {
+        -:   16:#ifndef ERROR
+        -:   17:#ifndef DEBUG
+        -:   18:        DEBUG = 0,
+        -:   19:        INFO,
+        -:   20:        WARNING,
+        -:   21:        ERROR,
+        -:   22:        CRITICAL,
+        -:   23:#endif
+        -:   24:#endif
+        -:   25:
+        -:   26:        Debug = 0,
+        -:   27:        Info,
+        -:   28:        Warning,
+        -:   29:        Error,
+        -:   30:        Critical,
+        -:   31:    };
+        -:   32:
+        -:   33:    class ILogHandler
+        -:   34:    {
+        -:   35:    public:
+        -:   36:        virtual ~ILogHandler() = default;
+        -:   37:
+        -:   38:        virtual void log(const std::string& message, LogLevel level) = 0;
+        -:   39:    };
+        -:   40:
+        -:   41:    class CerrLogHandler : public ILogHandler
+        -:   42:    {
+        -:   43:    public:
+function _ZN4crow14CerrLogHandler3logERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_8LogLevelE called 0 returned 0% blocks executed 0%
+    #####:   44:        void log(const std::string &message, LogLevel level) override
+    %%%%%:   44-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   45:        {
+        -:   46:            std::string log_msg;
+    #####:   47:            log_msg.reserve(message.length() + 1+32+3+8+2);
+    %%%%%:   47-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   48:            log_msg
+    #####:   49:                .append("(")
+    %%%%%:   49-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    #####:   50:                .append(timestamp())
+    %%%%%:   50-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    $$$$$:   50-block  1
+call    3 never executed
+    #####:   51:                .append(") [");
+    %%%%%:   51-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   52:
+    #####:   53:            switch (level)
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:   54:            {
+    #####:   55:                case LogLevel::Debug:
+    #####:   56:                    log_msg.append("DEBUG   ");
+    %%%%%:   56-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   57:                    break;
+    #####:   58:                case LogLevel::Info:
+    #####:   59:                    log_msg.append("INFO    ");
+    %%%%%:   59-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   60:                    break;
+    #####:   61:                case LogLevel::Warning:
+    #####:   62:                    log_msg.append("WARNING ");
+    %%%%%:   62-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   63:                    break;
+    #####:   64:                case LogLevel::Error:
+    #####:   65:                    log_msg.append("ERROR   ");
+    %%%%%:   65-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   66:                    break;
+    #####:   67:                case LogLevel::Critical:
+    #####:   68:                    log_msg.append("CRITICAL");
+    %%%%%:   68-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   69:                    break;
+        -:   70:            }
+        -:   71:
+    #####:   72:            log_msg.append("] ")
+    %%%%%:   72-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -:   73:            .append(message);
+        -:   74:
+        -:   75:            std::cerr << log_msg << std::endl;
+    #####:   76:        }
+        -:   77:
+        -:   78:    private:
+function _ZN4crow14CerrLogHandler9timestampB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####:   79:        static std::string timestamp()
+    %%%%%:   79-block  0
+call    0 never executed
+        -:   80:        {
+        -:   81:            char date[32];
+    #####:   82:            time_t t = time(0);
+call    0 never executed
+        -:   83:
+        -:   84:            tm my_tm;
+        -:   85:
+        -:   86:#if defined(_MSC_VER) || defined(__MINGW32__)
+        -:   87:#ifdef CROW_USE_LOCALTIMEZONE
+        -:   88:            localtime_s(&my_tm, &t);
+        -:   89:#else
+        -:   90:            gmtime_s(&my_tm, &t);
+        -:   91:#endif
+        -:   92:#else
+        -:   93:#ifdef CROW_USE_LOCALTIMEZONE
+        -:   94:            localtime_r(&t, &my_tm);
+        -:   95:#else
+        -:   96:            gmtime_r(&t, &my_tm);
+        -:   97:#endif
+        -:   98:#endif
+        -:   99:
+    #####:  100:            size_t sz = strftime(date, sizeof(date), "%Y-%m-%d %H:%M:%S", &my_tm);
+    #####:  101:            return std::string(date, date + sz);
+call    0 never executed
+        -:  102:        }
+        -:  103:    };
+        -:  104:
+        -:  105:    class logger
+        -:  106:    {
+        -:  107:    public:
+    #####:  108:        logger(LogLevel level):
+    #####:  109:          level_(level)
+    %%%%%:  109-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    %%%%%:  109-block  1
+call    3 never executed
+branch  4 never executed (fallthrough)
+branch  5 never executed (throw)
+    %%%%%:  109-block  2
+call    6 never executed
+branch  7 never executed (fallthrough)
+branch  8 never executed (throw)
+    %%%%%:  109-block  3
+call    9 never executed
+branch 10 never executed (fallthrough)
+branch 11 never executed (throw)
+    %%%%%:  109-block  4
+call   12 never executed
+branch 13 never executed (fallthrough)
+branch 14 never executed (throw)
+    %%%%%:  109-block  5
+call   15 never executed
+branch 16 never executed (fallthrough)
+branch 17 never executed (throw)
+    %%%%%:  109-block  6
+call   18 never executed
+branch 19 never executed (fallthrough)
+branch 20 never executed (throw)
+    %%%%%:  109-block  7
+call   21 never executed
+branch 22 never executed (fallthrough)
+branch 23 never executed (throw)
+    %%%%%:  109-block  8
+call   24 never executed
+branch 25 never executed (fallthrough)
+branch 26 never executed (throw)
+    %%%%%:  109-block  9
+call   27 never executed
+branch 28 never executed (fallthrough)
+branch 29 never executed (throw)
+    %%%%%:  109-block 10
+call   30 never executed
+branch 31 never executed (fallthrough)
+branch 32 never executed (throw)
+    %%%%%:  109-block 11
+call   33 never executed
+branch 34 never executed (fallthrough)
+branch 35 never executed (throw)
+    %%%%%:  109-block 12
+call   36 never executed
+branch 37 never executed (fallthrough)
+branch 38 never executed (throw)
+    %%%%%:  109-block 13
+call   39 never executed
+branch 40 never executed (fallthrough)
+branch 41 never executed (throw)
+    %%%%%:  109-block 14
+call   42 never executed
+branch 43 never executed (fallthrough)
+branch 44 never executed (throw)
+    %%%%%:  109-block 15
+call   45 never executed
+branch 46 never executed (fallthrough)
+branch 47 never executed (throw)
+    %%%%%:  109-block 16
+call   48 never executed
+branch 49 never executed (fallthrough)
+branch 50 never executed (throw)
+    %%%%%:  109-block 17
+call   51 never executed
+branch 52 never executed (fallthrough)
+branch 53 never executed (throw)
+    %%%%%:  109-block 18
+call   54 never executed
+branch 55 never executed (fallthrough)
+branch 56 never executed (throw)
+    %%%%%:  109-block 19
+call   57 never executed
+branch 58 never executed (fallthrough)
+branch 59 never executed (throw)
+    %%%%%:  109-block 20
+call   60 never executed
+branch 61 never executed (fallthrough)
+branch 62 never executed (throw)
+    %%%%%:  109-block 21
+call   63 never executed
+        -:  110:        {}
+function _ZN4crow6loggerD1Ev called 0 returned 0% blocks executed 0%
+    #####:  111:        ~logger()
+        -:  112:        {
+        -:  113:#ifdef CROW_ENABLE_LOGGING
+    #####:  114:            if (level_ >= get_current_log_level())
+        -:  115:            {
+    #####:  116:                get_handler_ref()->log(stringstream_.str(), level_);
+    %%%%%:  116-block  0
+call    0 never executed
+call    1 never executed
+call    2 never executed
+        -:  117:            }
+        -:  118:#endif
+    #####:  119:        }
+    %%%%%:  119-block  0
+call    0 never executed
+        -:  120:
+        -:  121:        //
+        -:  122:        template<typename T>
+        -:  123:        logger& operator<<(T const& value)
+        -:  124:        {
+        -:  125:#ifdef CROW_ENABLE_LOGGING
+    #####:  126:            if (level_ >= get_current_log_level())
+        -:  127:            {
+    #####:  128:                stringstream_ << value;
+    %%%%%:  128-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    %%%%%:  128-block  1
+call    3 never executed
+branch  4 never executed (fallthrough)
+branch  5 never executed (throw)
+    %%%%%:  128-block  2
+call    6 never executed
+branch  7 never executed (fallthrough)
+branch  8 never executed (throw)
+    %%%%%:  128-block  3
+call    9 never executed
+branch 10 never executed (fallthrough)
+branch 11 never executed (throw)
+    %%%%%:  128-block  4
+call   12 never executed
+branch 13 never executed (fallthrough)
+branch 14 never executed (throw)
+    %%%%%:  128-block  5
+call   15 never executed
+branch 16 never executed (fallthrough)
+branch 17 never executed (throw)
+    %%%%%:  128-block  6
+call   18 never executed
+branch 19 never executed (fallthrough)
+branch 20 never executed (throw)
+    %%%%%:  128-block  7
+call   21 never executed
+branch 22 never executed (fallthrough)
+branch 23 never executed (throw)
+    %%%%%:  128-block  8
+call   24 never executed
+branch 25 never executed (fallthrough)
+branch 26 never executed (throw)
+    %%%%%:  128-block  9
+call   27 never executed
+branch 28 never executed (fallthrough)
+branch 29 never executed (throw)
+    %%%%%:  128-block 10
+call   30 never executed
+branch 31 never executed (fallthrough)
+branch 32 never executed (throw)
+    %%%%%:  128-block 11
+call   33 never executed
+branch 34 never executed (fallthrough)
+branch 35 never executed (throw)
+    %%%%%:  128-block 12
+call   36 never executed
+branch 37 never executed (fallthrough)
+branch 38 never executed (throw)
+    %%%%%:  128-block 13
+call   39 never executed
+branch 40 never executed (fallthrough)
+branch 41 never executed (throw)
+    %%%%%:  128-block 14
+call   42 never executed
+branch 43 never executed (fallthrough)
+branch 44 never executed (throw)
+    %%%%%:  128-block 15
+call   45 never executed
+branch 46 never executed (fallthrough)
+branch 47 never executed (throw)
+    %%%%%:  128-block 16
+call   48 never executed
+branch 49 never executed (fallthrough)
+branch 50 never executed (throw)
+    %%%%%:  128-block 17
+call   51 never executed
+branch 52 never executed (fallthrough)
+branch 53 never executed (throw)
+    %%%%%:  128-block 18
+call   54 never executed
+branch 55 never executed (fallthrough)
+branch 56 never executed (throw)
+    %%%%%:  128-block 19
+call   57 never executed
+branch 58 never executed (fallthrough)
+branch 59 never executed (throw)
+    %%%%%:  128-block 20
+call   60 never executed
+branch 61 never executed (fallthrough)
+branch 62 never executed (throw)
+    %%%%%:  128-block 21
+call   63 never executed
+branch 64 never executed (fallthrough)
+branch 65 never executed (throw)
+    %%%%%:  128-block 22
+call   66 never executed
+branch 67 never executed (fallthrough)
+branch 68 never executed (throw)
+    %%%%%:  128-block 23
+call   69 never executed
+branch 70 never executed (fallthrough)
+branch 71 never executed (throw)
+    %%%%%:  128-block 24
+call   72 never executed
+branch 73 never executed (fallthrough)
+branch 74 never executed (throw)
+        -:  129:            }
+        -:  130:#endif
+        -:  131:            return *this;
+        -:  132:        }
+        -:  133:
+        -:  134:        //
+        -:  135:        static void setLogLevel(LogLevel level) { get_log_level_ref() = level; }
+        -:  136:
+        -:  137:        static void setHandler(ILogHandler* handler) { get_handler_ref() = handler; }
+        -:  138:
+    3801*:  139:        static LogLevel get_current_log_level() { return get_log_level_ref(); }
+        4:  139-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+    %%%%%:  139-block  1
+branch  2 never executed (fallthrough)
+branch  3 never executed
+        2:  139-block  2
+branch  4 taken 0 (fallthrough)
+branch  5 taken 2
+    %%%%%:  139-block  3
+branch  6 never executed (fallthrough)
+branch  7 never executed
+        2:  139-block  4
+branch  8 taken 0 (fallthrough)
+branch  9 taken 2
+    %%%%%:  139-block  5
+branch 10 never executed (fallthrough)
+branch 11 never executed
+        2:  139-block  6
+branch 12 taken 0 (fallthrough)
+branch 13 taken 2
+    %%%%%:  139-block  7
+branch 14 never executed (fallthrough)
+branch 15 never executed
+        2:  139-block  8
+branch 16 taken 0 (fallthrough)
+branch 17 taken 2
+    %%%%%:  139-block  9
+branch 18 never executed (fallthrough)
+branch 19 never executed
+branch 20 taken 0 (fallthrough)
+branch 21 taken 2
+    %%%%%:  139-block 10
+branch 22 never executed (fallthrough)
+branch 23 never executed
+branch 24 taken 0 (fallthrough)
+branch 25 taken 2
+    %%%%%:  139-block 11
+branch 26 never executed (fallthrough)
+branch 27 never executed
+branch 28 taken 0 (fallthrough)
+branch 29 taken 4
+    %%%%%:  139-block 12
+branch 30 never executed (fallthrough)
+branch 31 never executed
+        4:  139-block 13
+branch 32 taken 0 (fallthrough)
+branch 33 taken 4
+    %%%%%:  139-block 14
+branch 34 never executed (fallthrough)
+branch 35 never executed
+      750:  139-block 15
+branch 36 taken 0 (fallthrough)
+branch 37 taken 750
+    %%%%%:  139-block 16
+branch 38 never executed (fallthrough)
+branch 39 never executed
+      750:  139-block 17
+branch 40 taken 0 (fallthrough)
+branch 41 taken 750
+    %%%%%:  139-block 18
+branch 42 never executed (fallthrough)
+branch 43 never executed
+branch 44 taken 0 (fallthrough)
+branch 45 taken 750
+    %%%%%:  139-block 19
+branch 46 never executed (fallthrough)
+branch 47 never executed
+      750:  139-block 20
+branch 48 taken 0 (fallthrough)
+branch 49 taken 750
+    %%%%%:  139-block 21
+branch 50 never executed (fallthrough)
+branch 51 never executed
+      750:  139-block 22
+branch 52 taken 0 (fallthrough)
+branch 53 taken 750
+    %%%%%:  139-block 23
+branch 54 never executed (fallthrough)
+branch 55 never executed
+        4:  139-block 24
+branch 56 taken 0 (fallthrough)
+branch 57 taken 4
+    %%%%%:  139-block 25
+branch 58 never executed (fallthrough)
+branch 59 never executed
+        7:  139-block 26
+branch 60 taken 0 (fallthrough)
+branch 61 taken 7
+    %%%%%:  139-block 27
+branch 62 never executed (fallthrough)
+branch 63 never executed
+        2:  139-block 28
+branch 64 taken 0 (fallthrough)
+branch 65 taken 2
+    %%%%%:  139-block 29
+branch 66 never executed (fallthrough)
+branch 67 never executed
+    %%%%%:  139-block 30
+branch 68 never executed (fallthrough)
+branch 69 never executed
+        4:  139-block 31
+branch 70 taken 0 (fallthrough)
+branch 71 taken 4
+    %%%%%:  139-block 32
+branch 72 never executed (fallthrough)
+branch 73 never executed
+    %%%%%:  139-block 33
+branch 74 never executed (fallthrough)
+branch 75 never executed
+        7:  139-block 34
+branch 76 taken 0 (fallthrough)
+branch 77 taken 7
+    %%%%%:  139-block 35
+branch 78 never executed (fallthrough)
+branch 79 never executed
+    %%%%%:  139-block 36
+branch 80 never executed (fallthrough)
+branch 81 never executed
+    %%%%%:  139-block 37
+branch 82 never executed (fallthrough)
+branch 83 never executed
+    %%%%%:  139-block 38
+branch 84 never executed (fallthrough)
+branch 85 never executed
+        5:  139-block 39
+branch 86 taken 0 (fallthrough)
+branch 87 taken 5
+    %%%%%:  139-block 40
+branch 88 never executed (fallthrough)
+branch 89 never executed
+branch 90 never executed
+branch 91 never executed
+branch 92 never executed (fallthrough)
+branch 93 never executed
+    %%%%%:  139-block 41
+branch 94 never executed (fallthrough)
+branch 95 never executed
+    %%%%%:  139-block 42
+branch 96 never executed (fallthrough)
+branch 97 never executed
+    %%%%%:  139-block 43
+branch 98 never executed (fallthrough)
+branch 99 never executed
+        -:  140:
+        -:  141:    private:
+        -:  142:        //
+        -:  143:        static LogLevel& get_log_level_ref()
+        -:  144:        {
+        -:  145:            static LogLevel current_level = static_cast<LogLevel>(CROW_LOG_LEVEL);
+        -:  146:            return current_level;
+        -:  147:        }
+function _ZN4crow6logger15get_handler_refEv called 0 returned 0% blocks executed 0%
+    #####:  148:        static ILogHandler*& get_handler_ref()
+        -:  149:        {
+    #####:  150:            static CerrLogHandler default_handler;
+    %%%%%:  150-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%:  150-block  1
+call    2 never executed
+branch  3 never executed (fallthrough)
+branch  4 never executed
+    %%%%%:  150-block  2
+call    5 never executed
+call    6 never executed
+        -:  151:            static ILogHandler* current_handler = &default_handler;
+    #####:  152:            return current_handler;
+        -:  153:        }
+        -:  154:
+        -:  155:        //
+        -:  156:        std::ostringstream stringstream_;
+        -:  157:        LogLevel level_;
+        -:  158:    };
+        -:  159:} // namespace crow
+        -:  160:
+        -:  161:#define CROW_LOG_CRITICAL                                                  \
+        -:  162:    if (crow::logger::get_current_log_level() <= crow::LogLevel::Critical) \
+        -:  163:    crow::logger(crow::LogLevel::Critical)
+        -:  164:#define CROW_LOG_ERROR                                                  \
+        -:  165:    if (crow::logger::get_current_log_level() <= crow::LogLevel::Error) \
+        -:  166:    crow::logger(crow::LogLevel::Error)
+        -:  167:#define CROW_LOG_WARNING                                                  \
+        -:  168:    if (crow::logger::get_current_log_level() <= crow::LogLevel::Warning) \
+        -:  169:    crow::logger(crow::LogLevel::Warning)
+        -:  170:#define CROW_LOG_INFO                                                  \
+        -:  171:    if (crow::logger::get_current_log_level() <= crow::LogLevel::Info) \
+        -:  172:    crow::logger(crow::LogLevel::Info)
+        -:  173:#define CROW_LOG_DEBUG                                                  \
+        -:  174:    if (crow::logger::get_current_log_level() <= crow::LogLevel::Debug) \
+        -:  175:    crow::logger(crow::LogLevel::Debug)

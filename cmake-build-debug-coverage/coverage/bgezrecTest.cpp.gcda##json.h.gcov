@@ -1,0 +1,2505 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/include/crow/json.h
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3://#define CROW_JSON_NO_ERROR_CHECK
+        -:    4://#define CROW_JSON_USE_MAP
+        -:    5:
+        -:    6:#include <string>
+        -:    7:#ifdef CROW_JSON_USE_MAP
+        -:    8:#include <map>
+        -:    9:#else
+        -:   10:#include <unordered_map>
+        -:   11:#endif
+        -:   12:#include <iostream>
+        -:   13:#include <algorithm>
+        -:   14:#include <memory>
+        -:   15:#include <vector>
+        -:   16:#include <cmath>
+        -:   17:#include <cfloat>
+        -:   18:
+        -:   19:#include "crow/utility.h"
+        -:   20:#include "crow/settings.h"
+        -:   21:#include "crow/returnable.h"
+        -:   22:#include "crow/logging.h"
+        -:   23:
+        -:   24:using std::isinf;
+        -:   25:using std::isnan;
+        -:   26:
+        -:   27:
+        -:   28:namespace crow // NOTE: Already documented in "crow/app.h"
+        -:   29:{
+        -:   30:    namespace mustache
+        -:   31:    {
+        -:   32:        class template_t;
+        -:   33:    }
+        -:   34:
+        -:   35:    namespace json
+        -:   36:    {
+        -:   37:        static inline char to_hex(char c)
+        -:   38:        {
+    #####:   39:            c = c & 0xf;
+    #####:   40:            if (c < 10)
+    #####:   41:                return '0' + c;
+    %%%%%:   41-block  0
+    #####:   42:            return 'a' + c - 10;
+    %%%%%:   42-block  0
+        -:   43:        }
+        -:   44:
+function _ZN4crow4json6escapeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS6_ called 4 returned 100% blocks executed 39%
+        4:   45:        inline void escape(const std::string& str, std::string& ret)
+        4:   45-block  0
+call    0 returned 4
+        -:   46:        {
+        4:   47:            ret.reserve(ret.size() + str.size() + str.size() / 4);
+        4:   47-block  0
+call    0 returned 4
+       71:   48:            for (auto c : str)
+       71:   48-block  0
+branch  0 taken 67
+branch  1 taken 4 (fallthrough)
+        -:   49:            {
+       67:   50:                switch (c)
+       67:   50-block  0
+branch  0 taken 0
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 0
+branch  4 taken 0
+branch  5 taken 0
+branch  6 taken 0
+branch  7 taken 67
+        -:   51:                {
+        -:   52:                    case '"': ret += "\\\""; break;
+        -:   53:                    case '\\': ret += "\\\\"; break;
+        -:   54:                    case '\n': ret += "\\n"; break;
+        -:   55:                    case '\b': ret += "\\b"; break;
+        -:   56:                    case '\f': ret += "\\f"; break;
+        -:   57:                    case '\r': ret += "\\r"; break;
+        -:   58:                    case '\t': ret += "\\t"; break;
+       67:   59:                    default:
+       67:   60:                        if (c >= 0 && c < 0x20)
+       67:   60-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 67
+        -:   61:                        {
+        -:   62:                            ret += "\\u00";
+    #####:   63:                            ret += to_hex(c / 16);
+call    0 never executed
+    #####:   64:                            ret += to_hex(c % 16);
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -:   65:                        }
+        -:   66:                        else
+        -:   67:                            ret += c;
+        -:   68:                        break;
+        -:   69:                }
+        -:   70:            }
+        4:   71:        }
+        -:   72:        inline std::string escape(const std::string& str)
+        -:   73:        {
+        -:   74:            std::string ret;
+        -:   75:            escape(str, ret);
+        -:   76:            return ret;
+        -:   77:        }
+        -:   78:
+        -:   79:        enum class type : char
+        -:   80:        {
+        -:   81:            Null,
+        -:   82:            False,
+        -:   83:            True,
+        -:   84:            Number,
+        -:   85:            String,
+        -:   86:            List,
+        -:   87:            Object,
+        -:   88:            Function
+        -:   89:        };
+        -:   90:
+        -:   91:        inline const char* get_type_str(type t)
+        -:   92:        {
+        -:   93:            switch (t)
+        -:   94:            {
+        -:   95:                case type::Number: return "Number";
+        -:   96:                case type::False: return "False";
+        -:   97:                case type::True: return "True";
+        -:   98:                case type::List: return "List";
+        -:   99:                case type::String: return "String";
+        -:  100:                case type::Object: return "Object";
+        -:  101:                case type::Function: return "Function";
+        -:  102:                default: return "Unknown";
+        -:  103:            }
+        -:  104:        }
+        -:  105:
+        -:  106:        enum class num_type : char
+        -:  107:        {
+        -:  108:            Signed_integer,
+        -:  109:            Unsigned_integer,
+        -:  110:            Floating_point,
+        -:  111:            Null,
+        -:  112:            Double_precision_floating_point
+        -:  113:        };
+        -:  114:
+        -:  115:        class rvalue;
+        -:  116:        rvalue load(const char* data, size_t size);
+        -:  117:
+        -:  118:        namespace detail
+        -:  119:        {
+        -:  120:            /// A read string implementation with comparison functionality.
+        -:  121:            struct r_string
+        -:  122:            {
+        -:  123:                r_string(){}
+        -:  124:                r_string(char* s, char* e):
+        -:  125:                  s_(s), e_(e){}
+        -:  126:                ~r_string()
+        -:  127:                {
+        -:  128:                    if (owned_)
+        -:  129:                        delete[] s_;
+        -:  130:                }
+        -:  131:
+        -:  132:                r_string(const r_string& r)
+        -:  133:                {
+        -:  134:                    *this = r;
+        -:  135:                }
+        -:  136:
+        -:  137:                r_string(r_string&& r)
+        -:  138:                {
+        -:  139:                    *this = r;
+        -:  140:                }
+        -:  141:
+        -:  142:                r_string& operator=(r_string&& r)
+        -:  143:                {
+        -:  144:                    s_ = r.s_;
+        -:  145:                    e_ = r.e_;
+        -:  146:                    owned_ = r.owned_;
+        -:  147:                    if (r.owned_)
+        -:  148:                        r.owned_ = 0;
+        -:  149:                    return *this;
+        -:  150:                }
+        -:  151:
+        -:  152:                r_string& operator=(const r_string& r)
+        -:  153:                {
+        -:  154:                    s_ = r.s_;
+        -:  155:                    e_ = r.e_;
+        -:  156:                    owned_ = 0;
+        -:  157:                    return *this;
+        -:  158:                }
+        -:  159:
+        -:  160:                operator std::string() const
+        -:  161:                {
+        -:  162:                    return std::string(s_, e_);
+        -:  163:                }
+        -:  164:
+        -:  165:
+        -:  166:                const char* begin() const { return s_; }
+        -:  167:                const char* end() const { return e_; }
+        -:  168:                size_t size() const { return end() - begin(); }
+        -:  169:
+        -:  170:                using iterator = const char*;
+        -:  171:                using const_iterator = const char*;
+        -:  172:
+        -:  173:                char* s_;         ///< Start.
+        -:  174:                mutable char* e_; ///< End.
+        -:  175:                uint8_t owned_{0};
+        -:  176:                friend std::ostream& operator<<(std::ostream& os, const r_string& s)
+        -:  177:                {
+        -:  178:                    os << static_cast<std::string>(s);
+        -:  179:                    return os;
+        -:  180:                }
+        -:  181:
+        -:  182:            private:
+        -:  183:                void force(char* s, uint32_t length)
+        -:  184:                {
+        -:  185:                    s_ = s;
+        -:  186:                    e_ = s_ + length;
+        -:  187:                    owned_ = 1;
+        -:  188:                }
+        -:  189:                friend rvalue crow::json::load(const char* data, size_t size);
+        -:  190:
+        -:  191:                friend bool operator==(const r_string& l, const r_string& r);
+        -:  192:                friend bool operator==(const std::string& l, const r_string& r);
+        -:  193:                friend bool operator==(const r_string& l, const std::string& r);
+        -:  194:
+        -:  195:                template<typename T, typename U>
+        -:  196:                inline static bool equals(const T& l, const U& r)
+        -:  197:                {
+        -:  198:                    if (l.size() != r.size())
+        -:  199:                        return false;
+        -:  200:
+        -:  201:                    for (size_t i = 0; i < l.size(); i++)
+        -:  202:                    {
+        -:  203:                        if (*(l.begin() + i) != *(r.begin() + i))
+        -:  204:                            return false;
+        -:  205:                    }
+        -:  206:
+        -:  207:                    return true;
+        -:  208:                }
+        -:  209:            };
+        -:  210:
+        -:  211:            inline bool operator<(const r_string& l, const r_string& r)
+        -:  212:            {
+        -:  213:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  214:            }
+        -:  215:
+        -:  216:            inline bool operator<(const r_string& l, const std::string& r)
+        -:  217:            {
+        -:  218:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  219:            }
+        -:  220:
+        -:  221:            inline bool operator<(const std::string& l, const r_string& r)
+        -:  222:            {
+        -:  223:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  224:            }
+        -:  225:
+        -:  226:            inline bool operator>(const r_string& l, const r_string& r)
+        -:  227:            {
+        -:  228:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  229:            }
+        -:  230:
+        -:  231:            inline bool operator>(const r_string& l, const std::string& r)
+        -:  232:            {
+        -:  233:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  234:            }
+        -:  235:
+        -:  236:            inline bool operator>(const std::string& l, const r_string& r)
+        -:  237:            {
+        -:  238:                return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end());
+        -:  239:            }
+        -:  240:
+        -:  241:            inline bool operator==(const r_string& l, const r_string& r)
+        -:  242:            {
+        -:  243:                return r_string::equals(l, r);
+        -:  244:            }
+        -:  245:
+        -:  246:            inline bool operator==(const r_string& l, const std::string& r)
+        -:  247:            {
+        -:  248:                return r_string::equals(l, r);
+        -:  249:            }
+        -:  250:
+        -:  251:            inline bool operator==(const std::string& l, const r_string& r)
+        -:  252:            {
+        -:  253:                return r_string::equals(l, r);
+        -:  254:            }
+        -:  255:
+        -:  256:            inline bool operator!=(const r_string& l, const r_string& r)
+        -:  257:            {
+        -:  258:                return !(l == r);
+        -:  259:            }
+        -:  260:
+        -:  261:            inline bool operator!=(const r_string& l, const std::string& r)
+        -:  262:            {
+        -:  263:                return !(l == r);
+        -:  264:            }
+        -:  265:
+        -:  266:            inline bool operator!=(const std::string& l, const r_string& r)
+        -:  267:            {
+        -:  268:                return !(l == r);
+        -:  269:            }
+        -:  270:        } // namespace detail
+        -:  271:
+        -:  272:        /// JSON read value.
+        -:  273:
+        -:  274:        ///
+        -:  275:        /// Value can mean any json value, including a JSON object.
+        -:  276:        /// Read means this class is used to primarily read strings into a JSON value.
+        -:  277:        class rvalue
+        -:  278:        {
+        -:  279:            static const int cached_bit = 2;
+        -:  280:            static const int error_bit = 4;
+        -:  281:
+        -:  282:        public:
+        -:  283:            rvalue() noexcept:
+        -:  284:              option_{error_bit}
+        -:  285:            {
+        -:  286:            }
+        -:  287:            rvalue(type t) noexcept:
+        -:  288:              lsize_{}, lremain_{}, t_{t}
+        -:  289:            {
+        -:  290:            }
+        -:  291:            rvalue(type t, char* s, char* e) noexcept:
+        -:  292:              start_{s}, end_{e}, t_{t}
+        -:  293:            {
+        -:  294:                determine_num_type();
+        -:  295:            }
+        -:  296:
+        -:  297:            rvalue(const rvalue& r):
+        -:  298:              start_(r.start_), end_(r.end_), key_(r.key_), t_(r.t_), nt_(r.nt_), option_(r.option_)
+        -:  299:            {
+        -:  300:                copy_l(r);
+        -:  301:            }
+        -:  302:
+        -:  303:            rvalue(rvalue&& r) noexcept
+        -:  304:            {
+        -:  305:                *this = std::move(r);
+        -:  306:            }
+        -:  307:
+        -:  308:            rvalue& operator=(const rvalue& r)
+        -:  309:            {
+        -:  310:                start_ = r.start_;
+        -:  311:                end_ = r.end_;
+        -:  312:                key_ = r.key_;
+        -:  313:                t_ = r.t_;
+        -:  314:                nt_ = r.nt_;
+        -:  315:                option_ = r.option_;
+        -:  316:                copy_l(r);
+        -:  317:                return *this;
+        -:  318:            }
+        -:  319:            rvalue& operator=(rvalue&& r) noexcept
+        -:  320:            {
+        -:  321:                start_ = r.start_;
+        -:  322:                end_ = r.end_;
+        -:  323:                key_ = std::move(r.key_);
+        -:  324:                l_ = std::move(r.l_);
+        -:  325:                lsize_ = r.lsize_;
+        -:  326:                lremain_ = r.lremain_;
+        -:  327:                t_ = r.t_;
+        -:  328:                nt_ = r.nt_;
+        -:  329:                option_ = r.option_;
+        -:  330:                return *this;
+        -:  331:            }
+        -:  332:
+        -:  333:            explicit operator bool() const noexcept
+        -:  334:            {
+        -:  335:                return (option_ & error_bit) == 0;
+        -:  336:            }
+        -:  337:
+        -:  338:            explicit operator int64_t() const
+        -:  339:            {
+        -:  340:                return i();
+        -:  341:            }
+        -:  342:
+        -:  343:            explicit operator uint64_t() const
+        -:  344:            {
+        -:  345:                return u();
+        -:  346:            }
+        -:  347:
+        -:  348:            explicit operator int() const
+        -:  349:            {
+        -:  350:                return static_cast<int>(i());
+        -:  351:            }
+        -:  352:
+        -:  353:            /// Return any json value (not object or list) as a string.
+        -:  354:            explicit operator std::string() const
+        -:  355:            {
+        -:  356:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  357:                if (t() == type::Object || t() == type::List)
+        -:  358:                    throw std::runtime_error("json type container");
+        -:  359:#endif
+        -:  360:                switch (t())
+        -:  361:                {
+        -:  362:                    case type::String:
+        -:  363:                        return std::string(s());
+        -:  364:                    case type::Null:
+        -:  365:                        return std::string("null");
+        -:  366:                    case type::True:
+        -:  367:                        return std::string("true");
+        -:  368:                    case type::False:
+        -:  369:                        return std::string("false");
+        -:  370:                    default:
+        -:  371:                        return std::string(start_, end_ - start_);
+        -:  372:                }
+        -:  373:            }
+        -:  374:
+        -:  375:            /// The type of the JSON value.
+        -:  376:            type t() const
+        -:  377:            {
+        -:  378:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  379:                if (option_ & error_bit)
+        -:  380:                {
+        -:  381:                    throw std::runtime_error("invalid json object");
+        -:  382:                }
+        -:  383:#endif
+        -:  384:                return t_;
+        -:  385:            }
+        -:  386:
+        -:  387:            /// The number type of the JSON value.
+        -:  388:            num_type nt() const
+        -:  389:            {
+        -:  390:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  391:                if (option_ & error_bit)
+        -:  392:                {
+        -:  393:                    throw std::runtime_error("invalid json object");
+        -:  394:                }
+        -:  395:#endif
+        -:  396:                return nt_;
+        -:  397:            }
+        -:  398:
+        -:  399:            /// The integer value.
+        -:  400:            int64_t i() const
+        -:  401:            {
+        -:  402:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  403:                switch (t())
+        -:  404:                {
+        -:  405:                    case type::Number:
+        -:  406:                    case type::String:
+        -:  407:                        return utility::lexical_cast<int64_t>(start_, end_ - start_);
+        -:  408:                    default:
+        -:  409:                        const std::string msg = "expected number, got: " + std::string(get_type_str(t()));
+        -:  410:                        throw std::runtime_error(msg);
+        -:  411:                }
+        -:  412:#endif
+        -:  413:                return utility::lexical_cast<int64_t>(start_, end_ - start_);
+        -:  414:            }
+        -:  415:
+        -:  416:            /// The unsigned integer value.
+        -:  417:            uint64_t u() const
+        -:  418:            {
+        -:  419:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  420:                switch (t())
+        -:  421:                {
+        -:  422:                    case type::Number:
+        -:  423:                    case type::String:
+        -:  424:                        return utility::lexical_cast<uint64_t>(start_, end_ - start_);
+        -:  425:                    default:
+        -:  426:                        throw std::runtime_error(std::string("expected number, got: ") + get_type_str(t()));
+        -:  427:                }
+        -:  428:#endif
+        -:  429:                return utility::lexical_cast<uint64_t>(start_, end_ - start_);
+        -:  430:            }
+        -:  431:
+        -:  432:            /// The double precision floating-point number value.
+        -:  433:            double d() const
+        -:  434:            {
+        -:  435:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  436:                if (t() != type::Number)
+        -:  437:                    throw std::runtime_error("value is not number");
+        -:  438:#endif
+        -:  439:                return utility::lexical_cast<double>(start_, end_ - start_);
+        -:  440:            }
+        -:  441:
+        -:  442:            /// The boolean value.
+        -:  443:            bool b() const
+        -:  444:            {
+        -:  445:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  446:                if (t() != type::True && t() != type::False)
+        -:  447:                    throw std::runtime_error("value is not boolean");
+        -:  448:#endif
+        -:  449:                return t() == type::True;
+        -:  450:            }
+        -:  451:
+        -:  452:            /// The string value.
+        -:  453:            detail::r_string s() const
+        -:  454:            {
+        -:  455:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  456:                if (t() != type::String)
+        -:  457:                    throw std::runtime_error("value is not string");
+        -:  458:#endif
+        -:  459:                unescape();
+        -:  460:                return detail::r_string{start_, end_};
+        -:  461:            }
+        -:  462:
+        -:  463:            /// The list or object value
+        -:  464:            std::vector<rvalue> lo() const
+        -:  465:            {
+        -:  466:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  467:                if (t() != type::Object && t() != type::List)
+        -:  468:                    throw std::runtime_error("value is not a container");
+        -:  469:#endif
+        -:  470:                std::vector<rvalue> ret;
+        -:  471:                ret.reserve(lsize_);
+        -:  472:                for (uint32_t i = 0; i < lsize_; i++)
+        -:  473:                {
+        -:  474:                    ret.emplace_back(l_[i]);
+        -:  475:                }
+        -:  476:                return ret;
+        -:  477:            }
+        -:  478:
+        -:  479:            /// Convert escaped string character to their original form ("\\n" -> '\n').
+        -:  480:            void unescape() const
+        -:  481:            {
+        -:  482:                if (*(start_ - 1))
+        -:  483:                {
+        -:  484:                    char* head = start_;
+        -:  485:                    char* tail = start_;
+        -:  486:                    while (head != end_)
+        -:  487:                    {
+        -:  488:                        if (*head == '\\')
+        -:  489:                        {
+        -:  490:                            switch (*++head)
+        -:  491:                            {
+        -:  492:                                case '"': *tail++ = '"'; break;
+        -:  493:                                case '\\': *tail++ = '\\'; break;
+        -:  494:                                case '/': *tail++ = '/'; break;
+        -:  495:                                case 'b': *tail++ = '\b'; break;
+        -:  496:                                case 'f': *tail++ = '\f'; break;
+        -:  497:                                case 'n': *tail++ = '\n'; break;
+        -:  498:                                case 'r': *tail++ = '\r'; break;
+        -:  499:                                case 't': *tail++ = '\t'; break;
+        -:  500:                                case 'u':
+        -:  501:                                {
+        -:  502:                                    auto from_hex = [](char c) {
+        -:  503:                                        if (c >= 'a')
+        -:  504:                                            return c - 'a' + 10;
+        -:  505:                                        if (c >= 'A')
+        -:  506:                                            return c - 'A' + 10;
+        -:  507:                                        return c - '0';
+        -:  508:                                    };
+        -:  509:                                    unsigned int code =
+        -:  510:                                      (from_hex(head[1]) << 12) +
+        -:  511:                                      (from_hex(head[2]) << 8) +
+        -:  512:                                      (from_hex(head[3]) << 4) +
+        -:  513:                                      from_hex(head[4]);
+        -:  514:                                    if (code >= 0x800)
+        -:  515:                                    {
+        -:  516:                                        *tail++ = 0xE0 | (code >> 12);
+        -:  517:                                        *tail++ = 0x80 | ((code >> 6) & 0x3F);
+        -:  518:                                        *tail++ = 0x80 | (code & 0x3F);
+        -:  519:                                    }
+        -:  520:                                    else if (code >= 0x80)
+        -:  521:                                    {
+        -:  522:                                        *tail++ = 0xC0 | (code >> 6);
+        -:  523:                                        *tail++ = 0x80 | (code & 0x3F);
+        -:  524:                                    }
+        -:  525:                                    else
+        -:  526:                                    {
+        -:  527:                                        *tail++ = code;
+        -:  528:                                    }
+        -:  529:                                    head += 4;
+        -:  530:                                }
+        -:  531:                                break;
+        -:  532:                            }
+        -:  533:                        }
+        -:  534:                        else
+        -:  535:                            *tail++ = *head;
+        -:  536:                        head++;
+        -:  537:                    }
+        -:  538:                    end_ = tail;
+        -:  539:                    *end_ = 0;
+        -:  540:                    *(start_ - 1) = 0;
+        -:  541:                }
+        -:  542:            }
+        -:  543:
+        -:  544:            /// Check if the json object has the passed string as a key.
+        -:  545:            bool has(const char* str) const
+        -:  546:            {
+        -:  547:                return has(std::string(str));
+        -:  548:            }
+        -:  549:
+        -:  550:            bool has(const std::string& str) const
+        -:  551:            {
+        -:  552:                struct Pred
+        -:  553:                {
+        -:  554:                    bool operator()(const rvalue& l, const rvalue& r) const
+        -:  555:                    {
+        -:  556:                        return l.key_ < r.key_;
+        -:  557:                    }
+        -:  558:                    bool operator()(const rvalue& l, const std::string& r) const
+        -:  559:                    {
+        -:  560:                        return l.key_ < r;
+        -:  561:                    }
+        -:  562:                    bool operator()(const std::string& l, const rvalue& r) const
+        -:  563:                    {
+        -:  564:                        return l < r.key_;
+        -:  565:                    }
+        -:  566:                };
+        -:  567:                if (!is_cached())
+        -:  568:                {
+        -:  569:                    std::sort(begin(), end(), Pred());
+        -:  570:                    set_cached();
+        -:  571:                }
+        -:  572:                auto it = lower_bound(begin(), end(), str, Pred());
+        -:  573:                return it != end() && it->key_ == str;
+        -:  574:            }
+        -:  575:
+        -:  576:            int count(const std::string& str) const
+        -:  577:            {
+        -:  578:                return has(str) ? 1 : 0;
+        -:  579:            }
+        -:  580:
+        -:  581:            rvalue* begin() const
+        -:  582:            {
+        -:  583:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  584:                if (t() != type::Object && t() != type::List)
+        -:  585:                    throw std::runtime_error("value is not a container");
+        -:  586:#endif
+        -:  587:                return l_.get();
+        -:  588:            }
+        -:  589:            rvalue* end() const
+        -:  590:            {
+        -:  591:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  592:                if (t() != type::Object && t() != type::List)
+        -:  593:                    throw std::runtime_error("value is not a container");
+        -:  594:#endif
+        -:  595:                return l_.get() + lsize_;
+        -:  596:            }
+        -:  597:
+        -:  598:            const detail::r_string& key() const
+        -:  599:            {
+        -:  600:                return key_;
+        -:  601:            }
+        -:  602:
+        -:  603:            size_t size() const
+        -:  604:            {
+        -:  605:                if (t() == type::String)
+        -:  606:                    return s().size();
+        -:  607:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  608:                if (t() != type::Object && t() != type::List)
+        -:  609:                    throw std::runtime_error("value is not a container");
+        -:  610:#endif
+        -:  611:                return lsize_;
+        -:  612:            }
+        -:  613:
+        -:  614:            const rvalue& operator[](int index) const
+        -:  615:            {
+        -:  616:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  617:                if (t() != type::List)
+        -:  618:                    throw std::runtime_error("value is not a list");
+        -:  619:                if (index >= static_cast<int>(lsize_) || index < 0)
+        -:  620:                    throw std::runtime_error("list out of bound");
+        -:  621:#endif
+        -:  622:                return l_[index];
+        -:  623:            }
+        -:  624:
+        -:  625:            const rvalue& operator[](size_t index) const
+        -:  626:            {
+        -:  627:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  628:                if (t() != type::List)
+        -:  629:                    throw std::runtime_error("value is not a list");
+        -:  630:                if (index >= lsize_)
+        -:  631:                    throw std::runtime_error("list out of bound");
+        -:  632:#endif
+        -:  633:                return l_[index];
+        -:  634:            }
+        -:  635:
+        -:  636:            const rvalue& operator[](const char* str) const
+        -:  637:            {
+        -:  638:                return this->operator[](std::string(str));
+        -:  639:            }
+        -:  640:
+        -:  641:            const rvalue& operator[](const std::string& str) const
+        -:  642:            {
+        -:  643:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  644:                if (t() != type::Object)
+        -:  645:                    throw std::runtime_error("value is not an object");
+        -:  646:#endif
+        -:  647:                struct Pred
+        -:  648:                {
+        -:  649:                    bool operator()(const rvalue& l, const rvalue& r) const
+        -:  650:                    {
+        -:  651:                        return l.key_ < r.key_;
+        -:  652:                    }
+        -:  653:                    bool operator()(const rvalue& l, const std::string& r) const
+        -:  654:                    {
+        -:  655:                        return l.key_ < r;
+        -:  656:                    }
+        -:  657:                    bool operator()(const std::string& l, const rvalue& r) const
+        -:  658:                    {
+        -:  659:                        return l < r.key_;
+        -:  660:                    }
+        -:  661:                };
+        -:  662:                if (!is_cached())
+        -:  663:                {
+        -:  664:                    std::sort(begin(), end(), Pred());
+        -:  665:                    set_cached();
+        -:  666:                }
+        -:  667:                auto it = lower_bound(begin(), end(), str, Pred());
+        -:  668:                if (it != end() && it->key_ == str)
+        -:  669:                    return *it;
+        -:  670:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  671:                throw std::runtime_error("cannot find key: " + str);
+        -:  672:#else
+        -:  673:                static rvalue nullValue;
+        -:  674:                return nullValue;
+        -:  675:#endif
+        -:  676:            }
+        -:  677:
+        -:  678:            void set_error()
+        -:  679:            {
+        -:  680:                option_ |= error_bit;
+        -:  681:            }
+        -:  682:
+        -:  683:            bool error() const
+        -:  684:            {
+        -:  685:                return (option_ & error_bit) != 0;
+        -:  686:            }
+        -:  687:
+        -:  688:            std::vector<std::string> keys() const
+        -:  689:            {
+        -:  690:#ifndef CROW_JSON_NO_ERROR_CHECK
+        -:  691:                if (t() != type::Object)
+        -:  692:                    throw std::runtime_error("value is not an object");
+        -:  693:#endif
+        -:  694:                std::vector<std::string> ret;
+        -:  695:                ret.reserve(lsize_);
+        -:  696:                for (uint32_t i = 0; i < lsize_; i++)
+        -:  697:                {
+        -:  698:                    ret.emplace_back(std::string(l_[i].key()));
+        -:  699:                }
+        -:  700:                return ret;
+        -:  701:            }
+        -:  702:
+        -:  703:        private:
+        -:  704:            bool is_cached() const
+        -:  705:            {
+        -:  706:                return (option_ & cached_bit) != 0;
+        -:  707:            }
+        -:  708:            void set_cached() const
+        -:  709:            {
+        -:  710:                option_ |= cached_bit;
+        -:  711:            }
+        -:  712:            void copy_l(const rvalue& r)
+        -:  713:            {
+        -:  714:                if (r.t() != type::Object && r.t() != type::List)
+        -:  715:                    return;
+        -:  716:                lsize_ = r.lsize_;
+        -:  717:                lremain_ = 0;
+        -:  718:                l_.reset(new rvalue[lsize_]);
+        -:  719:                std::copy(r.begin(), r.end(), begin());
+        -:  720:            }
+        -:  721:
+        -:  722:            void emplace_back(rvalue&& v)
+        -:  723:            {
+        -:  724:                if (!lremain_)
+        -:  725:                {
+        -:  726:                    int new_size = lsize_ + lsize_;
+        -:  727:                    if (new_size - lsize_ > 60000)
+        -:  728:                        new_size = lsize_ + 60000;
+        -:  729:                    if (new_size < 4)
+        -:  730:                        new_size = 4;
+        -:  731:                    rvalue* p = new rvalue[new_size];
+        -:  732:                    rvalue* p2 = p;
+        -:  733:                    for (auto& x : *this)
+        -:  734:                        *p2++ = std::move(x);
+        -:  735:                    l_.reset(p);
+        -:  736:                    lremain_ = new_size - lsize_;
+        -:  737:                }
+        -:  738:                l_[lsize_++] = std::move(v);
+        -:  739:                lremain_--;
+        -:  740:            }
+        -:  741:
+        -:  742:            /// Determines num_type from the string.
+        -:  743:            void determine_num_type()
+        -:  744:            {
+        -:  745:                if (t_ != type::Number)
+        -:  746:                {
+        -:  747:                    nt_ = num_type::Null;
+        -:  748:                    return;
+        -:  749:                }
+        -:  750:
+        -:  751:                const std::size_t len = end_ - start_;
+        -:  752:                const bool has_minus = std::memchr(start_, '-', len) != nullptr;
+        -:  753:                const bool has_e = std::memchr(start_, 'e', len) != nullptr || std::memchr(start_, 'E', len) != nullptr;
+        -:  754:                const bool has_dec_sep = std::memchr(start_, '.', len) != nullptr;
+        -:  755:                if (has_dec_sep || has_e)
+        -:  756:                    nt_ = num_type::Floating_point;
+        -:  757:                else if (has_minus)
+        -:  758:                    nt_ = num_type::Signed_integer;
+        -:  759:                else
+        -:  760:                    nt_ = num_type::Unsigned_integer;
+        -:  761:            }
+        -:  762:
+        -:  763:            mutable char* start_;
+        -:  764:            mutable char* end_;
+        -:  765:            detail::r_string key_;
+        -:  766:            std::unique_ptr<rvalue[]> l_;
+        -:  767:            uint32_t lsize_;
+        -:  768:            uint16_t lremain_;
+        -:  769:            type t_;
+        -:  770:            num_type nt_{num_type::Null};
+        -:  771:            mutable uint8_t option_{0};
+        -:  772:
+        -:  773:            friend rvalue load_nocopy_internal(char* data, size_t size);
+        -:  774:            friend rvalue load(const char* data, size_t size);
+        -:  775:            friend std::ostream& operator<<(std::ostream& os, const rvalue& r)
+        -:  776:            {
+        -:  777:                switch (r.t_)
+        -:  778:                {
+        -:  779:
+        -:  780:                    case type::Null: os << "null"; break;
+        -:  781:                    case type::False: os << "false"; break;
+        -:  782:                    case type::True: os << "true"; break;
+        -:  783:                    case type::Number:
+        -:  784:                    {
+        -:  785:                        switch (r.nt())
+        -:  786:                        {
+        -:  787:                            case num_type::Floating_point: os << r.d(); break;
+        -:  788:                            case num_type::Double_precision_floating_point: os << r.d(); break;
+        -:  789:                            case num_type::Signed_integer: os << r.i(); break;
+        -:  790:                            case num_type::Unsigned_integer: os << r.u(); break;
+        -:  791:                            case num_type::Null: throw std::runtime_error("Number with num_type Null");
+        -:  792:                        }
+        -:  793:                    }
+        -:  794:                    break;
+        -:  795:                    case type::String: os << '"' << r.s() << '"'; break;
+        -:  796:                    case type::List:
+        -:  797:                    {
+        -:  798:                        os << '[';
+        -:  799:                        bool first = true;
+        -:  800:                        for (auto& x : r)
+        -:  801:                        {
+        -:  802:                            if (!first)
+        -:  803:                                os << ',';
+        -:  804:                            first = false;
+        -:  805:                            os << x;
+        -:  806:                        }
+        -:  807:                        os << ']';
+        -:  808:                    }
+        -:  809:                    break;
+        -:  810:                    case type::Object:
+        -:  811:                    {
+        -:  812:                        os << '{';
+        -:  813:                        bool first = true;
+        -:  814:                        for (auto& x : r)
+        -:  815:                        {
+        -:  816:                            if (!first)
+        -:  817:                                os << ',';
+        -:  818:                            os << '"' << escape(x.key_) << "\":";
+        -:  819:                            first = false;
+        -:  820:                            os << x;
+        -:  821:                        }
+        -:  822:                        os << '}';
+        -:  823:                    }
+        -:  824:                    break;
+        -:  825:                    case type::Function: os << "custom function"; break;
+        -:  826:                }
+        -:  827:                return os;
+        -:  828:            }
+        -:  829:        };
+        -:  830:        namespace detail
+        -:  831:        {
+        -:  832:        }
+        -:  833:
+        -:  834:        inline bool operator==(const rvalue& l, const std::string& r)
+        -:  835:        {
+        -:  836:            return l.s() == r;
+        -:  837:        }
+        -:  838:
+        -:  839:        inline bool operator==(const std::string& l, const rvalue& r)
+        -:  840:        {
+        -:  841:            return l == r.s();
+        -:  842:        }
+        -:  843:
+        -:  844:        inline bool operator!=(const rvalue& l, const std::string& r)
+        -:  845:        {
+        -:  846:            return l.s() != r;
+        -:  847:        }
+        -:  848:
+        -:  849:        inline bool operator!=(const std::string& l, const rvalue& r)
+        -:  850:        {
+        -:  851:            return l != r.s();
+        -:  852:        }
+        -:  853:
+        -:  854:        inline bool operator==(const rvalue& l, const int& r)
+        -:  855:        {
+        -:  856:          return l.i() == r;
+        -:  857:        }
+        -:  858:
+        -:  859:        inline bool operator==(const int& l, const rvalue& r)
+        -:  860:        {
+        -:  861:          return l == r.i();
+        -:  862:        }
+        -:  863:
+        -:  864:        inline bool operator!=(const rvalue& l, const int& r)
+        -:  865:        {
+        -:  866:          return l.i() != r;
+        -:  867:        }
+        -:  868:
+        -:  869:        inline bool operator!=(const int& l, const rvalue& r)
+        -:  870:        {
+        -:  871:          return l != r.i();
+        -:  872:        }
+        -:  873:
+        -:  874:
+        -:  875:        inline rvalue load_nocopy_internal(char* data, size_t size)
+        -:  876:        {
+        -:  877:            // Defend against excessive recursion
+        -:  878:            static constexpr unsigned max_depth = 10000;
+        -:  879:
+        -:  880:            //static const char* escaped = "\"\\/\b\f\n\r\t";
+        -:  881:            struct Parser
+        -:  882:            {
+        -:  883:                Parser(char* data_, size_t /*size*/):
+        -:  884:                  data(data_)
+        -:  885:                {
+        -:  886:                }
+        -:  887:
+        -:  888:                bool consume(char c)
+        -:  889:                {
+        -:  890:                    if (CROW_UNLIKELY(*data != c))
+        -:  891:                        return false;
+        -:  892:                    data++;
+        -:  893:                    return true;
+        -:  894:                }
+        -:  895:
+        -:  896:                void ws_skip()
+        -:  897:                {
+        -:  898:                    while (*data == ' ' || *data == '\t' || *data == '\r' || *data == '\n')
+        -:  899:                        ++data;
+        -:  900:                }
+        -:  901:
+        -:  902:                rvalue decode_string()
+        -:  903:                {
+        -:  904:                    if (CROW_UNLIKELY(!consume('"')))
+        -:  905:                        return {};
+        -:  906:                    char* start = data;
+        -:  907:                    uint8_t has_escaping = 0;
+        -:  908:                    while (1)
+        -:  909:                    {
+        -:  910:                        if (CROW_LIKELY(*data != '"' && *data != '\\' && *data != '\0'))
+        -:  911:                        {
+        -:  912:                            data++;
+        -:  913:                        }
+        -:  914:                        else if (*data == '"')
+        -:  915:                        {
+        -:  916:                            *data = 0;
+        -:  917:                            *(start - 1) = has_escaping;
+        -:  918:                            data++;
+        -:  919:                            return {type::String, start, data - 1};
+        -:  920:                        }
+        -:  921:                        else if (*data == '\\')
+        -:  922:                        {
+        -:  923:                            has_escaping = 1;
+        -:  924:                            data++;
+        -:  925:                            switch (*data)
+        -:  926:                            {
+        -:  927:                                case 'u':
+        -:  928:                                {
+        -:  929:                                    auto check = [](char c) {
+        -:  930:                                        return ('0' <= c && c <= '9') ||
+        -:  931:                                               ('a' <= c && c <= 'f') ||
+        -:  932:                                               ('A' <= c && c <= 'F');
+        -:  933:                                    };
+        -:  934:                                    if (!(check(*(data + 1)) &&
+        -:  935:                                          check(*(data + 2)) &&
+        -:  936:                                          check(*(data + 3)) &&
+        -:  937:                                          check(*(data + 4))))
+        -:  938:                                        return {};
+        -:  939:                                }
+        -:  940:                                    data += 5;
+        -:  941:                                    break;
+        -:  942:                                case '"':
+        -:  943:                                case '\\':
+        -:  944:                                case '/':
+        -:  945:                                case 'b':
+        -:  946:                                case 'f':
+        -:  947:                                case 'n':
+        -:  948:                                case 'r':
+        -:  949:                                case 't':
+        -:  950:                                    data++;
+        -:  951:                                    break;
+        -:  952:                                default:
+        -:  953:                                    return {};
+        -:  954:                            }
+        -:  955:                        }
+        -:  956:                        else
+        -:  957:                            return {};
+        -:  958:                    }
+        -:  959:                    return {};
+        -:  960:                }
+        -:  961:
+        -:  962:                rvalue decode_list(unsigned depth)
+        -:  963:                {
+        -:  964:                    rvalue ret(type::List);
+        -:  965:                    if (CROW_UNLIKELY(!consume('[')) || CROW_UNLIKELY(depth > max_depth))
+        -:  966:                    {
+        -:  967:                        ret.set_error();
+        -:  968:                        return ret;
+        -:  969:                    }
+        -:  970:                    ws_skip();
+        -:  971:                    if (CROW_UNLIKELY(*data == ']'))
+        -:  972:                    {
+        -:  973:                        data++;
+        -:  974:                        return ret;
+        -:  975:                    }
+        -:  976:
+        -:  977:                    while (1)
+        -:  978:                    {
+        -:  979:                        auto v = decode_value(depth + 1);
+        -:  980:                        if (CROW_UNLIKELY(!v))
+        -:  981:                        {
+        -:  982:                            ret.set_error();
+        -:  983:                            break;
+        -:  984:                        }
+        -:  985:                        ws_skip();
+        -:  986:                        ret.emplace_back(std::move(v));
+        -:  987:                        if (*data == ']')
+        -:  988:                        {
+        -:  989:                            data++;
+        -:  990:                            break;
+        -:  991:                        }
+        -:  992:                        if (CROW_UNLIKELY(!consume(',')))
+        -:  993:                        {
+        -:  994:                            ret.set_error();
+        -:  995:                            break;
+        -:  996:                        }
+        -:  997:                        ws_skip();
+        -:  998:                    }
+        -:  999:                    return ret;
+        -: 1000:                }
+        -: 1001:
+        -: 1002:                rvalue decode_number()
+        -: 1003:                {
+        -: 1004:                    char* start = data;
+        -: 1005:
+        -: 1006:                    enum NumberParsingState
+        -: 1007:                    {
+        -: 1008:                        Minus,
+        -: 1009:                        AfterMinus,
+        -: 1010:                        ZeroFirst,
+        -: 1011:                        Digits,
+        -: 1012:                        DigitsAfterPoints,
+        -: 1013:                        E,
+        -: 1014:                        DigitsAfterE,
+        -: 1015:                        Invalid,
+        -: 1016:                    } state{Minus};
+        -: 1017:                    while (CROW_LIKELY(state != Invalid))
+        -: 1018:                    {
+        -: 1019:                        switch (*data)
+        -: 1020:                        {
+        -: 1021:                            case '0':
+        -: 1022:                                state = static_cast<NumberParsingState>("\2\2\7\3\4\6\6"[state]);
+        -: 1023:                                /*if (state == NumberParsingState::Minus || state == NumberParsingState::AfterMinus)
+        -: 1024:                                {
+        -: 1025:                                    state = NumberParsingState::ZeroFirst;
+        -: 1026:                                }
+        -: 1027:                                else if (state == NumberParsingState::Digits ||
+        -: 1028:                                    state == NumberParsingState::DigitsAfterE ||
+        -: 1029:                                    state == NumberParsingState::DigitsAfterPoints)
+        -: 1030:                                {
+        -: 1031:                                    // ok; pass
+        -: 1032:                                }
+        -: 1033:                                else if (state == NumberParsingState::E)
+        -: 1034:                                {
+        -: 1035:                                    state = NumberParsingState::DigitsAfterE;
+        -: 1036:                                }
+        -: 1037:                                else
+        -: 1038:                                    return {};*/
+        -: 1039:                                break;
+        -: 1040:                            case '1':
+        -: 1041:                            case '2':
+        -: 1042:                            case '3':
+        -: 1043:                            case '4':
+        -: 1044:                            case '5':
+        -: 1045:                            case '6':
+        -: 1046:                            case '7':
+        -: 1047:                            case '8':
+        -: 1048:                            case '9':
+        -: 1049:                                state = static_cast<NumberParsingState>("\3\3\7\3\4\6\6"[state]);
+        -: 1050:                                while (*(data + 1) >= '0' && *(data + 1) <= '9')
+        -: 1051:                                    data++;
+        -: 1052:                                /*if (state == NumberParsingState::Minus || state == NumberParsingState::AfterMinus)
+        -: 1053:                                {
+        -: 1054:                                    state = NumberParsingState::Digits;
+        -: 1055:                                }
+        -: 1056:                                else if (state == NumberParsingState::Digits ||
+        -: 1057:                                    state == NumberParsingState::DigitsAfterE ||
+        -: 1058:                                    state == NumberParsingState::DigitsAfterPoints)
+        -: 1059:                                {
+        -: 1060:                                    // ok; pass
+        -: 1061:                                }
+        -: 1062:                                else if (state == NumberParsingState::E)
+        -: 1063:                                {
+        -: 1064:                                    state = NumberParsingState::DigitsAfterE;
+        -: 1065:                                }
+        -: 1066:                                else
+        -: 1067:                                    return {};*/
+        -: 1068:                                break;
+        -: 1069:                            case '.':
+        -: 1070:                                state = static_cast<NumberParsingState>("\7\7\4\4\7\7\7"[state]);
+        -: 1071:                                /*
+        -: 1072:                                if (state == NumberParsingState::Digits || state == NumberParsingState::ZeroFirst)
+        -: 1073:                                {
+        -: 1074:                                    state = NumberParsingState::DigitsAfterPoints;
+        -: 1075:                                }
+        -: 1076:                                else
+        -: 1077:                                    return {};
+        -: 1078:                                */
+        -: 1079:                                break;
+        -: 1080:                            case '-':
+        -: 1081:                                state = static_cast<NumberParsingState>("\1\7\7\7\7\6\7"[state]);
+        -: 1082:                                /*if (state == NumberParsingState::Minus)
+        -: 1083:                                {
+        -: 1084:                                    state = NumberParsingState::AfterMinus;
+        -: 1085:                                }
+        -: 1086:                                else if (state == NumberParsingState::E)
+        -: 1087:                                {
+        -: 1088:                                    state = NumberParsingState::DigitsAfterE;
+        -: 1089:                                }
+        -: 1090:                                else
+        -: 1091:                                    return {};*/
+        -: 1092:                                break;
+        -: 1093:                            case '+':
+        -: 1094:                                state = static_cast<NumberParsingState>("\7\7\7\7\7\6\7"[state]);
+        -: 1095:                                /*if (state == NumberParsingState::E)
+        -: 1096:                                {
+        -: 1097:                                    state = NumberParsingState::DigitsAfterE;
+        -: 1098:                                }
+        -: 1099:                                else
+        -: 1100:                                    return {};*/
+        -: 1101:                                break;
+        -: 1102:                            case 'e':
+        -: 1103:                            case 'E':
+        -: 1104:                                state = static_cast<NumberParsingState>("\7\7\7\5\5\7\7"[state]);
+        -: 1105:                                /*if (state == NumberParsingState::Digits ||
+        -: 1106:                                    state == NumberParsingState::DigitsAfterPoints)
+        -: 1107:                                {
+        -: 1108:                                    state = NumberParsingState::E;
+        -: 1109:                                }
+        -: 1110:                                else
+        -: 1111:                                    return {};*/
+        -: 1112:                                break;
+        -: 1113:                            default:
+        -: 1114:                                if (CROW_LIKELY(state == NumberParsingState::ZeroFirst ||
+        -: 1115:                                                state == NumberParsingState::Digits ||
+        -: 1116:                                                state == NumberParsingState::DigitsAfterPoints ||
+        -: 1117:                                                state == NumberParsingState::DigitsAfterE))
+        -: 1118:                                    return {type::Number, start, data};
+        -: 1119:                                else
+        -: 1120:                                    return {};
+        -: 1121:                        }
+        -: 1122:                        data++;
+        -: 1123:                    }
+        -: 1124:
+        -: 1125:                    return {};
+        -: 1126:                }
+        -: 1127:
+        -: 1128:
+        -: 1129:                rvalue decode_value(unsigned depth)
+        -: 1130:                {
+        -: 1131:                    switch (*data)
+        -: 1132:                    {
+        -: 1133:                        case '[':
+        -: 1134:                            return decode_list(depth + 1);
+        -: 1135:                        case '{':
+        -: 1136:                            return decode_object(depth + 1);
+        -: 1137:                        case '"':
+        -: 1138:                            return decode_string();
+        -: 1139:                        case 't':
+        -: 1140:                            if ( //e-data >= 4 &&
+        -: 1141:                              data[1] == 'r' &&
+        -: 1142:                              data[2] == 'u' &&
+        -: 1143:                              data[3] == 'e')
+        -: 1144:                            {
+        -: 1145:                                data += 4;
+        -: 1146:                                return {type::True};
+        -: 1147:                            }
+        -: 1148:                            else
+        -: 1149:                                return {};
+        -: 1150:                        case 'f':
+        -: 1151:                            if ( //e-data >= 5 &&
+        -: 1152:                              data[1] == 'a' &&
+        -: 1153:                              data[2] == 'l' &&
+        -: 1154:                              data[3] == 's' &&
+        -: 1155:                              data[4] == 'e')
+        -: 1156:                            {
+        -: 1157:                                data += 5;
+        -: 1158:                                return {type::False};
+        -: 1159:                            }
+        -: 1160:                            else
+        -: 1161:                                return {};
+        -: 1162:                        case 'n':
+        -: 1163:                            if ( //e-data >= 4 &&
+        -: 1164:                              data[1] == 'u' &&
+        -: 1165:                              data[2] == 'l' &&
+        -: 1166:                              data[3] == 'l')
+        -: 1167:                            {
+        -: 1168:                                data += 4;
+        -: 1169:                                return {type::Null};
+        -: 1170:                            }
+        -: 1171:                            else
+        -: 1172:                                return {};
+        -: 1173:                        //case '1': case '2': case '3':
+        -: 1174:                        //case '4': case '5': case '6':
+        -: 1175:                        //case '7': case '8': case '9':
+        -: 1176:                        //case '0': case '-':
+        -: 1177:                        default:
+        -: 1178:                            return decode_number();
+        -: 1179:                    }
+        -: 1180:                    return {};
+        -: 1181:                }
+        -: 1182:
+        -: 1183:                rvalue decode_object(unsigned depth)
+        -: 1184:                {
+        -: 1185:                    rvalue ret(type::Object);
+        -: 1186:                    if (CROW_UNLIKELY(!consume('{')) || CROW_UNLIKELY(depth > max_depth))
+        -: 1187:                    {
+        -: 1188:                        ret.set_error();
+        -: 1189:                        return ret;
+        -: 1190:                    }
+        -: 1191:
+        -: 1192:                    ws_skip();
+        -: 1193:
+        -: 1194:                    if (CROW_UNLIKELY(*data == '}'))
+        -: 1195:                    {
+        -: 1196:                        data++;
+        -: 1197:                        return ret;
+        -: 1198:                    }
+        -: 1199:
+        -: 1200:                    while (1)
+        -: 1201:                    {
+        -: 1202:                        auto t = decode_string();
+        -: 1203:                        if (CROW_UNLIKELY(!t))
+        -: 1204:                        {
+        -: 1205:                            ret.set_error();
+        -: 1206:                            break;
+        -: 1207:                        }
+        -: 1208:
+        -: 1209:                        ws_skip();
+        -: 1210:                        if (CROW_UNLIKELY(!consume(':')))
+        -: 1211:                        {
+        -: 1212:                            ret.set_error();
+        -: 1213:                            break;
+        -: 1214:                        }
+        -: 1215:
+        -: 1216:                        // TODO(ipkn) caching key to speed up (flyweight?)
+        -: 1217:                        // I have no idea how flyweight could apply here, but maybe some speedup can happen if we stopped checking type since decode_string returns a string anyway
+        -: 1218:                        auto key = t.s();
+        -: 1219:
+        -: 1220:                        ws_skip();
+        -: 1221:                        auto v = decode_value(depth + 1);
+        -: 1222:                        if (CROW_UNLIKELY(!v))
+        -: 1223:                        {
+        -: 1224:                            ret.set_error();
+        -: 1225:                            break;
+        -: 1226:                        }
+        -: 1227:                        ws_skip();
+        -: 1228:
+        -: 1229:                        v.key_ = std::move(key);
+        -: 1230:                        ret.emplace_back(std::move(v));
+        -: 1231:                        if (CROW_UNLIKELY(*data == '}'))
+        -: 1232:                        {
+        -: 1233:                            data++;
+        -: 1234:                            break;
+        -: 1235:                        }
+        -: 1236:                        if (CROW_UNLIKELY(!consume(',')))
+        -: 1237:                        {
+        -: 1238:                            ret.set_error();
+        -: 1239:                            break;
+        -: 1240:                        }
+        -: 1241:                        ws_skip();
+        -: 1242:                    }
+        -: 1243:                    return ret;
+        -: 1244:                }
+        -: 1245:
+        -: 1246:                rvalue parse()
+        -: 1247:                {
+        -: 1248:                    ws_skip();
+        -: 1249:                    auto ret = decode_value(0); // or decode object?
+        -: 1250:                    ws_skip();
+        -: 1251:                    if (ret && *data != '\0')
+        -: 1252:                        ret.set_error();
+        -: 1253:                    return ret;
+        -: 1254:                }
+        -: 1255:
+        -: 1256:                char* data;
+        -: 1257:            };
+        -: 1258:            return Parser(data, size).parse();
+        -: 1259:        }
+        -: 1260:        inline rvalue load(const char* data, size_t size)
+        -: 1261:        {
+        -: 1262:            char* s = new char[size + 1];
+        -: 1263:            memcpy(s, data, size);
+        -: 1264:            s[size] = 0;
+        -: 1265:            auto ret = load_nocopy_internal(s, size);
+        -: 1266:            if (ret)
+        -: 1267:                ret.key_.force(s, size);
+        -: 1268:            else
+        -: 1269:                delete[] s;
+        -: 1270:            return ret;
+        -: 1271:        }
+        -: 1272:
+        -: 1273:        inline rvalue load(const char* data)
+        -: 1274:        {
+        -: 1275:            return load(data, strlen(data));
+        -: 1276:        }
+        -: 1277:
+        -: 1278:        inline rvalue load(const std::string& str)
+        -: 1279:        {
+        -: 1280:            return load(str.data(), str.size());
+        -: 1281:        }
+        -: 1282:
+        -: 1283:        struct wvalue_reader;
+        -: 1284:
+        -: 1285:        /// JSON write value.
+        -: 1286:
+        -: 1287:        ///
+        -: 1288:        /// Value can mean any json value, including a JSON object.<br>
+        -: 1289:        /// Write means this class is used to primarily assemble JSON objects using keys and values and export those into a string.
+        -: 1290:        class wvalue : public returnable
+        -: 1291:        {
+        -: 1292:            friend class crow::mustache::template_t;
+        -: 1293:            friend struct wvalue_reader;
+        -: 1294:
+        -: 1295:        public:
+        -: 1296:            using object =
+        -: 1297:#ifdef CROW_JSON_USE_MAP
+        -: 1298:              std::map<std::string, wvalue>;
+        -: 1299:#else
+        -: 1300:              std::unordered_map<std::string, wvalue>;
+        -: 1301:#endif
+        -: 1302:
+        -: 1303:            using list = std::vector<wvalue>;
+        -: 1304:
+      180: 1305:            type t() const { return t_; }
+        -: 1306:
+        -: 1307:            /// Create an empty json value (outputs "{}" instead of a "null" string)
+        -: 1308:            static crow::json::wvalue empty_object() { return crow::json::wvalue::object(); }
+        -: 1309:
+        -: 1310:        private:
+        -: 1311:            type t_{type::Null};         ///< The type of the value.
+        -: 1312:            num_type nt{num_type::Null}; ///< The specific type of the number if \ref t_ is a number.
+        -: 1313:            union number
+        -: 1314:            {
+        -: 1315:                double d;
+        -: 1316:                int64_t si;
+        -: 1317:                uint64_t ui;
+        -: 1318:
+        -: 1319:            public:
+      353: 1320:                constexpr number() noexcept:
+      353: 1321:                  ui() {} /* default constructor initializes unsigned integer. */
+        -: 1322:                constexpr number(std::uint64_t value) noexcept:
+        -: 1323:                  ui(value) {}
+        -: 1324:                constexpr number(std::int64_t value) noexcept:
+        -: 1325:                  si(value) {}
+        -: 1326:                explicit constexpr number(double value) noexcept:
+        -: 1327:                  d(value) {}
+        -: 1328:                explicit constexpr number(float value) noexcept:
+        -: 1329:                  d(value) {}
+        -: 1330:            } num;                                      ///< Value if type is a number.
+        -: 1331:            std::string s;                              ///< Value if type is a string.
+        -: 1332:            std::unique_ptr<list> l;                    ///< Value if type is a list.
+        -: 1333:            std::unique_ptr<object> o;                  ///< Value if type is a JSON object.
+        -: 1334:            std::function<std::string(std::string&)> f; ///< Value if type is a function (C++ lambda)
+        -: 1335:
+        -: 1336:        public:
+function _ZN4crow4json6wvalueC1Ev called 166 returned 100% blocks executed 86%
+      166: 1337:            wvalue():
+      332: 1338:              returnable("application/json") {}
+      166: 1338-block  0
+call    0 returned 166
+        -: 1339:
+        -: 1340:            wvalue(std::nullptr_t):
+        -: 1341:              returnable("application/json"), t_(type::Null) {}
+        -: 1342:
+        -: 1343:            wvalue(bool value):
+        -: 1344:              returnable("application/json"), t_(value ? type::True : type::False) {}
+        -: 1345:
+        -: 1346:            wvalue(std::uint8_t value):
+        -: 1347:              returnable("application/json"), t_(type::Number), nt(num_type::Unsigned_integer), num(static_cast<std::uint64_t>(value)) {}
+        -: 1348:            wvalue(std::uint16_t value):
+        -: 1349:              returnable("application/json"), t_(type::Number), nt(num_type::Unsigned_integer), num(static_cast<std::uint64_t>(value)) {}
+        -: 1350:            wvalue(std::uint32_t value):
+        -: 1351:              returnable("application/json"), t_(type::Number), nt(num_type::Unsigned_integer), num(static_cast<std::uint64_t>(value)) {}
+        -: 1352:            wvalue(std::uint64_t value):
+        -: 1353:              returnable("application/json"), t_(type::Number), nt(num_type::Unsigned_integer), num(static_cast<std::uint64_t>(value)) {}
+        -: 1354:
+        -: 1355:            wvalue(std::int8_t value):
+        -: 1356:              returnable("application/json"), t_(type::Number), nt(num_type::Signed_integer), num(static_cast<std::int64_t>(value)) {}
+        -: 1357:            wvalue(std::int16_t value):
+        -: 1358:              returnable("application/json"), t_(type::Number), nt(num_type::Signed_integer), num(static_cast<std::int64_t>(value)) {}
+        -: 1359:            wvalue(std::int32_t value):
+        -: 1360:              returnable("application/json"), t_(type::Number), nt(num_type::Signed_integer), num(static_cast<std::int64_t>(value)) {}
+        -: 1361:            wvalue(std::int64_t value):
+        -: 1362:              returnable("application/json"), t_(type::Number), nt(num_type::Signed_integer), num(static_cast<std::int64_t>(value)) {}
+        -: 1363:
+        -: 1364:            wvalue(float value):
+        -: 1365:              returnable("application/json"), t_(type::Number), nt(num_type::Floating_point), num(static_cast<double>(value)) {}
+        -: 1366:            wvalue(double value):
+        -: 1367:              returnable("application/json"), t_(type::Number), nt(num_type::Double_precision_floating_point), num(static_cast<double>(value)) {}
+        -: 1368:
+        -: 1369:            wvalue(char const* value):
+        -: 1370:              returnable("application/json"), t_(type::String), s(value) {}
+        -: 1371:
+        -: 1372:            wvalue(std::string const& value):
+        -: 1373:              returnable("application/json"), t_(type::String), s(value) {}
+        -: 1374:            wvalue(std::string&& value):
+        -: 1375:              returnable("application/json"), t_(type::String), s(std::move(value)) {}
+        -: 1376:
+        -: 1377:            wvalue(std::initializer_list<std::pair<std::string const, wvalue>> initializer_list):
+        -: 1378:              returnable("application/json"), t_(type::Object), o(new object(initializer_list)) {}
+        -: 1379:
+        -: 1380:            wvalue(object const& value):
+        -: 1381:              returnable("application/json"), t_(type::Object), o(new object(value)) {}
+        -: 1382:            wvalue(object&& value):
+        -: 1383:              returnable("application/json"), t_(type::Object), o(new object(std::move(value))) {}
+        -: 1384:
+function _ZN4crow4json6wvalueC1ERKSt6vectorIS1_SaIS1_EE called 7 returned 100% blocks executed 46%
+        7: 1385:            wvalue(const list& r):
+       14: 1386:              returnable("application/json")
+        7: 1386-block  0
+call    0 returned 7
+call    1 returned 7
+branch  2 taken 7 (fallthrough)
+branch  3 taken 0 (throw)
+        -: 1387:            {
+        7: 1388:                t_ = type::List;
+       14: 1389:                l = std::unique_ptr<list>(new list{});
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 7
+call    4 returned 7
+branch  5 taken 7 (fallthrough)
+branch  6 taken 0 (throw)
+    $$$$$: 1389-block  0
+branch  7 never executed (fallthrough)
+branch  8 never executed
+        7: 1390:                l->reserve(r.size());
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+        7: 1391:                for (auto it = r.begin(); it != r.end(); ++it)
+        7: 1391-block  0
+        7: 1391-block  1
+branch  0 taken 0
+branch  1 taken 7 (fallthrough)
+    #####: 1392:                    l->emplace_back(*it);
+    %%%%%: 1392-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        7: 1393:            }
+        7: 1393-block  0
+    $$$$$: 1393-block  1
+call    0 never executed
+    $$$$$: 1393-block  2
+call    1 never executed
+    $$$$$: 1393-block  3
+call    2 never executed
+        -: 1394:            wvalue(list& r):
+        -: 1395:              returnable("application/json")
+        -: 1396:            {
+        -: 1397:                t_ = type::List;
+        -: 1398:                l = std::unique_ptr<list>(new list{});
+        -: 1399:                l->reserve(r.size());
+        -: 1400:                for (auto it = r.begin(); it != r.end(); ++it)
+        -: 1401:                    l->emplace_back(*it);
+        -: 1402:            }
+        -: 1403:
+        -: 1404:            /// Create a write value from a read value (useful for editing JSON strings).
+        -: 1405:            wvalue(const rvalue& r):
+        -: 1406:              returnable("application/json")
+        -: 1407:            {
+        -: 1408:                t_ = r.t();
+        -: 1409:                switch (r.t())
+        -: 1410:                {
+        -: 1411:                    case type::Null:
+        -: 1412:                    case type::False:
+        -: 1413:                    case type::True:
+        -: 1414:                    case type::Function:
+        -: 1415:                        return;
+        -: 1416:                    case type::Number:
+        -: 1417:                        nt = r.nt();
+        -: 1418:                        if (nt == num_type::Floating_point || nt == num_type::Double_precision_floating_point)
+        -: 1419:                            num.d = r.d();
+        -: 1420:                        else if (nt == num_type::Signed_integer)
+        -: 1421:                            num.si = r.i();
+        -: 1422:                        else
+        -: 1423:                            num.ui = r.u();
+        -: 1424:                        return;
+        -: 1425:                    case type::String:
+        -: 1426:                        s = r.s();
+        -: 1427:                        return;
+        -: 1428:                    case type::List:
+        -: 1429:                        l = std::unique_ptr<list>(new list{});
+        -: 1430:                        l->reserve(r.size());
+        -: 1431:                        for (auto it = r.begin(); it != r.end(); ++it)
+        -: 1432:                            l->emplace_back(*it);
+        -: 1433:                        return;
+        -: 1434:                    case type::Object:
+        -: 1435:                        o = std::unique_ptr<object>(new object{});
+        -: 1436:                        for (auto it = r.begin(); it != r.end(); ++it)
+        -: 1437:                            o->emplace(it->key(), *it);
+        -: 1438:                        return;
+        -: 1439:                }
+        -: 1440:            }
+        -: 1441:
+function _ZN4crow4json6wvalueC1ERKS1_ called 180 returned 100% blocks executed 38%
+      180: 1442:            wvalue(const wvalue& r):
+      360: 1443:              returnable("application/json")
+      180: 1443-block  0
+call    0 returned 180
+branch  1 taken 0
+branch  2 taken 120
+branch  3 taken 0
+branch  4 taken 60
+branch  5 taken 0
+branch  6 taken 0
+        -: 1444:            {
+      180: 1445:                t_ = r.t();
+      180: 1446:                switch (r.t())
+branch  0 taken 0
+branch  1 taken 120
+branch  2 taken 0
+branch  3 taken 60
+branch  4 taken 0
+branch  5 taken 0
+        -: 1447:                {
+        -: 1448:                    case type::Null:
+        -: 1449:                    case type::False:
+        -: 1450:                    case type::True:
+        -: 1451:                        return;
+    #####: 1452:                    case type::Number:
+    #####: 1453:                        nt = r.nt;
+    #####: 1454:                        if (nt == num_type::Floating_point || nt == num_type::Double_precision_floating_point)
+    %%%%%: 1454-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####: 1455:                            num.d = r.num.d;
+    %%%%%: 1455-block  0
+    #####: 1456:                        else if (nt == num_type::Signed_integer)
+    %%%%%: 1456-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####: 1457:                            num.si = r.num.si;
+    %%%%%: 1457-block  0
+        -: 1458:                        else
+    #####: 1459:                            num.ui = r.num.ui;
+    %%%%%: 1459-block  0
+        -: 1460:                        return;
+      120: 1461:                    case type::String:
+      120: 1462:                        s = r.s;
+      120: 1462-block  0
+call    0 returned 120
+branch  1 taken 120 (fallthrough)
+branch  2 taken 0 (throw)
+        -: 1463:                        return;
+    #####: 1464:                    case type::List:
+    #####: 1465:                        l = std::unique_ptr<list>(new list{});
+    %%%%%: 1465-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+call    3 never executed
+branch  4 never executed (fallthrough)
+branch  5 never executed
+    #####: 1466:                        l->reserve(r.size());
+    %%%%%: 1466-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    #####: 1467:                        for (auto it = r.l->begin(); it != r.l->end(); ++it)
+    %%%%%: 1467-block  0
+    %%%%%: 1467-block  1
+branch  0 never executed
+branch  1 never executed
+    #####: 1468:                            l->emplace_back(*it);
+    %%%%%: 1468-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -: 1469:                        return;
+       60: 1470:                    case type::Object:
+       60: 1471:                        o = std::unique_ptr<object>(new object{});
+       60: 1471-block  0
+call    0 returned 60
+branch  1 taken 60 (fallthrough)
+branch  2 taken 0 (throw)
+       60: 1471-block  1
+call    3 returned 60
+call    4 returned 60
+    $$$$$: 1471-block  2
+branch  5 never executed (fallthrough)
+branch  6 never executed
+        -: 1472:                        o->insert(r.o->begin(), r.o->end());
+        -: 1473:                        return;
+    #####: 1474:                    case type::Function:
+    #####: 1475:                        f = r.f;
+    %%%%%: 1475-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+        -: 1476:                }
+    =====: 1477:            }
+    $$$$$: 1477-block  0
+call    0 never executed
+    $$$$$: 1477-block  1
+call    1 never executed
+    $$$$$: 1477-block  2
+call    2 never executed
+        -: 1478:
+        -: 1479:            wvalue(wvalue&& r):
+        -: 1480:              returnable("application/json")
+        -: 1481:            {
+        -: 1482:                *this = std::move(r);
+        -: 1483:            }
+        -: 1484:
+function _ZN4crow4json6wvalueaSEOS1_ called 41 returned 100% blocks executed 100%
+       41: 1485:            wvalue& operator=(wvalue&& r)
+        -: 1486:            {
+       41: 1487:                t_ = r.t_;
+       41: 1488:                nt = r.nt;
+       41: 1489:                num = r.num;
+       41: 1490:                s = std::move(r.s);
+       41: 1490-block  0
+call    0 returned 41
+        -: 1491:                l = std::move(r.l);
+        -: 1492:                o = std::move(r.o);
+       41: 1493:                return *this;
+        -: 1494:            }
+        -: 1495:
+        -: 1496:            /// Used for compatibility, same as \ref reset()
+        -: 1497:            void clear()
+        -: 1498:            {
+        -: 1499:                reset();
+        -: 1500:            }
+        -: 1501:
+function _ZN4crow4json6wvalue5resetEv called 123 returned 100% blocks executed 100%
+      123: 1502:            void reset()
+        -: 1503:            {
+      123: 1504:                t_ = type::Null;
+      123: 1504-block  0
+call    0 returned 123
+        -: 1505:                l.reset();
+        -: 1506:                o.reset();
+      123: 1507:            }
+        -: 1508:
+        -: 1509:            wvalue& operator=(std::nullptr_t)
+        -: 1510:            {
+        -: 1511:                reset();
+        -: 1512:                return *this;
+        -: 1513:            }
+        -: 1514:            wvalue& operator=(bool value)
+        -: 1515:            {
+        -: 1516:                reset();
+        -: 1517:                if (value)
+        -: 1518:                    t_ = type::True;
+        -: 1519:                else
+        -: 1520:                    t_ = type::False;
+        -: 1521:                return *this;
+        -: 1522:            }
+        -: 1523:
+        -: 1524:            wvalue& operator=(float value)
+        -: 1525:            {
+        -: 1526:                reset();
+        -: 1527:                t_ = type::Number;
+        -: 1528:                num.d = value;
+        -: 1529:                nt = num_type::Floating_point;
+        -: 1530:                return *this;
+        -: 1531:            }
+        -: 1532:
+        -: 1533:            wvalue& operator=(double value)
+        -: 1534:            {
+        -: 1535:                reset();
+        -: 1536:                t_ = type::Number;
+        -: 1537:                num.d = value;
+        -: 1538:                nt = num_type::Double_precision_floating_point;
+        -: 1539:                return *this;
+        -: 1540:            }
+        -: 1541:
+        -: 1542:            wvalue& operator=(unsigned short value)
+        -: 1543:            {
+        -: 1544:                reset();
+        -: 1545:                t_ = type::Number;
+        -: 1546:                num.ui = value;
+        -: 1547:                nt = num_type::Unsigned_integer;
+        -: 1548:                return *this;
+        -: 1549:            }
+        -: 1550:
+        -: 1551:            wvalue& operator=(short value)
+        -: 1552:            {
+        -: 1553:                reset();
+        -: 1554:                t_ = type::Number;
+        -: 1555:                num.si = value;
+        -: 1556:                nt = num_type::Signed_integer;
+        -: 1557:                return *this;
+        -: 1558:            }
+        -: 1559:
+        -: 1560:            wvalue& operator=(long long value)
+        -: 1561:            {
+        -: 1562:                reset();
+        -: 1563:                t_ = type::Number;
+        -: 1564:                num.si = value;
+        -: 1565:                nt = num_type::Signed_integer;
+        -: 1566:                return *this;
+        -: 1567:            }
+        -: 1568:
+        -: 1569:            wvalue& operator=(long value)
+        -: 1570:            {
+        -: 1571:                reset();
+        -: 1572:                t_ = type::Number;
+        -: 1573:                num.si = value;
+        -: 1574:                nt = num_type::Signed_integer;
+        -: 1575:                return *this;
+        -: 1576:            }
+        -: 1577:
+        -: 1578:            wvalue& operator=(int value)
+        -: 1579:            {
+        -: 1580:                reset();
+        -: 1581:                t_ = type::Number;
+        -: 1582:                num.si = value;
+        -: 1583:                nt = num_type::Signed_integer;
+        -: 1584:                return *this;
+        -: 1585:            }
+        -: 1586:
+        -: 1587:            wvalue& operator=(unsigned long long value)
+        -: 1588:            {
+        -: 1589:                reset();
+        -: 1590:                t_ = type::Number;
+        -: 1591:                num.ui = value;
+        -: 1592:                nt = num_type::Unsigned_integer;
+        -: 1593:                return *this;
+        -: 1594:            }
+        -: 1595:
+        -: 1596:            wvalue& operator=(unsigned long value)
+        -: 1597:            {
+        -: 1598:                reset();
+        -: 1599:                t_ = type::Number;
+        -: 1600:                num.ui = value;
+        -: 1601:                nt = num_type::Unsigned_integer;
+        -: 1602:                return *this;
+        -: 1603:            }
+        -: 1604:
+        -: 1605:            wvalue& operator=(unsigned int value)
+        -: 1606:            {
+        -: 1607:                reset();
+        -: 1608:                t_ = type::Number;
+        -: 1609:                num.ui = value;
+        -: 1610:                nt = num_type::Unsigned_integer;
+        -: 1611:                return *this;
+        -: 1612:            }
+        -: 1613:
+        -: 1614:            wvalue& operator=(const char* str)
+        -: 1615:            {
+        2: 1616:                reset();
+        1: 1616-block  0
+call    0 returned 1
+        1: 1616-block  1
+call    1 returned 1
+        2: 1617:                t_ = type::String;
+        2: 1618:                s = str;
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        2: 1619:                return *this;
+        1: 1619-block  0
+        1: 1619-block  1
+        -: 1620:            }
+        -: 1621:
+        -: 1622:            wvalue& operator=(const std::string& str)
+        -: 1623:            {
+       80: 1624:                reset();
+       40: 1624-block  0
+call    0 returned 40
+       40: 1624-block  1
+call    1 returned 40
+       80: 1625:                t_ = type::String;
+       80: 1626:                s = str;
+call    0 returned 40
+branch  1 taken 40 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 40
+branch  4 taken 40 (fallthrough)
+branch  5 taken 0 (throw)
+       80: 1627:                return *this;
+       40: 1627-block  0
+       40: 1627-block  1
+        -: 1628:            }
+        -: 1629:
+        -: 1630:            wvalue& operator=(list&& v)
+        -: 1631:            {
+        -: 1632:                if (t_ != type::List)
+        -: 1633:                    reset();
+        -: 1634:                t_ = type::List;
+        -: 1635:                if (!l)
+        -: 1636:                    l = std::unique_ptr<list>(new list{});
+        -: 1637:                l->clear();
+        -: 1638:                l->resize(v.size());
+        -: 1639:                size_t idx = 0;
+        -: 1640:                for (auto& x : v)
+        -: 1641:                {
+        -: 1642:                    (*l)[idx++] = std::move(x);
+        -: 1643:                }
+        -: 1644:                return *this;
+        -: 1645:            }
+        -: 1646:
+        -: 1647:            template<typename T>
+        -: 1648:            wvalue& operator=(const std::vector<T>& v)
+        -: 1649:            {
+        -: 1650:                if (t_ != type::List)
+        -: 1651:                    reset();
+        -: 1652:                t_ = type::List;
+        -: 1653:                if (!l)
+        -: 1654:                    l = std::unique_ptr<list>(new list{});
+        -: 1655:                l->clear();
+        -: 1656:                l->resize(v.size());
+        -: 1657:                size_t idx = 0;
+        -: 1658:                for (auto& x : v)
+        -: 1659:                {
+        -: 1660:                    (*l)[idx++] = x;
+        -: 1661:                }
+        -: 1662:                return *this;
+        -: 1663:            }
+        -: 1664:
+        -: 1665:            wvalue& operator=(std::initializer_list<std::pair<std::string const, wvalue>> initializer_list)
+        -: 1666:            {
+        -: 1667:                if (t_ != type::Object)
+        -: 1668:                {
+        -: 1669:                    reset();
+        -: 1670:                    t_ = type::Object;
+        -: 1671:                    o = std::unique_ptr<object>(new object(initializer_list));
+        -: 1672:                }
+        -: 1673:                else
+        -: 1674:                {
+        -: 1675:#if defined(__APPLE__) || defined(__MACH__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(_LIBCPP_VERSION)
+        -: 1676:                    o = std::unique_ptr<object>(new object(initializer_list));
+        -: 1677:#else
+        -: 1678:                    (*o) = initializer_list;
+        -: 1679:#endif
+        -: 1680:                }
+        -: 1681:                return *this;
+        -: 1682:            }
+        -: 1683:
+        -: 1684:            wvalue& operator=(object const& value)
+        -: 1685:            {
+        -: 1686:                if (t_ != type::Object)
+        -: 1687:                {
+        -: 1688:                    reset();
+        -: 1689:                    t_ = type::Object;
+        -: 1690:                    o = std::unique_ptr<object>(new object(value));
+        -: 1691:                }
+        -: 1692:                else
+        -: 1693:                {
+        -: 1694:#if defined(__APPLE__) || defined(__MACH__) || defined(__FreeBSD__) || defined(__ANDROID__) || defined(_LIBCPP_VERSION)
+        -: 1695:                    o = std::unique_ptr<object>(new object(value));
+        -: 1696:#else
+        -: 1697:                    (*o) = value;
+        -: 1698:#endif
+        -: 1699:                }
+        -: 1700:                return *this;
+        -: 1701:            }
+        -: 1702:
+        -: 1703:            wvalue& operator=(object&& value)
+        -: 1704:            {
+        -: 1705:                if (t_ != type::Object)
+        -: 1706:                {
+        -: 1707:                    reset();
+        -: 1708:                    t_ = type::Object;
+        -: 1709:                    o = std::unique_ptr<object>(new object(std::move(value)));
+        -: 1710:                }
+        -: 1711:                else
+        -: 1712:                {
+        -: 1713:                    (*o) = std::move(value);
+        -: 1714:                }
+        -: 1715:                return *this;
+        -: 1716:            }
+        -: 1717:
+        -: 1718:            wvalue& operator=(std::function<std::string(std::string&)>&& func)
+        -: 1719:            {
+        -: 1720:                reset();
+        -: 1721:                t_ = type::Function;
+        -: 1722:                f = std::move(func);
+        -: 1723:                return *this;
+        -: 1724:            }
+        -: 1725:
+function _ZN4crow4json6wvalueixEj called 41 returned 100% blocks executed 50%
+       41: 1726:            wvalue& operator[](unsigned index)
+        -: 1727:            {
+       41: 1728:                if (t_ != type::List)
+       41: 1728-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 41
+    #####: 1729:                    reset();
+    %%%%%: 1729-block  0
+call    0 never executed
+       41: 1730:                t_ = type::List;
+       41: 1730-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 41
+       41: 1731:                if (!l)
+       41: 1731-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 41
+    #####: 1732:                    l = std::unique_ptr<list>(new list{});
+    %%%%%: 1732-block  0
+call    0 never executed
+call    1 never executed
+       41: 1733:                if (l->size() < index + 1)
+       41: 1733-block  0
+branch  0 taken 41 (fallthrough)
+branch  1 taken 0
+       41: 1734:                    l->resize(index + 1);
+       41: 1734-block  0
+call    0 returned 41
+       41: 1735:                return (*l)[index];
+        -: 1736:            }
+        -: 1737:
+        -: 1738:            const wvalue& operator[](unsigned index) const
+        -: 1739:            {
+        -: 1740:                return const_cast<wvalue*>(this)->operator[](index);
+        -: 1741:            }
+        -: 1742:
+        -: 1743:            int count(const std::string& str) const
+        -: 1744:            {
+        -: 1745:                if (t_ != type::Object)
+        -: 1746:                    return 0;
+        -: 1747:                if (!o)
+        -: 1748:                    return 0;
+        -: 1749:                return o->count(str);
+        -: 1750:            }
+        -: 1751:
+function _ZN4crow4json6wvalueixERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 82 returned 100% blocks executed 100%
+       82: 1752:            wvalue& operator[](const std::string& str)
+        -: 1753:            {
+       82: 1754:                if (t_ != type::Object)
+       82: 1754-block  0
+branch  0 taken 41 (fallthrough)
+branch  1 taken 41
+       41: 1755:                    reset();
+       41: 1755-block  0
+call    0 returned 41
+       82: 1756:                t_ = type::Object;
+       82: 1756-block  0
+branch  0 taken 41 (fallthrough)
+branch  1 taken 41
+       82: 1757:                if (!o)
+       82: 1757-block  0
+branch  0 taken 41 (fallthrough)
+branch  1 taken 41
+       41: 1758:                    o = std::unique_ptr<object>(new object{});
+       41: 1758-block  0
+call    0 returned 41
+call    1 returned 41
+call    2 returned 41
+       82: 1759:                return (*o)[str];
+        -: 1760:            }
+        -: 1761:
+        -: 1762:            const wvalue& operator[](const std::string& str) const
+        -: 1763:            {
+        -: 1764:                return const_cast<wvalue*>(this)->operator[](str);
+        -: 1765:            }
+        -: 1766:
+        -: 1767:            std::vector<std::string> keys() const
+        -: 1768:            {
+        -: 1769:                if (t_ != type::Object)
+        -: 1770:                    return {};
+        -: 1771:                std::vector<std::string> result;
+        -: 1772:                for (auto& kv : *o)
+        -: 1773:                {
+        -: 1774:                    result.push_back(kv.first);
+        -: 1775:                }
+        -: 1776:                return result;
+        -: 1777:            }
+        -: 1778:
+        -: 1779:            std::string execute(std::string txt = "") const //Not using reference because it cannot be used with a default rvalue
+        -: 1780:            {
+        -: 1781:                if (t_ != type::Function)
+        -: 1782:                    return "";
+        -: 1783:                return f(txt);
+        -: 1784:            }
+        -: 1785:
+        -: 1786:            /// If the wvalue is a list, it returns the length of the list, otherwise it returns 1.
+        -: 1787:            std::size_t size() const
+        -: 1788:            {
+    #####: 1789:                if (t_ != type::List)
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1790:                    return 1;
+    #####: 1791:                return l->size();
+    %%%%%: 1791-block  0
+        -: 1792:            }
+        -: 1793:
+        -: 1794:            /// Returns an estimated size of the value in bytes.
+function _ZNK4crow4json6wvalue15estimate_lengthEv called 6 returned 100% blocks executed 79%
+        6: 1795:            size_t estimate_length() const
+        -: 1796:            {
+        6: 1797:                switch (t_)
+        6: 1797-block  0
+branch  0 taken 0
+branch  1 taken 0
+branch  2 taken 2
+branch  3 taken 3
+branch  4 taken 1
+branch  5 taken 0
+branch  6 taken 0
+branch  7 taken 0
+        -: 1798:                {
+        -: 1799:                    case type::Null: return 4;
+    #####: 1800:                    case type::False: return 5;
+    %%%%%: 1800-block  0
+        -: 1801:                    case type::True: return 4;
+    #####: 1802:                    case type::Number: return 30;
+    %%%%%: 1802-block  0
+        2: 1803:                    case type::String: return 2 + s.size() + s.size() / 2;
+        2: 1803-block  0
+        3: 1804:                    case type::List:
+        3: 1804-block  0
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        -: 1805:                    {
+        -: 1806:                        size_t sum{};
+        3: 1807:                        if (l)
+        3: 1807-block  0
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        -: 1808:                        {
+        4: 1809:                            for (auto& x : *l)
+        3: 1809-block  0
+        4: 1809-block  1
+branch  0 taken 1
+branch  1 taken 3 (fallthrough)
+        -: 1810:                            {
+        1: 1811:                                sum += 1;
+        1: 1812:                                sum += x.estimate_length();
+        1: 1812-block  0
+call    0 returned 1
+        -: 1813:                            }
+        -: 1814:                        }
+        3: 1815:                        return sum + 2;
+        3: 1815-block  0
+        -: 1816:                    }
+        1: 1817:                    case type::Object:
+        1: 1817-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -: 1818:                    {
+        -: 1819:                        size_t sum{};
+        1: 1820:                        if (o)
+        1: 1820-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -: 1821:                        {
+        3: 1822:                            for (auto& kv : *o)
+        1: 1822-block  0
+        3: 1822-block  1
+branch  0 taken 2
+branch  1 taken 1 (fallthrough)
+        -: 1823:                            {
+        2: 1824:                                sum += 2;
+        2: 1824-block  0
+call    0 returned 2
+        2: 1825:                                sum += 2 + kv.first.size() + kv.first.size() / 2;
+        2: 1826:                                sum += kv.second.estimate_length();
+        2: 1826-block  0
+call    0 returned 2
+        -: 1827:                            }
+        -: 1828:                        }
+        1: 1829:                        return sum + 2;
+        1: 1829-block  0
+        -: 1830:                    }
+    #####: 1831:                    case type::Function:
+    #####: 1832:                        return 0;
+    %%%%%: 1832-block  0
+        -: 1833:                }
+    #####: 1834:                return 1;
+    %%%%%: 1834-block  0
+        -: 1835:            }
+        -: 1836:
+        -: 1837:        private:
+function _ZNK4crow4json6wvalue11dump_stringERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERS7_ called 4 returned 100% blocks executed 100%
+        4: 1838:            inline void dump_string(const std::string& str, std::string& out) const
+        -: 1839:            {
+        4: 1840:                out.push_back('"');
+        4: 1840-block  0
+call    0 returned 4
+        4: 1841:                escape(str, out);
+call    0 returned 4
+        4: 1842:                out.push_back('"');
+call    0 returned 4
+        4: 1843:            }
+        -: 1844:
+function _ZNK4crow4json6wvalue21dump_indentation_partERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEici called 0 returned 0% blocks executed 0%
+    #####: 1845:            inline void dump_indentation_part(std::string& out, const int indent, const char separator, const int indent_level) const
+        -: 1846:            {
+    #####: 1847:                out.push_back('\n');
+    %%%%%: 1847-block  0
+call    0 never executed
+    #####: 1848:                out.append(indent_level * indent, separator);
+call    0 never executed
+    #####: 1849:            }
+        -: 1850:
+        -: 1851:
+function _ZNK4crow4json6wvalue13dump_internalERKS1_RNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEici called 6 returned 100% blocks executed 32%
+        6: 1852:            inline void dump_internal(const wvalue& v, std::string& out, const int indent, const char separator, const int indent_level = 0) const
+        -: 1853:            {
+        6: 1854:                switch (v.t_)
+        6: 1854-block  0
+branch  0 taken 0
+branch  1 taken 0
+branch  2 taken 0
+branch  3 taken 0
+branch  4 taken 2
+branch  5 taken 3
+branch  6 taken 1
+branch  7 taken 0
+branch  8 taken 0
+        -: 1855:                {
+        -: 1856:                    case type::Null: out += "null"; break;
+        -: 1857:                    case type::False: out += "false"; break;
+        -: 1858:                    case type::True: out += "true"; break;
+    #####: 1859:                    case type::Number:
+        -: 1860:                    {
+    #####: 1861:                        if (v.nt == num_type::Floating_point || v.nt == num_type::Double_precision_floating_point)
+    %%%%%: 1861-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1862:                        {
+    #####: 1863:                            if (isnan(v.num.d) || isinf(v.num.d))
+    %%%%%: 1863-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%: 1863-block  1
+branch  2 never executed (fallthrough)
+branch  3 never executed
+        -: 1864:                            {
+        -: 1865:                                out += "null";
+    #####: 1866:                                CROW_LOG_WARNING << "Invalid JSON value detected (" << v.num.d << "), value set to null";
+branch  0 never executed
+branch  1 never executed
+    %%%%%: 1866-block  0
+call    2 never executed
+    $$$$$: 1866-block  1
+call    3 never executed
+    #####: 1867:                                break;
+    %%%%%: 1867-block  0
+        -: 1868:                            }
+        -: 1869:                            enum
+        -: 1870:                            {
+        -: 1871:                                start,
+        -: 1872:                                decp, // Decimal point
+        -: 1873:                                zero
+        -: 1874:                            } f_state;
+        -: 1875:                            char outbuf[128];
+    #####: 1876:                            if (v.nt == num_type::Double_precision_floating_point)
+    %%%%%: 1876-block  0
+branch  0 never executed
+branch  1 never executed
+        -: 1877:                            {
+        -: 1878:#ifdef _MSC_VER
+        -: 1879:                                sprintf_s(outbuf, sizeof(outbuf), "%.*g", DECIMAL_DIG, v.num.d);
+        -: 1880:#else
+    #####: 1881:                                snprintf(outbuf, sizeof(outbuf), "%.*g", DECIMAL_DIG, v.num.d);
+    %%%%%: 1881-block  0
+call    0 never executed
+        -: 1882:#endif
+        -: 1883:                            }
+        -: 1884:                            else
+        -: 1885:                            {
+        -: 1886:#ifdef _MSC_VER
+        -: 1887:                                sprintf_s(outbuf, sizeof(outbuf), "%f", v.num.d);
+        -: 1888:#else
+    #####: 1889:                                snprintf(outbuf, sizeof(outbuf), "%f", v.num.d);
+    %%%%%: 1889-block  0
+call    0 never executed
+        -: 1890:#endif
+        -: 1891:                            }
+        -: 1892:                            char* p = &outbuf[0];
+        -: 1893:                            char* pos_first_trailing_0 = nullptr;
+        -: 1894:                            f_state = start;
+    #####: 1895:                            while (*p != '\0')
+    %%%%%: 1895-block  0
+    %%%%%: 1895-block  1
+branch  0 never executed
+branch  1 never executed (fallthrough)
+        -: 1896:                            {
+        -: 1897:                                //std::cout << *p << std::endl;
+        -: 1898:                                char ch = *p;
+        -: 1899:                                switch (f_state)
+        -: 1900:                                {
+    #####: 1901:                                    case start: // Loop and lookahead until a decimal point is found
+    #####: 1902:                                        if (ch == '.')
+    %%%%%: 1902-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1903:                                        {
+    #####: 1904:                                            char fch = *(p + 1);
+        -: 1905:                                            // if the first character is 0, leave it be (this is so that "1.00000" becomes "1.0" and not "1.")
+    #####: 1906:                                            if (fch != '\0' && fch == '0') p++;
+    %%%%%: 1906-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%: 1906-block  1
+        -: 1907:                                            f_state = decp;
+        -: 1908:                                        }
+    #####: 1909:                                        p++;
+    #####: 1910:                                        break;
+    %%%%%: 1910-block  0
+    #####: 1911:                                    case decp: // Loop until a 0 is found, if found, record its position
+    #####: 1912:                                        if (ch == '0')
+    %%%%%: 1912-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1913:                                        {
+        -: 1914:                                            f_state = zero;
+        -: 1915:                                            pos_first_trailing_0 = p;
+        -: 1916:                                        }
+    #####: 1917:                                        p++;
+    #####: 1918:                                        break;
+    %%%%%: 1918-block  0
+    #####: 1919:                                    case zero: // if a non 0 is found (e.g. 1.00004) remove the earlier recorded 0 position and look for more trailing 0s
+    #####: 1920:                                        if (ch != '0')
+    %%%%%: 1920-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1921:                                        {
+        -: 1922:                                            pos_first_trailing_0 = nullptr;
+        -: 1923:                                            f_state = decp;
+        -: 1924:                                        }
+    #####: 1925:                                        p++;
+    #####: 1926:                                        break;
+    %%%%%: 1926-block  0
+        -: 1927:                                }
+        -: 1928:                            }
+    #####: 1929:                            if (pos_first_trailing_0 != nullptr) // if any trailing 0s are found, terminate the string where they begin
+    %%%%%: 1929-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####: 1930:                                *pos_first_trailing_0 = '\0';
+    %%%%%: 1930-block  0
+        -: 1931:                            out += outbuf;
+        -: 1932:                        }
+    #####: 1933:                        else if (v.nt == num_type::Signed_integer)
+    %%%%%: 1933-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1934:                        {
+    #####: 1935:                            out += std::to_string(v.num.si);
+    %%%%%: 1935-block  0
+call    0 never executed
+        -: 1936:                        }
+        -: 1937:                        else
+        -: 1938:                        {
+    #####: 1939:                            out += std::to_string(v.num.ui);
+    %%%%%: 1939-block  0
+call    0 never executed
+        -: 1940:                        }
+        -: 1941:                    }
+        -: 1942:                    break;
+        2: 1943:                    case type::String: dump_string(v.s, out); break;
+        2: 1943-block  0
+call    0 returned 2
+        3: 1944:                    case type::List:
+        -: 1945:                    {
+        3: 1946:                        out.push_back('[');
+        3: 1946-block  0
+call    0 returned 3
+        -: 1947:
+        3: 1948:                        if (indent >= 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+        -: 1949:                        {
+    #####: 1950:                            dump_indentation_part(out, indent, separator, indent_level + 1);
+    %%%%%: 1950-block  0
+call    0 never executed
+        -: 1951:                        }
+        -: 1952:
+        3: 1953:                        if (v.l)
+        3: 1953-block  0
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        -: 1954:                        {
+        -: 1955:                            bool first = true;
+        4: 1956:                            for (auto& x : *v.l)
+        3: 1956-block  0
+        4: 1956-block  1
+branch  0 taken 1
+branch  1 taken 3 (fallthrough)
+        -: 1957:                            {
+        1: 1958:                                if (!first)
+        1: 1958-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -: 1959:                                {
+    #####: 1960:                                    out.push_back(',');
+    %%%%%: 1960-block  0
+call    0 never executed
+        -: 1961:
+    #####: 1962:                                    if (indent >= 0)
+branch  0 never executed (fallthrough)
+branch  1 never executed
+        -: 1963:                                    {
+    #####: 1964:                                        dump_indentation_part(out, indent, separator, indent_level + 1);
+    %%%%%: 1964-block  0
+call    0 never executed
+        -: 1965:                                    }
+        -: 1966:                                }
+        -: 1967:                                first = false;
+        1: 1968:                                dump_internal(x, out, indent, separator, indent_level + 1);
+        1: 1968-block  0
+call    0 returned 1
+        -: 1969:                            }
+        -: 1970:                        }
+        -: 1971:
+        3: 1972:                        if (indent >= 0)
+        3: 1972-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+        -: 1973:                        {
+    #####: 1974:                            dump_indentation_part(out, indent, separator, indent_level);
+    %%%%%: 1974-block  0
+call    0 never executed
+        -: 1975:                        }
+        -: 1976:
+        3: 1977:                        out.push_back(']');
+        3: 1977-block  0
+call    0 returned 3
+        -: 1978:                    }
+        3: 1979:                    break;
+        1: 1980:                    case type::Object:
+        -: 1981:                    {
+        1: 1982:                        out.push_back('{');
+        1: 1982-block  0
+call    0 returned 1
+        -: 1983:
+        1: 1984:                        if (indent >= 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -: 1985:                        {
+    #####: 1986:                            dump_indentation_part(out, indent, separator, indent_level + 1);
+    %%%%%: 1986-block  0
+call    0 never executed
+        -: 1987:                        }
+        -: 1988:
+        1: 1989:                        if (v.o)
+        1: 1989-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        -: 1990:                        {
+        -: 1991:                            bool first = true;
+        3: 1992:                            for (auto& kv : *v.o)
+        1: 1992-block  0
+        3: 1992-block  1
+branch  0 taken 2
+branch  1 taken 1 (fallthrough)
+        -: 1993:                            {
+        2: 1994:                                if (!first)
+        2: 1994-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+        -: 1995:                                {
+        1: 1996:                                    out.push_back(',');
+        1: 1996-block  0
+call    0 returned 1
+        1: 1997:                                    if (indent >= 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -: 1998:                                    {
+    #####: 1999:                                        dump_indentation_part(out, indent, separator, indent_level + 1);
+    %%%%%: 1999-block  0
+call    0 never executed
+        -: 2000:                                    }
+        -: 2001:                                }
+        -: 2002:                                first = false;
+        2: 2003:                                dump_string(kv.first, out);
+        2: 2003-block  0
+call    0 returned 2
+        2: 2004:                                out.push_back(':');
+call    0 returned 2
+        -: 2005:
+        2: 2006:                                if (indent >= 0)
+branch  0 taken 0 (fallthrough)
+branch  1 taken 2
+        -: 2007:                                {
+    #####: 2008:                                    out.push_back(' ');
+    %%%%%: 2008-block  0
+call    0 never executed
+        -: 2009:                                }
+        -: 2010:
+        2: 2011:                                dump_internal(kv.second, out, indent, separator, indent_level + 1);
+        2: 2011-block  0
+call    0 returned 2
+        -: 2012:                            }
+        -: 2013:                        }
+        -: 2014:
+        1: 2015:                        if (indent >= 0)
+        1: 2015-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+        -: 2016:                        {
+    #####: 2017:                            dump_indentation_part(out, indent, separator, indent_level);
+    %%%%%: 2017-block  0
+call    0 never executed
+        -: 2018:                        }
+        -: 2019:
+        1: 2020:                        out.push_back('}');
+        1: 2020-block  0
+call    0 returned 1
+        -: 2021:                    }
+        1: 2022:                    break;
+        -: 2023:
+        -: 2024:                    case type::Function:
+        -: 2025:                        out += "custom function";
+        -: 2026:                        break;
+        -: 2027:                }
+        6: 2028:            }
+        6: 2028-block  0
+        -: 2029:
+        -: 2030:        public:
+function _ZNK4crow4json6wvalue4dumpB5cxx11Eic called 3 returned 100% blocks executed 83%
+        3: 2031:            std::string dump(const int indent, const char separator = ' ') const
+        3: 2031-block  0
+call    0 returned 3
+        -: 2032:            {
+        -: 2033:                std::string ret;
+        3: 2034:                ret.reserve(estimate_length());
+        3: 2034-block  0
+call    0 returned 3
+call    1 returned 3
+branch  2 taken 3 (fallthrough)
+branch  3 taken 0 (throw)
+        3: 2035:                dump_internal(*this, ret, indent, separator);
+        3: 2035-block  0
+call    0 returned 3
+branch  1 taken 3 (fallthrough)
+branch  2 taken 0 (throw)
+        3: 2036:                return ret;
+        3: 2036-block  0
+        -: 2037:            }
+        -: 2038:
+function _ZNK4crow4json6wvalue4dumpB5cxx11Ev called 0 returned 0% blocks executed 0%
+    #####: 2039:            std::string dump() const override
+        -: 2040:            {
+        -: 2041:                static constexpr int DontIndent = -1;
+        -: 2042:
+       3*: 2043:                return dump(DontIndent);
+        1: 2043-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1: 2043-block  1
+call    3 returned 1
+branch  4 taken 1 (fallthrough)
+branch  5 taken 0 (throw)
+        1: 2043-block  2
+call    6 returned 1
+branch  7 taken 1 (fallthrough)
+branch  8 taken 0 (throw)
+    %%%%%: 2043-block  3
+call    9 never executed
+        -: 2044:            }
+        -: 2045:        };
+        -: 2046:
+        -: 2047:        // Used for accessing the internals of a wvalue
+        -: 2048:        struct wvalue_reader
+        -: 2049:        {
+        -: 2050:            int64_t get(int64_t fallback)
+        -: 2051:            {
+        -: 2052:                if (ref.t() != type::Number || ref.nt == num_type::Floating_point ||
+        -: 2053:                    ref.nt == num_type::Double_precision_floating_point)
+        -: 2054:                    return fallback;
+        -: 2055:                return ref.num.si;
+        -: 2056:            }
+        -: 2057:
+        -: 2058:            double get(double fallback)
+        -: 2059:            {
+        -: 2060:                if (ref.t() != type::Number || ref.nt != num_type::Floating_point ||
+        -: 2061:                    ref.nt == num_type::Double_precision_floating_point)
+        -: 2062:                    return fallback;
+        -: 2063:                return ref.num.d;
+        -: 2064:            }
+        -: 2065:
+        -: 2066:            bool get(bool fallback)
+        -: 2067:            {
+        -: 2068:                if (ref.t() == type::True) return true;
+        -: 2069:                if (ref.t() == type::False) return false;
+        -: 2070:                return fallback;
+        -: 2071:            }
+        -: 2072:
+        -: 2073:            std::string get(const std::string& fallback)
+        -: 2074:            {
+        -: 2075:                if (ref.t() != type::String) return fallback;
+        -: 2076:                return ref.s;
+        -: 2077:            }
+        -: 2078:
+        -: 2079:            const wvalue& ref;
+        -: 2080:        };
+        -: 2081:
+        -: 2082:        //std::vector<asio::const_buffer> dump_ref(wvalue& v)
+        -: 2083:        //{
+        -: 2084:        //}
+        -: 2085:    } // namespace json
+        -: 2086:} // namespace crow

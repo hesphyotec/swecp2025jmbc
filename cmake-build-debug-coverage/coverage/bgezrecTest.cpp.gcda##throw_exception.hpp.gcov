@@ -1,0 +1,62 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/throw_exception.hpp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// detail/throw_exception.hpp
+        -:    3:// ~~~~~~~~~~~~~~~~~~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_DETAIL_THROW_EXCEPTION_HPP
+        -:   12:#define ASIO_DETAIL_THROW_EXCEPTION_HPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:
+        -:   20:#if defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
+        -:   21:# include <boost/throw_exception.hpp>
+        -:   22:#endif // defined(ASIO_BOOST_THROW_EXCEPTION)
+        -:   23:
+        -:   24:namespace asio {
+        -:   25:namespace detail {
+        -:   26:
+        -:   27:#if defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
+        -:   28:using boost::throw_exception;
+        -:   29:#else // defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
+        -:   30:
+        -:   31:// Declare the throw_exception function for all targets.
+        -:   32:template <typename Exception>
+        -:   33:[[noreturn]] void throw_exception(
+        -:   34:    const Exception& e
+        -:   35:    ASIO_SOURCE_LOCATION_DEFAULTED_PARAM);
+        -:   36:
+        -:   37:// Only define the throw_exception function when exceptions are enabled.
+        -:   38:// Otherwise, it is up to the application to provide a definition of this
+        -:   39:// function.
+        -:   40:# if !defined(ASIO_NO_EXCEPTIONS)
+        -:   41:template <typename Exception>
+function _ZN4asio6detail15throw_exceptionISt12system_errorEEvRKT_ called 0 returned 0% blocks executed 0%
+    #####:   42:void throw_exception(
+        -:   43:    const Exception& e
+        -:   44:    ASIO_SOURCE_LOCATION_PARAM)
+        -:   45:{
+    #####:   46:  throw e;
+    %%%%%:   46-block  0
+call    0 never executed
+        -:   47:}
+        -:   48:# endif // !defined(ASIO_NO_EXCEPTIONS)
+        -:   49:
+        -:   50:#endif // defined(ASIO_HAS_BOOST_THROW_EXCEPTION)
+        -:   51:
+        -:   52:} // namespace detail
+        -:   53:} // namespace asio
+        -:   54:
+        -:   55:#endif // ASIO_DETAIL_THROW_EXCEPTION_HPP
