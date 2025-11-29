@@ -94,14 +94,6 @@ private:
 		return 0; // Return 0 to continue processing rows, non-zero to stop
 	}
 
-	int stringToTrait(const std::string& name) {
-		auto it = traitMap.find(name);
-		if (it != traitMap.end()) {
-			return static_cast<int>(it->second);
-		}
-		return -1; // or handle error case
-	}
-
 public:
 	UserRecSys() {
 		std::cout << "Hello!\n";
@@ -148,25 +140,25 @@ public:
 			std::string temp = " ";
 			std::vector<double> tempVec = {};
 
-			if (ingredientID.empty()) { return {}; }
+			if (ingredientID.empty()) { return {{}}; }
 			sqlite3_stmt *stmt;
 
 			for (const int &ingID: ingredientID) {
 				const char *sql = "SELECT vector, tfidf FROM Ingredients WHERE id = ?;";
 				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
 				sqlite3_bind_int(stmt, 1, ingID);
-				sqlite3_step(stmt);
-				std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
-				double tfidf = sqlite3_column_double(stmt, 1);
+				if (sqlite3_step(stmt) == SQLITE_ROW) {
+					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
+					double tfidf = sqlite3_column_double(stmt, 1);
 
-				while (std::getline(iss, temp, ' ' ) ) {
-					tempVec.push_back((std::stod(temp))*(1.0-tfidf));
+					while (std::getline(iss, temp, ' ' ) ) {
+						tempVec.push_back((std::stod(temp))*(1.0-tfidf));
+					}
 				}
-
-		if (tempVec.size() != 1){ingredient.push_back({tempVec});}
+				if (tempVec.size() != 1){ingredient.push_back({tempVec});}
 
 				tempVec = {};
-				sqlite3_reset(stmt); // Reset statement for next row //call db for vector value
+				sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
 			}
 
 			return ingredient;
@@ -177,7 +169,7 @@ public:
 		std::string temp = " ";
 		std::vector<double> tempVec = {};
 
-		if (mealID.empty()) { return {}; }
+		if (mealID.empty()) { return {{}}; }
 			sqlite3_stmt *stmt;
 
 			for (const int &ingID: mealID) {
@@ -185,16 +177,17 @@ public:
 				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
 				sqlite3_bind_int(stmt, 1, ingID);
 
-				sqlite3_step(stmt);
-				std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
+				if (sqlite3_step(stmt) == SQLITE_ROW) {
+					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
 
-				while (std::getline(iss, temp, ' ' ) ) {
-					tempVec.push_back(std::stod(temp));
+					while (std::getline(iss, temp, ' ' ) ) {
+						tempVec.push_back(std::stod(temp));
+					}
 				}
+				if (tempVec.size() != 1){meals.push_back({tempVec});}
 
-				meals.push_back({tempVec});
-
-				sqlite3_reset(stmt); // Reset statement for next row //call db for vector value
+					tempVec = {};
+					sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
 			}
 			return meals;
 		}
@@ -204,7 +197,7 @@ public:
 			std::vector<double> tempMealVec = {};
 			vecVector returnVec;
 
-			if (!ingredientVector.empty()) {
+			if (!ingredientVector[0].empty()) {
 				tempIngVec.resize(100);
 				for (auto& ingredients : ingredientVector) {
 					for (int i = 0; i < ingredients.size(); i++) {
@@ -217,7 +210,7 @@ public:
 			}
 
 		returnVec.emplace_back(tempIngVec);
-		if (!mealVector.empty()) {
+		if (!mealVector[0].empty()) {
 			tempMealVec.resize(100);
 			for (auto& meals : mealVector) {
 				for (int i = 0; i < meals.size(); i++) {
@@ -228,7 +221,7 @@ public:
 				value /= mealVector.size();
 			}
 		}
-
+		returnVec.emplace_back(tempMealVec);
 		return returnVec;
 		}
 
@@ -276,10 +269,12 @@ public:
 		sqlite3_bind_int(stmt, 2, uID);
 		int rc = sqlite3_step(stmt);
 		if (rc != SQLITE_DONE) {
+			std::cout << "Error" << "\n";
 			CROW_LOG_ERROR << "Error executing update: " << sqlite3_errmsg(db);
 		}
 		sqlite3_finalize(stmt);
 		sqlite3_close(db);
+		std::cout << "Entered Saved Items" << "\n";
 		CROW_LOG_DEBUG << "Entered Saved Items";
 	}
 };
@@ -351,7 +346,7 @@ class Recommend {
 			}
 
 	pairVec fromKeyword(int uID) { //this returns all the meals with a certain keyword
-			pairVec meals{};
+			pairVec meals;
 			sqlite3_stmt* stmt;
 			std::string keyword;
 			std::vector<int> tempVec;
@@ -438,14 +433,11 @@ class Recommend {
 				json_array[i] = (std::move(item));
 				i++;
 			}
-
+		std::cout << "\n";
 		return json_array;
 		}
 
 	crow::json::wvalue doIt (int uID, vecVector searchedVector) {
-			if (searchedVector.empty()) {
-				searchedVector = {{}, {}};
-			}
 			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
 				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
 				db = nullptr;
@@ -502,11 +494,11 @@ class Recommend {
 				return json_array;
 			}
 
-			sqlite3_step(stmt);
-			item["ingredients"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-			item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-			json_array[0] = (std::move(item));
-
+			if (sqlite3_step(stmt) == SQLITE_ROW) {
+				item["ingredients"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+				item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+				json_array[0] = (std::move(item));
+			}
 			sqlite3_finalize(stmt);
 			return json_array;
 		}

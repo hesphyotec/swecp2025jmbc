@@ -18,6 +18,7 @@ add_executable(swecp2025jmbc
         app.cpp
         include/bcrypt.cpp
         include/blowfish.cpp
+        #bgezrecTest.cpp
 )
 
 target_include_directories(swecp2025jmbc PRIVATE
