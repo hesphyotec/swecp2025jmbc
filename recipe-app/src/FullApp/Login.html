@@ -145,7 +145,11 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Login server");
       }
-    })
+      if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+        sock = new WebSocket(`ws://${window.location.hostname}:18080/login`);
+        console.log("Reopened Login WS");
+      }
+    });
   </script>
 
 </body>

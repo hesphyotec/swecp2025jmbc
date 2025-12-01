@@ -138,7 +138,8 @@
     const fuse = new Fuse(ingreds, { includeScore: true })
     let scanning = false;
 
-    let ingredients = JSON.parse(localStorage.getItem("ingredients")) || [];
+    var sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+    let ingredients = JSON.parse(sessionStorage.getItem("ingredients")) || [];
 
     window.addEventListener('load', function () {
       let deviceId;
@@ -243,9 +244,15 @@
 
           resultDiv.textContent = `Detected item: ${fuzzResult.item}`;
 
-          ingredients.push(fuzzResult.item);
+          ingredients.push({name: fuzzResult.item, id : Date.now()});
+          const sendData = {
+              op : "additem",
+              uid : localStorage.getItem("activeuserid"),
+              name : fuzzResult.item
+          };
+          const stringData = JSON.stringify(sendData);
           try {
-            localStorage.setItem('ingredients', JSON.stringify(ingredients));
+            sessionStorage.setItem('ingredients', JSON.stringify(ingredients));
           } catch (e) {
             console.error('Failed to save ingredients', e);
           }
@@ -272,7 +279,7 @@
 
       ingredients.forEach((ingredient, index) => {
         const item = document.createElement("div");
-        item.textContent = ingredient;
+        item.textContent = ingredient.name;
 
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "✕";
@@ -290,6 +297,16 @@
     }
 
     renderList();
+
+    document.addEventListener('visibilitychange', function (event) {
+      if(document.hidden){
+        sock.close(1000, "Disconnecting from Barcode server");
+      }
+      if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+          sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+          console.log("Reopened Barcode WS");
+      }
+    });
   </script>
 </body>
 </html>

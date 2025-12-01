@@ -158,7 +158,7 @@
     // Save ingredients to persistent storage
     async function saveToStorage() {
         try {
-            await window.storage.set(STORAGE_KEY, JSON.stringify(ingredients));
+            await sessionStorage.setItem("ingredients",JSON.stringify(ingredients));
             console.log('Saved ingredients to storage');
         } catch (error) {
             console.error('Error saving to storage:', error);
@@ -180,7 +180,7 @@
     // Initialize WebSocket connection
     function initWebSocket() {
         try {
-            sock = new WebSocket(`wss://${window.location.hostname}:18080/inventory`);
+            sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
             
             sock.onopen = () => {
                 console.log('WebSocket connected');
@@ -295,7 +295,11 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Saved server");
       }
-    })
+    if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+        sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+        console.log("Reopened Saved WS");
+    }
+    });
 </script>
 </body>
 </html>

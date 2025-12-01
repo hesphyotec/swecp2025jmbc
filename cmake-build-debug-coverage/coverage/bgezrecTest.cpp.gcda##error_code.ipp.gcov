@@ -1,0 +1,254 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/error_code.ipp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// impl/error_code.ipp
+        -:    3:// ~~~~~~~~~~~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_IMPL_ERROR_CODE_IPP
+        -:   12:#define ASIO_IMPL_ERROR_CODE_IPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:#if defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+        -:   20:# include <winerror.h>
+        -:   21:#elif defined(ASIO_WINDOWS_RUNTIME)
+        -:   22:# include <windows.h>
+        -:   23:#else
+        -:   24:# include <cerrno>
+        -:   25:# include <cstring>
+        -:   26:# include <string>
+        -:   27:#endif
+        -:   28:#include "asio/detail/local_free_on_block_exit.hpp"
+        -:   29:#include "asio/detail/socket_types.hpp"
+        -:   30:#include "asio/error_code.hpp"
+        -:   31:
+        -:   32:#include "asio/detail/push_options.hpp"
+        -:   33:
+        -:   34:namespace asio {
+        -:   35:namespace detail {
+        -:   36:
+        -:   37:class system_category : public error_category
+        -:   38:{
+        -:   39:public:
+function _ZNK4asio6detail15system_category4nameEv called 0 returned 0% blocks executed 0%
+    #####:   40:  const char* name() const noexcept
+        -:   41:  {
+    #####:   42:    return "asio.system";
+        -:   43:  }
+        -:   44:
+function _ZNK4asio6detail15system_category7messageB5cxx11Ei called 0 returned 0% blocks executed 0%
+    #####:   45:  std::string message(int value) const
+        -:   46:  {
+        -:   47:#if defined(ASIO_WINDOWS_RUNTIME) || defined(ASIO_WINDOWS_APP)
+        -:   48:    std::wstring wmsg(128, wchar_t());
+        -:   49:    for (;;)
+        -:   50:    {
+        -:   51:      DWORD wlength = ::FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM
+        -:   52:          | FORMAT_MESSAGE_IGNORE_INSERTS, 0, value,
+        -:   53:          MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        -:   54:          &wmsg[0], static_cast<DWORD>(wmsg.size()), 0);
+        -:   55:      if (wlength == 0 && ::GetLastError() == ERROR_INSUFFICIENT_BUFFER)
+        -:   56:      {
+        -:   57:        wmsg.resize(wmsg.size() + wmsg.size() / 2);
+        -:   58:        continue;
+        -:   59:      }
+        -:   60:      if (wlength && wmsg[wlength - 1] == '\n')
+        -:   61:        --wlength;
+        -:   62:      if (wlength && wmsg[wlength - 1] == '\r')
+        -:   63:        --wlength;
+        -:   64:      if (wlength)
+        -:   65:      {
+        -:   66:        std::string msg(wlength * 2, char());
+        -:   67:        int length = ::WideCharToMultiByte(CP_ACP, 0,
+        -:   68:            wmsg.c_str(), static_cast<int>(wlength),
+        -:   69:            &msg[0], static_cast<int>(wlength * 2), 0, 0);
+        -:   70:        if (length <= 0)
+        -:   71:          return "asio.system error";
+        -:   72:        msg.resize(static_cast<std::size_t>(length));
+        -:   73:        return msg;
+        -:   74:      }
+        -:   75:      else
+        -:   76:        return "asio.system error";
+        -:   77:    }
+        -:   78:#elif defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+    #####:   79:    char* msg = 0;
+    #####:   80:    DWORD length = ::FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER
+    %%%%%:   80-block  0
+call    0 never executed
+        -:   81:        | FORMAT_MESSAGE_FROM_SYSTEM
+        -:   82:        | FORMAT_MESSAGE_IGNORE_INSERTS, 0, value,
+        -:   83:        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (char*)&msg, 0, 0);
+    #####:   84:    detail::local_free_on_block_exit local_free_obj(msg);
+    #####:   85:    if (length && msg[length - 1] == '\n')
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%:   85-block  0
+branch  2 never executed (fallthrough)
+branch  3 never executed
+    #####:   86:      msg[--length] = '\0';
+    %%%%%:   86-block  0
+    #####:   87:    if (length && msg[length - 1] == '\r')
+    %%%%%:   87-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%:   87-block  1
+branch  2 never executed (fallthrough)
+branch  3 never executed
+    #####:   88:      msg[--length] = '\0';
+    %%%%%:   88-block  0
+    #####:   89:    if (length)
+    %%%%%:   89-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:   90:      return msg;
+    %%%%%:   90-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    %%%%%:   90-block  1
+        -:   91:    else
+    #####:   92:      return "asio.system error";
+    %%%%%:   92-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    %%%%%:   92-block  1
+    $$$$$:   92-block  2
+call    3 never executed
+        -:   93:#else // defined(ASIO_WINDOWS_DESKTOP) || defined(__CYGWIN__)
+        -:   94:#if !defined(__sun)
+        -:   95:    if (value == ECANCELED)
+        -:   96:      return "Operation aborted.";
+        -:   97:#endif // !defined(__sun)
+        -:   98:#if defined(__sun) || defined(__QNX__) || defined(__SYMBIAN32__)
+        -:   99:    using namespace std;
+        -:  100:    return strerror(value);
+        -:  101:#else
+        -:  102:    char buf[256] = "";
+        -:  103:    using namespace std;
+        -:  104:    return strerror_result(strerror_r(value, buf, sizeof(buf)), buf);
+        -:  105:#endif
+        -:  106:#endif // defined(ASIO_WINDOWS_DESKTOP) || defined(__CYGWIN__)
+        -:  107:  }
+        -:  108:
+        -:  109:#if defined(ASIO_HAS_STD_ERROR_CODE)
+        -:  110:  std::error_condition default_error_condition(
+        -:  111:      int ev) const noexcept
+        -:  112:  {
+        -:  113:    switch (ev)
+        -:  114:    {
+        -:  115:    case access_denied:
+        -:  116:      return std::errc::permission_denied;
+        -:  117:    case address_family_not_supported:
+        -:  118:      return std::errc::address_family_not_supported;
+        -:  119:    case address_in_use:
+        -:  120:      return std::errc::address_in_use;
+        -:  121:    case already_connected:
+        -:  122:      return std::errc::already_connected;
+        -:  123:    case already_started:
+        -:  124:      return std::errc::connection_already_in_progress;
+        -:  125:    case broken_pipe:
+        -:  126:      return std::errc::broken_pipe;
+        -:  127:    case connection_aborted:
+        -:  128:      return std::errc::connection_aborted;
+        -:  129:    case connection_refused:
+        -:  130:      return std::errc::connection_refused;
+        -:  131:    case connection_reset:
+        -:  132:      return std::errc::connection_reset;
+        -:  133:    case bad_descriptor:
+        -:  134:      return std::errc::bad_file_descriptor;
+        -:  135:    case fault:
+        -:  136:      return std::errc::bad_address;
+        -:  137:    case host_unreachable:
+        -:  138:      return std::errc::host_unreachable;
+        -:  139:    case in_progress:
+        -:  140:      return std::errc::operation_in_progress;
+        -:  141:    case interrupted:
+        -:  142:      return std::errc::interrupted;
+        -:  143:    case invalid_argument:
+        -:  144:      return std::errc::invalid_argument;
+        -:  145:    case message_size:
+        -:  146:      return std::errc::message_size;
+        -:  147:    case name_too_long:
+        -:  148:      return std::errc::filename_too_long;
+        -:  149:    case network_down:
+        -:  150:      return std::errc::network_down;
+        -:  151:    case network_reset:
+        -:  152:      return std::errc::network_reset;
+        -:  153:    case network_unreachable:
+        -:  154:      return std::errc::network_unreachable;
+        -:  155:    case no_descriptors:
+        -:  156:      return std::errc::too_many_files_open;
+        -:  157:    case no_buffer_space:
+        -:  158:      return std::errc::no_buffer_space;
+        -:  159:    case no_memory:
+        -:  160:      return std::errc::not_enough_memory;
+        -:  161:    case no_permission:
+        -:  162:      return std::errc::operation_not_permitted;
+        -:  163:    case no_protocol_option:
+        -:  164:      return std::errc::no_protocol_option;
+        -:  165:    case no_such_device:
+        -:  166:      return std::errc::no_such_device;
+        -:  167:    case not_connected:
+        -:  168:      return std::errc::not_connected;
+        -:  169:    case not_socket:
+        -:  170:      return std::errc::not_a_socket;
+        -:  171:    case operation_aborted:
+        -:  172:      return std::errc::operation_canceled;
+        -:  173:    case operation_not_supported:
+        -:  174:      return std::errc::operation_not_supported;
+        -:  175:    case shut_down:
+        -:  176:      return std::make_error_condition(ev, *this);
+        -:  177:    case timed_out:
+        -:  178:      return std::errc::timed_out;
+        -:  179:    case try_again:
+        -:  180:      return std::errc::resource_unavailable_try_again;
+        -:  181:    case would_block:
+        -:  182:      return std::errc::operation_would_block;
+        -:  183:    default:
+        -:  184:      return std::make_error_condition(ev, *this);
+        -:  185:    }
+        -:  186:  }
+        -:  187:#endif // defined(ASIO_HAS_STD_ERROR_CODE)
+        -:  188:
+        -:  189:private:
+        -:  190:  // Helper function to adapt the result from glibc's variant of strerror_r.
+        -:  191:  static const char* strerror_result(int, const char* s) { return s; }
+        -:  192:  static const char* strerror_result(const char* s, const char*) { return s; }
+        -:  193:};
+        -:  194:
+        -:  195:} // namespace detail
+        -:  196:
+function _ZN4asio15system_categoryEv called 3 returned 100% blocks executed 100%
+        3:  197:const error_category& system_category()
+        -:  198:{
+        3:  199:  static detail::system_category instance;
+        3:  199-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 2
+        1:  199-block  1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:  199-block  2
+call    5 returned 1
+call    6 returned 1
+        3:  200:  return instance;
+        -:  201:}
+        -:  202:
+        -:  203:} // namespace asio
+        -:  204:
+        -:  205:#include "asio/detail/pop_options.hpp"
+        -:  206:
+        -:  207:#endif // ASIO_IMPL_ERROR_CODE_IPP

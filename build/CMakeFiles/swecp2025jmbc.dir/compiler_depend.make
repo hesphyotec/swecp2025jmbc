@@ -390,33 +390,6 @@ CMakeFiles/swecp2025jmbc.dir/app.cpp.o: /mnt/c/Users/blake/swecp2025jmbc/app.cpp
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/signal_set.hpp \
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/signal_set_base.hpp \
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/socket_base.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/context.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/context_base.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/buffered_handshake_op.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/engine.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/handshake_op.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/impl/engine.ipp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/impl/openssl_init.ipp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/io.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/openssl_init.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/openssl_types.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/password_callback.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/read_op.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/shutdown_op.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/stream_core.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/verify_callback.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/write_op.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/error.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/host_name_verification.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/context.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/context.ipp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/error.ipp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/host_name_verification.ipp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/stream.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/stream_base.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/verify_context.hpp \
-  /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/verify_mode.hpp \
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/static_thread_pool.hpp \
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/steady_timer.hpp \
   /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/strand.hpp \
@@ -704,7 +677,6 @@ CMakeFiles/swecp2025jmbc.dir/app.cpp.o: /mnt/c/Users/blake/swecp2025jmbc/app.cpp
   /usr/include/c++/13/span \
   /usr/include/c++/13/sstream \
   /usr/include/c++/13/stdexcept \
-  /usr/include/c++/13/stdlib.h \
   /usr/include/c++/13/stop_token \
   /usr/include/c++/13/streambuf \
   /usr/include/c++/13/string \
@@ -756,78 +728,6 @@ CMakeFiles/swecp2025jmbc.dir/app.cpp.o: /mnt/c/Users/blake/swecp2025jmbc/app.cpp
   /usr/include/netdb.h \
   /usr/include/netinet/in.h \
   /usr/include/netinet/tcp.h \
-  /usr/include/openssl/asn1.h \
-  /usr/include/openssl/asn1err.h \
-  /usr/include/openssl/async.h \
-  /usr/include/openssl/asyncerr.h \
-  /usr/include/openssl/bio.h \
-  /usr/include/openssl/bioerr.h \
-  /usr/include/openssl/bn.h \
-  /usr/include/openssl/bnerr.h \
-  /usr/include/openssl/buffer.h \
-  /usr/include/openssl/buffererr.h \
-  /usr/include/openssl/comp.h \
-  /usr/include/openssl/comperr.h \
-  /usr/include/openssl/conf.h \
-  /usr/include/openssl/conferr.h \
-  /usr/include/openssl/conftypes.h \
-  /usr/include/openssl/core.h \
-  /usr/include/openssl/core_dispatch.h \
-  /usr/include/openssl/crypto.h \
-  /usr/include/openssl/cryptoerr.h \
-  /usr/include/openssl/cryptoerr_legacy.h \
-  /usr/include/openssl/ct.h \
-  /usr/include/openssl/cterr.h \
-  /usr/include/openssl/dh.h \
-  /usr/include/openssl/dherr.h \
-  /usr/include/openssl/dsa.h \
-  /usr/include/openssl/dsaerr.h \
-  /usr/include/openssl/dtls1.h \
-  /usr/include/openssl/e_os2.h \
-  /usr/include/openssl/ec.h \
-  /usr/include/openssl/ecerr.h \
-  /usr/include/openssl/engine.h \
-  /usr/include/openssl/engineerr.h \
-  /usr/include/openssl/err.h \
-  /usr/include/openssl/evp.h \
-  /usr/include/openssl/evperr.h \
-  /usr/include/openssl/hmac.h \
-  /usr/include/openssl/http.h \
-  /usr/include/openssl/lhash.h \
-  /usr/include/openssl/macros.h \
-  /usr/include/openssl/obj_mac.h \
-  /usr/include/openssl/objects.h \
-  /usr/include/openssl/objectserr.h \
-  /usr/include/openssl/opensslv.h \
-  /usr/include/openssl/params.h \
-  /usr/include/openssl/pem.h \
-  /usr/include/openssl/pemerr.h \
-  /usr/include/openssl/pkcs7.h \
-  /usr/include/openssl/pkcs7err.h \
-  /usr/include/openssl/prov_ssl.h \
-  /usr/include/openssl/rand.h \
-  /usr/include/openssl/randerr.h \
-  /usr/include/openssl/rsa.h \
-  /usr/include/openssl/rsaerr.h \
-  /usr/include/openssl/safestack.h \
-  /usr/include/openssl/sha.h \
-  /usr/include/openssl/srtp.h \
-  /usr/include/openssl/ssl.h \
-  /usr/include/openssl/ssl2.h \
-  /usr/include/openssl/ssl3.h \
-  /usr/include/openssl/sslerr.h \
-  /usr/include/openssl/sslerr_legacy.h \
-  /usr/include/openssl/stack.h \
-  /usr/include/openssl/symhacks.h \
-  /usr/include/openssl/tls1.h \
-  /usr/include/openssl/types.h \
-  /usr/include/openssl/ui.h \
-  /usr/include/openssl/uierr.h \
-  /usr/include/openssl/x509.h \
-  /usr/include/openssl/x509_vfy.h \
-  /usr/include/openssl/x509err.h \
-  /usr/include/openssl/x509v3.h \
-  /usr/include/openssl/x509v3err.h \
   /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/rpc/netdb.h \
@@ -1026,8 +926,6 @@ CMakeFiles/swecp2025jmbc.dir/app.cpp.o: /mnt/c/Users/blake/swecp2025jmbc/app.cpp
   /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
-  /usr/include/x86_64-linux-gnu/openssl/configuration.h \
-  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/epoll.h \
   /usr/include/x86_64-linux-gnu/sys/eventfd.h \
@@ -1435,6 +1333,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/include/blowfish.cpp:
 
+/usr/include/c++/13/stdlib.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/include/node_blf.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/bcrypt.cpp:
@@ -1455,8 +1355,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/sys/epoll.h:
 
-/usr/include/x86_64-linux-gnu/openssl/opensslconf.h:
-
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h:
@@ -1475,6 +1373,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
 /usr/include/x86_64-linux-gnu/bits/unistd.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd-decl.h:
@@ -1485,6 +1385,10 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
+/usr/include/x86_64-linux-gnu/sys/ucontext.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigval_t.h:
@@ -1492,6 +1396,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/x86_64-linux-gnu/bits/types/siginfo_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
 
@@ -1517,6 +1423,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/termios-tcflow.h:
 
+/usr/include/x86_64-linux-gnu/bits/termios-struct.h:
+
 /usr/include/x86_64-linux-gnu/bits/termios-misc.h:
 
 /usr/include/x86_64-linux-gnu/bits/termios-c_oflag.h:
@@ -1533,6 +1441,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
 /usr/include/x86_64-linux-gnu/sys/syscall.h:
 
 /usr/include/x86_64-linux-gnu/bits/ss_flags.h:
@@ -1546,6 +1456,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/x86_64-linux-gnu/bits/sigstack.h:
 
 /usr/include/x86_64-linux-gnu/bits/signum-arch.h:
+
+/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
 
 /usr/include/x86_64-linux-gnu/bits/siginfo-arch.h:
 
@@ -1613,6 +1525,12 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/epoll.h:
 
+/usr/include/x86_64-linux-gnu/bits/endianness.h:
+
+/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
@@ -1643,6 +1561,10 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/stdio.h:
 
+/usr/include/stdint.h:
+
+/usr/include/stdc-predef.h:
+
 /usr/include/semaphore.h:
 
 /usr/include/pthread.h:
@@ -1650,98 +1572,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
 /usr/include/poll.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
-/usr/include/openssl/x509v3.h:
-
-/usr/include/openssl/x509err.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/openssl/x509.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/openssl/uierr.h:
-
-/usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
-
-/usr/include/openssl/ui.h:
-
-/usr/include/openssl/symhacks.h:
-
-/usr/include/openssl/ssl2.h:
-
-/usr/include/x86_64-linux-gnu/sys/ucontext.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h:
-
-/usr/include/openssl/srtp.h:
-
-/usr/include/openssl/safestack.h:
-
-/usr/include/openssl/rsaerr.h:
-
-/usr/include/openssl/randerr.h:
-
-/usr/include/x86_64-linux-gnu/bits/confname.h:
-
-/usr/include/openssl/rand.h:
-
-/usr/include/openssl/pkcs7err.h:
-
-/usr/include/openssl/pemerr.h:
-
-/usr/include/openssl/pem.h:
-
-/usr/include/openssl/params.h:
-
-/usr/include/openssl/obj_mac.h:
-
-/usr/include/openssl/macros.h:
-
-/usr/include/stdint.h:
-
-/usr/include/openssl/evp.h:
-
-/usr/include/openssl/engineerr.h:
-
-/usr/include/openssl/ec.h:
-
-/usr/include/openssl/dsaerr.h:
-
-/usr/include/openssl/dherr.h:
-
-/usr/include/openssl/cterr.h:
-
-/usr/include/openssl/ct.h:
-
-/usr/include/openssl/cryptoerr_legacy.h:
-
-/usr/include/openssl/cryptoerr.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
-/usr/include/openssl/crypto.h:
-
-/usr/include/openssl/core.h:
-
-/usr/include/openssl/conftypes.h:
-
-/usr/include/openssl/comp.h:
-
-/usr/include/x86_64-linux-gnu/bits/termios-struct.h:
-
-/usr/include/openssl/buffererr.h:
-
-/usr/include/openssl/buffer.h:
-
-/usr/include/openssl/bn.h:
-
-/usr/include/openssl/async.h:
-
-/usr/include/openssl/asn1err.h:
 
 /usr/include/netinet/in.h:
 
@@ -1772,8 +1602,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/errno.h:
 
 /usr/include/endian.h:
-
-/usr/include/openssl/rsa.h:
 
 /usr/include/c++/13/vector:
 
@@ -1825,15 +1653,11 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/stop_token:
 
-/usr/include/c++/13/stdlib.h:
-
 /usr/include/c++/13/sstream:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/c++/13/span:
-
-/usr/include/openssl/asyncerr.h:
 
 /usr/include/c++/13/ratio:
 
@@ -1855,19 +1679,21 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/numbers:
 
+/usr/include/c++/13/mutex:
+
 /usr/include/x86_64-linux-gnu/asm/ioctls.h:
 
 /usr/include/c++/13/memory:
 
 /usr/include/c++/13/limits:
 
+/usr/include/c++/13/iterator:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
 /usr/include/c++/13/ios:
 
 /usr/include/x86_64-linux-gnu/bits/string_fortified.h:
-
-/usr/include/openssl/evperr.h:
 
 /usr/include/c++/13/initializer_list:
 
@@ -1884,8 +1710,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/ext/atomicity.h:
 
 /usr/include/c++/13/exception:
-
-/usr/include/openssl/bnerr.h:
 
 /usr/include/c++/13/debug/debug.h:
 
@@ -1907,9 +1731,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/compare:
 
-/usr/include/c++/13/cmath:
+/usr/include/c++/13/codecvt:
 
-/usr/include/openssl/ecerr.h:
+/usr/include/c++/13/cmath:
 
 /usr/include/c++/13/stdexcept:
 
@@ -1937,8 +1761,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/bits/uses_allocator.h:
 
-/usr/include/openssl/e_os2.h:
-
 /usr/include/c++/13/bits/unordered_map.h:
 
 /usr/include/c++/13/bits/unique_ptr.h:
@@ -1953,8 +1775,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/bits/streambuf.tcc:
 
-/usr/include/openssl/prov_ssl.h:
-
 /usr/include/c++/13/bits/stl_uninitialized.h:
 
 /usr/include/c++/13/bits/stl_tree.h:
@@ -1965,19 +1785,15 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/bits/stl_multimap.h:
 
-/usr/include/openssl/x509_vfy.h:
+/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
 /usr/include/c++/13/bits/stl_iterator.h:
-
-/usr/include/openssl/bioerr.h:
 
 /usr/include/c++/13/bits/stl_function.h:
 
 /usr/include/c++/13/bits/stl_algobase.h:
 
 /usr/include/c++/13/bits/stl_algo.h:
-
-/usr/include/openssl/pkcs7.h:
 
 /usr/include/c++/13/bits/std_thread.h:
 
@@ -2019,11 +1835,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h:
 
-/usr/include/openssl/opensslv.h:
-
 /usr/include/c++/13/bits/predefined_ops.h:
 
-/usr/include/openssl/conf.h:
+/usr/include/c++/13/bits/postypes.h:
 
 /usr/include/c++/13/bits/parse_numbers.h:
 
@@ -2039,43 +1853,11 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/c++/13/bits/memoryfwd.h:
 
-/usr/include/c++/13/bits/max_size_type.h:
-
-/usr/include/c++/13/bits/locale_facets_nonio.tcc:
-
-/usr/include/c++/13/bits/locale_facets_nonio.h:
-
-/usr/include/c++/13/bits/locale_facets.tcc:
-
-/usr/include/c++/13/bits/locale_facets.h:
-
-/usr/include/c++/13/bits/locale_classes.tcc:
-
-/usr/include/c++/13/bits/iterator_concepts.h:
-
-/usr/include/c++/13/bits/ios_base.h:
-
-/usr/include/c++/13/bits/hashtable_policy.h:
-
-/usr/include/c++/13/bits/hash_bytes.h:
-
-/usr/include/c++/13/bits/fs_path.h:
-
-/usr/include/c++/13/bits/fs_ops.h:
-
-/usr/include/c++/13/bits/fs_fwd.h:
-
-/usr/include/c++/13/bits/exception.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
-
-/usr/include/c++/13/bits/erase_if.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/generic/detail/endpoint.hpp:
 
-/usr/include/openssl/bio.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/reactive_socket_service_base.ipp:
+
+/usr/include/c++/13/bits/locale_facets.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/blocking_adaptation.hpp:
 
@@ -2125,6 +1907,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/timer_queue.hpp:
 
+/usr/include/c++/13/bits/locale_facets_nonio.tcc:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/thread_info_base.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/conditionally_enabled_mutex.hpp:
@@ -2137,7 +1921,11 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/epoll_reactor.hpp:
 
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/std_fenced_block.hpp:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/select_interrupter.hpp:
+
+/usr/include/c++/13/bits/fs_ops.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/scheduler.hpp:
 
@@ -2155,11 +1943,17 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/socket_option.hpp:
 
+/usr/include/c++/13/bits/fs_fwd.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/impl/bad_executor.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/regex_fwd.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/system_context.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/resolve_endpoint_op.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_service_base.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_send_op.hpp:
 
@@ -2197,15 +1991,13 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/posix_event.hpp:
 
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/c++/13/bits/erase_if.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/pop_options.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/noncopyable.hpp:
-
-/usr/include/c++/13/bits/locale_classes.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/scheduler_thread_info.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/work_dispatcher.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/fenced_block.hpp:
 
@@ -2216,10 +2008,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/keyword_tss_ptr.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/memory.hpp:
-
-/usr/include/c++/13/bits/exception_defines.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/include/sqlite3.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/occupancy.hpp:
 
@@ -2233,7 +2021,7 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/static_thread_pool.hpp:
 
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/context.ipp:
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/timer_queue_set.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/prefer_only.hpp:
 
@@ -2261,10 +2049,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/config.hpp:
 
-/usr/include/c++/13/bits/functional_hash.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/traits/require_member.hpp:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/context_as.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/buffered_read_stream_fwd.hpp:
@@ -2272,12 +2056,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/bits/localefwd.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/handler_tracking.ipp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/std_fenced_block.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/context_base.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_sendto_op.hpp:
 
@@ -2294,10 +2072,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/cstddef.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/disposition.hpp:
-
-/usr/include/c++/13/bits/functexcept.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/resolver_service_base.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/impl/address_v6.ipp:
 
@@ -2322,10 +2096,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/ext/numeric_traits.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/require.hpp:
-
-/usr/include/c++/13/mutex:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/host_name_verification.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/scheduler.ipp:
 
@@ -2371,12 +2141,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/buffer_registration.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/c++/13/bits/locale_conv.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/include/crow/http_response.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/composed.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/buffer.hpp:
@@ -2398,8 +2162,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/operation.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
-
-/usr/include/openssl/tls1.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/connect.hpp:
 
@@ -2429,25 +2191,19 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
 
-/usr/include/openssl/objects.h:
-
 /usr/include/c++/13/ext/aligned_buffer.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/associated_cancellation_slot.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/thread_pool.ipp:
 
-/usr/include/openssl/objectserr.h:
-
 /usr/include/c++/13/bits/unique_lock.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/write_at.hpp:
 
+/usr/include/c++/13/bits/iterator_concepts.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/include/sqlite3.c:
-
-/usr/include/openssl/x509v3err.h:
-
-/usr/include/openssl/engine.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/cancellation_state.hpp:
 
@@ -2471,13 +2227,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/associated_immediate_executor.hpp:
 
-/usr/include/openssl/asn1.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_random_access_file.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/executor_function.hpp:
-
-/usr/include/openssl/core_dispatch.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/windows/basic_object_handle.hpp:
 
@@ -2513,6 +2265,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/associated_executor.hpp:
 
+/usr/include/c++/13/bits/max_size_type.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/posix_mutex.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_io_object.hpp:
@@ -2520,8 +2274,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/query_string.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/file_base.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/verify_context.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/resolver_service.hpp:
 
@@ -2591,11 +2343,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/common.h:
 
-/usr/include/c++/13/bits/hashtable.h:
+/mnt/c/Users/blake/swecp2025jmbc/include/sqlite3.h:
 
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_writable_pipe.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_raw_socket.hpp:
+/usr/include/c++/13/bits/exception_defines.h:
 
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
@@ -2657,13 +2407,11 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/atomic_count.hpp:
 
-/usr/include/openssl/dsa.h:
-
 /usr/include/c++/13/bit:
 
-/usr/include/c++/13/bits/istream.tcc:
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/generic/datagram_protocol.hpp:
 
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/buffered_stream_storage.hpp:
+/usr/include/c++/13/bits/allocated_ptr.h:
 
 /usr/include/c++/13/bits/random.tcc:
 
@@ -2683,17 +2431,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/impl/address_v6.hpp:
 
-/usr/include/openssl/dh.h:
-
-/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/context.hpp:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/local/basic_endpoint.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/buffer_resize_guard.hpp:
-
-/usr/include/openssl/http.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/posix_thread.hpp:
 
@@ -2725,10 +2465,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/handler_type_requirements.hpp:
 
-/usr/include/c++/13/iterator:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/shutdown_op.hpp:
-
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/associated_allocator.hpp:
@@ -2744,8 +2480,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/alloca.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/impl/network_v4.ipp:
-
-/usr/include/openssl/sslerr.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/date_time_fwd.hpp:
 
@@ -2767,13 +2501,11 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_connect_op.hpp:
 
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/impl/openssl_init.ipp:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/resolver_service_base.hpp:
 
-/usr/include/x86_64-linux-gnu/openssl/configuration.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/any_io_executor.ipp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/traits/require_concept_member.hpp:
 
 /usr/include/c++/13/streambuf:
 
@@ -2788,10 +2520,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/bits/stl_pair.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/impl/address.ipp:
-
-/usr/include/c++/13/codecvt:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/io.hpp:
 
 /usr/include/c++/13/functional:
 
@@ -2809,15 +2537,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/descriptor_write_op.hpp:
 
-/usr/include/c++/13/bits/postypes.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/host_name_verification.ipp:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/as_tuple.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/completion_condition.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/write_op.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/redirect_error.hpp:
 
@@ -2833,15 +2555,21 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/strand.hpp:
 
+/usr/include/c++/13/bits/hash_bytes.h:
+
 /usr/include/c++/13/bits/node_handle.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution_context.hpp:
+
+/usr/include/c++/13/bits/fs_path.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/consign.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/handler_alloc_helpers.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/handler_cont_helpers.hpp:
+
+/usr/include/c++/13/bits/ios_base.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/local_free_on_block_exit.hpp:
 
@@ -2866,6 +2594,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/bits/new_allocator.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/service_registry.hpp:
+
+/usr/include/c++/13/bits/locale_classes.tcc:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/generic/seq_packet_protocol.hpp:
 
@@ -2899,11 +2629,7 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/any_completion_executor.ipp:
 
-/usr/include/openssl/sha.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/as_tuple.hpp:
-
-/usr/include/openssl/types.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/awaitable.hpp:
 
@@ -2951,6 +2677,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/config.hpp:
 
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/basic_resolver.hpp:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/connect_pipe.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/detached.hpp:
@@ -2960,16 +2688,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/error.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/error_code.ipp:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
-
-/usr/include/x86_64-linux-gnu/bits/stat.h:
-
-/usr/include/c++/13/bits/this_thread_sleep.h:
-
-/usr/include/c++/13/bits/exception_ptr.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/execution_context.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -3015,6 +2733,16 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/serial_port_base.hpp:
 
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/x86_64-linux-gnu/bits/stat.h:
+
+/usr/include/c++/13/bits/this_thread_sleep.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/execution_context.hpp:
+
+/usr/include/c++/13/bits/exception_ptr.h:
+
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
 
 /usr/include/x86_64-linux-gnu/bits/syscall.h:
@@ -3053,10 +2781,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/address_v4.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/openssl_init.hpp:
-
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/x86_64-linux-gnu/bits/ioctls.h:
@@ -3087,9 +2811,9 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/detail/impl/endpoint.ipp:
 
-/usr/include/c++/13/bits/invoke.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/strand_executor_service.hpp:
+
+/usr/include/c++/13/bits/invoke.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/host_name.hpp:
 
@@ -3147,8 +2871,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/windows/overlapped_ptr.hpp:
 
-/usr/include/openssl/ssl3.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/unicast.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
@@ -3158,6 +2880,10 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_accept_op.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/v6_only.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/traits/require_member.hpp:
+
+/usr/include/c++/13/bits/functional_hash.h:
 
 /usr/include/c++/13/map:
 
@@ -3205,6 +2931,12 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/query.hpp:
 
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/handler_work.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/app.cpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/random_access_file.hpp:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/read.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
@@ -3221,8 +2953,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/recycling_allocator.hpp:
 
-/usr/include/openssl/lhash.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/require_concept.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/serial_port.hpp:
@@ -3237,72 +2967,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/signal_set_base.hpp:
 
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/engine.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/endianness.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/handshake_op.hpp:
-
-/usr/include/openssl/comperr.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/impl/engine.ipp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/resolve_endpoint_op.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/reactive_socket_service_base.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/openssl_types.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/timer_queue_set.ipp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/password_callback.hpp:
-
-/usr/include/c++/13/bits/fstream.tcc:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/read_op.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/stream_core.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/windows/basic_overlapped_handle.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
-
-/usr/include/c++/13/array:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/verify_callback.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/generic/datagram_protocol.hpp:
-
-/usr/include/c++/13/bits/allocated_ptr.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/error.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/traits/require_concept_member.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/context.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/basic_resolver.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/impl/error.ipp:
-
-/usr/include/openssl/err.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/stream.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/stream_base.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/handler_work.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/app.cpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/random_access_file.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/verify_mode.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/posix_static_mutex.hpp:
-
-/mnt/c/Users/blake/swecp2025jmbc/include/crow/http_connection.h:
-
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/steady_timer.hpp:
@@ -3315,21 +2979,19 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/system_timer.hpp:
 
+/usr/include/c++/13/bits/fstream.tcc:
+
 /usr/include/x86_64-linux-gnu/asm/sockios.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_serial_port.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/this_coro.hpp:
 
-/usr/include/openssl/stack.h:
-
 /usr/include/linux/stat.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/thread.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
-
-/usr/include/openssl/conferr.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/execution/mapping.hpp:
 
@@ -3379,6 +3041,12 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/uses_executor.hpp:
 
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/windows/basic_overlapped_handle.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
+
+/usr/include/c++/13/array:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/strand_service.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/wrapped_handler.hpp:
@@ -3419,6 +3087,8 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/include/bgezitem.h:
 
+/usr/include/c++/13/bits/hashtable_policy.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/descriptor_ops.ipp:
 
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ip/tcp.hpp:
@@ -3429,13 +3099,15 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/compression.h:
 
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/posix_static_mutex.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/include/crow/http_connection.h:
+
 /mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/thread_context.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/http_parser_merged.h:
 
 /usr/include/linux/limits.h:
-
-/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/ssl/detail/buffered_handshake_op.hpp:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/http_request.h:
 
@@ -3449,8 +3121,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/mustache.h:
 
-/usr/include/openssl/sslerr_legacy.h:
-
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/parser.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/utility.h:
@@ -3458,8 +3128,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/returnable.h:
 
 /usr/include/c++/13/any:
-
-/usr/include/openssl/ssl.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/routing.h:
 
@@ -3478,8 +3146,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/bits/shared_ptr.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/socket_acceptors.h:
-
-/usr/include/openssl/hmac.h:
 
 /mnt/c/Users/blake/swecp2025jmbc/include/crow/socket_adaptors.h:
 
@@ -3537,8 +3203,6 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
-/usr/include/openssl/dtls1.h:
-
 /usr/include/c++/13/bits/basic_string.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h:
@@ -3552,3 +3216,35 @@ CMakeFiles/swecp2025jmbc.dir/include/sqlite3.c.o: /mnt/c/Users/blake/swecp2025jm
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
 /usr/include/c++/13/bits/enable_special_members.h:
+
+/usr/include/c++/13/bits/exception.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/impl/resolver_service_base.ipp:
+
+/usr/include/c++/13/bits/functexcept.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_writable_pipe.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/basic_raw_socket.hpp:
+
+/usr/include/c++/13/bits/hashtable.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/buffered_stream_storage.hpp:
+
+/usr/include/c++/13/bits/istream.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/include/crow/http_response.h:
+
+/usr/include/c++/13/bits/locale_conv.h:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/scheduler_thread_info.hpp:
+
+/mnt/c/Users/blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/detail/work_dispatcher.hpp:
+
+/usr/include/c++/13/bits/locale_classes.h:
+
+/usr/include/c++/13/bits/locale_facets.tcc:
+
+/usr/include/c++/13/bits/locale_facets_nonio.h:

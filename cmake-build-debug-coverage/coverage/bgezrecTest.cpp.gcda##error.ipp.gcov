@@ -1,0 +1,167 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/impl/error.ipp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// impl/error.ipp
+        -:    3:// ~~~~~~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_IMPL_ERROR_IPP
+        -:   12:#define ASIO_IMPL_ERROR_IPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:#include <string>
+        -:   20:#include "asio/error.hpp"
+        -:   21:
+        -:   22:#include "asio/detail/push_options.hpp"
+        -:   23:
+        -:   24:namespace asio {
+        -:   25:namespace error {
+        -:   26:
+        -:   27:#if !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
+        -:   28:
+        -:   29:namespace detail {
+        -:   30:
+        -:   31:class netdb_category : public asio::error_category
+        -:   32:{
+        -:   33:public:
+        -:   34:  const char* name() const noexcept
+        -:   35:  {
+        -:   36:    return "asio.netdb";
+        -:   37:  }
+        -:   38:
+        -:   39:  std::string message(int value) const
+        -:   40:  {
+        -:   41:    if (value == error::host_not_found)
+        -:   42:      return "Host not found (authoritative)";
+        -:   43:    if (value == error::host_not_found_try_again)
+        -:   44:      return "Host not found (non-authoritative), try again later";
+        -:   45:    if (value == error::no_data)
+        -:   46:      return "The query is valid, but it does not have associated data";
+        -:   47:    if (value == error::no_recovery)
+        -:   48:      return "A non-recoverable error occurred during database lookup";
+        -:   49:    return "asio.netdb error";
+        -:   50:  }
+        -:   51:};
+        -:   52:
+        -:   53:} // namespace detail
+        -:   54:
+        -:   55:const asio::error_category& get_netdb_category()
+        -:   56:{
+        -:   57:  static detail::netdb_category instance;
+        -:   58:  return instance;
+        -:   59:}
+        -:   60:
+        -:   61:namespace detail {
+        -:   62:
+        -:   63:class addrinfo_category : public asio::error_category
+        -:   64:{
+        -:   65:public:
+        -:   66:  const char* name() const noexcept
+        -:   67:  {
+        -:   68:    return "asio.addrinfo";
+        -:   69:  }
+        -:   70:
+        -:   71:  std::string message(int value) const
+        -:   72:  {
+        -:   73:    if (value == error::service_not_found)
+        -:   74:      return "Service not found";
+        -:   75:    if (value == error::socket_type_not_supported)
+        -:   76:      return "Socket type not supported";
+        -:   77:    return "asio.addrinfo error";
+        -:   78:  }
+        -:   79:};
+        -:   80:
+        -:   81:} // namespace detail
+        -:   82:
+        -:   83:const asio::error_category& get_addrinfo_category()
+        -:   84:{
+        -:   85:  static detail::addrinfo_category instance;
+        -:   86:  return instance;
+        -:   87:}
+        -:   88:
+        -:   89:#endif // !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
+        -:   90:
+        -:   91:namespace detail {
+        -:   92:
+        -:   93:class misc_category : public asio::error_category
+        -:   94:{
+        -:   95:public:
+function _ZNK4asio5error6detail13misc_category4nameEv called 0 returned 0% blocks executed 0%
+    #####:   96:  const char* name() const noexcept
+        -:   97:  {
+    #####:   98:    return "asio.misc";
+        -:   99:  }
+        -:  100:
+function _ZNK4asio5error6detail13misc_category7messageB5cxx11Ei called 0 returned 0% blocks executed 0%
+    #####:  101:  std::string message(int value) const
+        -:  102:  {
+    #####:  103:    if (value == error::already_open)
+    %%%%%:  103-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:  104:      return "Already open";
+    %%%%%:  104-block  0
+call    0 never executed
+    #####:  105:    if (value == error::eof)
+    %%%%%:  105-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:  106:      return "End of file";
+    %%%%%:  106-block  0
+call    0 never executed
+    #####:  107:    if (value == error::not_found)
+    %%%%%:  107-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:  108:      return "Element not found";
+    %%%%%:  108-block  0
+call    0 never executed
+    #####:  109:    if (value == error::fd_set_failure)
+    %%%%%:  109-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    #####:  110:      return "The descriptor does not fit into the select call's fd_set";
+    %%%%%:  110-block  0
+call    0 never executed
+    #####:  111:    return "asio.misc error";
+    %%%%%:  111-block  0
+call    0 never executed
+        -:  112:  }
+        -:  113:};
+        -:  114:
+        -:  115:} // namespace detail
+        -:  116:
+function _ZN4asio5error17get_misc_categoryEv called 1 returned 100% blocks executed 100%
+        1:  117:const asio::error_category& get_misc_category()
+        -:  118:{
+        1:  119:  static detail::misc_category instance;
+        1:  119-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 0
+        1:  119-block  1
+call    2 returned 1
+branch  3 taken 1 (fallthrough)
+branch  4 taken 0
+        1:  119-block  2
+call    5 returned 1
+call    6 returned 1
+        1:  120:  return instance;
+        -:  121:}
+        -:  122:
+        -:  123:} // namespace error
+        -:  124:} // namespace asio
+        -:  125:
+        -:  126:#include "asio/detail/pop_options.hpp"
+        -:  127:
+        -:  128:#endif // ASIO_IMPL_ERROR_IPP

@@ -284,12 +284,16 @@
         
             sessionStorage.setItem("checked", JSON.stringify(checkedValues));
 
-        socket.send(JSON.stringify({
-            op: "save",
-            uid: localStorage.getItem("activeuserid"),
-            saved : checkedValues
-        }));
-        socket.close(1000, "Disconnecting from Account server");
+            socket.send(JSON.stringify({
+                op: "save",
+                uid: localStorage.getItem("activeuserid"),
+                saved : checkedValues
+            }));
+            socket.close(1000, "Disconnecting from Account server");
+        }
+        if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+            socket = new WebSocket(`ws://${window.location.hostname}:18080/Account`);
+            console.log("Reopened Account WS");
         }
     });
     socket.onclose = () => {

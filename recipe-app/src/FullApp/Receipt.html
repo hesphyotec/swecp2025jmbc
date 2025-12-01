@@ -357,7 +357,11 @@
           console.log("Page is unloading (possibly reloading)");
           sock.close(1000, "Disconnecting from Receipt server");
         }
-    })
+        if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+          sock = new WebSocket(`ws://${window.location.hostname}:18080/inventory`);
+          console.log("Reopened Receipt WS");
+        }
+      });
 
     sock.onerror = (e) =>{
         console.error('error', e);

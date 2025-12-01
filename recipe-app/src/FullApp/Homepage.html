@@ -108,6 +108,10 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Homepage server");
       }
+      if(!document.hidden && sock.readyState === WebSocket.CLOSED){
+        socket = new WebSocket(`ws://${window.location.hostname}:18080/home`);
+        console.log("Reopened Homepage WS");
+      }
     });
   </script>
 </body>

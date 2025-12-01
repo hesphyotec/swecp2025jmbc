@@ -1,0 +1,39 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/include/crow/returnable.h
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <string>
+        -:    4:
+        -:    5:namespace crow
+        -:    6:{
+        -:    7:    /// An abstract class that allows any other class to be returned by a handler.
+        -:    8:    struct returnable
+        -:    9:    {
+        -:   10:        std::string content_type;
+        -:   11:        virtual std::string dump() const = 0;
+        -:   12:
+      353:   13:        returnable(std::string ctype):
+      353:   14:          content_type{ctype}
+call    0 returned 180
+branch  1 taken 180 (fallthrough)
+branch  2 taken 0 (throw)
+call    3 returned 7
+branch  4 taken 7 (fallthrough)
+branch  5 taken 0 (throw)
+call    6 returned 166
+branch  7 taken 166 (fallthrough)
+branch  8 taken 0 (throw)
+      353:   15:        {}
+      180:   15-block  0
+        7:   15-block  1
+      166:   15-block  2
+        -:   16:
+    =====:   17:        virtual ~returnable(){}
+    $$$$$:   17-block  0
+call    0 never executed
+    $$$$$:   17-block  1
+call    1 never executed
+        -:   18:    };
+        -:   19:} // namespace crow

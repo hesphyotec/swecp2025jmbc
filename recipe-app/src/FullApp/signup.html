@@ -147,7 +147,11 @@
       if(document.hidden){
         sock.close(1000, "Disconnecting from Signup server");
       }
-    })
+      if(!document.hidden && socket.readyState === WebSocket.CLOSED){
+        sock = new WebSocket(`ws://${window.location.hostname}:18080/signup`);
+        console.log("Reopened Signup WS");
+      }
+    });
   </script>
 
 </body>

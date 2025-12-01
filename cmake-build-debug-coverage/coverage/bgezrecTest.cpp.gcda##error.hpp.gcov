@@ -1,0 +1,394 @@
+        -:    0:Source:C:/Users/Blake/swecp2025jmbc/asio/asio-1.36.0/include/asio/error.hpp
+        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// error.hpp
+        -:    3:// ~~~~~~~~~
+        -:    4://
+        -:    5:// Copyright (c) 2003-2025 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+        -:    6://
+        -:    7:// Distributed under the Boost Software License, Version 1.0. (See accompanying
+        -:    8:// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+        -:    9://
+        -:   10:
+        -:   11:#ifndef ASIO_ERROR_HPP
+        -:   12:#define ASIO_ERROR_HPP
+        -:   13:
+        -:   14:#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   15:# pragma once
+        -:   16:#endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
+        -:   17:
+        -:   18:#include "asio/detail/config.hpp"
+        -:   19:#include "asio/error_code.hpp"
+        -:   20:#include "asio/system_error.hpp"
+        -:   21:#if defined(ASIO_WINDOWS) \
+        -:   22:  || defined(__CYGWIN__) \
+        -:   23:  || defined(ASIO_WINDOWS_RUNTIME)
+        -:   24:# include <winerror.h>
+        -:   25:#else
+        -:   26:# include <cerrno>
+        -:   27:# include <netdb.h>
+        -:   28:#endif
+        -:   29:
+        -:   30:#if defined(GENERATING_DOCUMENTATION)
+        -:   31:/// INTERNAL ONLY.
+        -:   32:# define ASIO_NATIVE_ERROR(e) implementation_defined
+        -:   33:/// INTERNAL ONLY.
+        -:   34:# define ASIO_SOCKET_ERROR(e) implementation_defined
+        -:   35:/// INTERNAL ONLY.
+        -:   36:# define ASIO_NETDB_ERROR(e) implementation_defined
+        -:   37:/// INTERNAL ONLY.
+        -:   38:# define ASIO_GETADDRINFO_ERROR(e) implementation_defined
+        -:   39:/// INTERNAL ONLY.
+        -:   40:# define ASIO_WIN_OR_POSIX(e_win, e_posix) implementation_defined
+        -:   41:#elif defined(ASIO_WINDOWS_RUNTIME)
+        -:   42:# define ASIO_NATIVE_ERROR(e) __HRESULT_FROM_WIN32(e)
+        -:   43:# define ASIO_SOCKET_ERROR(e) __HRESULT_FROM_WIN32(WSA ## e)
+        -:   44:# define ASIO_NETDB_ERROR(e) __HRESULT_FROM_WIN32(WSA ## e)
+        -:   45:# define ASIO_GETADDRINFO_ERROR(e) __HRESULT_FROM_WIN32(WSA ## e)
+        -:   46:# define ASIO_WIN_OR_POSIX(e_win, e_posix) e_win
+        -:   47:#elif defined(ASIO_WINDOWS) || defined(__CYGWIN__)
+        -:   48:# define ASIO_NATIVE_ERROR(e) e
+        -:   49:# define ASIO_SOCKET_ERROR(e) WSA ## e
+        -:   50:# define ASIO_NETDB_ERROR(e) WSA ## e
+        -:   51:# define ASIO_GETADDRINFO_ERROR(e) WSA ## e
+        -:   52:# define ASIO_WIN_OR_POSIX(e_win, e_posix) e_win
+        -:   53:#else
+        -:   54:# define ASIO_NATIVE_ERROR(e) e
+        -:   55:# define ASIO_SOCKET_ERROR(e) e
+        -:   56:# define ASIO_NETDB_ERROR(e) e
+        -:   57:# define ASIO_GETADDRINFO_ERROR(e) e
+        -:   58:# define ASIO_WIN_OR_POSIX(e_win, e_posix) e_posix
+        -:   59:#endif
+        -:   60:
+        -:   61:#include "asio/detail/push_options.hpp"
+        -:   62:
+        -:   63:namespace asio {
+        -:   64:namespace error {
+        -:   65:
+        -:   66:enum basic_errors
+        -:   67:{
+        -:   68:  /// Permission denied.
+        -:   69:  access_denied = ASIO_SOCKET_ERROR(EACCES),
+        -:   70:
+        -:   71:  /// Address family not supported by protocol.
+        -:   72:  address_family_not_supported = ASIO_SOCKET_ERROR(EAFNOSUPPORT),
+        -:   73:
+        -:   74:  /// Address already in use.
+        -:   75:  address_in_use = ASIO_SOCKET_ERROR(EADDRINUSE),
+        -:   76:
+        -:   77:  /// Transport endpoint is already connected.
+        -:   78:  already_connected = ASIO_SOCKET_ERROR(EISCONN),
+        -:   79:
+        -:   80:  /// Operation already in progress.
+        -:   81:  already_started = ASIO_SOCKET_ERROR(EALREADY),
+        -:   82:
+        -:   83:  /// Broken pipe.
+        -:   84:  broken_pipe = ASIO_WIN_OR_POSIX(
+        -:   85:      ASIO_NATIVE_ERROR(ERROR_BROKEN_PIPE),
+        -:   86:      ASIO_NATIVE_ERROR(EPIPE)),
+        -:   87:
+        -:   88:  /// A connection has been aborted.
+        -:   89:  connection_aborted = ASIO_SOCKET_ERROR(ECONNABORTED),
+        -:   90:
+        -:   91:  /// Connection refused.
+        -:   92:  connection_refused = ASIO_SOCKET_ERROR(ECONNREFUSED),
+        -:   93:
+        -:   94:  /// Connection reset by peer.
+        -:   95:  connection_reset = ASIO_SOCKET_ERROR(ECONNRESET),
+        -:   96:
+        -:   97:  /// Bad file descriptor.
+        -:   98:  bad_descriptor = ASIO_SOCKET_ERROR(EBADF),
+        -:   99:
+        -:  100:  /// Bad address.
+        -:  101:  fault = ASIO_SOCKET_ERROR(EFAULT),
+        -:  102:
+        -:  103:  /// No route to host.
+        -:  104:  host_unreachable = ASIO_SOCKET_ERROR(EHOSTUNREACH),
+        -:  105:
+        -:  106:  /// Operation now in progress.
+        -:  107:  in_progress = ASIO_SOCKET_ERROR(EINPROGRESS),
+        -:  108:
+        -:  109:  /// Interrupted system call.
+        -:  110:  interrupted = ASIO_SOCKET_ERROR(EINTR),
+        -:  111:
+        -:  112:  /// Invalid argument.
+        -:  113:  invalid_argument = ASIO_SOCKET_ERROR(EINVAL),
+        -:  114:
+        -:  115:  /// Message too long.
+        -:  116:  message_size = ASIO_SOCKET_ERROR(EMSGSIZE),
+        -:  117:
+        -:  118:  /// The name was too long.
+        -:  119:  name_too_long = ASIO_SOCKET_ERROR(ENAMETOOLONG),
+        -:  120:
+        -:  121:  /// Network is down.
+        -:  122:  network_down = ASIO_SOCKET_ERROR(ENETDOWN),
+        -:  123:
+        -:  124:  /// Network dropped connection on reset.
+        -:  125:  network_reset = ASIO_SOCKET_ERROR(ENETRESET),
+        -:  126:
+        -:  127:  /// Network is unreachable.
+        -:  128:  network_unreachable = ASIO_SOCKET_ERROR(ENETUNREACH),
+        -:  129:
+        -:  130:  /// Too many open files.
+        -:  131:  no_descriptors = ASIO_SOCKET_ERROR(EMFILE),
+        -:  132:
+        -:  133:  /// No buffer space available.
+        -:  134:  no_buffer_space = ASIO_SOCKET_ERROR(ENOBUFS),
+        -:  135:
+        -:  136:  /// Cannot allocate memory.
+        -:  137:  no_memory = ASIO_WIN_OR_POSIX(
+        -:  138:      ASIO_NATIVE_ERROR(ERROR_OUTOFMEMORY),
+        -:  139:      ASIO_NATIVE_ERROR(ENOMEM)),
+        -:  140:
+        -:  141:  /// Operation not permitted.
+        -:  142:  no_permission = ASIO_WIN_OR_POSIX(
+        -:  143:      ASIO_NATIVE_ERROR(ERROR_ACCESS_DENIED),
+        -:  144:      ASIO_NATIVE_ERROR(EPERM)),
+        -:  145:
+        -:  146:  /// Protocol not available.
+        -:  147:  no_protocol_option = ASIO_SOCKET_ERROR(ENOPROTOOPT),
+        -:  148:
+        -:  149:  /// No such device.
+        -:  150:  no_such_device = ASIO_WIN_OR_POSIX(
+        -:  151:      ASIO_NATIVE_ERROR(ERROR_BAD_UNIT),
+        -:  152:      ASIO_NATIVE_ERROR(ENODEV)),
+        -:  153:
+        -:  154:  /// Transport endpoint is not connected.
+        -:  155:  not_connected = ASIO_SOCKET_ERROR(ENOTCONN),
+        -:  156:
+        -:  157:  /// Socket operation on non-socket.
+        -:  158:  not_socket = ASIO_SOCKET_ERROR(ENOTSOCK),
+        -:  159:
+        -:  160:  /// Operation cancelled.
+        -:  161:  operation_aborted = ASIO_WIN_OR_POSIX(
+        -:  162:      ASIO_NATIVE_ERROR(ERROR_OPERATION_ABORTED),
+        -:  163:      ASIO_NATIVE_ERROR(ECANCELED)),
+        -:  164:
+        -:  165:  /// Operation not supported.
+        -:  166:  operation_not_supported = ASIO_SOCKET_ERROR(EOPNOTSUPP),
+        -:  167:
+        -:  168:  /// Cannot send after transport endpoint shutdown.
+        -:  169:  shut_down = ASIO_SOCKET_ERROR(ESHUTDOWN),
+        -:  170:
+        -:  171:  /// Connection timed out.
+        -:  172:  timed_out = ASIO_SOCKET_ERROR(ETIMEDOUT),
+        -:  173:
+        -:  174:  /// Resource temporarily unavailable.
+        -:  175:  try_again = ASIO_WIN_OR_POSIX(
+        -:  176:      ASIO_NATIVE_ERROR(ERROR_RETRY),
+        -:  177:      ASIO_NATIVE_ERROR(EAGAIN)),
+        -:  178:
+        -:  179:  /// The socket is marked non-blocking and the requested operation would block.
+        -:  180:  would_block = ASIO_SOCKET_ERROR(EWOULDBLOCK)
+        -:  181:};
+        -:  182:
+        -:  183:enum netdb_errors
+        -:  184:{
+        -:  185:  /// Host not found (authoritative).
+        -:  186:  host_not_found = ASIO_NETDB_ERROR(HOST_NOT_FOUND),
+        -:  187:
+        -:  188:  /// Host not found (non-authoritative).
+        -:  189:  host_not_found_try_again = ASIO_NETDB_ERROR(TRY_AGAIN),
+        -:  190:
+        -:  191:  /// The query is valid but does not have associated address data.
+        -:  192:  no_data = ASIO_NETDB_ERROR(NO_DATA),
+        -:  193:
+        -:  194:  /// A non-recoverable error occurred.
+        -:  195:  no_recovery = ASIO_NETDB_ERROR(NO_RECOVERY)
+        -:  196:};
+        -:  197:
+        -:  198:enum addrinfo_errors
+        -:  199:{
+        -:  200:  /// The service is not supported for the given socket type.
+        -:  201:  service_not_found = ASIO_WIN_OR_POSIX(
+        -:  202:      ASIO_NATIVE_ERROR(WSATYPE_NOT_FOUND),
+        -:  203:      ASIO_GETADDRINFO_ERROR(EAI_SERVICE)),
+        -:  204:
+        -:  205:  /// The socket type is not supported.
+        -:  206:  socket_type_not_supported = ASIO_WIN_OR_POSIX(
+        -:  207:      ASIO_NATIVE_ERROR(WSAESOCKTNOSUPPORT),
+        -:  208:      ASIO_GETADDRINFO_ERROR(EAI_SOCKTYPE))
+        -:  209:};
+        -:  210:
+        -:  211:enum misc_errors
+        -:  212:{
+        -:  213:  /// Already open.
+        -:  214:  already_open = 1,
+        -:  215:
+        -:  216:  /// End of file or stream.
+        -:  217:  eof,
+        -:  218:
+        -:  219:  /// Element not found.
+        -:  220:  not_found,
+        -:  221:
+        -:  222:  /// The descriptor cannot fit into the select system call's fd_set.
+        -:  223:  fd_set_failure
+        -:  224:};
+        -:  225:
+        -:  226:// boostify: non-boost code starts here
+        -:  227:#if !defined(ASIO_ERROR_LOCATION)
+        -:  228:# define ASIO_ERROR_LOCATION(e) (void)0
+        -:  229:#endif // !defined(ASIO_ERROR_LOCATION)
+        -:  230:
+        -:  231:// boostify: non-boost code ends here
+        -:  232:#if !defined(ASIO_ERROR_LOCATION) \
+        -:  233:  && !defined(ASIO_DISABLE_ERROR_LOCATION) \
+        -:  234:  && defined(ASIO_HAS_BOOST_CONFIG) \
+        -:  235:  && (BOOST_VERSION >= 107900)
+        -:  236:
+        -:  237:# define ASIO_ERROR_LOCATION(e) \
+        -:  238:  do { \
+        -:  239:    BOOST_STATIC_CONSTEXPR boost::source_location loc \
+        -:  240:      = BOOST_CURRENT_LOCATION; \
+        -:  241:    (e).assign((e), &loc); \
+        -:  242:  } while (false)
+        -:  243:
+        -:  244:#else // !defined(ASIO_ERROR_LOCATION)
+        -:  245:      //   && !defined(ASIO_DISABLE_ERROR_LOCATION)
+        -:  246:      //   && defined(ASIO_HAS_BOOST_CONFIG)
+        -:  247:      //   && (BOOST_VERSION >= 107900)
+        -:  248:
+        -:  249:# define ASIO_ERROR_LOCATION(e) (void)0
+        -:  250:
+        -:  251:#endif // !defined(ASIO_ERROR_LOCATION)
+        -:  252:       //   && !defined(ASIO_DISABLE_ERROR_LOCATION)
+        -:  253:       //   && defined(ASIO_HAS_BOOST_CONFIG)
+        -:  254:       //   && (BOOST_VERSION >= 107900)
+        -:  255:
+        -:  256:inline void clear(asio::error_code& ec)
+        -:  257:{
+        -:  258:  ec.assign(0, ec.category());
+        -:  259:}
+        -:  260:
+        -:  261:inline const asio::error_category& get_system_category()
+        -:  262:{
+    #####:  263:  return asio::system_category();
+call    0 never executed
+        -:  264:}
+        -:  265:
+        -:  266:#if !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
+        -:  267:
+        -:  268:extern ASIO_DECL
+        -:  269:const asio::error_category& get_netdb_category();
+        -:  270:
+        -:  271:extern ASIO_DECL
+        -:  272:const asio::error_category& get_addrinfo_category();
+        -:  273:
+        -:  274:#else // !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
+        -:  275:
+        -:  276:inline const asio::error_category& get_netdb_category()
+        -:  277:{
+        -:  278:  return get_system_category();
+        -:  279:}
+        -:  280:
+        -:  281:inline const asio::error_category& get_addrinfo_category()
+        -:  282:{
+        -:  283:  return get_system_category();
+        -:  284:}
+        -:  285:
+        -:  286:#endif // !defined(ASIO_WINDOWS) && !defined(__CYGWIN__)
+        -:  287:
+        -:  288:extern ASIO_DECL
+        -:  289:const asio::error_category& get_misc_category();
+        -:  290:
+        -:  291:static const asio::error_category&
+        -:  292:  system_category ASIO_UNUSED_VARIABLE
+        -:  293:  = asio::error::get_system_category();
+        -:  294:static const asio::error_category&
+        -:  295:  netdb_category ASIO_UNUSED_VARIABLE
+        -:  296:  = asio::error::get_netdb_category();
+        -:  297:static const asio::error_category&
+        -:  298:  addrinfo_category ASIO_UNUSED_VARIABLE
+        -:  299:  = asio::error::get_addrinfo_category();
+        -:  300:static const asio::error_category&
+        -:  301:  misc_category ASIO_UNUSED_VARIABLE
+        -:  302:  = asio::error::get_misc_category();
+        -:  303:
+        -:  304:} // namespace error
+        -:  305:} // namespace asio
+        -:  306:
+        -:  307:namespace std {
+        -:  308:
+        -:  309:template<> struct is_error_code_enum<asio::error::basic_errors>
+        -:  310:{
+        -:  311:  static const bool value = true;
+        -:  312:};
+        -:  313:
+        -:  314:template<> struct is_error_code_enum<asio::error::netdb_errors>
+        -:  315:{
+        -:  316:  static const bool value = true;
+        -:  317:};
+        -:  318:
+        -:  319:template<> struct is_error_code_enum<asio::error::addrinfo_errors>
+        -:  320:{
+        -:  321:  static const bool value = true;
+        -:  322:};
+        -:  323:
+        -:  324:template<> struct is_error_code_enum<asio::error::misc_errors>
+        -:  325:{
+        -:  326:  static const bool value = true;
+        -:  327:};
+        -:  328:
+        -:  329:} // namespace std
+        -:  330:
+        -:  331:namespace asio {
+        -:  332:namespace error {
+        -:  333:
+        -:  334:inline asio::error_code make_error_code(basic_errors e)
+        -:  335:{
+        -:  336:  return asio::error_code(
+        -:  337:      static_cast<int>(e), get_system_category());
+        -:  338:}
+        -:  339:
+        -:  340:inline asio::error_code make_error_code(netdb_errors e)
+        -:  341:{
+        -:  342:  return asio::error_code(
+        -:  343:      static_cast<int>(e), get_netdb_category());
+        -:  344:}
+        -:  345:
+        -:  346:inline asio::error_code make_error_code(addrinfo_errors e)
+        -:  347:{
+        -:  348:  return asio::error_code(
+        -:  349:      static_cast<int>(e), get_addrinfo_category());
+        -:  350:}
+        -:  351:
+        -:  352:inline asio::error_code make_error_code(misc_errors e)
+        -:  353:{
+        -:  354:  return asio::error_code(
+        -:  355:      static_cast<int>(e), get_misc_category());
+        -:  356:}
+        -:  357:
+        -:  358:} // namespace error
+        -:  359:namespace stream_errc {
+        -:  360:  // Simulates the proposed stream_errc scoped enum.
+        -:  361:  using error::eof;
+        -:  362:  using error::not_found;
+        -:  363:} // namespace stream_errc
+        -:  364:namespace socket_errc {
+        -:  365:  // Simulates the proposed socket_errc scoped enum.
+        -:  366:  using error::already_open;
+        -:  367:  using error::not_found;
+        -:  368:} // namespace socket_errc
+        -:  369:namespace resolver_errc {
+        -:  370:  // Simulates the proposed resolver_errc scoped enum.
+        -:  371:  using error::host_not_found;
+        -:  372:  const error::netdb_errors try_again = error::host_not_found_try_again;
+        -:  373:  using error::service_not_found;
+        -:  374:} // namespace resolver_errc
+        -:  375:} // namespace asio
+        -:  376:
+        -:  377:#include "asio/detail/pop_options.hpp"
+        -:  378:
+        -:  379:#undef ASIO_NATIVE_ERROR
+        -:  380:#undef ASIO_SOCKET_ERROR
+        -:  381:#undef ASIO_NETDB_ERROR
+        -:  382:#undef ASIO_GETADDRINFO_ERROR
+        -:  383:#undef ASIO_WIN_OR_POSIX
+        -:  384:
+        -:  385:#if defined(ASIO_HEADER_ONLY)
+        -:  386:# include "asio/impl/error.ipp"
+        -:  387:#endif // defined(ASIO_HEADER_ONLY)
+        -:  388:
+        -:  389:#endif // ASIO_ERROR_HPP

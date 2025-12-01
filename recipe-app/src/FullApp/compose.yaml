@@ -5,11 +5,8 @@ services:
       - "3000:3000"
 
   backend:
-    build: ./backend
+    build: ./Backend
     ports:
       - "18080:18080"
     volumes:
       - ./backend/core.db:/core.db
-
-volumes:
-  db:
