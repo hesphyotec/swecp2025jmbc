@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instructions</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffddb4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #ff8c00;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .recipe-details {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .recipe-details img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .recipe-title {
+      color: #000000;
+      font-size: 1.6em;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #000000;
+      margin-top: 20px;
+    }
+    ul, ol {
+      margin-left: 20px;
+      color: #333;
+    }
+    .loading {
+      text-align: center;
+      color: #ff8c00;
+      font-size: 1.1em;
+      margin-top: 50px;
+    }
+    nav {
+      background-color: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+    }
+    nav button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #ff8c00;
+      color: white;
+      transition: background 0.2s ease;
+    }
+    nav button:hover {
+      color: #ffe4b5;
+    }
+    .top-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    .top-buttons button {
+      background-color: #ff8c00;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .top-buttons button:hover {
+      background-color: #a0785a;
+    }
+  </style>
+  <script src ="js/config.js"></script>
+</head>
+<body>
+  <header>Instructions</header>
+  <main>
+    <div class="recipe-details" id="recipe-container">
+      <p class="loading">Connecting to recipe server...</p>
+    </div>
+  </main>
+  <nav>
+    <button onclick="location.href='Homepage.html'">Home</button>
+    <button onclick="location.href='Recipes.html'">Recipes</button>
+    <button onclick="location.href='account.html'">Account</button>
+  </nav>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const recipeId = params.get("id");
+    const recipeContainer = document.getElementById("recipe-container");
+
+    if(localStorage.getItem("instruction") !== null){
+      const instruction = JSON.parse(localStorage.getItem('instruction'));
+      const name = JSON.parse(localStorage.getItem("recName"))
+      const img = JSON.parse(localStorage.getItem("recImage"))
+      
+      ingArray = instruction.ingredients.split(';').filter(s => s.length > 0);
+      instArray = instruction.instructions.split('\r\n').filter(s => s.length > 0);
+
+      recipeContainer.innerHTML = `
+        <div class="top-buttons">
+          <button onclick="location.href='Recipes.html'">← Back to Recipes</button>
+          <button onclick="location.href='Homepage.html'">🏠 Homepage</button>
+        </div>
+
+        <h1 class="recipe-title">${name}</h1>
+        ${img ? `<img src="${img}" alt="${name}">` : ""}
+        <h2>Ingredients</h2>
+        <ul>${ingArray.map(i => `<li>${i}</li>`).join("\r\n")}</ul>
+        <h2>Instructions</h2>
+        <ol>${instArray.map(s => `<li>${s}</li>`).join("\r\n")}</ol>
+      `;
+      localStorage.removeItem('instruction');
+      localStorage.removeItem('recName');
+      localStorage.removeItem('recImage');
+    } else {
+      recipeContainer.innerHTML = "<p class='loading'>Failed to load recipe.</p>";
+    };
+  </script>
+</body>
+</html>
