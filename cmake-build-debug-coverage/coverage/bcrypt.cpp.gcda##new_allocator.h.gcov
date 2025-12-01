@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/new_allocator.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/new_allocator.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcda
         -:    0:Runs:1
         -:    1:// Allocator that wraps operator new -*- C++ -*-
         -:    2:
@@ -161,8 +161,8 @@ call    0 never executed
         -:  149:
         -:  150:      // __p is not permitted to be a null pointer.
         -:  151:      void
-function _ZNSt15__new_allocatorIcE10deallocateEPcy called 235 returned 100% blocks executed 100%
-      235:  152:      deallocate(_Tp* __p, size_type __n __attribute__ ((__unused__)))
+function _ZNSt15__new_allocatorIcE10deallocateEPcy called 298 returned 100% blocks executed 100%
+      298:  152:      deallocate(_Tp* __p, size_type __n __attribute__ ((__unused__)))
         -:  153:      {
         -:  154:#if __cpp_sized_deallocation
         -:  155:# define _GLIBCXX_SIZED_DEALLOC(p, n) (p), (n) * sizeof(_Tp)
@@ -178,9 +178,9 @@ function _ZNSt15__new_allocatorIcE10deallocateEPcy called 235 returned 100% bloc
         -:  165:	    return;
         -:  166:	  }
         -:  167:#endif
-      235:  168:	_GLIBCXX_OPERATOR_DELETE(_GLIBCXX_SIZED_DEALLOC(__p, __n));
-      235:  168-block  0
-call    0 returned 235
+      298:  168:	_GLIBCXX_OPERATOR_DELETE(_GLIBCXX_SIZED_DEALLOC(__p, __n));
+      298:  168-block  0
+call    0 returned 298
         -:  169:      }
         -:  170:
         -:  171:#undef _GLIBCXX_SIZED_DEALLOC

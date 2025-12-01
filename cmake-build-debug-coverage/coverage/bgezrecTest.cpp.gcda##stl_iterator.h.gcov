@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// Iterators -*- C++ -*-
         -:    2:
@@ -1078,7 +1078,7 @@
         -: 1074:
         -: 1075:      explicit _GLIBCXX20_CONSTEXPR
         -: 1076:      __normal_iterator(const _Iterator& __i) _GLIBCXX_NOEXCEPT
-    3252*: 1077:      : _M_current(__i) { }
+   25932*: 1077:      : _M_current(__i) { }
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
@@ -1088,8 +1088,8 @@ branch  5 taken 0 (throw)
 call    6 returned 4
 branch  7 taken 4 (fallthrough)
 branch  8 taken 0 (throw)
-branch  9 taken 1578 (fallthrough)
-branch 10 taken 1566
+branch  9 taken 24641 (fallthrough)
+branch 10 taken 1183
         4: 1077-block  0
 branch 11 taken 2 (fallthrough)
 branch 12 taken 2
@@ -1114,8 +1114,8 @@ branch 18 taken 2
 branch 19 taken 6 (fallthrough)
 branch 20 taken 9
        15: 1077-block 13
-branch 21 taken 7 (fallthrough)
-branch 22 taken 8
+branch 21 taken 10 (fallthrough)
+branch 22 taken 5
         3: 1077-block 14
         3: 1077-block 15
     %%%%%: 1077-block 16
@@ -1159,21 +1159,21 @@ branch 26 taken 7 (fallthrough)
         -: 1108:      __normal_iterator&
         -: 1109:      operator++() _GLIBCXX_NOEXCEPT
         -: 1110:      {
-     798*: 1111:	++_M_current;
+     858*: 1111:	++_M_current;
        40: 1111-block  0
       750: 1111-block  1
-        8: 1111-block  2
-    1373*: 1112:	return *this;
+       68: 1111-block  2
+    1502*: 1112:	return *this;
         4: 1112-block  0
         5: 1112-block  1
-       37: 1112-block  2
+       97: 1112-block  2
         7: 1112-block  3
         3: 1112-block  4
       200: 1112-block  5
         3: 1112-block  6
       200: 1112-block  7
         8: 1112-block  8
-       42: 1112-block  9
+      111: 1112-block  9
     %%%%%: 1112-block 10
     %%%%%: 1112-block 11
        67: 1112-block 12
@@ -1222,7 +1222,7 @@ branch 26 taken 7 (fallthrough)
         -: 1155:      _GLIBCXX20_CONSTEXPR
         -: 1156:      __normal_iterator
         -: 1157:      operator-(difference_type __n) const _GLIBCXX_NOEXCEPT
-   80856*: 1158:      { return __normal_iterator(_M_current - __n); }
+   87231*: 1158:      { return __normal_iterator(_M_current - __n); }
         -: 1159:
         -: 1160:      _GLIBCXX20_CONSTEXPR
         -: 1161:      const _Iterator&
@@ -1267,15 +1267,15 @@ branch 26 taken 7 (fallthrough)
         -: 1200:    requires requires {
         -: 1201:      { __lhs.base() == __rhs.base() } -> std::convertible_to<bool>;
         -: 1202:    }
-      814: 1203:    { return __lhs.base() == __rhs.base(); }
+      874: 1203:    { return __lhs.base() == __rhs.base(); }
        44: 1203-block  0
 branch  0 taken 40
 branch  1 taken 4 (fallthrough)
       754: 1203-block  1
 branch  2 taken 750
 branch  3 taken 4 (fallthrough)
-       12: 1203-block  2
-branch  4 taken 8
+       72: 1203-block  2
+branch  4 taken 68
 branch  5 taken 4 (fallthrough)
 call    6 returned 1
 call    7 returned 1
@@ -1414,16 +1414,16 @@ call    9 returned 1
         -: 1334:    operator-(const __normal_iterator<_Iterator, _Container>& __lhs,
         -: 1335:	      const __normal_iterator<_Iterator, _Container>& __rhs)
         -: 1336:    _GLIBCXX_NOEXCEPT
-     242*: 1337:    { return __lhs.base() - __rhs.base(); }
+     302*: 1337:    { return __lhs.base() - __rhs.base(); }
 branch  0 taken 36 (fallthrough)
 branch  1 taken 0
-branch  2 taken 104 (fallthrough)
+branch  2 taken 128 (fallthrough)
 branch  3 taken 0
 branch  4 taken 36 (fallthrough)
 branch  5 taken 0
-branch  6 taken 40 (fallthrough)
+branch  6 taken 61 (fallthrough)
 branch  7 taken 0
-branch  8 taken 18 (fallthrough)
+branch  8 taken 33 (fallthrough)
 branch  9 taken 0
 branch 10 never executed (fallthrough)
 branch 11 never executed

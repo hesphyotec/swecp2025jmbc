@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/alloc_traits.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/alloc_traits.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// Allocator traits -*- C++ -*-
         -:    2:
@@ -517,7 +517,7 @@
         -:  513:      [[__gnu__::__always_inline__]]
         -:  514:      static _GLIBCXX20_CONSTEXPR void
         -:  515:      deallocate(allocator_type& __a, pointer __p, size_type __n)
-    1908*:  516:      { __a.deallocate(__p, __n); }
+   25028*:  516:      { __a.deallocate(__p, __n); }
         -:  517:
         -:  518:      /**
         -:  519:       *  @brief  Construct an object of type `_Up`
@@ -540,7 +540,7 @@
         -:  536:#if __cplusplus <= 201703L
         -:  537:	  __a.construct(__p, std::forward<_Args>(__args)...);
         -:  538:#else
-    1834*:  539:	  std::construct_at(__p, std::forward<_Args>(__args)...);
+    2079*:  539:	  std::construct_at(__p, std::forward<_Args>(__args)...);
 call    0 returned 35
 branch  1 taken 35 (fallthrough)
 branch  2 taken 0 (throw)
@@ -552,15 +552,15 @@ branch  7 taken 120 (fallthrough)
 branch  8 taken 0 (throw)
      1276:  539-block  0
 call    9 returned 1276
-       76:  539-block  1
-call   10 returned 76
+      198:  539-block  1
+call   10 returned 198
 call   11 returned 35
 call   12 returned 82
 branch 13 taken 82 (fallthrough)
 branch 14 taken 0 (throw)
-       40:  539-block  2
-call   15 returned 40
-branch 16 taken 40 (fallthrough)
+       61:  539-block  2
+call   15 returned 61
+branch 16 taken 61 (fallthrough)
 branch 17 taken 0 (throw)
     %%%%%:  539-block  3
 call   18 never executed
@@ -574,8 +574,8 @@ branch 23 never executed (throw)
 call   24 returned 8
 branch 25 taken 8 (fallthrough)
 branch 26 taken 0 (throw)
-       51:  539-block  6
-call   27 returned 51
+      153:  539-block  6
+call   27 returned 153
     %%%%%:  539-block  7
 call   28 never executed
     %%%%%:  539-block  8
@@ -583,12 +583,12 @@ call   29 never executed
     %%%%%:  539-block  9
 call   30 never executed
         -:  540:#endif
-     396*:  541:	}
+     417*:  541:	}
        35:  541-block  0
       111:  541-block  1
       120:  541-block  2
        82:  541-block  3
-       40:  541-block  4
+       61:  541-block  4
     %%%%%:  541-block  5
     %%%%%:  541-block  6
         8:  541-block  7

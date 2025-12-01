@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/basic_string.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/basic_string.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\include\bcrypt.cpp.gcda
         -:    0:Runs:1
         -:    1:// Components for manipulating sequences of characters -*- C++ -*-
         -:    2:
@@ -262,7 +262,7 @@ branch  5 never executed
         -:  249:      _M_local_data() const
         -:  250:      {
         -:  251:#if __cplusplus >= 201103L
-     573*:  252:	return std::pointer_traits<const_pointer>::pointer_to(*_M_local_buf);
+     693*:  252:	return std::pointer_traits<const_pointer>::pointer_to(*_M_local_buf);
         -:  253:#else
         -:  254:	return const_pointer(_M_local_buf);
         -:  255:#endif
@@ -295,16 +295,16 @@ branch  1 never executed
 branch  2 never executed (fallthrough)
 branch  3 never executed
         -:  276:	  {
-     338*:  277:	    if (_M_string_length > _S_local_capacity)
+     395*:  277:	    if (_M_string_length > _S_local_capacity)
     %%%%%:  277-block  0
 branch  0 never executed (fallthrough)
 branch  1 never executed
     %%%%%:  277-block  1
 branch  2 never executed (fallthrough)
 branch  3 never executed
-      338:  277-block  2
+      395:  277-block  2
 branch  4 taken 0 (fallthrough)
-branch  5 taken 338
+branch  5 taken 395
     #####:  278:	      __builtin_unreachable();
     %%%%%:  278-block  0
 call    0 never executed
@@ -324,20 +324,20 @@ call    2 never executed
         -:  288:
         -:  289:      _GLIBCXX20_CONSTEXPR
         -:  290:      void
-function _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv called 573 returned 100% blocks executed 83%
-      573:  291:      _M_dispose()
-      573:  291-block  0
-branch  0 taken 338 (fallthrough)
-branch  1 taken 235
+function _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv called 693 returned 100% blocks executed 83%
+      693:  291:      _M_dispose()
+      693:  291-block  0
+branch  0 taken 395 (fallthrough)
+branch  1 taken 298
         -:  292:      {
         -:  293:	if (!_M_is_local())
-      235:  294:	  _M_destroy(_M_allocated_capacity);
-      573:  295:      }
+      298:  294:	  _M_destroy(_M_allocated_capacity);
+      693:  295:      }
         -:  296:
         -:  297:      _GLIBCXX20_CONSTEXPR
         -:  298:      void
         -:  299:      _M_destroy(size_type __size) throw()
-      235:  300:      { _Alloc_traits::deallocate(_M_get_allocator(), _M_data(), __size + 1); }
+      298:  300:      { _Alloc_traits::deallocate(_M_get_allocator(), _M_data(), __size + 1); }
         -:  301:
         -:  302:#if __cplusplus < 201103L || defined _GLIBCXX_DEFINING_STRING_INSTANTIATIONS
         -:  303:      // _M_construct_aux is used to implement the 21.3.1 para 15 which
@@ -385,9 +385,9 @@ branch  1 taken 235
         -:  345:      _GLIBCXX20_CONSTEXPR
         -:  346:      allocator_type&
         -:  347:      _M_get_allocator()
-     235*:  348:      { return _M_dataplus; }
-      235:  348-block  0
-call    0 returned 235
+     298*:  348:      { return _M_dataplus; }
+      298:  348-block  0
+call    0 returned 298
     %%%%%:  348-block  1
 call    1 never executed
         -:  349:

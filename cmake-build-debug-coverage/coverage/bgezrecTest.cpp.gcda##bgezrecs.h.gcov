@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Users/Blake/swecp2025jmbc/include/bgezrecs.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Users/blake/swecp2025jmbc/include/bgezrecs.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:#ifndef RECS
         -:    2:
@@ -65,10 +65,10 @@
         -:   61:};
         -:   62:
 function _Z13stringToTraitRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 0 returned 0% blocks executed 0%
-    #####:   63:int stringToTrait(const std::string& name) {
+    #####:   63:int stringToTrait(const std::string& name) { //this takes the string and returns the
     %%%%%:   63-block  0
 call    0 never executed
-        -:   64:	auto it = traitMap.find(name);
+        -:   64:	auto it = traitMap.find(name);			 //given integer value associated with it in bgeztraits.h
        8*:   65:	if (it != traitMap.end()) {
 branch  0 taken 1 (fallthrough)
 branch  1 taken 0
@@ -87,7 +87,7 @@ branch  9 never executed
         4:   66-block  3
     %%%%%:   66-block  4
         -:   67:	}
-        -:   68:	return -1; // or handle error case
+        -:   68:	return -1;
         -:   69:}
         -:   70:
 function _ZNK15reverseTraitMapMUlvE_clB5cxx11Ev called 1 returned 100% blocks executed 89%
@@ -113,11 +113,11 @@ call    3 never executed
         -:   77:}();
         -:   78:
 function _Z13traitToStringB5cxx11i called 7 returned 100% blocks executed 100%
-        7:   79:std::string traitToString(int val) {
+        7:   79:std::string traitToString(int val) { //this takes the integer value and returns the string
         7:   79-block  0
 branch  0 taken 6 (fallthrough)
 branch  1 taken 1
-        -:   80:	auto it = reverseTraitMap.find(val);
+        -:   80:	auto it = reverseTraitMap.find(val); //associated with it as shown in traitMap/bgeztraits.h
         7:   81:	if (it != reverseTraitMap.end()) {
         7:   81-block  0
 branch  0 taken 6 (fallthrough)
@@ -133,17 +133,17 @@ call    0 returned 1
         -:   88:private:
         -:   89:	sqlite3 * db;
         -:   90:
-function _ZN10UserRecSys11callbackIIDEPviPPcS2_ called 36 returned 100% blocks executed 86%
-       36:   91:	static int callbackIID(void *ingredientList, int columns, char **columnValue, char **colName) {//callback for userIngredientParser
+function _ZN10UserRecSys11callbackIIDEPviPPcS2_ called 105 returned 100% blocks executed 86%
+      105:   91:	static int callbackIID(void *ingredientList, int columns, char **columnValue, char **colName) {//callback for userIngredientParser
         -:   92:		auto* results = static_cast<std::vector<int>*>(ingredientList);
-       72:   93:		results->push_back(std::stoi(columnValue[0]));
-       36:   93-block  0
-call    0 returned 36
-       36:   93-block  1
-call    1 returned 36
-branch  2 taken 36 (fallthrough)
+      210:   93:		results->push_back(std::stoi(columnValue[0]));
+      105:   93-block  0
+call    0 returned 105
+      105:   93-block  1
+call    1 returned 105
+branch  2 taken 105 (fallthrough)
 branch  3 taken 0 (throw)
-       36:   94:		return 0; // Return 0 to continue processing rows, non-zero to stop
+      105:   94:		return 0; // Return 0 to continue processing rows, non-zero to stop
         -:   95:	}
         -:   96:
         -:   97:public:
@@ -152,7 +152,7 @@ function _ZN10UserRecSysC1Ev called 1 returned 100% blocks executed 44%
         1:   99:		std::cout << "Hello!\n";
         1:   99-block  0
 call    0 returned 1
-        1:  100:		if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+        1:  100:		if (sqlite3_open("core.db", &db)!=SQLITE_OK) { //This checks to make sure the DB is opened
 call    0 returned 1
 branch  1 taken 0 (fallthrough)
 branch  2 taken 1
@@ -172,7 +172,7 @@ function _ZN10UserRecSys20userIngredientParserEi called 10 returned 100% blocks 
 call    0 returned 10
 branch  1 taken 10 (fallthrough)
 branch  2 taken 0 (throw)
-       20:  109:			std::string sqlFix = sqlPre + std::to_string(userID);
+       20:  109:			std::string sqlFix = sqlPre + std::to_string(userID); //adds user ID to string
        10:  109-block  0
 call    0 returned 10
 call    1 returned 10
@@ -201,7 +201,7 @@ function _ZN10UserRecSys14userMealParserEi called 8 returned 100% blocks execute
 call    0 returned 8
 branch  1 taken 8 (fallthrough)
 branch  2 taken 0 (throw)
-       16:  118:			std::string sqlFix = sqlPre + std::to_string(userID);
+       16:  118:			std::string sqlFix = sqlPre + std::to_string(userID); //adds user ID to string
         8:  118-block  0
 call    0 returned 8
 call    1 returned 8
@@ -243,7 +243,7 @@ branch  2 taken 0 (throw)
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        2:  131:		if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) {
+        2:  131:		if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) { //This checks to make sure there is a value that we are returning, not null
         2:  131-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
@@ -262,860 +262,881 @@ branch  2 taken 0 (throw)
         -:  135:	}
         -:  136:
 function _ZN10UserRecSys18ingredientToVectorERKSt6vectorIiSaIiEE called 15 returned 100% blocks executed 67%
-       15:  137:	vecVector ingredientToVector(const std::vector<int>& ingredientID) {
-        -:  138:			//this takes the user ingredients and vector-ifys them
-       15:  139:			vecVector ingredient;
-       15:  140:			std::string temp = " ";
-       15:  140-block  0
+       15:  137:	vecVector ingredientToVector(const std::vector<int>& ingredientID) { //this takes the user ingredients and vector-ifys them
+       15:  138:			vecVector ingredient;
+       15:  139:			std::string temp = " ";
+       15:  139-block  0
 call    0 returned 15
 branch  1 taken 15 (fallthrough)
 branch  2 taken 0 (throw)
-       15:  141:			std::vector<double> tempVec = {};
-       15:  141-block  0
-branch  0 taken 7 (fallthrough)
-branch  1 taken 8
-        -:  142:
-       23:  143:			if (ingredientID.empty()) { return {{}}; }
-       15:  143-block  0
-branch  0 taken 7 (fallthrough)
-branch  1 taken 8
-        8:  143-block  1
-call    2 returned 8
+       15:  140:			std::vector<double> tempVec = {};
+       15:  140-block  0
+branch  0 taken 10 (fallthrough)
+branch  1 taken 5
+        -:  141:
+       20:  142:			if (ingredientID.empty()) { return {{}}; } //if its empty, return an empty vecVector
+       15:  142-block  0
+branch  0 taken 10 (fallthrough)
+branch  1 taken 5
+        5:  142-block  1
+call    2 returned 5
 branch  3 taken 0 (throw)
-branch  4 taken 8 (fallthrough)
-        8:  143-block  2
-       16:  143-block  3
-branch  5 taken 8 (fallthrough)
-branch  6 taken 8
-        8:  143-block  4
+branch  4 taken 5 (fallthrough)
+        5:  142-block  2
+       10:  142-block  3
+branch  5 taken 5 (fallthrough)
+branch  6 taken 5
+        5:  142-block  4
 branch  7 taken 0 (fallthrough)
-branch  8 taken 8
-        8:  143-block  5
-    $$$$$:  143-block  6
+branch  8 taken 5
+        5:  142-block  5
+    $$$$$:  142-block  6
 branch  9 never executed (fallthrough)
 branch 10 never executed
-    $$$$$:  143-block  7
+    $$$$$:  142-block  7
 branch 11 never executed (fallthrough)
 branch 12 never executed
-        -:  144:			sqlite3_stmt *stmt;
-        -:  145:
-       49:  146:			for (const int &ingID: ingredientID) {
-       49:  146-block  0
-branch  0 taken 42
-branch  1 taken 7 (fallthrough)
-        -:  147:				const char *sql = "SELECT vector, tfidf FROM Ingredients WHERE id = ?;";
-       42:  148:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
-       42:  148-block  0
-call    0 returned 42
-branch  1 taken 42 (fallthrough)
+        -:  143:			sqlite3_stmt *stmt;
+        -:  144:
+      121:  145:			for (const int &ingID: ingredientID) {
+      121:  145-block  0
+branch  0 taken 111
+branch  1 taken 10 (fallthrough)
+        -:  146:				const char *sql = "SELECT vector, tfidf FROM Ingredients WHERE id = ?;";
+      111:  147:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
+      111:  147-block  0
+call    0 returned 111
+branch  1 taken 111 (fallthrough)
 branch  2 taken 0 (throw)
-       42:  149:				sqlite3_bind_int(stmt, 1, ingID);
-       42:  149-block  0
-call    0 returned 42
-branch  1 taken 42 (fallthrough)
+      111:  148:				sqlite3_bind_int(stmt, 1, ingID);
+      111:  148-block  0
+call    0 returned 111
+branch  1 taken 111 (fallthrough)
 branch  2 taken 0 (throw)
-       42:  150:				if (sqlite3_step(stmt) == SQLITE_ROW) {
-       42:  150-block  0
-call    0 returned 42
-branch  1 taken 42 (fallthrough)
+      111:  149:				if (sqlite3_step(stmt) == SQLITE_ROW) {// this validates that the ingredient exists and there is a row for that ingredient
+      111:  149-block  0
+call    0 returned 111
+branch  1 taken 111 (fallthrough)
 branch  2 taken 0 (throw)
-       42:  150-block  1
-branch  3 taken 40 (fallthrough)
+      111:  149-block  1
+branch  3 taken 109 (fallthrough)
 branch  4 taken 2
-       40:  151:					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
-       40:  151-block  0
-call    0 returned 40
-branch  1 taken 40 (fallthrough)
+      109:  150:					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
+      109:  150-block  0
+call    0 returned 109
+branch  1 taken 109 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  151-block  1
-call    3 returned 40
-branch  4 taken 40 (fallthrough)
+      109:  150-block  1
+call    3 returned 109
+branch  4 taken 109 (fallthrough)
 branch  5 taken 0 (throw)
-       40:  151-block  2
-call    6 returned 40
-branch  7 taken 40 (fallthrough)
+      109:  150-block  2
+call    6 returned 109
+branch  7 taken 109 (fallthrough)
 branch  8 taken 0 (throw)
-    $$$$$:  151-block  3
+    $$$$$:  150-block  3
 branch  9 never executed (fallthrough)
 branch 10 never executed
-       40:  152:					double tfidf = sqlite3_column_double(stmt, 1);
-call    0 returned 40
-branch  1 taken 40 (fallthrough)
+      109:  151:					double tfidf = sqlite3_column_double(stmt, 1);
+call    0 returned 109
+branch  1 taken 109 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  153:
-     3743:  154:					while (std::getline(iss, temp, ' ' ) ) {
-     3743:  154-block  0
-call    0 returned 3743
-branch  1 taken 3743 (fallthrough)
+        -:  152:
+    10118:  153:					while (std::getline(iss, temp, ' ' ) ) {
+    10118:  153-block  0
+call    0 returned 10118
+branch  1 taken 10118 (fallthrough)
 branch  2 taken 0 (throw)
-     3743:  154-block  1
-branch  3 taken 3703
-branch  4 taken 40 (fallthrough)
-     3703:  155:						tempVec.push_back((std::stod(temp))*(1.0-tfidf));
-     3703:  155-block  0
-call    0 returned 3703
-branch  1 taken 3703 (fallthrough)
+    10118:  153-block  1
+branch  3 taken 10009
+branch  4 taken 109 (fallthrough)
+    10009:  154:						tempVec.push_back((std::stod(temp))*(1.0-tfidf));//this averages out each vector by its tfidf vector
+    10009:  154-block  0
+call    0 returned 10009
+branch  1 taken 10009 (fallthrough)
 branch  2 taken 0 (throw)
-     3703:  155-block  1
-        -:  156:					}
-       40:  157:				}
-       40:  157-block  0
-call    0 returned 40
-    $$$$$:  157-block  1
+    10009:  154-block  1
+        -:  155:					}					//rarer items have smaller tfidf vectors, therefore become more important after this normalization
+      109:  156:				}
+      109:  156-block  0
+call    0 returned 109
+    $$$$$:  156-block  1
 call    1 never executed
-       42:  158:				if (tempVec.size() != 1){ingredient.push_back({tempVec});}
-       42:  158-block  0
-branch  0 taken 39 (fallthrough)
-branch  1 taken 3
-       39:  158-block  1
-call    2 returned 39
-branch  3 taken 39 (fallthrough)
+      111:  157:				if (tempVec.size() != 1){ingredient.push_back({tempVec});}
+      111:  157-block  0
+branch  0 taken 102 (fallthrough)
+branch  1 taken 9
+      102:  157-block  1
+call    2 returned 102
+branch  3 taken 102 (fallthrough)
 branch  4 taken 0 (throw)
-        -:  159:
-        -:  160:				tempVec = {};
-       42:  161:				sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
-       42:  161-block  0
-call    0 returned 42
-branch  1 taken 42 (fallthrough)
+        -:  158:
+        -:  159:				tempVec = {};//clears tempVec for next ingredient
+      111:  160:				sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
+      111:  160-block  0
+call    0 returned 111
+branch  1 taken 111 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  162:			}
-        -:  163:
-        -:  164:			return ingredient;
-       15:  165:		}
+        -:  161:			}
+        -:  162:
+        -:  163:			return ingredient;
+       15:  164:		}
 call    0 returned 15
-    $$$$$:  165-block  0
+    $$$$$:  164-block  0
 call    1 never executed
-        -:  166:
+        -:  165:
 function _ZN10UserRecSys12mealToVectorERKSt6vectorIiSaIiEE called 15 returned 100% blocks executed 67%
-       15:  167:	vecVector mealToVector(const std::vector<int>& mealID) {//this takes the user past meals and vector-ifys them
-       15:  168:		vecVector meals;
-       15:  169:		std::string temp = " ";
-       15:  169-block  0
+       15:  166:	vecVector mealToVector(const std::vector<int>& mealID) {//this takes the user past meals and vector-ifys them
+       15:  167:		vecVector meals;
+       15:  168:		std::string temp = " ";
+       15:  168-block  0
 call    0 returned 15
 branch  1 taken 15 (fallthrough)
 branch  2 taken 0 (throw)
-       15:  170:		std::vector<double> tempVec = {};
-       15:  170-block  0
+       15:  169:		std::vector<double> tempVec = {};
+       15:  169-block  0
 branch  0 taken 6 (fallthrough)
 branch  1 taken 9
-        -:  171:
-       24:  172:		if (mealID.empty()) { return {{}}; }
-       15:  172-block  0
+        -:  170:
+       24:  171:		if (mealID.empty()) { return {{}}; }
+       15:  171-block  0
 branch  0 taken 6 (fallthrough)
 branch  1 taken 9
-        9:  172-block  1
+        9:  171-block  1
 call    2 returned 9
 branch  3 taken 0 (throw)
 branch  4 taken 9 (fallthrough)
-        9:  172-block  2
-       18:  172-block  3
+        9:  171-block  2
+       18:  171-block  3
 branch  5 taken 9 (fallthrough)
 branch  6 taken 9
-        9:  172-block  4
+        9:  171-block  4
 branch  7 taken 0 (fallthrough)
 branch  8 taken 9
-        9:  172-block  5
-    $$$$$:  172-block  6
+        9:  171-block  5
+    $$$$$:  171-block  6
 branch  9 never executed (fallthrough)
 branch 10 never executed
-    $$$$$:  172-block  7
+    $$$$$:  171-block  7
 branch 11 never executed (fallthrough)
 branch 12 never executed
-        -:  173:			sqlite3_stmt *stmt;
-        -:  174:
-       14:  175:			for (const int &ingID: mealID) {
-       14:  175-block  0
+        -:  172:			sqlite3_stmt *stmt;
+        -:  173:
+       14:  174:			for (const int &ingID: mealID) {
+       14:  174-block  0
 branch  0 taken 8
 branch  1 taken 6 (fallthrough)
-        -:  176:				const char *sql = "SELECT vector FROM Recipes WHERE id = ?;";
-        8:  177:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
+        -:  175:				const char *sql = "SELECT vector FROM Recipes WHERE id = ?;";
+        8:  176:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr); //This preps the statement to have values added to it
+        8:  176-block  0
+call    0 returned 8
+branch  1 taken 8 (fallthrough)
+branch  2 taken 0 (throw)
+        8:  177:				sqlite3_bind_int(stmt, 1, ingID);
         8:  177-block  0
 call    0 returned 8
 branch  1 taken 8 (fallthrough)
 branch  2 taken 0 (throw)
-        8:  178:				sqlite3_bind_int(stmt, 1, ingID);
-        8:  178-block  0
+        -:  178:
+        8:  179:				if (sqlite3_step(stmt) == SQLITE_ROW) {// this validates that the meal exists and there is a row for that meal
+        8:  179-block  0
 call    0 returned 8
 branch  1 taken 8 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  179:
-        8:  180:				if (sqlite3_step(stmt) == SQLITE_ROW) {
-        8:  180-block  0
-call    0 returned 8
-branch  1 taken 8 (fallthrough)
-branch  2 taken 0 (throw)
-        8:  180-block  1
+        8:  179-block  1
 branch  3 taken 6 (fallthrough)
 branch  4 taken 2
-        6:  181:					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
-        6:  181-block  0
+        6:  180:					std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
+        6:  180-block  0
 call    0 returned 6
 branch  1 taken 6 (fallthrough)
 branch  2 taken 0 (throw)
-        6:  181-block  1
+        6:  180-block  1
 call    3 returned 6
 branch  4 taken 6 (fallthrough)
 branch  5 taken 0 (throw)
-        6:  181-block  2
+        6:  180-block  2
 call    6 returned 6
 branch  7 taken 6 (fallthrough)
 branch  8 taken 0 (throw)
-    $$$$$:  181-block  3
+    $$$$$:  180-block  3
 branch  9 never executed (fallthrough)
 branch 10 never executed
-        -:  182:
-      606:  183:					while (std::getline(iss, temp, ' ' ) ) {
-      606:  183-block  0
+        -:  181:
+      606:  182:					while (std::getline(iss, temp, ' ' ) ) {
+      606:  182-block  0
 call    0 returned 606
 branch  1 taken 606 (fallthrough)
 branch  2 taken 0 (throw)
-      606:  183-block  1
+      606:  182-block  1
 branch  3 taken 600
 branch  4 taken 6 (fallthrough)
-      600:  184:						tempVec.push_back(std::stod(temp));
-      600:  184-block  0
+      600:  183:						tempVec.push_back(std::stod(temp));
+      600:  183-block  0
 call    0 returned 600
 branch  1 taken 600 (fallthrough)
 branch  2 taken 0 (throw)
-      600:  184-block  1
-        -:  185:					}
-        6:  186:				}
-        6:  186-block  0
+      600:  183-block  1
+        -:  184:					}
+        6:  185:				}
+        6:  185-block  0
 call    0 returned 6
-    $$$$$:  186-block  1
+    $$$$$:  185-block  1
 call    1 never executed
-        8:  187:				if (tempVec.size() != 1){meals.push_back({tempVec});}
-        8:  187-block  0
+        8:  186:				if (tempVec.size() != 1){meals.push_back({tempVec});}
+        8:  186-block  0
 branch  0 taken 8 (fallthrough)
 branch  1 taken 0
-        8:  187-block  1
+        8:  186-block  1
 call    2 returned 8
 branch  3 taken 8 (fallthrough)
 branch  4 taken 0 (throw)
-        -:  188:
-        -:  189:					tempVec = {};
-        8:  190:					sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
-        8:  190-block  0
+        -:  187:
+        -:  188:					tempVec = {};//clears tempVec for next meal
+        8:  189:					sqlite3_finalize(stmt); // Reset statement for next row //call db for vector value
+        8:  189-block  0
 call    0 returned 8
 branch  1 taken 8 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  191:			}
-        -:  192:			return meals;
-       15:  193:		}
+        -:  190:			}
+        -:  191:			return meals;
+       15:  192:		}
 call    0 returned 15
-    $$$$$:  193-block  0
+    $$$$$:  192-block  0
 call    1 never executed
-        -:  194:
+        -:  193:
 function _ZN10UserRecSys12outputVectorESt6vectorIS0_IdSaIdEESaIS2_EES4_ called 4 returned 100% blocks executed 78%
-        4:  195:	vecVector outputVector (const vecVector ingredientVector, const vecVector mealVector) {
-        4:  196:			std::vector<double> tempIngVec = {};
-        4:  197:			std::vector<double> tempMealVec = {};
-        4:  198:			vecVector returnVec;
-        4:  198-block  0
+        4:  194:	vecVector outputVector (const vecVector ingredientVector, const vecVector mealVector) {
+        4:  195:			std::vector<double> tempIngVec = {};
+        4:  196:			std::vector<double> tempMealVec = {};
+        4:  197:			vecVector returnVec;
+        4:  197-block  0
 branch  0 taken 2 (fallthrough)
 branch  1 taken 2
-        -:  199:
-        4:  200:			if (!ingredientVector[0].empty()) {
-        4:  200-block  0
+        -:  198:
+        4:  199:			if (!ingredientVector[0].empty()) {
+        4:  199-block  0
 branch  0 taken 2 (fallthrough)
 branch  1 taken 2
-        2:  201:				tempIngVec.resize(100);
+        2:  200:				tempIngVec.resize(100);//this just ensures that 100 vectors are passes through, as that is the size it should be anyway
+        2:  200-block  0
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  201:				for (auto& ingredients : ingredientVector) {
         2:  201-block  0
-call    0 returned 2
-branch  1 taken 2 (fallthrough)
-branch  2 taken 0 (throw)
-        5:  202:				for (auto& ingredients : ingredientVector) {
-        2:  202-block  0
-        5:  202-block  1
+        5:  201-block  1
 branch  0 taken 3 (fallthrough)
 branch  1 taken 2
-      303:  203:					for (int i = 0; i < ingredients.size(); i++) {
-      300:  203-block  0
-      303:  203-block  1
+      303:  202:					for (int i = 0; i < ingredients.size(); i++) {
+      300:  202-block  0
+      303:  202-block  1
 branch  0 taken 300
 branch  1 taken 3 (fallthrough)
-      300:  204:						tempIngVec[i] += ingredients[i];
-      300:  204-block  0
-        -:  205:					}
-        -:  206:				}
-      202:  207:				for (auto& value : tempIngVec) {
-        2:  207-block  0
-      202:  207-block  1
+      300:  203:						tempIngVec[i] += ingredients[i];
+      300:  203-block  0
+        -:  204:					}
+        -:  205:				}
+      202:  206:				for (auto& value : tempIngVec) {
+        2:  206-block  0
+      202:  206-block  1
 branch  0 taken 200
 branch  1 taken 2 (fallthrough)
-      200:  208:					value /= ingredientVector.size();
-      200:  208-block  0
-        -:  209:				}
-        -:  210:			}
-        -:  211:
-        4:  212:		returnVec.emplace_back(tempIngVec);
-        4:  212-block  0
+      200:  207:					value /= ingredientVector.size();
+      200:  207-block  0
+        -:  208:				} //this averages out each vector
+        -:  209:			}
+        -:  210:
+        4:  211:		returnVec.emplace_back(tempIngVec);
+        4:  211-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  213:		if (!mealVector[0].empty()) {
-        4:  213-block  0
+        4:  212:		if (!mealVector[0].empty()) {
+        4:  212-block  0
 branch  0 taken 2 (fallthrough)
 branch  1 taken 2
-        2:  214:			tempMealVec.resize(100);
-        2:  214-block  0
+        2:  213:			tempMealVec.resize(100);
+        2:  213-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        5:  215:			for (auto& meals : mealVector) {
-        2:  215-block  0
-        5:  215-block  1
+        5:  214:			for (auto& meals : mealVector) {
+        2:  214-block  0
+        5:  214-block  1
 branch  0 taken 3 (fallthrough)
 branch  1 taken 2
-      303:  216:				for (int i = 0; i < meals.size(); i++) {
-      300:  216-block  0
-      303:  216-block  1
+      303:  215:				for (int i = 0; i < meals.size(); i++) {
+      300:  215-block  0
+      303:  215-block  1
 branch  0 taken 300
 branch  1 taken 3 (fallthrough)
-      300:  217:					tempMealVec[i] += meals[i];
-      300:  217-block  0
-        -:  218:				}
-        -:  219:			}
-      202:  220:			for (auto& value : tempMealVec) {
-        2:  220-block  0
-      202:  220-block  1
+      300:  216:					tempMealVec[i] += meals[i];
+      300:  216-block  0
+        -:  217:				}
+        -:  218:			}
+      202:  219:			for (auto& value : tempMealVec) {
+        2:  219-block  0
+      202:  219-block  1
 branch  0 taken 200
 branch  1 taken 2 (fallthrough)
-      200:  221:				value /= mealVector.size();
-      200:  221-block  0
-        -:  222:			}
-        -:  223:		}
-        4:  224:		returnVec.emplace_back(tempMealVec);
-        4:  224-block  0
+      200:  220:				value /= mealVector.size();
+      200:  220-block  0
+        -:  221:			}
+        -:  222:		}
+        4:  223:		returnVec.emplace_back(tempMealVec);
+        4:  223-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  225:		return returnVec;
-        4:  225-block  0
-    =====:  226:		}
-    $$$$$:  226-block  0
+        4:  224:		return returnVec;
+        4:  224-block  0
+    =====:  225:		}
+    $$$$$:  225-block  0
 call    0 never executed
-        -:  227:
+        -:  226:
 function _ZN10UserRecSys10userGatherEi called 7 returned 100% blocks executed 67%
-        7:  228:	vecVector userGather (int uID) {
-        7:  229:			vecVector totVec;
-        7:  230:			const vecVector ingVec = ingredientToVector(userIngredientParser(uID));
+        7:  227:	vecVector userGather (int uID) {
+        7:  228:			vecVector totVec;
+        7:  229:			const vecVector ingVec = ingredientToVector(userIngredientParser(uID)); //this gets all ingredient vectors that user has saved
+        7:  229-block  0
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
+        7:  229-block  1
+call    3 returned 7
+branch  4 taken 7 (fallthrough)
+branch  5 taken 0 (throw)
+        7:  229-block  2
+call    6 returned 7
+    $$$$$:  229-block  3
+call    7 never executed
+        7:  230:			const vecVector mealVec = mealToVector(userMealParser(uID)); //this gets all meal vectors that user has saved
+call    0 returned 7
+branch  1 taken 7 (fallthrough)
+branch  2 taken 0 (throw)
         7:  230-block  0
-call    0 returned 7
-branch  1 taken 7 (fallthrough)
-branch  2 taken 0 (throw)
+call    3 returned 7
+branch  4 taken 7 (fallthrough)
+branch  5 taken 0 (throw)
         7:  230-block  1
-call    3 returned 7
-branch  4 taken 7 (fallthrough)
-branch  5 taken 0 (throw)
-        7:  230-block  2
 call    6 returned 7
-    $$$$$:  230-block  3
+    $$$$$:  230-block  2
 call    7 never executed
-        7:  231:			const vecVector mealVec = mealToVector(userMealParser(uID));
-call    0 returned 7
+      104:  231:			 for (auto& vector : ingVec) {
+      104:  231-block  0
+branch  0 taken 97
 branch  1 taken 7 (fallthrough)
+       97:  232:			 	totVec.push_back(vector);
+       97:  232-block  0
+call    0 returned 97
+branch  1 taken 97 (fallthrough)
 branch  2 taken 0 (throw)
-        7:  231-block  0
-call    3 returned 7
-branch  4 taken 7 (fallthrough)
-branch  5 taken 0 (throw)
-        7:  231-block  1
-call    6 returned 7
-    $$$$$:  231-block  2
-call    7 never executed
-       44:  232:			 for (auto& vector : ingVec) {
-       44:  232-block  0
-branch  0 taken 37
-branch  1 taken 7 (fallthrough)
-       37:  233:			 	totVec.push_back(vector);
-       37:  233-block  0
-call    0 returned 37
-branch  1 taken 37 (fallthrough)
-branch  2 taken 0 (throw)
-        -:  234:			 }
-       14:  235:			for (auto& vector : mealVec) {
-        7:  235-block  0
-       14:  235-block  1
+        -:  233:			 }
+       14:  234:			for (auto& vector : mealVec) { //these two for loops combine the two vectors into one
+        7:  234-block  0
+       14:  234-block  1
 branch  0 taken 7
 branch  1 taken 7 (fallthrough)
-        7:  236:				totVec.push_back(vector);
-        7:  236-block  0
+        7:  235:				totVec.push_back(vector);
+        7:  235-block  0
 call    0 returned 7
 branch  1 taken 7 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  237:			}
-        7:  238:			return totVec;
-        7:  239:		}
-        7:  239-block  0
+        -:  236:			}
+        7:  237:			return totVec;
+        7:  238:		}
+        7:  238-block  0
 call    0 returned 7
 call    1 returned 7
-    $$$$$:  239-block  1
+    $$$$$:  238-block  1
 call    2 never executed
-    $$$$$:  239-block  2
+    $$$$$:  238-block  2
 call    3 never executed
-    $$$$$:  239-block  3
+    $$$$$:  238-block  3
 call    4 never executed
-        -:  240:
-function _ZN10UserRecSys4saveERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEi called 5 returned 100% blocks executed 51%
-        5:  241:	void save(const std::vector<std::string>& toSave, const int uID) {
-        5:  242:		if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
-        5:  242-block  0
+        -:  239:
+function _ZN10UserRecSys4saveERKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEi called 5 returned 100% blocks executed 54%
+        5:  240:	void save(const std::vector<std::string>& toSave, const int uID) {
+        5:  241:		std::vector<int> tempVec;
+        5:  241-block  0
 call    0 returned 5
-branch  1 taken 0 (fallthrough)
-branch  2 taken 5
-    #####:  243:			std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
-call    0 never executed
-call    1 never executed
-call    2 never executed
-    #####:  244:			db = nullptr;
-        -:  245:		}
-        -:  246:
-        5:  247:		std::vector<int> tempVec;
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  242:		std::string toEnter;
+        -:  243:		sqlite3_stmt* stmt;
+        -:  244:		std::string keyword;
+        -:  245:
+        -:  246:		const char* sql2 = "UPDATE Users SET pref = ? WHERE uid = ?;";
+        5:  247:		sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
         5:  247-block  0
 call    0 returned 5
 branch  1 taken 5 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  248:		std::string toEnter;
-        -:  249:		sqlite3_stmt* stmt;
-        -:  250:		std::string keyword;
-        -:  251:
-        -:  252:		const char* sql2 = "UPDATE Users SET pref = ? WHERE uid = ?;";
-        5:  253:		sqlite3_prepare_v2(db, sql2, -1, &stmt, nullptr);
-        5:  253-block  0
-call    0 returned 5
-branch  1 taken 5 (fallthrough)
-branch  2 taken 0 (throw)
-        -:  254:
-        5:  255:		if (toSave.empty()) {
-        5:  255-block  0
+        -:  248:
+        5:  249:		if (toSave.empty()) {// if the checkboxes are empty, toSave will be empty, so we want nothing in the db
+        5:  249-block  0
 branch  0 taken 4 (fallthrough)
 branch  1 taken 1
-        1:  256:			sqlite3_bind_null(stmt, 1);
-        1:  256-block  0
+        1:  250:			sqlite3_bind_null(stmt, 1);
+        1:  250-block  0
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  257:		}
-        -:  258:		else{
-        9:  259:			for (auto& item: toSave) {
-        9:  259-block  0
+        -:  251:		}
+        -:  252:		else{
+        9:  253:			for (auto& item: toSave) {
+        9:  253-block  0
 branch  0 taken 5
 branch  1 taken 4 (fallthrough)
-        5:  260:				tempVec.push_back(stringToTrait(item));
-        5:  260-block  0
+        5:  254:				tempVec.push_back(stringToTrait(item)); //this takes the trait and converts it to its integer value
+        5:  254-block  0
 call    0 returned 5
 branch  1 taken 5 (fallthrough)
 branch  2 taken 0 (throw)
-        5:  260-block  1
-        -:  261:			}
-        9:  262:			for (const auto& item: tempVec) {
-        4:  262-block  0
-        9:  262-block  1
+        5:  254-block  1
+        -:  255:			}
+        9:  256:			for (const auto& item: tempVec) {
+        4:  256-block  0
+        9:  256-block  1
 branch  0 taken 5
 branch  1 taken 4 (fallthrough)
-       10:  263:				toEnter.append(std::to_string(item) + " ");
-        5:  263-block  0
+       10:  257:				toEnter.append(std::to_string(item) + " "); //this concats each integer value
+        5:  257-block  0
 call    0 returned 5
-        -:  264:			}
-        -:  265:			toEnter.pop_back();
-        4:  266:			sqlite3_bind_text(stmt, 1, toEnter.c_str(), -1, SQLITE_TRANSIENT);
+        -:  258:			}
+        -:  259:			toEnter.pop_back(); //this removes the last space added by line 257
+        4:  260:			sqlite3_bind_text(stmt, 1, toEnter.c_str(), -1, SQLITE_TRANSIENT);
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  267:		}
-        -:  268:
-        5:  269:		sqlite3_bind_int(stmt, 2, uID);
+        -:  261:		}
+        -:  262:
+        5:  263:		sqlite3_bind_int(stmt, 2, uID);
+        5:  263-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  264:		int rc = sqlite3_step(stmt); //this enters the saved items into the db
+        5:  264-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+        5:  265:		if (rc != SQLITE_DONE) {
+        5:  265-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 5
+    #####:  266:			std::cout << "Error" << "\n";
+    %%%%%:  266-block  0
+call    0 never executed
+branch  1 never executed (fallthrough)
+branch  2 never executed (throw)
+    #####:  267:			CROW_LOG_ERROR << "Error executing update: " << sqlite3_errmsg(db);
+    %%%%%:  267-block  0
+branch  0 never executed (fallthrough)
+branch  1 never executed
+    %%%%%:  267-block  1
+call    2 never executed
+branch  3 never executed (fallthrough)
+branch  4 never executed (throw)
+    %%%%%:  267-block  2
+call    5 never executed
+    $$$$$:  267-block  3
+call    6 never executed
+        -:  268:		}
+        5:  269:		sqlite3_finalize(stmt);
         5:  269-block  0
 call    0 returned 5
 branch  1 taken 5 (fallthrough)
 branch  2 taken 0 (throw)
-        5:  270:		int rc = sqlite3_step(stmt);
+        5:  270:		sqlite3_close(db);
         5:  270-block  0
 call    0 returned 5
 branch  1 taken 5 (fallthrough)
 branch  2 taken 0 (throw)
-        5:  271:		if (rc != SQLITE_DONE) {
+        5:  271:		std::cout << "Entered Saved Items" << "\n";
         5:  271-block  0
+call    0 returned 5
+branch  1 taken 5 (fallthrough)
+branch  2 taken 0 (throw)
+       5*:  272:		CROW_LOG_DEBUG << "Entered Saved Items";
+        5:  272-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 5
-    #####:  272:			std::cout << "Error" << "\n";
-    %%%%%:  272-block  0
-call    0 never executed
-branch  1 never executed (fallthrough)
-branch  2 never executed (throw)
-    #####:  273:			CROW_LOG_ERROR << "Error executing update: " << sqlite3_errmsg(db);
-    %%%%%:  273-block  0
-branch  0 never executed (fallthrough)
-branch  1 never executed
-    %%%%%:  273-block  1
+    %%%%%:  272-block  1
 call    2 never executed
-branch  3 never executed (fallthrough)
-branch  4 never executed (throw)
-    %%%%%:  273-block  2
-call    5 never executed
-    $$$$$:  273-block  3
-call    6 never executed
-        -:  274:		}
-        5:  275:		sqlite3_finalize(stmt);
-        5:  275-block  0
-call    0 returned 5
-branch  1 taken 5 (fallthrough)
-branch  2 taken 0 (throw)
-        5:  276:		sqlite3_close(db);
-        5:  276-block  0
-call    0 returned 5
-branch  1 taken 5 (fallthrough)
-branch  2 taken 0 (throw)
-        5:  277:		std::cout << "Entered Saved Items" << "\n";
-        5:  277-block  0
-call    0 returned 5
-branch  1 taken 5 (fallthrough)
-branch  2 taken 0 (throw)
-       5*:  278:		CROW_LOG_DEBUG << "Entered Saved Items";
-        5:  278-block  0
-branch  0 taken 0 (fallthrough)
-branch  1 taken 5
-    %%%%%:  278-block  1
-call    2 never executed
-    $$$$$:  278-block  2
+    $$$$$:  272-block  2
 call    3 never executed
-    $$$$$:  278-block  3
+    $$$$$:  272-block  3
 call    4 never executed
-        5:  279:	}
+        5:  273:	}
 call    0 returned 5
-    $$$$$:  279-block  0
+    $$$$$:  273-block  0
 call    1 never executed
-        -:  280:};
-        -:  281:
-        -:  282:class Recommend {
-        -:  283:	private:
-        -:  284:		sqlite3 * db;
-        -:  285:
+        -:  274:};
+        -:  275:
+        -:  276:class Recommend {
+        -:  277:	private:
+        -:  278:		sqlite3 * db;
+        -:  279:
 function _ZN9Recommend15callbackKeywordEPviPPcS2_ called 750 returned 100% blocks executed 100%
-      750:  286:	static int callbackKeyword(void *mealList, int columns, char **columnValue, char **colName) {//callback for keyword function
-        -:  287:		auto* results = static_cast<std::vector<std::pair<std::string, std::string>>*>(mealList);
-      750:  288:		results->emplace_back(columnValue[0],columnValue[1]);
-      750:  288-block  0
+      750:  280:	static int callbackKeyword(void *mealList, int columns, char **columnValue, char **colName) {//callback for keyword function
+        -:  281:		auto* results = static_cast<std::vector<std::pair<std::string, std::string>>*>(mealList);
+      750:  282:		results->emplace_back(columnValue[0],columnValue[1]);
+      750:  282-block  0
 call    0 returned 750
-      750:  289:		return 0; // Return 0 to continue processing rows, non-zero to stop
+      750:  283:		return 0; // Return 0 to continue processing rows, non-zero to stop
+        -:  284:	}
+        -:  285:
+        -:  286:	static int callbackEuclidean(void *output, int columns, char **columnValue, char **colName) {//callback for euclidean function
+        -:  287:		if (columnValue[0])
+        -:  288:			*static_cast<double*>(output) = std::stod(columnValue[0]);
+        -:  289:		return 0;
         -:  290:	}
         -:  291:
-        -:  292:	static int callbackEuclidean(void *output, int columns, char **columnValue, char **colName) {
-        -:  293:		if (columnValue[0])
-        -:  294:			*static_cast<double*>(output) = std::stod(columnValue[0]);
-        -:  295:		return 0;
-        -:  296:	}
-        -:  297:
-function _ZN9Recommend9partitionERSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_dEESaIS8_EEii called 746 returned 100% blocks executed 100%
-      746:  298:	int partition(recommendVec &vec, int low, int high) {
-      746:  299:		double pivot = std::get<2>(vec[high]);// Selecting last element as the pivot
-      746:  299-block  0
-      746:  300:		int i = (low - 1); // Index of elemment just before the last element it is used for swapping
-        -:  301:
-    96904:  302:		for (int j = low; j <= high - 1; j++) {// If current element is less than or equal to pivot
-      746:  302-block  0
-    96158:  302-block  1
-    96904:  302-block  2
-branch  0 taken 96158
-branch  1 taken 746 (fallthrough)
-    96158:  303:			if (std::get<2>(vec[j]) >= pivot) {
-    96158:  303-block  0
-branch  0 taken 96158 (fallthrough)
-branch  1 taken 0
-    96158:  304:				i++;
-    96158:  305:				swap(vec[i], vec[j]);
-    96158:  305-block  0
-call    0 returned 96158
-        -:  306:			}
-        -:  307:		}
-      746:  308:		std::swap(vec[i + 1], vec[high]);// Put pivot to its position
-      746:  308-block  0
-call    0 returned 746
-      746:  309:		return (i + 1);// Return the point of partition
-        -:  310:	}
-        -:  311:
-function _ZN9Recommend9quickSortERSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_dEESaIS8_EEii called 750 returned 100% blocks executed 100%
-      750:  312:	void quickSort(recommendVec &vec, int low, int high) {
-      750:  312-block  0
-     1496:  313:		if (low < high) {// Base case: This part will be executed till the starting index low is higher than the ending index high
-     1496:  313-block  0
-branch  0 taken 746 (fallthrough)
-branch  1 taken 750
-        -:  314:
-      746:  315:			int pi = partition(vec, low, high); // pi is Partitioning Index, arr[p] is now at right place
-      746:  315-block  0
-call    0 returned 746
-        -:  316:
-      746:  317:			quickSort(vec, low, pi - 1); // Separately sort elements before and after the Partition Index pi
-call    0 returned 746
-      746:  318:			quickSort(vec, pi + 1, high);
-        -:  319:		}
-      750:  320:	}
-        -:  321:
-function _ZN9Recommend7cosPrivESt6vectorIdSaIdEES2_ called 1500 returned 100% blocks executed 67%
-     1500:  322:	double cosPriv (std::vector<double> vec1, std::vector<double> vec2) {
-        -:  323:		double dotProduct = 0.0;
-        -:  324:		double magnitudeA = 0.0;
-        -:  325:		double magnitudeB = 0.0;
+function _ZN9Recommend9partitionERSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_dEESaIS8_EEii called 629 returned 100% blocks executed 100%
+      629:  292:	int partition(recommendVec &vec, int low, int high) {
+      629:  293:		double pivot = std::get<2>(vec[high]);// Selecting last element as the pivot
+      629:  293-block  0
+      629:  294:		int i = (low - 1); // Index of elemment just before the last element it is used for swapping
+        -:  295:
+    51620:  296:		for (int j = low; j <= high - 1; j++) {// If current element is less than or equal to pivot
+      629:  296-block  0
+    50991:  296-block  1
+    51620:  296-block  2
+branch  0 taken 50991
+branch  1 taken 629 (fallthrough)
+    50991:  297:			if (std::get<2>(vec[j]) <= pivot) {
+    50991:  297-block  0
+branch  0 taken 49612 (fallthrough)
+branch  1 taken 1379
+    49612:  298:				i++;
+    49612:  299:				swap(vec[i], vec[j]);
+    49612:  299-block  0
+call    0 returned 49612
+        -:  300:			}
+        -:  301:		}
+      629:  302:		std::swap(vec[i + 1], vec[high]);// Put pivot to its position
+      629:  302-block  0
+call    0 returned 629
+      629:  303:		return (i + 1);// Return the point of partition
+        -:  304:	}
+        -:  305:
+function _ZN9Recommend9quickSortERSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_dEESaIS8_EEii called 633 returned 100% blocks executed 100%
+      633:  306:	void quickSort(recommendVec &vec, int low, int high) {
+      633:  306-block  0
+     1262:  307:		if (low < high) {// Base case: This part will be executed till the starting index low is higher than the ending index high
+     1262:  307-block  0
+branch  0 taken 629 (fallthrough)
+branch  1 taken 633
+        -:  308:
+      629:  309:			int pi = partition(vec, low, high); // pi is Partitioning Index, arr[p] is now at right place
+      629:  309-block  0
+call    0 returned 629
+        -:  310:
+      629:  311:			quickSort(vec, low, pi - 1); // Separately sort elements before and after the Partition Index pi
+call    0 returned 629
+      629:  312:			quickSort(vec, pi + 1, high);
+        -:  313:		}
+      633:  314:	}
+        -:  315:
+function _ZN9Recommend7cosPrivESt6vectorIdSaIdEES2_ called 12750 returned 100% blocks executed 100%
+    12750:  316:	double cosPriv (std::vector<double> vec1, std::vector<double> vec2) {//this caculates the cosine distance between to vectors
+        -:  317:		double dotProduct = 0.0;
+        -:  318:		double magnitudeA = 0.0;
+        -:  319:		double magnitudeB = 0.0;
+        -:  320:
+  1175250:  321:		for (size_t i = 0; i < vec1.size(); ++i) {
+    12750:  321-block  0
+  1175250:  321-block  1
+branch  0 taken 1162500
+branch  1 taken 12750 (fallthrough)
+  1162500:  322:			dotProduct += vec1[i] * vec2[i];
+  1162500:  323:			magnitudeA += vec1[i] * vec1[i];
+  1162500:  324:			magnitudeB += vec2[i] * vec2[i];
+  1162500:  324-block  0
+        -:  325:		}
         -:  326:
-    1500*:  327:		for (size_t i = 0; i < vec1.size(); ++i) {
-     1500:  327-block  0
-     1500:  327-block  1
-branch  0 taken 0
-branch  1 taken 1500 (fallthrough)
-    #####:  328:			dotProduct += vec1[i] * vec2[i];
-    #####:  329:			magnitudeA += vec1[i] * vec1[i];
-    #####:  330:			magnitudeB += vec2[i] * vec2[i];
-    %%%%%:  330-block  0
-        -:  331:		}
-        -:  332:
-     1500:  333:		magnitudeA = std::sqrt(magnitudeA);
-     1500:  334:		magnitudeB = std::sqrt(magnitudeB);
-        -:  335:
-     1500:  336:		if (magnitudeA == 0.0 || magnitudeB == 0.0) {
-     1500:  336-block  0
-branch  0 taken 0 (fallthrough)
-branch  1 taken 1500
-        -:  337:			return 0.0;
-        -:  338:		}
-        -:  339:
-    #####:  340:		return dotProduct / (magnitudeA * magnitudeB);
-    %%%%%:  340-block  0
-        -:  341:	}
-        -:  342:
-        -:  343:	public:
-        1:  344:		Recommend() {
-        1:  345:			std::cout << "Recommending!\n";
+    12750:  327:		magnitudeA = std::sqrt(magnitudeA);
+    12750:  328:		magnitudeB = std::sqrt(magnitudeB);
+        -:  329:
+    12750:  330:		if (magnitudeA == 0.0 || magnitudeB == 0.0) {
+    12750:  330-block  0
+branch  0 taken 11625 (fallthrough)
+branch  1 taken 1125
+        -:  331:			return 0.0;
+        -:  332:		}
+        -:  333:
+    11625:  334:		return dotProduct / (magnitudeA * magnitudeB);
+    11625:  334-block  0
+        -:  335:	}
+        -:  336:
+        -:  337:	public:
+        1:  338:		Recommend() {
+        1:  339:			std::cout << "Recommending!\n";
 call    0 returned 1
-        -:  346:			}
-        -:  347:
+        -:  340:			}
+        -:  341:
 function _ZN9Recommend11fromKeywordB5cxx11Ei called 7 returned 100% blocks executed 39%
-        7:  348:	pairVec fromKeyword(int uID) { //this returns all the meals with a certain keyword
-        7:  349:			pairVec meals;
-        7:  349-block  0
+        7:  342:	pairVec fromKeyword(int uID) { //this returns all the meals with a certain keyword
+        7:  343:			pairVec meals;
+        7:  343-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 7
-        -:  350:			sqlite3_stmt* stmt;
-        -:  351:			std::string keyword;
-        7:  352:			std::vector<int> tempVec;
-        7:  352-block  0
+        -:  344:			sqlite3_stmt* stmt;
+        -:  345:			std::string keyword;
+        7:  346:			std::vector<int> tempVec;
+        7:  346-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 7
-        -:  353:			std::string toEnter;
-        -:  354:			std::string s;
-        -:  355:			std::string sql2;
-        -:  356:
-       7*:  357:			CROW_LOG_DEBUG << "Filtering";
-        7:  357-block  0
+        -:  347:			std::string toEnter;
+        -:  348:			std::string s;
+        -:  349:			std::string sql2;
+        -:  350:
+       7*:  351:			CROW_LOG_DEBUG << "Filtering";
+        7:  351-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 7
-    %%%%%:  357-block  1
+    %%%%%:  351-block  1
 call    2 never executed
-    $$$$$:  357-block  2
+    $$$$$:  351-block  2
 call    3 never executed
-        -:  358:			const char* sql1 = "SELECT pref FROM Users WHERE uid = ?";
-        7:  359:			sqlite3_prepare_v2(db, sql1, -1, &stmt, nullptr);
-        7:  359-block  0
+        -:  352:			const char* sql1 = "SELECT pref FROM Users WHERE uid = ?";
+        7:  353:			sqlite3_prepare_v2(db, sql1, -1, &stmt, nullptr);
+        7:  353-block  0
 call    0 returned 7
 branch  1 taken 7 (fallthrough)
 branch  2 taken 0 (throw)
-        7:  360:			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
-        7:  360-block  0
+        7:  354:			sqlite3_bind_text(stmt, 1, (std::to_string(uID)).c_str(), -1, SQLITE_TRANSIENT);
+        7:  354-block  0
 call    0 returned 7
 call    1 returned 7
 branch  2 taken 7 (fallthrough)
 branch  3 taken 0 (throw)
-        7:  361:			sqlite3_step(stmt);
+        7:  355:			sqlite3_step(stmt);
 call    0 returned 7
 branch  1 taken 7 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  362:
-        7:  363:			if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) {
-        7:  363-block  0
+        -:  356:
+        7:  357:			if (sqlite3_column_type(stmt, 0) != SQLITE_NULL) {//these next lines only execute if there is a saved pref value
+        7:  357-block  0
 call    0 returned 7
 branch  1 taken 7 (fallthrough)
 branch  2 taken 0 (throw)
-        7:  363-block  1
+        7:  357-block  1
 branch  3 taken 2 (fallthrough)
 branch  4 taken 5
-        2:  364:				keyword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
-        2:  364-block  0
+        2:  358:				keyword = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        2:  358-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-       2*:  365:				CROW_LOG_DEBUG << "FOUND " << keyword;
-        2:  365-block  0
+       2*:  359:				CROW_LOG_DEBUG << "FOUND " << keyword;
+        2:  359-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
-    %%%%%:  365-block  1
+    %%%%%:  359-block  1
 call    2 never executed
-    $$$$$:  365-block  2
+    $$$$$:  359-block  2
 call    3 never executed
-        2:  366:				sqlite3_finalize(stmt);
-        2:  366-block  0
+        2:  360:				sqlite3_finalize(stmt);
+        2:  360-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        2:  367:				std::stringstream ss(keyword);
-        2:  367-block  0
+        2:  361:				std::stringstream ss(keyword);
+        2:  361-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  368:
-        6:  369:				while (getline(ss, s, ' ')) {
-        6:  369-block  0
+        -:  362:
+        6:  363:				while (getline(ss, s, ' ')) { //this takes all of the saved prefs in the db
+        6:  363-block  0
 call    0 returned 6
 branch  1 taken 6 (fallthrough)
 branch  2 taken 0 (throw)
-        6:  369-block  1
+        6:  363-block  1
 branch  3 taken 4
 branch  4 taken 2 (fallthrough)
-        4:  370:					tempVec.push_back(std::stoi(s));
-        4:  370-block  0
+        4:  364:					tempVec.push_back(std::stoi(s));   //and splits them into individual integers so we can
+        4:  364-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  370-block  1
-        -:  371:				}
-        -:  372:
-        6:  373:				for (auto& ing : tempVec) {
-        2:  373-block  0
-        6:  373-block  1
+        4:  364-block  1
+        -:  365:				}										//bring them back to the actual string
+        -:  366:
+        6:  367:				for (auto& ing : tempVec) {
+        2:  367-block  0
+        6:  367-block  1
 branch  0 taken 4
 branch  1 taken 2 (fallthrough)
-        4:  374:					if (ing < 7) {
-        4:  374-block  0
+        4:  368:					if (ing < 7) { //all categories have an integer value less than 7 in bgeztraits.h
+        4:  368-block  0
 branch  0 taken 4 (fallthrough)
 branch  1 taken 0
-       12:  375:						sql2 = "SELECT name, image FROM Recipes WHERE category = '" + traitToString(ing) + "' COLLATE NOCASE;";;
-        4:  375-block  0
+       12:  369:						sql2 = "SELECT name, image FROM Recipes WHERE category = '" + traitToString(ing) + "' COLLATE NOCASE;";;
+        4:  369-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
 call    3 returned 4
-        -:  376:					}
-        -:  377:					else {
-    #####:  378:						sql2 = "SELECT name, image FROM Recipes WHERE area = '" + traitToString(ing) + "' COLLATE NOCASE;";;
-    %%%%%:  378-block  0
+        -:  370:					}
+        -:  371:					else {//all areas have an integer value greater than 7 in bgeztraits.h
+    #####:  372:						sql2 = "SELECT name, image FROM Recipes WHERE area = '" + traitToString(ing) + "' COLLATE NOCASE;";;
+    %%%%%:  372-block  0
 call    0 never executed
 branch  1 never executed (fallthrough)
 branch  2 never executed (throw)
 call    3 never executed
-        -:  379:					}
-       4*:  380:					CROW_LOG_DEBUG << "Keyword " << traitToString(ing);
-        4:  380-block  0
+        -:  373:					}
+       4*:  374:					CROW_LOG_DEBUG << "Keyword " << traitToString(ing);
+        4:  374-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-    %%%%%:  380-block  1
+    %%%%%:  374-block  1
 call    2 never executed
 branch  3 never executed (fallthrough)
 branch  4 never executed (throw)
 call    5 never executed
-    $$$$$:  380-block  2
+    $$$$$:  374-block  2
 call    6 never executed
-        4:  381:					sqlite3_exec(db, sql2.c_str(), callbackKeyword, &meals,  &errmsg);
-        4:  381-block  0
+        4:  375:					sqlite3_exec(db, sql2.c_str(), callbackKeyword, &meals,  &errmsg);
+        4:  375-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  382:				}
-        2:  383:			}
-        2:  383-block  0
+        -:  376:				}
+        2:  377:			}
+        2:  377-block  0
 call    0 returned 2
-    $$$$$:  383-block  1
+    $$$$$:  377-block  1
 call    1 never executed
-       7*:  384:			CROW_LOG_DEBUG << "Returning Filtered List";
-        7:  384-block  0
+       7*:  378:			CROW_LOG_DEBUG << "Returning Filtered List";
+        7:  378-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 7
-    %%%%%:  384-block  1
+    %%%%%:  378-block  1
 call    2 never executed
-    $$$$$:  384-block  2
+    $$$$$:  378-block  2
 call    3 never executed
-    $$$$$:  384-block  3
+    $$$$$:  378-block  3
 call    4 never executed
-        7:  385:			return meals;
-        7:  386:		}
+        7:  379:			return meals;
+        7:  380:		}
 call    0 returned 7
-    $$$$$:  386-block  0
+    $$$$$:  380-block  0
 call    1 never executed
-    $$$$$:  386-block  1
+    $$$$$:  380-block  1
 call    2 never executed
-        -:  387:
-function _ZN9Recommend6cosineESt6vectorIS0_IdSaIdEESaIS2_EES0_ISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_ESaISC_EE called 4 returned 100% blocks executed 42%
-        4:  388:	recommendVec cosine (vecVector searchedVector, pairVec toSearch) {//this returns a list of
-        4:  389:			recommendVec results{};//ids and cosine distances from a provided vector and provided search list
-        -:  390:			sqlite3_stmt* stmt;
-        4:  391:			std::string temp = "";
-        4:  391-block  0
-call    0 returned 4
-branch  1 taken 4 (fallthrough)
-branch  2 taken 0 (throw)
-        4:  392:			std::vector<double> tempVec = {};
-        4:  392-block  0
+        -:  381:
+function _ZN9Recommend6cosineESt6vectorIS0_IdSaIdEESaIS2_EES0_ISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESB_ESaISC_EE called 4 returned 100% blocks executed 43%
+        4:  382:	recommendVec cosine (vecVector searchedVector, pairVec toSearch) {//this returns a list of
+        4:  383:			recommendVec results{};//ids and cosine distances from a provided vector and provided search list
+        4:  383-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-        -:  393:			const char* sql = "SELECT vector FROM Recipes WHERE name = ?";
-       4*:  394:            CROW_LOG_DEBUG << "Starting calculations";
-        4:  394-block  0
+        -:  384:			sqlite3_stmt* stmt;
+        -:  385:			std::string temp;
+        4:  386:			std::vector<double> tempVec = {};
+        4:  386-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-    %%%%%:  394-block  1
+        -:  387:			const char* sql = "SELECT vector FROM Recipes WHERE name = ?";
+       4*:  388:            CROW_LOG_DEBUG << "Starting calculations";
+        4:  388-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
+    %%%%%:  388-block  1
 call    2 never executed
-    $$$$$:  394-block  2
+    $$$$$:  388-block  2
 call    3 never executed
-      754:  395:			for (const auto &[id,img] : toSearch) {
-        4:  395-block  0
-      754:  395-block  1
+      754:  389:			for (const auto &[id,img] : toSearch) {
+        4:  389-block  0
+      754:  389-block  1
 branch  0 taken 750
 branch  1 taken 4 (fallthrough)
-      750:  396:				double dist = 0.0;
-      750:  397:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
-      750:  397-block  0
+      750:  390:				double dist = 0.0;
+      750:  391:				sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+      750:  391-block  0
 call    0 returned 750
 branch  1 taken 750 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  398:
-      750:  399:				sqlite3_bind_text(stmt, 1, id.c_str(), -1, SQLITE_TRANSIENT);
-      750:  399-block  0
+        -:  392:
+      750:  393:				sqlite3_bind_text(stmt, 1, id.c_str(), -1, SQLITE_TRANSIENT);
+      750:  393-block  0
 call    0 returned 750
 branch  1 taken 750 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  400:
-      750:  401:				sqlite3_step(stmt);
-      750:  401-block  0
+        -:  394:
+      750:  395:				sqlite3_step(stmt);
+      750:  395-block  0
 call    0 returned 750
 branch  1 taken 750 (fallthrough)
 branch  2 taken 0 (throw)
-      750:  402:				std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0)));
-      750:  402-block  0
+      750:  396:				std::istringstream iss(reinterpret_cast<const char*>(sqlite3_column_text(stmt,0))); //since vectors are stored as a string in the db
+      750:  396-block  0
 call    0 returned 750
 branch  1 taken 750 (fallthrough)
 branch  2 taken 0 (throw)
-      750:  402-block  1
+      750:  396-block  1
 call    3 returned 750
 branch  4 taken 750 (fallthrough)
 branch  5 taken 0 (throw)
-      750:  402-block  2
+      750:  396-block  2
 call    6 returned 750
 branch  7 taken 750 (fallthrough)
 branch  8 taken 0 (throw)
-    75750:  403:				while (std::getline(iss, temp, ' ' ) ) {tempVec.push_back(std::stod(temp));}
-    75000:  403-block  0
+    75750:  397:				while (std::getline(iss, temp, ' ' ) ) {tempVec.push_back(std::stod(temp));} //they have to be split and converted to doubles
+    75000:  397-block  0
 call    0 returned 75000
 branch  1 taken 75000 (fallthrough)
 branch  2 taken 0 (throw)
-    75000:  403-block  1
-    75750:  403-block  2
+    75000:  397-block  1
+    75750:  397-block  2
 call    3 returned 75750
 branch  4 taken 75750 (fallthrough)
 branch  5 taken 0 (throw)
-    75750:  403-block  3
+    75750:  397-block  3
 branch  6 taken 75000
 branch  7 taken 750 (fallthrough)
+        -:  398:																										  // for calculations
+     750*:  399:                CROW_LOG_DEBUG << "Vector received";
+      750:  399-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 750
+    %%%%%:  399-block  1
+call    2 never executed
+    $$$$$:  399-block  2
+call    3 never executed
+        -:  400:
+    13500:  401:				for (int i =0; i<searchedVector.size(); i++) {
+    13500:  401-block  0
+branch  0 taken 12750
+branch  1 taken 750 (fallthrough)
+    37125:  402:					dist += cosPriv(searchedVector[i], tempVec);
+    12750:  402-block  0
+call    0 returned 12750
+branch  1 taken 12750 (fallthrough)
+branch  2 taken 0 (throw)
+    12750:  402-block  1
+call    3 returned 12750
+branch  4 taken 12750 (fallthrough)
+branch  5 taken 0 (throw)
+    12750:  402-block  2
+call    6 returned 12750
+branch  7 taken 11625 (fallthrough)
+branch  8 taken 1125
+    12750:  402-block  3
+branch  9 taken 12750 (fallthrough)
+branch 10 taken 0
+    12750:  402-block  4
+    $$$$$:  402-block  5
+branch 11 never executed (fallthrough)
+branch 12 never executed
+        -:  403:				}
         -:  404:
-     750*:  405:                CROW_LOG_DEBUG << "Vector received";
+     750*:  405:				CROW_LOG_DEBUG << "Distance calculated";
       750:  405-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 750
@@ -1123,34 +1144,31 @@ branch  1 taken 750
 call    2 never executed
     $$$$$:  405-block  2
 call    3 never executed
-        -:  406:
-     2250:  407:				for (int i =0; i<searchedVector.size(); i++) {
-     2250:  407-block  0
-branch  0 taken 1500
+      750:  406:				results.push_back(std::tuple(id, img, dist));
+branch  0 taken 0 (fallthrough)
+branch  1 taken 750
+     750*:  407:				CROW_LOG_DEBUG << "Distance pushed to results";
+branch  0 taken 0 (fallthrough)
+branch  1 taken 750
+    %%%%%:  407-block  0
+call    2 never executed
+    $$$$$:  407-block  1
+call    3 never executed
+      750:  408:				sqlite3_reset(stmt);
+      750:  408-block  0
+call    0 returned 750
 branch  1 taken 750 (fallthrough)
-     3000:  408:					dist += cosPriv(searchedVector[i], tempVec);
-     1500:  408-block  0
-call    0 returned 1500
-branch  1 taken 1500 (fallthrough)
 branch  2 taken 0 (throw)
-     1500:  408-block  1
-call    3 returned 1500
-branch  4 taken 1500 (fallthrough)
-branch  5 taken 0 (throw)
-     1500:  408-block  2
-call    6 returned 1500
-branch  7 taken 0 (fallthrough)
-branch  8 taken 1500
-     1500:  408-block  3
-branch  9 taken 1500 (fallthrough)
-branch 10 taken 0
-     1500:  408-block  4
-    $$$$$:  408-block  5
-branch 11 never executed (fallthrough)
-branch 12 never executed
-        -:  409:				}
-        -:  410:
-     750*:  411:				CROW_LOG_DEBUG << "Distance calculated";
+     750*:  409:				CROW_LOG_DEBUG << "Statement reset";
+      750:  409-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 750
+    %%%%%:  409-block  1
+call    2 never executed
+    $$$$$:  409-block  2
+call    3 never executed
+        -:  410:				tempVec = {};
+     750*:  411:				CROW_LOG_DEBUG << "tempVec cleared";
       750:  411-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 750
@@ -1158,473 +1176,440 @@ branch  1 taken 750
 call    2 never executed
     $$$$$:  411-block  2
 call    3 never executed
-      750:  412:				results.push_back(std::tuple(id, img, dist));
-branch  0 taken 0 (fallthrough)
-branch  1 taken 750
-     750*:  413:				CROW_LOG_DEBUG << "Distance pushed to results";
-branch  0 taken 0 (fallthrough)
-branch  1 taken 750
-    %%%%%:  413-block  0
-call    2 never executed
-    $$$$$:  413-block  1
-call    3 never executed
-      750:  414:				sqlite3_reset(stmt);
-      750:  414-block  0
+      750:  412:			}
+      750:  412-block  0
 call    0 returned 750
-branch  1 taken 750 (fallthrough)
-branch  2 taken 0 (throw)
-     750*:  415:				CROW_LOG_DEBUG << "Statement reset";
-      750:  415-block  0
-branch  0 taken 0 (fallthrough)
-branch  1 taken 750
-    %%%%%:  415-block  1
-call    2 never executed
-    $$$$$:  415-block  2
-call    3 never executed
-        -:  416:				tempVec = {};
-     750*:  417:				CROW_LOG_DEBUG << "tempVec cleared";
-      750:  417-block  0
-branch  0 taken 0 (fallthrough)
-branch  1 taken 750
-    %%%%%:  417-block  1
-call    2 never executed
-    $$$$$:  417-block  2
-call    3 never executed
-      750:  418:			}
-      750:  418-block  0
-call    0 returned 750
-    $$$$$:  418-block  1
+    $$$$$:  412-block  1
 call    1 never executed
-       4*:  419:			CROW_LOG_DEBUG << "Calculation complete, returning";
-        4:  419-block  0
+       4*:  413:			CROW_LOG_DEBUG << "Calculation complete, returning";
+        4:  413-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-    %%%%%:  419-block  1
+    %%%%%:  413-block  1
 call    2 never executed
-    $$$$$:  419-block  2
+    $$$$$:  413-block  2
 call    3 never executed
-    $$$$$:  419-block  3
+    $$$$$:  413-block  3
 branch  4 never executed (fallthrough)
 branch  5 never executed
-        4:  420:			sqlite3_finalize(stmt);
-        4:  420-block  0
+        4:  414:			sqlite3_finalize(stmt);
+        4:  414-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  421:			return results;
-    =====:  422:		}
-    $$$$$:  422-block  0
+        4:  415:			return results;
+    =====:  416:		}
+    $$$$$:  416-block  0
 call    0 never executed
-        -:  423:
+        -:  417:
 function _ZN9Recommend6toJsonESt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_dEESaIS8_EE called 4 returned 100% blocks executed 74%
-        4:  424:	crow::json::wvalue toJson(recommendVec finalRec) {
-        4:  424-block  0
+        4:  418:	crow::json::wvalue toJson(recommendVec finalRec) {
+        4:  418-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  425:			crow::json::wvalue json_array = crow::json::wvalue::list();
-        4:  425-block  0
+        4:  419:			crow::json::wvalue json_array = crow::json::wvalue::list();
+        4:  419-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  425-block  1
+        4:  419-block  1
 call    3 returned 4
-    $$$$$:  425-block  2
+    $$$$$:  419-block  2
 call    4 never executed
-        -:  426:			int i = 0;
-        -:  427:
-       44:  428:			for (const auto& [name, image, dist] : finalRec) {
-       44:  428-block  0
+        -:  420:			int i = 0;
+        -:  421:
+       44:  422:			for (const auto& [name, image, dist] : finalRec) {
+       44:  422-block  0
 branch  0 taken 40
 branch  1 taken 4 (fallthrough)
-       40:  429:				crow::json::wvalue item;
-       40:  429-block  0
+       40:  423:				crow::json::wvalue item;
+       40:  423-block  0
 call    0 returned 40
 branch  1 taken 40 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  430:				item["name"] = name;
-       40:  430-block  0
+       40:  424:				item["name"] = name; //this takes each name and puts them in a JSON array with the name of "name"
+       40:  424-block  0
 call    0 returned 40
 branch  1 taken 40 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  430-block  1
+       40:  424-block  1
 call    3 returned 40
 branch  4 taken 40 (fallthrough)
 branch  5 taken 0 (throw)
-       40:  431:				item["image"] = image;
+       40:  425:				item["image"] = image; //this takes each image and puts them in a JSON array with the name of "image"
 call    0 returned 40
 branch  1 taken 40 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  431-block  0
+       40:  425-block  0
 call    3 returned 40
 branch  4 taken 40 (fallthrough)
 branch  5 taken 0 (throw)
-       40:  432:				std::cout << dist << " ";
+       40:  426:				std::cout << dist << " "; //this is just to show each distance is sorted correctly
 call    0 returned 40
 branch  1 taken 40 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  432-block  0
+       40:  426-block  0
 call    3 returned 40
 branch  4 taken 40 (fallthrough)
 branch  5 taken 0 (throw)
-       40:  433:				json_array[i] = (std::move(item));
-       40:  433-block  0
+       40:  427:				json_array[i] = (std::move(item));
+       40:  427-block  0
 call    0 returned 40
 branch  1 taken 40 (fallthrough)
 branch  2 taken 0 (throw)
-       40:  433-block  1
+       40:  427-block  1
 call    3 returned 40
-       40:  434:				i++;
-       40:  435:			}
+       40:  428:				i++;
+       40:  429:			}
 call    0 returned 40
-    $$$$$:  435-block  0
+    $$$$$:  429-block  0
 call    1 never executed
-        4:  436:		std::cout << "\n";
-        4:  436-block  0
+        4:  430:		std::cout << "\n";
+        4:  430-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        4:  437:		return json_array;
-        4:  437-block  0
-    =====:  438:		}
-    $$$$$:  438-block  0
+        4:  431:		return json_array;
+        4:  431-block  0
+    =====:  432:		}
+    $$$$$:  432-block  0
 call    0 never executed
-        -:  439:
+        -:  433:
 function _ZN9Recommend4doItEiSt6vectorIS0_IdSaIdEESaIS2_EE called 4 returned 100% blocks executed 34%
-        4:  440:	crow::json::wvalue doIt (int uID, vecVector searchedVector) {
-        4:  441:			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
-        4:  441-block  0
+        4:  434:	crow::json::wvalue doIt (int uID, vecVector searchedVector) {
+        4:  435:			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+        4:  435-block  0
 call    0 returned 4
 branch  1 taken 0 (fallthrough)
 branch  2 taken 4
-    #####:  442:				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+    #####:  436:				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
 call    0 never executed
 call    1 never executed
 call    2 never executed
-    #####:  443:				db = nullptr;
-        -:  444:			}
-        -:  445:
-        4:  446:			recommendVec finalRec{};
-        4:  446-block  0
+    #####:  437:				db = nullptr;
+        -:  438:			}
+        4:  439:			recommendVec finalRec{};
+        4:  439-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-       4*:  447:			CROW_LOG_DEBUG << "Creating Filtered List";
-        4:  447-block  0
+       4*:  440:			CROW_LOG_DEBUG << "Creating Filtered List";
+        4:  440-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 4
-    %%%%%:  447-block  1
+    %%%%%:  440-block  1
 call    2 never executed
-    $$$$$:  447-block  2
+    $$$$$:  440-block  2
 call    3 never executed
-        4:  448:			pairVec filteredRec = fromKeyword(uID);
-        4:  448-block  0
+        4:  441:			pairVec filteredRec = fromKeyword(uID);
+        4:  441-block  0
 call    0 returned 4
 branch  1 taken 4 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  449:
-        4:  450:			if (!filteredRec.empty()) {
-        4:  450-block  0
+        -:  442:
+        4:  443:			if (!filteredRec.empty()) {
+        4:  443-block  0
 branch  0 taken 2 (fallthrough)
 branch  1 taken 2
-       2*:  451:				CROW_LOG_DEBUG << "Using Filtered List";
-        2:  451-block  0
+       2*:  444:				CROW_LOG_DEBUG << "Using Filtered List";
+        2:  444-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
-    %%%%%:  451-block  1
+    %%%%%:  444-block  1
 call    2 never executed
-    $$$$$:  451-block  2
+    $$$$$:  444-block  2
 call    3 never executed
-        2:  452:				finalRec = cosine(searchedVector, filteredRec);
-        2:  452-block  0
+        2:  445:				finalRec = cosine(searchedVector, filteredRec);
+        2:  445-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        2:  452-block  1
+        2:  445-block  1
 call    3 returned 2
 branch  4 taken 2 (fallthrough)
 branch  5 taken 0 (throw)
-        2:  452-block  2
+        2:  445-block  2
 call    6 returned 2
 branch  7 taken 2 (fallthrough)
 branch  8 taken 0 (throw)
-        2:  452-block  3
+        2:  445-block  3
 call    9 returned 2
 call   10 returned 2
 call   11 returned 2
 call   12 returned 2
 call   13 returned 2
-    $$$$$:  452-block  4
+    $$$$$:  445-block  4
 call   14 never executed
-    $$$$$:  452-block  5
+    $$$$$:  445-block  5
 call   15 never executed
-        2:  453:				quickSort(finalRec, 0, finalRec.size()-1);
+        2:  446:				quickSort(finalRec, 0, finalRec.size()-1);
 call    0 returned 2
-        -:  454:			}
-        -:  455:			else {
-       2*:  456:				CROW_LOG_DEBUG << "TO DB!";
-        2:  456-block  0
+        -:  447:			}
+        -:  448:			else {
+       2*:  449:				CROW_LOG_DEBUG << "TO DB!";
+        2:  449-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
-    %%%%%:  456-block  1
+    %%%%%:  449-block  1
 call    2 never executed
-    $$$$$:  456-block  2
+    $$$$$:  449-block  2
 call    3 never executed
-       2*:  457:                CROW_LOG_DEBUG << "Getting names and images from recipes";
-        2:  457-block  0
+       2*:  450:                CROW_LOG_DEBUG << "Getting names and images from recipes";
+        2:  450-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
-    %%%%%:  457-block  1
+    %%%%%:  450-block  1
 call    2 never executed
-    $$$$$:  457-block  2
+    $$$$$:  450-block  2
 call    3 never executed
-        2:  458:				sqlite3_exec(db, "SELECT name, image FROM Recipes", callbackKeyword, &filteredRec,  &errmsg); //get all meals from DB
-        2:  458-block  0
-call    0 returned 2
-branch  1 taken 2 (fallthrough)
-branch  2 taken 0 (throw)
-       2*:  459:                CROW_LOG_DEBUG << "Success! Getting cosine distance";
-        2:  459-block  0
-branch  0 taken 0 (fallthrough)
-branch  1 taken 2
-    %%%%%:  459-block  1
-call    2 never executed
-    $$$$$:  459-block  2
-call    3 never executed
-        2:  460:				finalRec = cosine(searchedVector, filteredRec);
-        2:  460-block  0
+        2:  451:				sqlite3_exec(db, "SELECT name, image FROM Recipes", callbackKeyword, &filteredRec,  &errmsg); //get all meals from DB
+        2:  451-block  0
 call    0 returned 2
 branch  1 taken 2 (fallthrough)
 branch  2 taken 0 (throw)
-        2:  460-block  1
+       2*:  452:                CROW_LOG_DEBUG << "Success! Getting cosine distance";
+        2:  452-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 2
+    %%%%%:  452-block  1
+call    2 never executed
+    $$$$$:  452-block  2
+call    3 never executed
+        2:  453:				finalRec = cosine(searchedVector, filteredRec); //gets the cosine distance
+        2:  453-block  0
+call    0 returned 2
+branch  1 taken 2 (fallthrough)
+branch  2 taken 0 (throw)
+        2:  453-block  1
 call    3 returned 2
 branch  4 taken 2 (fallthrough)
 branch  5 taken 0 (throw)
-        2:  460-block  2
+        2:  453-block  2
 call    6 returned 2
 branch  7 taken 2 (fallthrough)
 branch  8 taken 0 (throw)
-        2:  460-block  3
+        2:  453-block  3
 call    9 returned 2
 call   10 returned 2
 call   11 returned 2
 call   12 returned 2
 branch 13 taken 0 (fallthrough)
 branch 14 taken 2
-    $$$$$:  460-block  4
+    $$$$$:  453-block  4
 call   15 never executed
-    $$$$$:  460-block  5
+    $$$$$:  453-block  5
 call   16 never executed
-       2*:  461:				CROW_LOG_DEBUG << "Success! Sorting";
+       2*:  454:				CROW_LOG_DEBUG << "Success! Sorting";
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
-    %%%%%:  461-block  0
+    %%%%%:  454-block  0
 call    2 never executed
-    $$$$$:  461-block  1
+    $$$$$:  454-block  1
 call    3 never executed
-        2:  462:				quickSort(finalRec, 0, finalRec.size()-1);
-        2:  462-block  0
+        2:  455:				quickSort(finalRec, 0, finalRec.size()-1);
+        2:  455-block  0
 call    0 returned 2
-       2*:  463:				CROW_LOG_DEBUG << "Success! Converting to json";
+       2*:  456:				CROW_LOG_DEBUG << "Success! Converting to json";
 branch  0 taken 0 (fallthrough)
 branch  1 taken 2
+    %%%%%:  456-block  0
+call    2 never executed
+    $$$$$:  456-block  1
+call    3 never executed
+        -:  457:			}
+        4:  458:			sqlite3_close(db);
+        4:  458-block  0
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+        4:  459:			if (finalRec.size() > 10) {
+        4:  459-block  0
+branch  0 taken 4 (fallthrough)
+branch  1 taken 0
+        4:  460:				finalRec.resize(10); //this shows only the top 10 closest recipes since the vector is already sorted
+        4:  460-block  0
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+        -:  461:			}
+        4:  462:			crow::json::wvalue json_array = toJson(finalRec);
+        4:  462-block  0
+call    0 returned 4
+branch  1 taken 4 (fallthrough)
+branch  2 taken 0 (throw)
+        4:  462-block  1
+call    3 returned 4
+branch  4 taken 4 (fallthrough)
+branch  5 taken 0 (throw)
+        4:  462-block  2
+call    6 returned 4
+branch  7 taken 0 (fallthrough)
+branch  8 taken 4
+    $$$$$:  462-block  3
+call    9 never executed
+       4*:  463:			CROW_LOG_DEBUG << "Success!!!";
+branch  0 taken 0 (fallthrough)
+branch  1 taken 4
     %%%%%:  463-block  0
 call    2 never executed
     $$$$$:  463-block  1
 call    3 never executed
-        -:  464:			}
-        4:  465:			sqlite3_close(db);
-        4:  465-block  0
-call    0 returned 4
-branch  1 taken 4 (fallthrough)
-branch  2 taken 0 (throw)
-        4:  466:			if (finalRec.size() > 10) {
+        -:  464:
+        4:  465:			return json_array;
+        4:  466:		}
         4:  466-block  0
-branch  0 taken 4 (fallthrough)
-branch  1 taken 0
-        4:  467:				finalRec.resize(10);
-        4:  467-block  0
-call    0 returned 4
-branch  1 taken 4 (fallthrough)
-branch  2 taken 0 (throw)
-        -:  468:			}
-        4:  469:			crow::json::wvalue json_array = toJson(finalRec);
-        4:  469-block  0
-call    0 returned 4
-branch  1 taken 4 (fallthrough)
-branch  2 taken 0 (throw)
-        4:  469-block  1
-call    3 returned 4
-branch  4 taken 4 (fallthrough)
-branch  5 taken 0 (throw)
-        4:  469-block  2
-call    6 returned 4
-branch  7 taken 0 (fallthrough)
-branch  8 taken 4
-    $$$$$:  469-block  3
-call    9 never executed
-       4*:  470:			CROW_LOG_DEBUG << "Success!!!";
-branch  0 taken 0 (fallthrough)
-branch  1 taken 4
-    %%%%%:  470-block  0
-call    2 never executed
-    $$$$$:  470-block  1
-call    3 never executed
-        -:  471:
-        4:  472:			return json_array;
-        4:  473:		}
-        4:  473-block  0
 call    0 returned 4
 call    1 returned 4
-    $$$$$:  473-block  1
+    $$$$$:  466-block  1
 call    2 never executed
-    $$$$$:  473-block  2
+    $$$$$:  466-block  2
 call    3 never executed
-    $$$$$:  473-block  3
+    $$$$$:  466-block  3
 call    4 never executed
-        -:  474:
+        -:  467:
 function _ZN9Recommend15getInstructionsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE called 3 returned 100% blocks executed 61%
-        3:  475:	crow::json::wvalue getInstructions(std::string name) {
-        3:  476:			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
-        3:  476-block  0
+        3:  468:	crow::json::wvalue getInstructions(std::string name) {
+        3:  469:			if (sqlite3_open("core.db", &db)!=SQLITE_OK) {
+        3:  469-block  0
 call    0 returned 3
 branch  1 taken 0 (fallthrough)
 branch  2 taken 3
-    #####:  477:				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+    #####:  470:				std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
 call    0 never executed
 call    1 never executed
 call    2 never executed
-    #####:  478:				db = nullptr;
-        -:  479:			}
-        3:  480:			crow::json::wvalue json_array = crow::json::wvalue::list();
-        3:  480-block  0
+    #####:  471:				db = nullptr;
+        -:  472:			}
+        3:  473:			crow::json::wvalue json_array = crow::json::wvalue::list();
+        3:  473-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  480-block  1
+        3:  473-block  1
 call    3 returned 3
-    $$$$$:  480-block  2
+    $$$$$:  473-block  2
 call    4 never executed
-        3:  481:			crow::json::wvalue item;
+        3:  474:			crow::json::wvalue item;
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  482:			sqlite3_stmt* stmt = nullptr;
-        3:  482-block  0
+        3:  475:			sqlite3_stmt* stmt = nullptr;
+        3:  475-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  483:			name.erase(0, name.find_first_not_of(" \t\n\r"));
-        3:  483-block  0
+        3:  476:			name.erase(0, name.find_first_not_of(" \t\n\r"));
+        3:  476-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  484:			name.erase(name.find_last_not_of(" \t\n\r") + 1);
-        3:  484-block  0
+        3:  477:			name.erase(name.find_last_not_of(" \t\n\r") + 1);//these just trim the input to ensure no funny business is happening
+        3:  477-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  485:			std::cout << name;
-        -:  486:
-        -:  487:			const char* sql = "SELECT ingredients, instructions FROM Recipes WHERE name = ?;";
-        3:  488:			if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
-        3:  488-block  0
+        -:  478:			std::cout << name;
+        -:  479:
+        -:  480:			const char* sql = "SELECT ingredients, instructions FROM Recipes WHERE name = ?;";
+        3:  481:			if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK) {
+        3:  481-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  488-block  1
+        3:  481-block  1
 branch  3 taken 0 (fallthrough)
 branch  4 taken 3
-    #####:  489:				std::cout << "Prep error " << sqlite3_errmsg(db)<< "\n";
-    %%%%%:  489-block  0
+    #####:  482:				std::cout << "Prep error " << sqlite3_errmsg(db)<< "\n";
+    %%%%%:  482-block  0
 call    0 never executed
 branch  1 never executed (fallthrough)
 branch  2 never executed (throw)
-    %%%%%:  489-block  1
+    %%%%%:  482-block  1
 call    3 never executed
 branch  4 never executed (fallthrough)
 branch  5 never executed (throw)
-    %%%%%:  489-block  2
+    %%%%%:  482-block  2
 call    6 never executed
 branch  7 never executed (fallthrough)
 branch  8 never executed (throw)
-        -:  490:				return json_array;
-        -:  491:			}
-        3:  492:			if (sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_TRANSIENT) != SQLITE_OK) {
-        3:  492-block  0
+        -:  483:				return json_array;
+        -:  484:			}
+        3:  485:			if (sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_TRANSIENT) != SQLITE_OK) {
+        3:  485-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  492-block  1
+        3:  485-block  1
 branch  3 taken 0 (fallthrough)
 branch  4 taken 3
-    #####:  493:				std::cout << "Bind error " << sqlite3_errmsg(db) << "\n";
-    %%%%%:  493-block  0
+    #####:  486:				std::cout << "Bind error " << sqlite3_errmsg(db) << "\n";
+    %%%%%:  486-block  0
 call    0 never executed
 branch  1 never executed (fallthrough)
 branch  2 never executed (throw)
-    %%%%%:  493-block  1
+    %%%%%:  486-block  1
 call    3 never executed
 branch  4 never executed (fallthrough)
 branch  5 never executed (throw)
-    %%%%%:  493-block  2
+    %%%%%:  486-block  2
 call    6 never executed
 branch  7 never executed (fallthrough)
 branch  8 never executed (throw)
-        -:  494:				return json_array;
-        -:  495:			}
-        -:  496:
-        3:  497:			if (sqlite3_step(stmt) == SQLITE_ROW) {
-        3:  497-block  0
+        -:  487:				return json_array;
+        -:  488:			}
+        -:  489:
+        3:  490:			if (sqlite3_step(stmt) == SQLITE_ROW) {
+        3:  490-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        3:  497-block  1
+        3:  490-block  1
 branch  3 taken 1 (fallthrough)
 branch  4 taken 2
-        1:  498:				item["ingredients"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-        1:  498-block  0
+        1:  491:				item["ingredients"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+        1:  491-block  0
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0 (throw)
-        1:  498-block  1
+        1:  491-block  1
 call    3 returned 1
 branch  4 taken 1 (fallthrough)
 branch  5 taken 0 (throw)
-        1:  498-block  2
+        1:  491-block  2
 call    6 returned 1
 branch  7 taken 1 (fallthrough)
 branch  8 taken 0 (throw)
-        1:  499:				item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+        1:  492:				item["instructions"] = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0 (throw)
-        1:  499-block  0
+        1:  492-block  0
 call    3 returned 1
 branch  4 taken 1 (fallthrough)
 branch  5 taken 0 (throw)
-        1:  499-block  1
+        1:  492-block  1
 call    6 returned 1
 branch  7 taken 1 (fallthrough)
 branch  8 taken 0 (throw)
-        1:  500:				json_array[0] = (std::move(item));
+        1:  493:				json_array[0] = (std::move(item));
 call    0 returned 1
 branch  1 taken 1 (fallthrough)
 branch  2 taken 0 (throw)
-        1:  500-block  0
+        1:  493-block  0
 call    3 returned 1
-        -:  501:			}
-        3:  502:			sqlite3_finalize(stmt);
-        3:  502-block  0
+        -:  494:			}
+        3:  495:			sqlite3_finalize(stmt); //this returns the ingredients and instructions for the clicked on recipe
+        3:  495-block  0
 call    0 returned 3
 branch  1 taken 3 (fallthrough)
 branch  2 taken 0 (throw)
-        -:  503:			return json_array;
-        3:  504:		}
-        3:  504-block  0
+        -:  496:			return json_array;
+        3:  497:		}
+        3:  497-block  0
 call    0 returned 3
-    $$$$$:  504-block  1
+    $$$$$:  497-block  1
 call    1 never executed
-    $$$$$:  504-block  2
+    $$$$$:  497-block  2
 call    2 never executed
-        -:  505:};
-        -:  506:#endif
+        -:  498:};
+        -:  499:#endif
