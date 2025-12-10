@@ -13,3 +13,6 @@ https://docs.google.com/document/d/1WJhBnc7SWzk_88R7pZOfcFdEkMj_aZSkeH6upp2t5Gk/
 
 ## BGEZ Project Report:
 https://docs.google.com/document/d/12ED4yaf3ju5EvlWGRMzR405csbDSiQ78Inmf21UsXqM/edit?usp=sharing
+
+## BGEZ Documentation:
+https://docs.google.com/document/d/1HRSnnFOT123mOdH0dM-bCRHhPt7y3rdT5iEDK4xgTmg/edit?usp=sharing
