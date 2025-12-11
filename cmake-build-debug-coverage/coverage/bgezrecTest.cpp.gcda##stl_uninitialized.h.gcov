@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_uninitialized.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_uninitialized.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// Raw memory manipulators -*- C++ -*-
         -:    2:
@@ -114,15 +114,15 @@
         -:  110:  template<typename _InputIterator, typename _ForwardIterator>
         -:  111:    _GLIBCXX20_CONSTEXPR
         -:  112:    _ForwardIterator
-       70:  113:    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
+       67:  113:    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
         -:  114:		     _ForwardIterator __result)
         -:  115:    {
         -:  116:      _ForwardIterator __cur = __result;
         -:  117:      __try
         -:  118:	{
-      971:  119:	  for (; __first != __last; ++__first, (void)++__cur)
+     1025:  119:	  for (; __first != __last; ++__first, (void)++__cur)
         -:  120:	    std::_Construct(std::__addressof(*__cur), *__first);
-       70:  121:	  return __cur;
+       67:  121:	  return __cur;
         -:  122:	}
     =====:  123:      __catch(...)
         -:  124:	{
@@ -195,22 +195,22 @@ call    0 never executed
         -:  128:    }
 ------------------
 _ZSt16__do_uninit_copyIPKSt6vectorIdSaIdEEPS2_ET0_T_S7_S6_:
-function _ZSt16__do_uninit_copyIPKSt6vectorIdSaIdEEPS2_ET0_T_S7_S6_ called 32 returned 100% blocks executed 55%
-       32:  113:    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
+function _ZSt16__do_uninit_copyIPKSt6vectorIdSaIdEEPS2_ET0_T_S7_S6_ called 29 returned 100% blocks executed 55%
+       29:  113:    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
         -:  114:		     _ForwardIterator __result)
         -:  115:    {
         -:  116:      _ForwardIterator __cur = __result;
         -:  117:      __try
         -:  118:	{
-       69:  119:	  for (; __first != __last; ++__first, (void)++__cur)
-       32:  119-block  0
-       37:  119-block  1
-       69:  119-block  2
-branch  0 taken 37
-branch  1 taken 32 (fallthrough)
+       63:  119:	  for (; __first != __last; ++__first, (void)++__cur)
+       29:  119-block  0
+       34:  119-block  1
+       63:  119-block  2
+branch  0 taken 34
+branch  1 taken 29 (fallthrough)
         -:  120:	    std::_Construct(std::__addressof(*__cur), *__first);
-       32:  121:	  return __cur;
-       32:  121-block  0
+       29:  121:	  return __cur;
+       29:  121-block  0
         -:  122:	}
     =====:  123:      __catch(...)
     $$$$$:  123-block  0
@@ -329,11 +329,11 @@ function _ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKSt6vectorIdSaId
         -:  116:      _ForwardIterator __cur = __result;
         -:  117:      __try
         -:  118:	{
-       12:  119:	  for (; __first != __last; ++__first, (void)++__cur)
+       72:  119:	  for (; __first != __last; ++__first, (void)++__cur)
         4:  119-block  0
-        8:  119-block  1
-       12:  119-block  2
-branch  0 taken 8
+       68:  119-block  1
+       72:  119-block  2
+branch  0 taken 68
 branch  1 taken 4 (fallthrough)
         -:  120:	    std::_Construct(std::__addressof(*__cur), *__first);
         4:  121:	  return __cur;
@@ -360,13 +360,13 @@ call    0 never executed
         -:  134:        static _ForwardIterator
         -:  135:        __uninit_copy(_InputIterator __first, _InputIterator __last,
         -:  136:		      _ForwardIterator __result)
-      70*:  137:	{ return std::__do_uninit_copy(__first, __last, __result); }
+      67*:  137:	{ return std::__do_uninit_copy(__first, __last, __result); }
         1:  137-block  0
 call    0 returned 1
         4:  137-block  1
 call    1 returned 4
-       32:  137-block  2
-call    2 returned 32
+       29:  137-block  2
+call    2 returned 29
        21:  137-block  3
 call    3 returned 21
 branch  4 taken 21 (fallthrough)
@@ -1365,7 +1365,7 @@ branch  3 taken 0 (throw)
         -: 1061:  template<typename _Tp, typename _Up, typename _Allocator>
         -: 1062:    _GLIBCXX20_CONSTEXPR
         -: 1063:    inline void
-     1352: 1064:    __relocate_object_a(_Tp* __restrict __dest, _Up* __restrict __orig,
+     1474: 1064:    __relocate_object_a(_Tp* __restrict __dest, _Up* __restrict __orig,
         -: 1065:			_Allocator& __alloc)
         -: 1066:    noexcept(noexcept(std::allocator_traits<_Allocator>::construct(__alloc,
         -: 1067:			 __dest, std::move(*__orig)))
@@ -1375,7 +1375,7 @@ branch  3 taken 0 (throw)
         -: 1071:      typedef std::allocator_traits<_Allocator> __traits;
         -: 1072:      __traits::construct(__alloc, __dest, std::move(*__orig));
         -: 1073:      __traits::destroy(__alloc, std::__addressof(*__orig));
-     1352: 1074:    }
+     1474: 1074:    }
 ------------------
 _ZSt19__relocate_object_aISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEES7_SaIS7_EEvPT_PT0_RT1_:
 function _ZSt19__relocate_object_aISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEES7_SaIS7_EEvPT_PT0_RT1_ called 1276 returned 100% blocks executed 100%
@@ -1394,10 +1394,10 @@ call    0 returned 1276
      1276: 1074:    }
 ------------------
 _ZSt19__relocate_object_aISt6vectorIdSaIdEES2_SaIS2_EEvPT_PT0_RT1_:
-function _ZSt19__relocate_object_aISt6vectorIdSaIdEES2_SaIS2_EEvPT_PT0_RT1_ called 76 returned 100% blocks executed 60%
-       76: 1064:    __relocate_object_a(_Tp* __restrict __dest, _Up* __restrict __orig,
-       76: 1064-block  0
-call    0 returned 76
+function _ZSt19__relocate_object_aISt6vectorIdSaIdEES2_SaIS2_EEvPT_PT0_RT1_ called 198 returned 100% blocks executed 60%
+      198: 1064:    __relocate_object_a(_Tp* __restrict __dest, _Up* __restrict __orig,
+      198: 1064-block  0
+call    0 returned 198
         -: 1065:			_Allocator& __alloc)
         -: 1066:    noexcept(noexcept(std::allocator_traits<_Allocator>::construct(__alloc,
         -: 1067:			 __dest, std::move(*__orig)))
@@ -1407,7 +1407,7 @@ call    0 returned 76
         -: 1071:      typedef std::allocator_traits<_Allocator> __traits;
         -: 1072:      __traits::construct(__alloc, __dest, std::move(*__orig));
         -: 1073:      __traits::destroy(__alloc, std::__addressof(*__orig));
-       76: 1074:    }
+      198: 1074:    }
 ------------------
         -: 1075:
         -: 1076:  // This class may be specialized for specific types.
@@ -1434,7 +1434,7 @@ function _ZSt14__relocate_a_1IPSt4pairINSt7__cxx1112basic_stringIcSt11char_trait
         -: 1096:      static_assert(std::is_same<_ValueType, _ValueType2>::value,
         -: 1097:	  "relocation is only possible for values of the same type");
         -: 1098:      _ForwardIterator __cur = __result;
-    2868*: 1099:      for (; __first != __last; ++__first, (void)++__cur)
+    3032*: 1099:      for (; __first != __last; ++__first, (void)++__cur)
        72: 1099-block  0
      1348: 1099-block  1
 branch  0 taken 1276
@@ -1448,27 +1448,27 @@ branch  5 taken 36 (fallthrough)
     %%%%%: 1099-block  4
 branch  6 never executed
 branch  7 never executed (fallthrough)
-      112: 1099-block  5
-branch  8 taken 72
-branch  9 taken 40 (fallthrough)
-       40: 1099-block  6
+      255: 1099-block  5
+branch  8 taken 194
+branch  9 taken 61 (fallthrough)
+       61: 1099-block  6
 branch 10 taken 0
-branch 11 taken 40 (fallthrough)
+branch 11 taken 61 (fallthrough)
        12: 1099-block  7
 branch 12 taken 4
 branch 13 taken 8 (fallthrough)
         8: 1099-block  8
 branch 14 taken 0
 branch 15 taken 8 (fallthrough)
-    1352*: 1100:	std::__relocate_object_a(std::__addressof(*__cur),
+    1474*: 1100:	std::__relocate_object_a(std::__addressof(*__cur),
      1276: 1100-block  0
 call    0 returned 1276
     %%%%%: 1100-block  1
 call    1 never executed
     %%%%%: 1100-block  2
 call    2 never executed
-       72: 1100-block  3
-call    3 returned 72
+      194: 1100-block  3
+call    3 returned 194
     %%%%%: 1100-block  4
 call    4 never executed
         4: 1100-block  5
@@ -1487,23 +1487,23 @@ call    6 never executed
         -: 1110:		   _Tp* __result,
         -: 1111:		   [[__maybe_unused__]] allocator<_Up>& __alloc) noexcept
         -: 1112:    {
-      122: 1113:      ptrdiff_t __count = __last - __first;
-      226: 1114:      if (__count > 0)
-      104: 1114-block  0
-branch  0 taken 91 (fallthrough)
-branch  1 taken 13
-      104: 1114-block  1
+      161: 1113:      ptrdiff_t __count = __last - __first;
+      298: 1114:      if (__count > 0)
+      128: 1114-block  0
+branch  0 taken 112 (fallthrough)
+branch  1 taken 16
+      128: 1114-block  1
 branch  2 taken 0 (fallthrough)
-branch  3 taken 104
+branch  3 taken 128
         4: 1114-block  2
 branch  4 taken 0 (fallthrough)
 branch  5 taken 4
-       18: 1114-block  3
-branch  6 taken 9 (fallthrough)
-branch  7 taken 9
-       18: 1114-block  4
+       33: 1114-block  3
+branch  6 taken 21 (fallthrough)
+branch  7 taken 12
+       33: 1114-block  4
 branch  8 taken 0 (fallthrough)
-branch  9 taken 18
+branch  9 taken 33
         -: 1115:	{
         -: 1116:#ifdef __cpp_lib_is_constant_evaluated
         -: 1117:	  if (std::is_constant_evaluated())
@@ -1515,20 +1515,20 @@ branch  9 taken 18
         -: 1123:	      return ___out.base();
         -: 1124:	    }
         -: 1125:#endif
-     100*: 1126:	  __builtin_memmove(__result, __first, __count * sizeof(_Tp));
-       91: 1126-block  0
+     133*: 1126:	  __builtin_memmove(__result, __first, __count * sizeof(_Tp));
+      112: 1126-block  0
     %%%%%: 1126-block  1
     %%%%%: 1126-block  2
-        9: 1126-block  3
+       21: 1126-block  3
     %%%%%: 1126-block  4
         -: 1127:	}
-      122: 1128:      return __result + __count;
-      104: 1128-block  0
-branch  0 taken 91 (fallthrough)
-branch  1 taken 13
-       18: 1128-block  1
-branch  2 taken 9 (fallthrough)
-branch  3 taken 9
+      161: 1128:      return __result + __count;
+      128: 1128-block  0
+branch  0 taken 112 (fallthrough)
+branch  1 taken 16
+       33: 1128-block  1
+branch  2 taken 21 (fallthrough)
+branch  3 taken 12
         -: 1129:    }
         -: 1130:#endif
         -: 1131:

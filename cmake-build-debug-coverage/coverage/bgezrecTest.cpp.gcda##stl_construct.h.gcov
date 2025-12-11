@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_construct.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_construct.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// nonstandard construct and destroy functions -*- C++ -*-
         -:    2:
@@ -124,24 +124,24 @@ call   11 never executed
         -:   91:#if __cplusplus >= 202002L
         -:   92:  template<typename _Tp, typename... _Args>
         -:   93:    constexpr auto
-    1834*:   94:    construct_at(_Tp* __location, _Args&&... __args)
+    2079*:   94:    construct_at(_Tp* __location, _Args&&... __args)
         -:   95:    noexcept(noexcept(::new((void*)0) _Tp(std::declval<_Args>()...)))
         -:   96:    -> decltype(::new((void*)0) _Tp(std::declval<_Args>()...))
-   81932*:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
-      104:   97-block  0
-branch  0 taken 91 (fallthrough)
-branch  1 taken 13
+   88552*:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
+      128:   97-block  0
+branch  0 taken 112 (fallthrough)
+branch  1 taken 16
        36:   97-block  1
 call    2 returned 36
 branch  3 taken 36 (fallthrough)
 branch  4 taken 0 (throw)
-    79199:   97-block  2
-       18:   97-block  3
-branch  5 taken 9 (fallthrough)
-branch  6 taken 9
+    85481:   97-block  2
+       33:   97-block  3
+branch  5 taken 21 (fallthrough)
+branch  6 taken 12
       714:   97-block  4
 call    7 returned 714
-       27:   97-block  5
+       81:   97-block  5
 ------------------
 _ZSt12construct_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE6TraitsEJRS7_RKS8_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPSE_DpOSF_:
 function _ZSt12construct_atISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE6TraitsEJRS7_RKS8_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPSE_DpOSF_ called 35 returned 100% blocks executed 100%
@@ -180,11 +180,11 @@ call    0 returned 1276
      1276:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
 ------------------
 _ZSt12construct_atISt6vectorIdSaIdEEJS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS4_DpOS5_:
-function _ZSt12construct_atISt6vectorIdSaIdEEJS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS4_DpOS5_ called 76 returned 100% blocks executed 100%
-       76:   94:    construct_at(_Tp* __location, _Args&&... __args)
+function _ZSt12construct_atISt6vectorIdSaIdEEJS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS4_DpOS5_ called 198 returned 100% blocks executed 100%
+      198:   94:    construct_at(_Tp* __location, _Args&&... __args)
         -:   95:    noexcept(noexcept(::new((void*)0) _Tp(std::declval<_Args>()...)))
         -:   96:    -> decltype(::new((void*)0) _Tp(std::declval<_Args>()...))
-       76:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
+      198:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
 ------------------
 _ZSt12construct_atISt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEJRKSt21piecewise_construct_tSt5tupleIJOiEESC_IJEEEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPSH_DpOSI_:
 function _ZSt12construct_atISt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEJRKSt21piecewise_construct_tSt5tupleIJOiEESC_IJEEEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPSH_DpOSI_ called 35 returned 100% blocks executed 100%
@@ -203,13 +203,13 @@ call    0 returned 82
        82:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
 ------------------
 _ZSt12construct_atISt6vectorIdSaIdEEJRKS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS6_DpOS7_:
-function _ZSt12construct_atISt6vectorIdSaIdEEJRKS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS6_DpOS7_ called 91 returned 100% blocks executed 100%
-       91:   94:    construct_at(_Tp* __location, _Args&&... __args)
+function _ZSt12construct_atISt6vectorIdSaIdEEJRKS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS6_DpOS7_ called 214 returned 100% blocks executed 100%
+      214:   94:    construct_at(_Tp* __location, _Args&&... __args)
         -:   95:    noexcept(noexcept(::new((void*)0) _Tp(std::declval<_Args>()...)))
         -:   96:    -> decltype(::new((void*)0) _Tp(std::declval<_Args>()...))
-       91:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
-       91:   97-block  0
-call    0 returned 91
+      214:   97:    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
+      214:   97-block  0
+call    0 returned 214
 ------------------
 _ZSt12construct_atIN4crow4json6wvalueEJRS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS5_DpOS6_:
 function _ZSt12construct_atIN4crow4json6wvalueEJRS2_EEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS5_DpOS6_ called 0 returned 0% blocks executed 0%
@@ -259,7 +259,7 @@ call    0 returned 8
         -:  116:	  return;
         -:  117:	}
         -:  118:#endif
-     906*:  119:      ::new((void*)__p) _Tp(std::forward<_Args>(__args)...);
+     963*:  119:      ::new((void*)__p) _Tp(std::forward<_Args>(__args)...);
        41:  119-block  0
 call    0 returned 41
 branch  1 taken 41 (fallthrough)
@@ -274,9 +274,9 @@ branch  7 taken 5 (fallthrough)
 branch  8 taken 0 (throw)
         5:  119-block  3
         5:  119-block  4
-       37:  119-block  5
-call    9 returned 37
-branch 10 taken 37 (fallthrough)
+       34:  119-block  5
+call    9 returned 34
+branch 10 taken 34 (fallthrough)
 branch 11 taken 0 (throw)
        60:  119-block  6
 call   12 returned 60
@@ -286,9 +286,9 @@ branch 14 taken 0 (throw)
 call   15 returned 750
 branch 16 taken 750 (fallthrough)
 branch 17 taken 0 (throw)
-        8:  119-block  8
-call   18 returned 8
-branch 19 taken 8 (fallthrough)
+       68:  119-block  8
+call   18 returned 68
+branch 19 taken 68 (fallthrough)
 branch 20 taken 0 (throw)
     %%%%%:  119-block  9
 branch 21 never executed (fallthrough)
@@ -339,7 +339,7 @@ branch 24 taken 0
 function _ZNSt12_Destroy_auxILb0EE9__destroyIPSt6vectorIdSaIdEEEEvT_S6_ called 90 returned 100% blocks executed 100%
        90:  160:	__destroy(_ForwardIterator __first, _ForwardIterator __last)
         -:  161:	{
-    2703*:  162:	  for (; __first != __last; ++__first)
+    2883*:  162:	  for (; __first != __last; ++__first)
     $$$$$:  162-block  0
 branch  0 never executed
 branch  1 never executed (fallthrough)
@@ -350,9 +350,9 @@ branch  3 never executed (fallthrough)
 branch  4 never executed
 branch  5 never executed (fallthrough)
        90:  162-block  3
-      144:  162-block  4
-      234:  162-block  5
-branch  6 taken 144
+      324:  162-block  4
+      414:  162-block  5
+branch  6 taken 324
 branch  7 taken 90 (fallthrough)
     $$$$$:  162-block  6
 branch  8 never executed

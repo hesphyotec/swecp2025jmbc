@@ -15,10 +15,10 @@ set(CMAKE_BUILD_TYPE Release)
 
 add_executable(swecp2025jmbc
         include/sqlite3.c
-        app.cpp
+        #app.cpp
         include/bcrypt.cpp
         include/blowfish.cpp
-        #bgezrecTest.cpp
+        bgezrecTest.cpp
 )
 
 target_include_directories(swecp2025jmbc PRIVATE

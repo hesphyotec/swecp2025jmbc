@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// Vector implementation -*- C++ -*-
         -:    2:
@@ -100,7 +100,7 @@
         -:   96:	pointer _M_end_of_storage;
         -:   97:
         -:   98:	_GLIBCXX20_CONSTEXPR
-    3230*:   99:	_Vector_impl_data() _GLIBCXX_NOEXCEPT
+   25907*:   99:	_Vector_impl_data() _GLIBCXX_NOEXCEPT
       18*:  100:	: _M_start(), _M_finish(), _M_end_of_storage()
         1:  100-block  0
 call    0 returned 1
@@ -138,10 +138,10 @@ call   23 returned 7
         -:  102:
         -:  103:#if __cplusplus >= 201103L
         -:  104:	_GLIBCXX20_CONSTEXPR
-       76:  105:	_Vector_impl_data(_Vector_impl_data&& __x) noexcept
-       89:  106:	: _M_start(__x._M_start), _M_finish(__x._M_finish),
-       89:  107:	  _M_end_of_storage(__x._M_end_of_storage)
-       89:  108:	{ __x._M_start = __x._M_finish = __x._M_end_of_storage = pointer(); }
+      198:  105:	_Vector_impl_data(_Vector_impl_data&& __x) noexcept
+      214:  106:	: _M_start(__x._M_start), _M_finish(__x._M_finish),
+      214:  107:	  _M_end_of_storage(__x._M_end_of_storage)
+      214:  108:	{ __x._M_start = __x._M_finish = __x._M_end_of_storage = pointer(); }
         -:  109:#endif
         -:  110:
         -:  111:	_GLIBCXX20_CONSTEXPR
@@ -332,11 +332,11 @@ call   23 returned 7
         -:  296:      _GLIBCXX20_CONSTEXPR
         -:  297:      _Tp_alloc_type&
         -:  298:      _M_get_Tp_allocator() _GLIBCXX_NOEXCEPT
-     120*:  299:      { return this->_M_impl; }
+     141*:  299:      { return this->_M_impl; }
     %%%%%:  299-block  0
        36:  299-block  1
 call    0 returned 36
-       40:  299-block  2
+       61:  299-block  2
         8:  299-block  3
         -:  300:
         -:  301:      _GLIBCXX20_CONSTEXPR
@@ -370,7 +370,7 @@ call    0 returned 36
         -:  329:      _GLIBCXX20_CONSTEXPR
         -:  330:      _Vector_base(size_t __n, const allocator_type& __a)
         -:  331:      : _M_impl(__a)
-     3156:  332:      { _M_create_storage(__n); }
+    25836:  332:      { _M_create_storage(__n); }
         -:  333:
         -:  334:#if __cplusplus >= 201103L
         -:  335:      _Vector_base(_Vector_base&&) = default;
@@ -404,8 +404,8 @@ call    0 returned 36
         -:  363:      _GLIBCXX20_CONSTEXPR
         -:  364:      ~_Vector_base() _GLIBCXX_NOEXCEPT
         -:  365:      {
-     3484:  366:	_M_deallocate(_M_impl._M_start,
-     3484:  367:		      _M_impl._M_end_of_storage - _M_impl._M_start);
+    26283:  366:	_M_deallocate(_M_impl._M_start,
+    26283:  367:		      _M_impl._M_end_of_storage - _M_impl._M_start);
     =====:  368:      }
         -:  369:
         -:  370:    public:
@@ -416,7 +416,7 @@ call    0 returned 36
         -:  375:      _M_allocate(size_t __n)
         -:  376:      {
         -:  377:	typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
-    1908*:  378:	return __n != 0 ? _Tr::allocate(_M_impl, __n) : pointer();
+   25028*:  378:	return __n != 0 ? _Tr::allocate(_M_impl, __n) : pointer();
         4:  378-block  0
 call    0 returned 4
         4:  378-block  1
@@ -427,12 +427,12 @@ branch  3 taken 36 (fallthrough)
 branch  4 taken 0
        36:  378-block  3
 call    5 returned 36
-branch  6 taken 104 (fallthrough)
+branch  6 taken 128 (fallthrough)
 branch  7 taken 0
-      104:  378-block  4
-call    8 returned 104
-     1578:  378-block  5
-call    9 returned 1578
+      128:  378-block  4
+call    8 returned 128
+    24641:  378-block  5
+call    9 returned 24641
         1:  378-block  6
 branch 10 taken 1 (fallthrough)
 branch 11 taken 0
@@ -460,19 +460,19 @@ branch 25 taken 4 (fallthrough)
 branch 26 taken 0
         4:  378-block 14
 call   27 returned 4
-branch 28 taken 40 (fallthrough)
+branch 28 taken 61 (fallthrough)
 branch 29 taken 0
-       40:  378-block 15
-call   30 returned 40
-       32:  378-block 16
-branch 31 taken 32 (fallthrough)
+       61:  378-block 15
+call   30 returned 61
+       29:  378-block 16
+branch 31 taken 29 (fallthrough)
 branch 32 taken 0
-       32:  378-block 17
-call   33 returned 32
-branch 34 taken 18 (fallthrough)
+       29:  378-block 17
+call   33 returned 29
+branch 34 taken 33 (fallthrough)
 branch 35 taken 0
-       18:  378-block 18
-call   36 returned 18
+       33:  378-block 18
+call   36 returned 33
 branch 37 taken 21 (fallthrough)
 branch 38 taken 0
        21:  378-block 19
@@ -500,18 +500,18 @@ call   50 never executed
         -:  383:      _M_deallocate(pointer __p, size_t __n)
         -:  384:      {
         -:  385:	typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Tr;
-    2247*:  386:	if (__p)
+   25481*:  386:	if (__p)
 branch  0 taken 0 (fallthrough)
-branch  1 taken 76
-      144:  386-block  0
-branch  2 taken 78 (fallthrough)
-branch  3 taken 66
+branch  1 taken 198
+      324:  386-block  0
+branch  2 taken 266 (fallthrough)
+branch  3 taken 58
        36:  386-block  1
 branch  4 taken 32 (fallthrough)
 branch  5 taken 4
-      104:  386-block  2
-branch  6 taken 91 (fallthrough)
-branch  7 taken 13
+      128:  386-block  2
+branch  6 taken 112 (fallthrough)
+branch  7 taken 16
     %%%%%:  386-block  3
 branch  8 never executed (fallthrough)
 branch  9 never executed
@@ -520,18 +520,18 @@ branch 11 taken 4
         4:  386-block  4
 branch 12 taken 0 (fallthrough)
 branch 13 taken 4
-       40:  386-block  5
-branch 14 taken 20 (fallthrough)
-branch 15 taken 20
+       61:  386-block  5
+branch 14 taken 38 (fallthrough)
+branch 15 taken 23
     $$$$$:  386-block  6
 branch 16 never executed (fallthrough)
 branch 17 never executed
     $$$$$:  386-block  7
 branch 18 never executed (fallthrough)
 branch 19 never executed
-       18:  386-block  8
-branch 20 taken 9 (fallthrough)
-branch 21 taken 9
+       33:  386-block  8
+branch 20 taken 21 (fallthrough)
+branch 21 taken 12
        21:  386-block  9
 branch 22 taken 16 (fallthrough)
 branch 23 taken 5
@@ -590,8 +590,8 @@ branch 60 taken 60 (fallthrough)
 branch 61 taken 30
 branch 62 taken 5 (fallthrough)
 branch 63 taken 9
-branch 64 taken 23 (fallthrough)
-branch 65 taken 25
+branch 64 taken 26 (fallthrough)
+branch 65 taken 22
     %%%%%:  386-block 25
 branch 66 never executed (fallthrough)
 branch 67 never executed
@@ -687,10 +687,10 @@ branch 127 never executed
     $$$$$:  386-block 55
 branch 128 never executed (fallthrough)
 branch 129 never executed
-branch 130 taken 0 (fallthrough)
-branch 131 taken 1500
-     1500:  386-block 56
-branch 132 taken 1500 (fallthrough)
+branch 130 taken 11625 (fallthrough)
+branch 131 taken 1125
+    12750:  386-block 56
+branch 132 taken 12750 (fallthrough)
 branch 133 taken 0
         4:  386-block 57
 branch 134 taken 4 (fallthrough)
@@ -722,12 +722,12 @@ branch 151 never executed
     $$$$$:  386-block 66
 branch 152 never executed (fallthrough)
 branch 153 never executed
-        8:  386-block 67
+        5:  386-block 67
 branch 154 taken 0 (fallthrough)
-branch 155 taken 8
+branch 155 taken 5
        15:  386-block 68
-branch 156 taken 5 (fallthrough)
-branch 157 taken 10
+branch 156 taken 8 (fallthrough)
+branch 157 taken 7
     $$$$$:  386-block 69
 branch 158 never executed (fallthrough)
 branch 159 never executed
@@ -736,13 +736,13 @@ branch 160 never executed (fallthrough)
 branch 161 never executed
 branch 162 never executed (fallthrough)
 branch 163 never executed
-     303*:  387:	  _Tr::deallocate(_M_impl, __p, __n);
+     527*:  387:	  _Tr::deallocate(_M_impl, __p, __n);
     %%%%%:  387-block  0
 call    0 never executed
-       78:  387-block  1
-call    1 returned 78
-       91:  387-block  2
-call    2 returned 91
+      266:  387-block  1
+call    1 returned 266
+      112:  387-block  2
+call    2 returned 112
     $$$$$:  387-block  3
 call    3 never executed
     %%%%%:  387-block  4
@@ -751,8 +751,8 @@ call    4 never executed
 call    5 never executed
     $$$$$:  387-block  6
 call    6 never executed
-        9:  387-block  7
-call    7 returned 9
+       21:  387-block  7
+call    7 returned 21
        16:  387-block  8
 call    8 returned 16
     $$$$$:  387-block  9
@@ -793,8 +793,8 @@ call   25 never executed
 call   26 returned 60
         5:  387-block 27
 call   27 returned 5
-       23:  387-block 28
-call   28 returned 23
+       26:  387-block 28
+call   28 returned 26
     %%%%%:  387-block 29
 call   29 never executed
         4:  387-block 30
@@ -874,12 +874,12 @@ call   65 never executed
         -:  390:    protected:
         -:  391:      _GLIBCXX20_CONSTEXPR
         -:  392:      void
-     3156:  393:      _M_create_storage(size_t __n)
+    25836:  393:      _M_create_storage(size_t __n)
         -:  394:      {
-     3156:  395:	this->_M_impl._M_start = this->_M_allocate(__n);
-     3156:  396:	this->_M_impl._M_finish = this->_M_impl._M_start;
-     3156:  397:	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
-     3156:  398:      }
+    25836:  395:	this->_M_impl._M_start = this->_M_allocate(__n);
+    25836:  396:	this->_M_impl._M_finish = this->_M_impl._M_start;
+    25836:  397:	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+    25836:  398:      }
 ------------------
 _ZNSt12_Vector_baseISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEESaIS7_EE17_M_create_storageEy:
 function _ZNSt12_Vector_baseISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEESaIS7_EE17_M_create_storageEy called 4 returned 100% blocks executed 100%
@@ -918,16 +918,16 @@ branch  1 taken 0
         4:  398:      }
 ------------------
 _ZNSt12_Vector_baseIdSaIdEE17_M_create_storageEy:
-function _ZNSt12_Vector_baseIdSaIdEE17_M_create_storageEy called 3144 returned 100% blocks executed 100%
-     3144:  393:      _M_create_storage(size_t __n)
-     3144:  393-block  0
-branch  0 taken 1578 (fallthrough)
-branch  1 taken 1566
+function _ZNSt12_Vector_baseIdSaIdEE17_M_create_storageEy called 25824 returned 100% blocks executed 100%
+    25824:  393:      _M_create_storage(size_t __n)
+    25824:  393-block  0
+branch  0 taken 24641 (fallthrough)
+branch  1 taken 1183
         -:  394:      {
-     3144:  395:	this->_M_impl._M_start = this->_M_allocate(__n);
-     3144:  396:	this->_M_impl._M_finish = this->_M_impl._M_start;
-     3144:  397:	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
-     3144:  398:      }
+    25824:  395:	this->_M_impl._M_start = this->_M_allocate(__n);
+    25824:  396:	this->_M_impl._M_finish = this->_M_impl._M_start;
+    25824:  397:	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+    25824:  398:      }
 ------------------
         -:  399:    };
         -:  400:
@@ -1126,15 +1126,15 @@ branch  1 taken 1566
         -:  593:       *  by @a __x (unless the allocator traits dictate a different object).
         -:  594:       */
         -:  595:      _GLIBCXX20_CONSTEXPR
-     3156:  596:      vector(const vector& __x)
+    25836:  596:      vector(const vector& __x)
         -:  597:      : _Base(__x.size(),
-     3156:  598:	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
+    25836:  598:	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
         -:  599:      {
-     3156:  600:	this->_M_impl._M_finish =
-     3156:  601:	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
+    25836:  600:	this->_M_impl._M_finish =
+    25836:  601:	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
         -:  602:				      this->_M_impl._M_start,
         -:  603:				      _M_get_Tp_allocator());
-     3156:  604:      }
+    25836:  604:      }
 ------------------
 _ZNSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEESaIS7_EEC1ERKS9_:
 function _ZNSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEESaIS7_EEC1ERKS9_ called 4 returned 100% blocks executed 57%
@@ -1185,18 +1185,18 @@ branch  2 taken 0 (throw)
         4:  604-block  0
 ------------------
 _ZNSt6vectorIdSaIdEEC1ERKS1_:
-function _ZNSt6vectorIdSaIdEEC1ERKS1_ called 3144 returned 100% blocks executed 83%
-     3144:  596:      vector(const vector& __x)
+function _ZNSt6vectorIdSaIdEEC1ERKS1_ called 25824 returned 100% blocks executed 83%
+    25824:  596:      vector(const vector& __x)
         -:  597:      : _Base(__x.size(),
-     3144:  598:	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
+    25824:  598:	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
         -:  599:      {
-     3144:  600:	this->_M_impl._M_finish =
-     3144:  601:	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
-branch  0 taken 1578 (fallthrough)
-branch  1 taken 1566
+    25824:  600:	this->_M_impl._M_finish =
+    25824:  601:	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
+branch  0 taken 24641 (fallthrough)
+branch  1 taken 1183
         -:  602:				      this->_M_impl._M_start,
         -:  603:				      _M_get_Tp_allocator());
-     3144:  604:      }
+    25824:  604:      }
 ------------------
         -:  605:
         -:  606:#if __cplusplus >= 201103L
@@ -1208,9 +1208,9 @@ branch  1 taken 1566
         -:  612:       *  The contents of the moved instance are a valid, but unspecified
         -:  613:       *  %vector.
         -:  614:       */
-       13:  615:      vector(vector&&) noexcept = default;
+       16:  615:      vector(vector&&) noexcept = default;
         6:  615-block  0
-        7:  615-block  1
+       10:  615-block  1
         -:  616:
         -:  617:      /// Copy constructor with alternative allocator
         -:  618:      _GLIBCXX20_CONSTEXPR
@@ -1268,13 +1268,13 @@ branch  1 taken 1566
         -:  670:       *  (where N is @a __l.size()) and do no memory reallocation.
         -:  671:       */
         -:  672:      _GLIBCXX20_CONSTEXPR
-       47:  673:      vector(initializer_list<value_type> __l,
+       44:  673:      vector(initializer_list<value_type> __l,
         -:  674:	     const allocator_type& __a = allocator_type())
         -:  675:      : _Base(__a)
         -:  676:      {
-       47:  677:	_M_range_initialize(__l.begin(), __l.end(),
+       44:  677:	_M_range_initialize(__l.begin(), __l.end(),
         -:  678:			    random_access_iterator_tag());
-       47:  679:      }
+       44:  679:      }
 ------------------
 _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EEC1ESt16initializer_listIS7_ERKS8_:
 function _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EEC1ESt16initializer_listIS7_ERKS8_ called 1 returned 100% blocks executed 50%
@@ -1315,23 +1315,23 @@ branch  2 taken 0 (throw)
        14:  679-block  0
 ------------------
 _ZNSt6vectorIS_IdSaIdEESaIS1_EEC1ESt16initializer_listIS1_ERKS2_:
-function _ZNSt6vectorIS_IdSaIdEESaIS1_EEC1ESt16initializer_listIS1_ERKS2_ called 32 returned 100% blocks executed 50%
-       32:  673:      vector(initializer_list<value_type> __l,
-       32:  673-block  0
-call    0 returned 32
-branch  1 taken 32 (fallthrough)
+function _ZNSt6vectorIS_IdSaIdEESaIS1_EEC1ESt16initializer_listIS1_ERKS2_ called 29 returned 100% blocks executed 50%
+       29:  673:      vector(initializer_list<value_type> __l,
+       29:  673-block  0
+call    0 returned 29
+branch  1 taken 29 (fallthrough)
 branch  2 taken 0 (throw)
         -:  674:	     const allocator_type& __a = allocator_type())
         -:  675:      : _Base(__a)
         -:  676:      {
-       32:  677:	_M_range_initialize(__l.begin(), __l.end(),
-       32:  677-block  0
-call    0 returned 32
-branch  1 taken 32 (fallthrough)
+       29:  677:	_M_range_initialize(__l.begin(), __l.end(),
+       29:  677-block  0
+call    0 returned 29
+branch  1 taken 29 (fallthrough)
 branch  2 taken 0 (throw)
         -:  678:			    random_access_iterator_tag());
-       32:  679:      }
-       32:  679-block  0
+       29:  679:      }
+       29:  679-block  0
 ------------------
         -:  680:#endif
         -:  681:
@@ -1392,8 +1392,8 @@ branch  2 taken 0 (throw)
       185:  730:	std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
         -:  731:		      _M_get_Tp_allocator());
         -:  732:	_GLIBCXX_ASAN_ANNOTATE_BEFORE_DEALLOC;
-     3406:  733:      }
-      144:  733-block  0
+    26083:  733:      }
+      324:  733-block  0
     $$$$$:  733-block  1
     $$$$$:  733-block  2
         1:  733-block  3
@@ -1426,10 +1426,10 @@ branch  2 taken 0 (throw)
     $$$$$:  733-block 30
     $$$$$:  733-block 31
     $$$$$:  733-block 32
-     1500:  733-block 33
-branch  0 taken 1500 (fallthrough)
+    12750:  733-block 33
+branch  0 taken 12750 (fallthrough)
 branch  1 taken 0
-     1500:  733-block 34
+    12750:  733-block 34
         4:  733-block 35
 call    2 returned 4
     $$$$$:  733-block 36
@@ -1444,7 +1444,7 @@ branch  4 taken 2
 call    5 returned 15
     $$$$$:  733-block 43
     $$$$$:  733-block 44
-        8:  733-block 45
+        5:  733-block 45
        15:  733-block 46
 call    6 returned 15
     $$$$$:  733-block 47
@@ -1568,7 +1568,7 @@ function _ZNSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaI
         -:  782:      vector&
         -:  783:      operator=(initializer_list<value_type> __l)
         -:  784:      {
-      800:  785:	this->_M_assign_aux(__l.begin(), __l.end(),
+      869:  785:	this->_M_assign_aux(__l.begin(), __l.end(),
       750:  785-block  0
 call    0 returned 750
 branch  1 taken 750 (fallthrough)
@@ -1577,15 +1577,15 @@ branch  2 taken 0 (throw)
 call    3 returned 8
 branch  4 taken 8 (fallthrough)
 branch  5 taken 0 (throw)
-       42:  785-block  2
-call    6 returned 42
-branch  7 taken 42 (fallthrough)
+      111:  785-block  2
+call    6 returned 111
+branch  7 taken 111 (fallthrough)
 branch  8 taken 0 (throw)
         -:  786:			    random_access_iterator_tag());
-      800:  787:	return *this;
+      869:  787:	return *this;
       750:  787-block  0
         8:  787-block  1
-       42:  787-block  2
+      111:  787-block  2
         -:  788:      }
         -:  789:#endif
         -:  790:
@@ -1786,7 +1786,7 @@ branch  8 taken 0 (throw)
         -:  985:      _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
         -:  986:      size_type
         -:  987:      size() const _GLIBCXX_NOEXCEPT
-    8863*:  988:      { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
+ 1216681*:  988:      { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
     %%%%%:  988-block  0
 branch  0 never executed (fallthrough)
 branch  1 never executed
@@ -1804,20 +1804,20 @@ call    7 returned 4
 call    8 returned 4
     %%%%%:  988-block  6
 call    9 never executed
-     3144:  988-block  7
-call   10 returned 3144
+    25824:  988-block  7
+call   10 returned 25824
 call   11 returned 2
         2:  988-block  8
 call   12 returned 2
         4:  988-block  9
 branch 13 taken 4 (fallthrough)
 branch 14 taken 0
-     2250:  988-block 10
-branch 15 taken 1500
+    13500:  988-block 10
+branch 15 taken 12750
 branch 16 taken 750 (fallthrough)
-     1500:  988-block 11
-branch 17 taken 0
-branch 18 taken 1500 (fallthrough)
+  1175250:  988-block 11
+branch 17 taken 1162500
+branch 18 taken 12750 (fallthrough)
       303:  988-block 12
 branch 19 taken 300
 branch 20 taken 3 (fallthrough)
@@ -1829,11 +1829,11 @@ branch 22 taken 3 (fallthrough)
         8:  988-block 16
 branch 23 taken 8 (fallthrough)
 branch 24 taken 0
-       42:  988-block 17
-branch 25 taken 39 (fallthrough)
-branch 26 taken 3
-      800:  988-block 18
-branch 27 taken 800 (fallthrough)
+      111:  988-block 17
+branch 25 taken 102 (fallthrough)
+branch 26 taken 9
+      869:  988-block 18
+branch 27 taken 869 (fallthrough)
 branch 28 taken 0
     %%%%%:  988-block 19
 branch 29 never executed (fallthrough)
@@ -1985,14 +1985,14 @@ branch  1 never executed
         -: 1071:      _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
         -: 1072:      size_type
         -: 1073:      capacity() const _GLIBCXX_NOEXCEPT
-      807: 1074:      { return size_type(this->_M_impl._M_end_of_storage
-      807: 1075:			 - this->_M_impl._M_start); }
+      876: 1074:      { return size_type(this->_M_impl._M_end_of_storage
+      876: 1075:			 - this->_M_impl._M_start); }
         7: 1075-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 7
-      800: 1075-block  1
+      869: 1075-block  1
 branch  2 taken 0 (fallthrough)
-branch  3 taken 800
+branch  3 taken 869
         -: 1076:
         -: 1077:      /**
         -: 1078:       *  Returns true if the %vector is empty.  (Thus begin() would
@@ -2041,20 +2041,20 @@ branch  3 taken 800
         -: 1121:      operator[](size_type __n) _GLIBCXX_NOEXCEPT
         -: 1122:      {
         -: 1123:	__glibcxx_requires_subscript(__n);
-   99750*: 1124:	return *(this->_M_impl._M_start + __n);
-     1500: 1124-block  0
-call    0 returned 1500
-branch  1 taken 1500 (fallthrough)
+  1228099: 1124:	return *(this->_M_impl._M_start + __n);
+    12750: 1124-block  0
+call    0 returned 12750
+branch  1 taken 12750 (fallthrough)
 branch  2 taken 0 (throw)
-    %%%%%: 1124-block  1
-      746: 1124-block  2
-    96158: 1124-block  3
-branch  3 taken 96158 (fallthrough)
-branch  4 taken 0
-    96158: 1124-block  4
-call    5 returned 96158
-      746: 1124-block  5
-call    6 returned 746
+  1162500: 1124-block  1
+      629: 1124-block  2
+    50991: 1124-block  3
+branch  3 taken 49612 (fallthrough)
+branch  4 taken 1379
+    49612: 1124-block  4
+call    5 returned 49612
+      629: 1124-block  5
+call    6 returned 629
       300: 1124-block  6
       300: 1124-block  7
         -: 1125:      }
@@ -2216,31 +2216,31 @@ branch  3 taken 2
         -: 1273:       */
         -: 1274:      _GLIBCXX20_CONSTEXPR
         -: 1275:      void
-function _ZNSt6vectorIS_IdSaIdEESaIS1_EE9push_backERKS1_ called 91 returned 100% blocks executed 100%
-       91: 1276:      push_back(const value_type& __x)
+function _ZNSt6vectorIS_IdSaIdEESaIS1_EE9push_backERKS1_ called 214 returned 100% blocks executed 100%
+      214: 1276:      push_back(const value_type& __x)
         -: 1277:      {
-       91: 1278:	if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage)
-       91: 1278-block  0
-branch  0 taken 51 (fallthrough)
-branch  1 taken 40
+      214: 1278:	if (this->_M_impl._M_finish != this->_M_impl._M_end_of_storage)
+      214: 1278-block  0
+branch  0 taken 153 (fallthrough)
+branch  1 taken 61
         -: 1279:	  {
         -: 1280:	    _GLIBCXX_ASAN_ANNOTATE_GROW(1);
         -: 1281:	    _Alloc_traits::construct(this->_M_impl, this->_M_impl._M_finish,
         -: 1282:				     __x);
-       51: 1283:	    ++this->_M_impl._M_finish;
+      153: 1283:	    ++this->_M_impl._M_finish;
         -: 1284:	    _GLIBCXX_ASAN_ANNOTATE_GREW(1);
         -: 1285:	  }
         -: 1286:	else
-       40: 1287:	  _M_realloc_insert(end(), __x);
-       40: 1287-block  0
-call    0 returned 40
-       91: 1288:      }
+       61: 1287:	  _M_realloc_insert(end(), __x);
+       61: 1287-block  0
+call    0 returned 61
+      214: 1288:      }
         -: 1289:
         -: 1290:#if __cplusplus >= 201103L
         -: 1291:      _GLIBCXX20_CONSTEXPR
         -: 1292:      void
         -: 1293:      push_back(value_type&& __x)
-    80098: 1294:      { emplace_back(std::move(__x)); }
+    86473: 1294:      { emplace_back(std::move(__x)); }
     75000: 1294-block  0
 call    0 returned 75000
 branch  1 taken 75000 (fallthrough)
@@ -2261,13 +2261,13 @@ branch 11 taken 0 (throw)
 call   12 returned 600
 branch 13 taken 600 (fallthrough)
 branch 14 taken 0 (throw)
-     3703: 1294-block  5
-call   15 returned 3703
-branch 16 taken 3703 (fallthrough)
+    10009: 1294-block  5
+call   15 returned 10009
+branch 16 taken 10009 (fallthrough)
 branch 17 taken 0 (throw)
-       36: 1294-block  6
-call   18 returned 36
-branch 19 taken 36 (fallthrough)
+      105: 1294-block  6
+call   18 returned 105
+branch 19 taken 105 (fallthrough)
 branch 20 taken 0 (throw)
         -: 1295:
         -: 1296:      template<typename... _Args>
@@ -2709,18 +2709,18 @@ branch  1 never executed
         -: 1679:      template<typename _ForwardIterator>
         -: 1680:	_GLIBCXX20_CONSTEXPR
         -: 1681:	void
-       51: 1682:	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
+       48: 1682:	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
         -: 1683:			    std::forward_iterator_tag)
         -: 1684:	{
-       51: 1685:	  const size_type __n = std::distance(__first, __last);
+       48: 1685:	  const size_type __n = std::distance(__first, __last);
         -: 1686:	  this->_M_impl._M_start
-       51: 1687:	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
-       51: 1688:	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
-       51: 1689:	  this->_M_impl._M_finish =
+       48: 1687:	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
+       48: 1688:	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+       48: 1689:	  this->_M_impl._M_finish =
         -: 1690:	    std::__uninitialized_copy_a(__first, __last,
         -: 1691:					this->_M_impl._M_start,
         -: 1692:					_M_get_Tp_allocator());
-       51: 1693:	}
+       48: 1693:	}
 ------------------
 _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE19_M_range_initializeIPKS7_EEvT_SD_St20forward_iterator_tag:
 function _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ESaIS7_EE19_M_range_initializeIPKS7_EEvT_SD_St20forward_iterator_tag called 1 returned 100% blocks executed 83%
@@ -2784,24 +2784,24 @@ branch  1 taken 10
        14: 1693:	}
 ------------------
 _ZNSt6vectorIS_IdSaIdEESaIS1_EE19_M_range_initializeIPKS1_EEvT_S7_St20forward_iterator_tag:
-function _ZNSt6vectorIS_IdSaIdEESaIS1_EE19_M_range_initializeIPKS1_EEvT_S7_St20forward_iterator_tag called 32 returned 100% blocks executed 83%
-       32: 1682:	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
-       32: 1682-block  0
+function _ZNSt6vectorIS_IdSaIdEESaIS1_EE19_M_range_initializeIPKS1_EEvT_S7_St20forward_iterator_tag called 29 returned 100% blocks executed 83%
+       29: 1682:	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
+       29: 1682-block  0
 branch  0 taken 0 (fallthrough)
-branch  1 taken 32
+branch  1 taken 29
         -: 1683:			    std::forward_iterator_tag)
         -: 1684:	{
-       32: 1685:	  const size_type __n = std::distance(__first, __last);
+       29: 1685:	  const size_type __n = std::distance(__first, __last);
         -: 1686:	  this->_M_impl._M_start
-       32: 1687:	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
-       32: 1688:	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
-       32: 1688-block  0
-call    0 returned 32
-       32: 1689:	  this->_M_impl._M_finish =
+       29: 1687:	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
+       29: 1688:	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+       29: 1688-block  0
+call    0 returned 29
+       29: 1689:	  this->_M_impl._M_finish =
         -: 1690:	    std::__uninitialized_copy_a(__first, __last,
         -: 1691:					this->_M_impl._M_start,
         -: 1692:					_M_get_Tp_allocator());
-       32: 1693:	}
+       29: 1693:	}
 ------------------
         -: 1694:
         -: 1695:      // Called by the first initialize_dispatch above and by the
@@ -3000,13 +3000,13 @@ call    0 returned 32
         -: 1888:      // Called by _M_fill_insert, _M_insert_aux etc.
         -: 1889:      _GLIBCXX20_CONSTEXPR
         -: 1890:      size_type
-      267: 1891:      _M_check_len(size_type __n, const char* __s) const
+      327: 1891:      _M_check_len(size_type __n, const char* __s) const
         -: 1892:      {
-      267: 1893:	if (max_size() - size() < __n)
+      327: 1893:	if (max_size() - size() < __n)
     #####: 1894:	  __throw_length_error(__N(__s));
         -: 1895:
-      267: 1896:	const size_type __len = size() + (std::max)(size(), __n);
-      267: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
+      327: 1896:	const size_type __len = size() + (std::max)(size(), __n);
+      327: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
         -: 1898:      }
 ------------------
 _ZNKSt6vectorISt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_dEESaIS7_EE12_M_check_lenEyPKc:
@@ -3056,49 +3056,49 @@ branch  1 taken 0
         -: 1898:      }
 ------------------
 _ZNKSt6vectorIdSaIdEE12_M_check_lenEyPKc:
-function _ZNKSt6vectorIdSaIdEE12_M_check_lenEyPKc called 108 returned 100% blocks executed 86%
-      108: 1891:      _M_check_len(size_type __n, const char* __s) const
+function _ZNKSt6vectorIdSaIdEE12_M_check_lenEyPKc called 132 returned 100% blocks executed 86%
+      132: 1891:      _M_check_len(size_type __n, const char* __s) const
         -: 1892:      {
-      108: 1893:	if (max_size() - size() < __n)
-      108: 1893-block  0
+      132: 1893:	if (max_size() - size() < __n)
+      132: 1893-block  0
 branch  0 taken 0 (fallthrough)
-branch  1 taken 108
+branch  1 taken 132
     #####: 1894:	  __throw_length_error(__N(__s));
     %%%%%: 1894-block  0
 call    0 never executed
         -: 1895:
-      108: 1896:	const size_type __len = size() + (std::max)(size(), __n);
-      108: 1896-block  0
-branch  0 taken 17 (fallthrough)
-branch  1 taken 91
-      108: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
-      108: 1897-block  0
-branch  0 taken 108 (fallthrough)
+      132: 1896:	const size_type __len = size() + (std::max)(size(), __n);
+      132: 1896-block  0
+branch  0 taken 20 (fallthrough)
+branch  1 taken 112
+      132: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
+      132: 1897-block  0
+branch  0 taken 132 (fallthrough)
 branch  1 taken 0
-      108: 1897-block  1
+      132: 1897-block  1
         -: 1898:      }
 ------------------
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEyPKc:
-function _ZNKSt6vectorIiSaIiEE12_M_check_lenEyPKc called 18 returned 100% blocks executed 86%
-       18: 1891:      _M_check_len(size_type __n, const char* __s) const
+function _ZNKSt6vectorIiSaIiEE12_M_check_lenEyPKc called 33 returned 100% blocks executed 86%
+       33: 1891:      _M_check_len(size_type __n, const char* __s) const
         -: 1892:      {
-       18: 1893:	if (max_size() - size() < __n)
-       18: 1893-block  0
+       33: 1893:	if (max_size() - size() < __n)
+       33: 1893-block  0
 branch  0 taken 0 (fallthrough)
-branch  1 taken 18
+branch  1 taken 33
     #####: 1894:	  __throw_length_error(__N(__s));
     %%%%%: 1894-block  0
 call    0 never executed
         -: 1895:
-       18: 1896:	const size_type __len = size() + (std::max)(size(), __n);
-       18: 1896-block  0
-branch  0 taken 9 (fallthrough)
-branch  1 taken 9
-       18: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
-       18: 1897-block  0
-branch  0 taken 18 (fallthrough)
+       33: 1896:	const size_type __len = size() + (std::max)(size(), __n);
+       33: 1896-block  0
+branch  0 taken 12 (fallthrough)
+branch  1 taken 21
+       33: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
+       33: 1897-block  0
+branch  0 taken 33 (fallthrough)
 branch  1 taken 0
-       18: 1897-block  1
+       33: 1897-block  1
         -: 1898:      }
 ------------------
 _ZNKSt6vectorIN4crow4json6wvalueESaIS2_EE12_M_check_lenEyPKc:
@@ -3125,26 +3125,26 @@ branch  1 taken 0
         -: 1898:      }
 ------------------
 _ZNKSt6vectorIS_IdSaIdEESaIS1_EE12_M_check_lenEyPKc:
-function _ZNKSt6vectorIS_IdSaIdEESaIS1_EE12_M_check_lenEyPKc called 48 returned 100% blocks executed 86%
-       48: 1891:      _M_check_len(size_type __n, const char* __s) const
+function _ZNKSt6vectorIS_IdSaIdEESaIS1_EE12_M_check_lenEyPKc called 69 returned 100% blocks executed 86%
+       69: 1891:      _M_check_len(size_type __n, const char* __s) const
         -: 1892:      {
-       48: 1893:	if (max_size() - size() < __n)
-       48: 1893-block  0
+       69: 1893:	if (max_size() - size() < __n)
+       69: 1893-block  0
 branch  0 taken 0 (fallthrough)
-branch  1 taken 48
+branch  1 taken 69
     #####: 1894:	  __throw_length_error(__N(__s));
     %%%%%: 1894-block  0
 call    0 never executed
         -: 1895:
-       48: 1896:	const size_type __len = size() + (std::max)(size(), __n);
-       48: 1896-block  0
-branch  0 taken 24 (fallthrough)
-branch  1 taken 24
-       48: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
-       48: 1897-block  0
-branch  0 taken 48 (fallthrough)
+       69: 1896:	const size_type __len = size() + (std::max)(size(), __n);
+       69: 1896-block  0
+branch  0 taken 27 (fallthrough)
+branch  1 taken 42
+       69: 1897:	return (__len < size() || __len > max_size()) ? max_size() : __len;
+       69: 1897-block  0
+branch  0 taken 69 (fallthrough)
 branch  1 taken 0
-       48: 1897-block  1
+       69: 1897-block  1
         -: 1898:      }
 ------------------
         -: 1899:
@@ -3152,7 +3152,7 @@ branch  1 taken 0
         -: 1901:      static _GLIBCXX20_CONSTEXPR size_type
         -: 1902:      _S_check_init_len(size_type __n, const allocator_type& __a)
         -: 1903:      {
-      51*: 1904:	if (__n > _S_max_size(_Tp_alloc_type(__a)))
+      48*: 1904:	if (__n > _S_max_size(_Tp_alloc_type(__a)))
         1: 1904-block  0
 branch  0 taken 0 (fallthrough)
 branch  1 taken 1
@@ -3162,9 +3162,9 @@ branch  3 taken 4
        14: 1904-block  2
 branch  4 taken 0 (fallthrough)
 branch  5 taken 14
-       32: 1904-block  3
+       29: 1904-block  3
 branch  6 taken 0 (fallthrough)
-branch  7 taken 32
+branch  7 taken 29
     %%%%%: 1904-block  4
 branch  8 never executed (fallthrough)
 branch  9 never executed
@@ -3203,7 +3203,7 @@ call    4 never executed
         -: 1927:      void
         -: 1928:      _M_erase_at_end(pointer __pos) _GLIBCXX_NOEXCEPT
         -: 1929:      {
-     804*: 1930:	if (size_type __n = this->_M_impl._M_finish - __pos)
+     873*: 1930:	if (size_type __n = this->_M_impl._M_finish - __pos)
         4: 1930-block  0
 branch  0 taken 4 (fallthrough)
 branch  1 taken 0
@@ -3213,15 +3213,15 @@ branch  3 never executed
     %%%%%: 1930-block  2
 branch  4 never executed (fallthrough)
 branch  5 never executed
-      800: 1930-block  3
-branch  6 taken 796 (fallthrough)
+      869: 1930-block  3
+branch  6 taken 865 (fallthrough)
 branch  7 taken 4
         -: 1931:	  {
         -: 1932:	    std::_Destroy(__pos, this->_M_impl._M_finish,
         -: 1933:			  _M_get_Tp_allocator());
-     800*: 1934:	    this->_M_impl._M_finish = __pos;
+     869*: 1934:	    this->_M_impl._M_finish = __pos;
     %%%%%: 1934-block  0
-      796: 1934-block  1
+      865: 1934-block  1
         -: 1935:	    _GLIBCXX_ASAN_ANNOTATE_SHRINK(__n);
         -: 1936:	  }
         -: 1937:      }
@@ -3326,10 +3326,10 @@ call    0 returned 4
         -: 2034:    inline bool
         3: 2035:    operator==(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
         -: 2036:    { return (__x.size() == __y.size()
-       34: 2037:	      && std::equal(__x.begin(), __x.end(), __y.begin())); }
-       14: 2037-block  0
-branch  0 taken 12
-branch  1 taken 2
+       33: 2037:	      && std::equal(__x.begin(), __x.end(), __y.begin())); }
+       13: 2037-block  0
+branch  0 taken 10
+branch  1 taken 3
         1: 2037-block  1
 branch  2 taken 1 (fallthrough)
 branch  3 taken 0

@@ -1,6 +1,6 @@
-        -:    0:Source:C:/Program Files/JetBrains/CLion 2024.3.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/char_traits.h
-        -:    0:Graph:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
-        -:    0:Data:C:\Users\Blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
+        -:    0:Source:C:/Program Files/JetBrains/CLion 2025.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/char_traits.h
+        -:    0:Graph:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcno
+        -:    0:Data:C:\Users\blake\swecp2025jmbc\cmake-build-debug-coverage\CMakeFiles\swecp2025jmbc.dir\bgezrecTest.cpp.gcda
         -:    0:Runs:1
         -:    1:// Character Traits for use by standard string and iostream -*- C++ -*-
         -:    2:
@@ -369,36 +369,39 @@
         -:  365:	  std::construct_at(__builtin_addressof(__c1), __c2);
         -:  366:	else
         -:  367:#endif
-     648*:  368:	__c1 = __c2;
+     652*:  368:	__c1 = __c2;
     %%%%%:  368-block  0
     %%%%%:  368-block  1
     %%%%%:  368-block  2
     %%%%%:  368-block  3
       235:  368-block  4
         4:  368-block  5
-        7:  368-block  6
+        4:  368-block  6
 branch  0 taken 0 (fallthrough)
-branch  1 taken 7
-        5:  368-block  7
-call    2 returned 5
-branch  3 taken 5 (fallthrough)
-branch  4 taken 0 (throw)
-       41:  368-block  8
-        3:  368-block  9
-call    5 returned 3
-branch  6 taken 0
-branch  7 taken 120
+branch  1 taken 4
+        7:  368-block  7
+branch  2 taken 0 (fallthrough)
+branch  3 taken 7
+        5:  368-block  8
+call    4 returned 5
+branch  5 taken 5 (fallthrough)
+branch  6 taken 0 (throw)
+       41:  368-block  9
+        3:  368-block 10
+call    7 returned 3
 branch  8 taken 0
-branch  9 taken 60
+branch  9 taken 120
 branch 10 taken 0
-branch 11 taken 0
-call   12 returned 7
-branch 13 taken 7 (fallthrough)
-branch 14 taken 0 (throw)
-    %%%%%:  368-block 10
-call   15 never executed
-branch 16 never executed (fallthrough)
-branch 17 never executed (throw)
+branch 11 taken 60
+branch 12 taken 0
+branch 13 taken 0
+call   14 returned 7
+branch 15 taken 7 (fallthrough)
+branch 16 taken 0 (throw)
+    %%%%%:  368-block 11
+call   17 never executed
+branch 18 never executed (fallthrough)
+branch 19 never executed (throw)
       67*:  369:      }
     %%%%%:  369-block  0
     %%%%%:  369-block  1
@@ -466,7 +469,7 @@ branch  3 taken 0
         -:  406:	if (std::__is_constant_evaluated())
         -:  407:	  return __gnu_cxx::char_traits<char_type>::length(__s);
         -:  408:#endif
-     3114:  409:	return __builtin_strlen(__s);
+     3248:  409:	return __builtin_strlen(__s);
         5:  409-block  0
 call    0 returned 5
         4:  409-block  1
@@ -477,8 +480,8 @@ branch  3 taken 0
         9:  409-block  3
 branch  4 taken 0 (fallthrough)
 branch  5 taken 9
-     3092:  409-block  4
-call    6 returned 3092
+     3226:  409-block  4
+call    6 returned 3226
         -:  410:      }
         -:  411:
         -:  412:      static _GLIBCXX17_CONSTEXPR const char_type*
@@ -523,27 +526,27 @@ branch  3 taken 0
         -:  436:      static _GLIBCXX20_CONSTEXPR char_type*
         -:  437:      copy(char_type* __s1, const char_type* __s2, size_t __n)
         -:  438:      {
-    6964*:  439:	if (__n == 0)
+    7098*:  439:	if (__n == 0)
      3900:  439-block  0
 branch  0 taken 3898 (fallthrough)
 branch  1 taken 2
     %%%%%:  439-block  1
 branch  2 never executed (fallthrough)
 branch  3 never executed
-     3064:  439-block  2
-branch  4 taken 3055 (fallthrough)
-branch  5 taken 9
+     3198:  439-block  2
+branch  4 taken 3193 (fallthrough)
+branch  5 taken 5
         -:  440:	  return __s1;
         -:  441:#if __cplusplus >= 202002L
         -:  442:	if (std::__is_constant_evaluated())
         -:  443:	  return __gnu_cxx::char_traits<char_type>::copy(__s1, __s2, __n);
         -:  444:#endif
-    8440*:  445:	return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
-    %%%%%:  445-block  0
-    %%%%%:  445-block  1
+    9463*:  445:	return static_cast<char_type*>(__builtin_memcpy(__s1, __s2, __n));
+      330:  445-block  0
+      213:  445-block  1
     %%%%%:  445-block  2
     %%%%%:  445-block  3
-    %%%%%:  445-block  4
+      336:  445-block  4
         4:  445-block  5
       235:  445-block  6
      3898:  445-block  7
@@ -552,9 +555,9 @@ branch  5 taken 9
         4:  445-block 10
        27:  445-block 11
        10:  445-block 12
-     1202:  445-block 13
+     1208:  445-block 13
     %%%%%:  445-block 14
-     3055:  445-block 15
+     3193:  445-block 15
         -:  446:      }
         -:  447:
         -:  448:      static _GLIBCXX20_CONSTEXPR char_type*
