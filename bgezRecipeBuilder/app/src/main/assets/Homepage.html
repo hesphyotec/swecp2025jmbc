@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Builder App</title>
+  <script src= "js/tailwind.js"></script>
+  <script src ="js/jquery-3.7.1.min.js"></script>  
+  <script src ="js/config.js"></script>
+    <style>
+    body {
+      background-color: #ffddb4;
+    }
+    .action-button {
+      border-radius: 16px;
+    }
+    .quick-access-button {
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-orange-600 shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-white">Recipe Builder</h1>
+    <nav>
+      <ul class="flex space-x-4 text-white font-medium">
+        <li><a href="home.html" class="hover:text-black">Home</a></li>
+        <li><a href="Account.html" class="hover:text-black">Account</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col items-center p-6">
+    <h2 class="text-2xl font-bold mb-8 text-gray-800">
+      Hi <span id="username">Guest</span> 👋, what's in your kitchen today?
+    </h2>
+    <!-- Action Buttons -->
+    <div class="grid grid-cols-2 gap-6 w-full max-w-md">
+      <a href="Barcode.html" class="action-button p-8 bg-green-500 text-white shadow-lg hover:scale-105 hover:bg-green-600 transition text-lg font-semibold flex flex-col items-center">
+        📷
+        <span class="mt-2">Scan Barcode</span>
+      </a>
+      <a href="Receipt.html" class="action-button p-8 bg-blue-500 text-white shadow-lg hover:scale-105 hover:bg-blue-600 transition text-lg font-semibold flex flex-col items-center">
+        🧾
+        <span class="mt-2">Scan Receipt</span>
+      </a>
+      <a href="ScanFood.html" class="action-button p-8 bg-purple-500 text-white shadow-lg hover:scale-105 hover:bg-purple-600 transition text-lg font-semibold flex flex-col items-center">
+        🍎
+        <span class="mt-2">Scan Food</span>
+      </a>
+      <a href="Manual.html" class="action-button p-8 bg-gray-700 text-white shadow-lg hover:scale-105 hover:bg-gray-800 transition text-lg font-semibold flex flex-col items-center">
+        ✍️
+        <span class="mt-2">Manual Input</span>
+      </a>
+      <a href="Recipes.html" class="action-button p-8 bg-orange-700 text-white shadow-lg hover:scale-105 hover:bg-orange-800 transition text-lg font-semibold flex flex-col items-center">
+        🍽️
+        <span class="mt-2">Recipes</span>
+      </a>
+      <a href="Saved.html" class="action-button p-8 bg-pink-500 text-white shadow-lg hover:scale-105 hover:bg-pink-600 transition text-lg font-semibold flex flex-col items-center">
+        🥣
+        <span class="mt-2">Ingredients</span>
+      </a>
+    </div>
+    <!-- Quick Access -->
+    
+  </main>
+  <!-- Footer -->
+  <footer class="bg-orange-600 shadow-inner p-4 text-center text-white text-sm">
+    <p><strong>Recipe Builder</strong> - Your personal cooking companion</p>
+    <p class="text-xs mt-1">© Recipe Builder 2025</p>
+  </footer>
+  <script>
+      var sock = new WebSocket(`${CONFIG.IP}:18080/home`);
+      var username = "Guest";
+      if (localStorage.getItem("activeusername") !== null){
+        username = localStorage.getItem("activeusername");
+      }
+      $("#username").text(username);
+      sock.onopen = ()=>{
+        console.log('open');
+        if (localStorage.getItem("activeuser") !== null){
+          sock.send(localStorage.getItem("activeuser"));
+        }
+      }
+      if(localStorage.getItem("saved") !== null){
+          const saved = JSON.parse(localStorage.getItem('saved'));
+          console.log(saved.uid);
+          console.log(saved.saved);
+          localStorage.removeItem('saved');
+        }
+      sock.onmessage = (m)=>{
+        console.log('message');
+      }
+      sock.onerror = (e) =>{
+        console.log('error', e);
+      }
+      sock.onclose = (e) =>{
+        console.log('close', e);
+      }
+  </script>
+</body>
+</html>
