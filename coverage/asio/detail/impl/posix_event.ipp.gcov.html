@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - asio/detail/impl/posix_event.ipp</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">asio/detail/impl</a> - posix_event.ipp<span style="font-size: 80%;"> (source / <a href="posix_event.ipp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-12-12 11:11:53</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<a name="2"><span class="lineNum">       2 </span>            : // detail/impl/posix_event.ipp</a>
+<a name="3"><span class="lineNum">       3 </span>            : // ~~~~~~~~~~~~~~~~~~~~~~~~~~~</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // Copyright (c) 2003-2020 Christopher M. Kohlhoff (chris at kohlhoff dot com)</a>
+<a name="6"><span class="lineNum">       6 </span>            : //</a>
+<a name="7"><span class="lineNum">       7 </span>            : // Distributed under the Boost Software License, Version 1.0. (See accompanying</a>
+<a name="8"><span class="lineNum">       8 </span>            : // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</a>
+<a name="9"><span class="lineNum">       9 </span>            : //</a>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<a name="11"><span class="lineNum">      11 </span>            : #ifndef ASIO_DETAIL_IMPL_POSIX_EVENT_IPP</a>
+<a name="12"><span class="lineNum">      12 </span>            : #define ASIO_DETAIL_IMPL_POSIX_EVENT_IPP</a>
+<a name="13"><span class="lineNum">      13 </span>            : </a>
+<a name="14"><span class="lineNum">      14 </span>            : #if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</a>
+<a name="15"><span class="lineNum">      15 </span>            : # pragma once</a>
+<a name="16"><span class="lineNum">      16 </span>            : #endif // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span>            : #include &quot;asio/detail/config.hpp&quot;</a>
+<a name="19"><span class="lineNum">      19 </span>            : </a>
+<a name="20"><span class="lineNum">      20 </span>            : #if defined(ASIO_HAS_PTHREADS)</a>
+<a name="21"><span class="lineNum">      21 </span>            : </a>
+<a name="22"><span class="lineNum">      22 </span>            : #include &quot;asio/detail/posix_event.hpp&quot;</a>
+<a name="23"><span class="lineNum">      23 </span>            : #include &quot;asio/detail/throw_error.hpp&quot;</a>
+<a name="24"><span class="lineNum">      24 </span>            : #include &quot;asio/error.hpp&quot;</a>
+<a name="25"><span class="lineNum">      25 </span>            : </a>
+<a name="26"><span class="lineNum">      26 </span>            : #include &quot;asio/detail/push_options.hpp&quot;</a>
+<a name="27"><span class="lineNum">      27 </span>            : </a>
+<a name="28"><span class="lineNum">      28 </span>            : namespace asio {</a>
+<a name="29"><span class="lineNum">      29 </span>            : namespace detail {</a>
+<a name="30"><span class="lineNum">      30 </span>            : </a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineCov">          4 : posix_event::posix_event()</span></a>
+<a name="32"><span class="lineNum">      32 </span><span class="lineCov">          4 :   : state_(0)</span></a>
+<a name="33"><span class="lineNum">      33 </span>            : {</a>
+<a name="34"><span class="lineNum">      34 </span>            : #if (defined(__MACH__) &amp;&amp; defined(__APPLE__)) \</a>
+<a name="35"><span class="lineNum">      35 </span>            :       || (defined(__ANDROID__) &amp;&amp; (__ANDROID_API__ &lt; 21))</a>
+<a name="36"><span class="lineNum">      36 </span>            :   int error = ::pthread_cond_init(&amp;cond_, 0);</a>
+<a name="37"><span class="lineNum">      37 </span>            : #else // (defined(__MACH__) &amp;&amp; defined(__APPLE__))</a>
+<a name="38"><span class="lineNum">      38 </span>            :       // || (defined(__ANDROID__) &amp;&amp; (__ANDROID_API__ &lt; 21))</a>
+<a name="39"><span class="lineNum">      39 </span>            :   ::pthread_condattr_t attr;</a>
+<a name="40"><span class="lineNum">      40 </span><span class="lineCov">          4 :   ::pthread_condattr_init(&amp;attr);</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          4 :   int error = ::pthread_condattr_setclock(&amp;attr, CLOCK_MONOTONIC);</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">          4 :   if (error == 0)</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          4 :     error = ::pthread_cond_init(&amp;cond_, &amp;attr);</span></a>
+<a name="44"><span class="lineNum">      44 </span>            : #endif // (defined(__MACH__) &amp;&amp; defined(__APPLE__))</a>
+<a name="45"><span class="lineNum">      45 </span>            :        // || (defined(__ANDROID__) &amp;&amp; (__ANDROID_API__ &lt; 21))</a>
+<a name="46"><span class="lineNum">      46 </span>            : </a>
+<a name="47"><span class="lineNum">      47 </span>            :   asio::error_code ec(error,</a>
+<a name="48"><span class="lineNum">      48 </span><span class="lineCov">          4 :       asio::error::get_system_category());</span></a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          4 :   asio::detail::throw_error(ec, &quot;event&quot;);</span></a>
+<a name="50"><span class="lineNum">      50 </span><span class="lineCov">          4 : }</span></a>
+<a name="51"><span class="lineNum">      51 </span>            : </a>
+<a name="52"><span class="lineNum">      52 </span>            : } // namespace detail</a>
+<a name="53"><span class="lineNum">      53 </span>            : } // namespace asio</a>
+<a name="54"><span class="lineNum">      54 </span>            : </a>
+<a name="55"><span class="lineNum">      55 </span>            : #include &quot;asio/detail/pop_options.hpp&quot;</a>
+<a name="56"><span class="lineNum">      56 </span>            : </a>
+<a name="57"><span class="lineNum">      57 </span>            : #endif // defined(ASIO_HAS_PTHREADS)</a>
+<a name="58"><span class="lineNum">      58 </span>            : </a>
+<a name="59"><span class="lineNum">      59 </span>            : #endif // ASIO_DETAIL_IMPL_POSIX_EVENT_IPP</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

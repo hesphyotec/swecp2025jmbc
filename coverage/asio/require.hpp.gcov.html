@@ -1,0 +1,600 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - asio/require.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">asio</a> - require.hpp<span style="font-size: 80%;"> (source / <a href="require.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-12-12 11:11:53</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryLo">50.0 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<a name="2"><span class="lineNum">       2 </span>            : // require.hpp</a>
+<a name="3"><span class="lineNum">       3 </span>            : // ~~~~~~~~~~~</a>
+<a name="4"><span class="lineNum">       4 </span>            : //</a>
+<a name="5"><span class="lineNum">       5 </span>            : // Copyright (c) 2003-2020 Christopher M. Kohlhoff (chris at kohlhoff dot com)</a>
+<a name="6"><span class="lineNum">       6 </span>            : //</a>
+<a name="7"><span class="lineNum">       7 </span>            : // Distributed under the Boost Software License, Version 1.0. (See accompanying</a>
+<a name="8"><span class="lineNum">       8 </span>            : // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)</a>
+<a name="9"><span class="lineNum">       9 </span>            : //</a>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<a name="11"><span class="lineNum">      11 </span>            : #ifndef ASIO_REQUIRE_HPP</a>
+<a name="12"><span class="lineNum">      12 </span>            : #define ASIO_REQUIRE_HPP</a>
+<a name="13"><span class="lineNum">      13 </span>            : </a>
+<a name="14"><span class="lineNum">      14 </span>            : #if defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</a>
+<a name="15"><span class="lineNum">      15 </span>            : # pragma once</a>
+<a name="16"><span class="lineNum">      16 </span>            : #endif // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span>            : #include &quot;asio/detail/config.hpp&quot;</a>
+<a name="19"><span class="lineNum">      19 </span>            : #include &quot;asio/detail/type_traits.hpp&quot;</a>
+<a name="20"><span class="lineNum">      20 </span>            : #include &quot;asio/is_applicable_property.hpp&quot;</a>
+<a name="21"><span class="lineNum">      21 </span>            : #include &quot;asio/traits/require_member.hpp&quot;</a>
+<a name="22"><span class="lineNum">      22 </span>            : #include &quot;asio/traits/require_free.hpp&quot;</a>
+<a name="23"><span class="lineNum">      23 </span>            : #include &quot;asio/traits/static_require.hpp&quot;</a>
+<a name="24"><span class="lineNum">      24 </span>            : </a>
+<a name="25"><span class="lineNum">      25 </span>            : #include &quot;asio/detail/push_options.hpp&quot;</a>
+<a name="26"><span class="lineNum">      26 </span>            : </a>
+<a name="27"><span class="lineNum">      27 </span>            : #if defined(GENERATING_DOCUMENTATION)</a>
+<a name="28"><span class="lineNum">      28 </span>            : </a>
+<a name="29"><span class="lineNum">      29 </span>            : namespace asio {</a>
+<a name="30"><span class="lineNum">      30 </span>            : </a>
+<a name="31"><span class="lineNum">      31 </span>            : /// A customisation point that applies a concept-preserving property to an</a>
+<a name="32"><span class="lineNum">      32 </span>            : /// object.</a>
+<a name="33"><span class="lineNum">      33 </span>            : /**</a>
+<a name="34"><span class="lineNum">      34 </span>            :  * The name &lt;tt&gt;require&lt;/tt&gt; denotes a customisation point object. The</a>
+<a name="35"><span class="lineNum">      35 </span>            :  * expression &lt;tt&gt;asio::require(E, P0, Pn...)&lt;/tt&gt; for some</a>
+<a name="36"><span class="lineNum">      36 </span>            :  * subexpressions &lt;tt&gt;E&lt;/tt&gt; and &lt;tt&gt;P0&lt;/tt&gt;, and where &lt;tt&gt;Pn...&lt;/tt&gt;</a>
+<a name="37"><span class="lineNum">      37 </span>            :  * represents &lt;tt&gt;N&lt;/tt&gt; subexpressions (where &lt;tt&gt;N&lt;/tt&gt; is 0 or more, and with</a>
+<a name="38"><span class="lineNum">      38 </span>            :  * types &lt;tt&gt;T = decay_t&lt;decltype(E)&gt;&lt;/tt&gt; and &lt;tt&gt;Prop0 =</a>
+<a name="39"><span class="lineNum">      39 </span>            :  * decay_t&lt;decltype(P0)&gt;&lt;/tt&gt;) is expression-equivalent to:</a>
+<a name="40"><span class="lineNum">      40 </span>            :  *</a>
+<a name="41"><span class="lineNum">      41 </span>            :  * @li If &lt;tt&gt;is_applicable_property_v&lt;T, Prop0&gt; &amp;&amp; Prop0::is_requirable&lt;/tt&gt; is</a>
+<a name="42"><span class="lineNum">      42 </span>            :  *   not a well-formed constant expression with value &lt;tt&gt;true&lt;/tt&gt;,</a>
+<a name="43"><span class="lineNum">      43 </span>            :  *   &lt;tt&gt;asio::require(E, P0, Pn...)&lt;/tt&gt; is ill-formed.</a>
+<a name="44"><span class="lineNum">      44 </span>            :  *</a>
+<a name="45"><span class="lineNum">      45 </span>            :  * @li Otherwise, &lt;tt&gt;E&lt;/tt&gt; if &lt;tt&gt;N == 0&lt;/tt&gt; and the expression</a>
+<a name="46"><span class="lineNum">      46 </span>            :  *   &lt;tt&gt;Prop0::template static_query_v&lt;T&gt; == Prop0::value()&lt;/tt&gt; is a</a>
+<a name="47"><span class="lineNum">      47 </span>            :  *   well-formed constant expression with value &lt;tt&gt;true&lt;/tt&gt;.</a>
+<a name="48"><span class="lineNum">      48 </span>            :  *</a>
+<a name="49"><span class="lineNum">      49 </span>            :  * @li Otherwise, &lt;tt&gt;(E).require(P0)&lt;/tt&gt; if &lt;tt&gt;N == 0&lt;/tt&gt; and the expression</a>
+<a name="50"><span class="lineNum">      50 </span>            :  *   &lt;tt&gt;(E).require(P0)&lt;/tt&gt; is a valid expression.</a>
+<a name="51"><span class="lineNum">      51 </span>            :  *</a>
+<a name="52"><span class="lineNum">      52 </span>            :  * @li Otherwise, &lt;tt&gt;require(E, P0)&lt;/tt&gt; if &lt;tt&gt;N == 0&lt;/tt&gt; and the expression</a>
+<a name="53"><span class="lineNum">      53 </span>            :  *   &lt;tt&gt;require(E, P0)&lt;/tt&gt; is a valid expression with overload resolution</a>
+<a name="54"><span class="lineNum">      54 </span>            :  *   performed in a context that does not include the declaration of the</a>
+<a name="55"><span class="lineNum">      55 </span>            :  *   &lt;tt&gt;require&lt;/tt&gt; customization point object.</a>
+<a name="56"><span class="lineNum">      56 </span>            :  *</a>
+<a name="57"><span class="lineNum">      57 </span>            :  * @li Otherwise,</a>
+<a name="58"><span class="lineNum">      58 </span>            :  *   &lt;tt&gt;asio::require(asio::require(E, P0), Pn...)&lt;/tt&gt;</a>
+<a name="59"><span class="lineNum">      59 </span>            :  *   if &lt;tt&gt;N &gt; 0&lt;/tt&gt; and the expression</a>
+<a name="60"><span class="lineNum">      60 </span>            :  *   &lt;tt&gt;asio::require(asio::require(E, P0), Pn...)&lt;/tt&gt;</a>
+<a name="61"><span class="lineNum">      61 </span>            :  *   is a valid expression.</a>
+<a name="62"><span class="lineNum">      62 </span>            :  *</a>
+<a name="63"><span class="lineNum">      63 </span>            :  * @li Otherwise, &lt;tt&gt;asio::require(E, P0, Pn...)&lt;/tt&gt; is ill-formed.</a>
+<a name="64"><span class="lineNum">      64 </span>            :  */</a>
+<a name="65"><span class="lineNum">      65 </span>            : inline constexpr unspecified require = unspecified;</a>
+<a name="66"><span class="lineNum">      66 </span>            : </a>
+<a name="67"><span class="lineNum">      67 </span>            : /// A type trait that determines whether a @c require expression is well-formed.</a>
+<a name="68"><span class="lineNum">      68 </span>            : /**</a>
+<a name="69"><span class="lineNum">      69 </span>            :  * Class template @c can_require is a trait that is derived from</a>
+<a name="70"><span class="lineNum">      70 </span>            :  * @c true_type if the expression &lt;tt&gt;asio::require(std::declval&lt;T&gt;(),</a>
+<a name="71"><span class="lineNum">      71 </span>            :  * std::declval&lt;Properties&gt;()...)&lt;/tt&gt; is well formed; otherwise @c false_type.</a>
+<a name="72"><span class="lineNum">      72 </span>            :  */</a>
+<a name="73"><span class="lineNum">      73 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="74"><span class="lineNum">      74 </span>            : struct can_require :</a>
+<a name="75"><span class="lineNum">      75 </span>            :   integral_constant&lt;bool, automatically_determined&gt;</a>
+<a name="76"><span class="lineNum">      76 </span>            : {</a>
+<a name="77"><span class="lineNum">      77 </span>            : };</a>
+<a name="78"><span class="lineNum">      78 </span>            : </a>
+<a name="79"><span class="lineNum">      79 </span>            : /// A type trait that determines whether a @c require expression will not throw.</a>
+<a name="80"><span class="lineNum">      80 </span>            : /**</a>
+<a name="81"><span class="lineNum">      81 </span>            :  * Class template @c is_nothrow_require is a trait that is derived from</a>
+<a name="82"><span class="lineNum">      82 </span>            :  * @c true_type if the expression &lt;tt&gt;asio::require(std::declval&lt;T&gt;(),</a>
+<a name="83"><span class="lineNum">      83 </span>            :  * std::declval&lt;Properties&gt;()...)&lt;/tt&gt; is @c noexcept; otherwise @c false_type.</a>
+<a name="84"><span class="lineNum">      84 </span>            :  */</a>
+<a name="85"><span class="lineNum">      85 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="86"><span class="lineNum">      86 </span>            : struct is_nothrow_require :</a>
+<a name="87"><span class="lineNum">      87 </span>            :   integral_constant&lt;bool, automatically_determined&gt;</a>
+<a name="88"><span class="lineNum">      88 </span>            : {</a>
+<a name="89"><span class="lineNum">      89 </span>            : };</a>
+<a name="90"><span class="lineNum">      90 </span>            : </a>
+<a name="91"><span class="lineNum">      91 </span>            : /// A type trait that determines the result type of a @c require expression.</a>
+<a name="92"><span class="lineNum">      92 </span>            : /**</a>
+<a name="93"><span class="lineNum">      93 </span>            :  * Class template @c require_result is a trait that determines the result</a>
+<a name="94"><span class="lineNum">      94 </span>            :  * type of the expression &lt;tt&gt;asio::require(std::declval&lt;T&gt;(),</a>
+<a name="95"><span class="lineNum">      95 </span>            :  * std::declval&lt;Properties&gt;()...)&lt;/tt&gt;.</a>
+<a name="96"><span class="lineNum">      96 </span>            :  */</a>
+<a name="97"><span class="lineNum">      97 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="98"><span class="lineNum">      98 </span>            : struct require_result</a>
+<a name="99"><span class="lineNum">      99 </span>            : {</a>
+<a name="100"><span class="lineNum">     100 </span>            :   /// The result of the @c require expression.</a>
+<a name="101"><span class="lineNum">     101 </span>            :   typedef automatically_determined type;</a>
+<a name="102"><span class="lineNum">     102 </span>            : };</a>
+<a name="103"><span class="lineNum">     103 </span>            : </a>
+<a name="104"><span class="lineNum">     104 </span>            : } // namespace asio</a>
+<a name="105"><span class="lineNum">     105 </span>            : </a>
+<a name="106"><span class="lineNum">     106 </span>            : #else // defined(GENERATING_DOCUMENTATION)</a>
+<a name="107"><span class="lineNum">     107 </span>            : </a>
+<a name="108"><span class="lineNum">     108 </span>            : namespace asio_require_fn {</a>
+<a name="109"><span class="lineNum">     109 </span>            : </a>
+<a name="110"><span class="lineNum">     110 </span>            : using asio::decay;</a>
+<a name="111"><span class="lineNum">     111 </span>            : using asio::declval;</a>
+<a name="112"><span class="lineNum">     112 </span>            : using asio::enable_if;</a>
+<a name="113"><span class="lineNum">     113 </span>            : using asio::is_applicable_property;</a>
+<a name="114"><span class="lineNum">     114 </span>            : using asio::traits::require_free;</a>
+<a name="115"><span class="lineNum">     115 </span>            : using asio::traits::require_member;</a>
+<a name="116"><span class="lineNum">     116 </span>            : using asio::traits::static_require;</a>
+<a name="117"><span class="lineNum">     117 </span>            : </a>
+<a name="118"><span class="lineNum">     118 </span>            : void require();</a>
+<a name="119"><span class="lineNum">     119 </span>            : </a>
+<a name="120"><span class="lineNum">     120 </span>            : enum overload_type</a>
+<a name="121"><span class="lineNum">     121 </span>            : {</a>
+<a name="122"><span class="lineNum">     122 </span>            :   identity,</a>
+<a name="123"><span class="lineNum">     123 </span>            :   call_member,</a>
+<a name="124"><span class="lineNum">     124 </span>            :   call_free,</a>
+<a name="125"><span class="lineNum">     125 </span>            :   two_props,</a>
+<a name="126"><span class="lineNum">     126 </span>            :   n_props,</a>
+<a name="127"><span class="lineNum">     127 </span>            :   ill_formed</a>
+<a name="128"><span class="lineNum">     128 </span>            : };</a>
+<a name="129"><span class="lineNum">     129 </span>            : </a>
+<a name="130"><span class="lineNum">     130 </span>            : template &lt;typename T, typename Properties, typename = void&gt;</a>
+<a name="131"><span class="lineNum">     131 </span>            : struct call_traits</a>
+<a name="132"><span class="lineNum">     132 </span>            : {</a>
+<a name="133"><span class="lineNum">     133 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = ill_formed);</a>
+<a name="134"><span class="lineNum">     134 </span>            :   ASIO_STATIC_CONSTEXPR(bool, is_noexcept = false);</a>
+<a name="135"><span class="lineNum">     135 </span>            :   typedef void result_type;</a>
+<a name="136"><span class="lineNum">     136 </span>            : };</a>
+<a name="137"><span class="lineNum">     137 </span>            : </a>
+<a name="138"><span class="lineNum">     138 </span>            : template &lt;typename T, typename Property&gt;</a>
+<a name="139"><span class="lineNum">     139 </span>            : struct call_traits&lt;T, void(Property),</a>
+<a name="140"><span class="lineNum">     140 </span>            :   typename enable_if&lt;</a>
+<a name="141"><span class="lineNum">     141 </span>            :     (</a>
+<a name="142"><span class="lineNum">     142 </span>            :       is_applicable_property&lt;</a>
+<a name="143"><span class="lineNum">     143 </span>            :         typename decay&lt;T&gt;::type,</a>
+<a name="144"><span class="lineNum">     144 </span>            :         typename decay&lt;Property&gt;::type</a>
+<a name="145"><span class="lineNum">     145 </span>            :       &gt;::value</a>
+<a name="146"><span class="lineNum">     146 </span>            :       &amp;&amp;</a>
+<a name="147"><span class="lineNum">     147 </span>            :       decay&lt;Property&gt;::type::is_requirable</a>
+<a name="148"><span class="lineNum">     148 </span>            :       &amp;&amp;</a>
+<a name="149"><span class="lineNum">     149 </span>            :       static_require&lt;T, Property&gt;::is_valid</a>
+<a name="150"><span class="lineNum">     150 </span>            :     )</a>
+<a name="151"><span class="lineNum">     151 </span>            :   &gt;::type&gt;</a>
+<a name="152"><span class="lineNum">     152 </span>            : {</a>
+<a name="153"><span class="lineNum">     153 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = identity);</a>
+<a name="154"><span class="lineNum">     154 </span>            :   ASIO_STATIC_CONSTEXPR(bool, is_noexcept = true);</a>
+<a name="155"><span class="lineNum">     155 </span>            : </a>
+<a name="156"><span class="lineNum">     156 </span>            : #if defined(ASIO_HAS_MOVE)</a>
+<a name="157"><span class="lineNum">     157 </span>            :   typedef ASIO_MOVE_ARG(T) result_type;</a>
+<a name="158"><span class="lineNum">     158 </span>            : #else // defined(ASIO_HAS_MOVE)</a>
+<a name="159"><span class="lineNum">     159 </span>            :   typedef ASIO_MOVE_ARG(typename decay&lt;T&gt;::type) result_type;</a>
+<a name="160"><span class="lineNum">     160 </span>            : #endif // defined(ASIO_HAS_MOVE)</a>
+<a name="161"><span class="lineNum">     161 </span>            : };</a>
+<a name="162"><span class="lineNum">     162 </span>            : </a>
+<a name="163"><span class="lineNum">     163 </span>            : template &lt;typename T, typename Property&gt;</a>
+<a name="164"><span class="lineNum">     164 </span>            : struct call_traits&lt;T, void(Property),</a>
+<a name="165"><span class="lineNum">     165 </span>            :   typename enable_if&lt;</a>
+<a name="166"><span class="lineNum">     166 </span>            :     (</a>
+<a name="167"><span class="lineNum">     167 </span>            :       is_applicable_property&lt;</a>
+<a name="168"><span class="lineNum">     168 </span>            :         typename decay&lt;T&gt;::type,</a>
+<a name="169"><span class="lineNum">     169 </span>            :         typename decay&lt;Property&gt;::type</a>
+<a name="170"><span class="lineNum">     170 </span>            :       &gt;::value</a>
+<a name="171"><span class="lineNum">     171 </span>            :       &amp;&amp;</a>
+<a name="172"><span class="lineNum">     172 </span>            :       decay&lt;Property&gt;::type::is_requirable</a>
+<a name="173"><span class="lineNum">     173 </span>            :       &amp;&amp;</a>
+<a name="174"><span class="lineNum">     174 </span>            :       !static_require&lt;T, Property&gt;::is_valid</a>
+<a name="175"><span class="lineNum">     175 </span>            :       &amp;&amp;</a>
+<a name="176"><span class="lineNum">     176 </span>            :       require_member&lt;T, Property&gt;::is_valid</a>
+<a name="177"><span class="lineNum">     177 </span>            :     )</a>
+<a name="178"><span class="lineNum">     178 </span>            :   &gt;::type&gt; :</a>
+<a name="179"><span class="lineNum">     179 </span>            :   require_member&lt;T, Property&gt;</a>
+<a name="180"><span class="lineNum">     180 </span>            : {</a>
+<a name="181"><span class="lineNum">     181 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = call_member);</a>
+<a name="182"><span class="lineNum">     182 </span>            : };</a>
+<a name="183"><span class="lineNum">     183 </span>            : </a>
+<a name="184"><span class="lineNum">     184 </span>            : template &lt;typename T, typename Property&gt;</a>
+<a name="185"><span class="lineNum">     185 </span>            : struct call_traits&lt;T, void(Property),</a>
+<a name="186"><span class="lineNum">     186 </span>            :   typename enable_if&lt;</a>
+<a name="187"><span class="lineNum">     187 </span>            :     (</a>
+<a name="188"><span class="lineNum">     188 </span>            :       is_applicable_property&lt;</a>
+<a name="189"><span class="lineNum">     189 </span>            :         typename decay&lt;T&gt;::type,</a>
+<a name="190"><span class="lineNum">     190 </span>            :         typename decay&lt;Property&gt;::type</a>
+<a name="191"><span class="lineNum">     191 </span>            :       &gt;::value</a>
+<a name="192"><span class="lineNum">     192 </span>            :       &amp;&amp;</a>
+<a name="193"><span class="lineNum">     193 </span>            :       decay&lt;Property&gt;::type::is_requirable</a>
+<a name="194"><span class="lineNum">     194 </span>            :       &amp;&amp;</a>
+<a name="195"><span class="lineNum">     195 </span>            :       !static_require&lt;T, Property&gt;::is_valid</a>
+<a name="196"><span class="lineNum">     196 </span>            :       &amp;&amp;</a>
+<a name="197"><span class="lineNum">     197 </span>            :       !require_member&lt;T, Property&gt;::is_valid</a>
+<a name="198"><span class="lineNum">     198 </span>            :       &amp;&amp;</a>
+<a name="199"><span class="lineNum">     199 </span>            :       require_free&lt;T, Property&gt;::is_valid</a>
+<a name="200"><span class="lineNum">     200 </span>            :     )</a>
+<a name="201"><span class="lineNum">     201 </span>            :   &gt;::type&gt; :</a>
+<a name="202"><span class="lineNum">     202 </span>            :   require_free&lt;T, Property&gt;</a>
+<a name="203"><span class="lineNum">     203 </span>            : {</a>
+<a name="204"><span class="lineNum">     204 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = call_free);</a>
+<a name="205"><span class="lineNum">     205 </span>            : };</a>
+<a name="206"><span class="lineNum">     206 </span>            : </a>
+<a name="207"><span class="lineNum">     207 </span>            : template &lt;typename T, typename P0, typename P1&gt;</a>
+<a name="208"><span class="lineNum">     208 </span>            : struct call_traits&lt;T, void(P0, P1),</a>
+<a name="209"><span class="lineNum">     209 </span>            :   typename enable_if&lt;</a>
+<a name="210"><span class="lineNum">     210 </span>            :     call_traits&lt;T, void(P0)&gt;::overload != ill_formed</a>
+<a name="211"><span class="lineNum">     211 </span>            :     &amp;&amp;</a>
+<a name="212"><span class="lineNum">     212 </span>            :     call_traits&lt;</a>
+<a name="213"><span class="lineNum">     213 </span>            :       typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="214"><span class="lineNum">     214 </span>            :       void(P1)</a>
+<a name="215"><span class="lineNum">     215 </span>            :     &gt;::overload != ill_formed</a>
+<a name="216"><span class="lineNum">     216 </span>            :   &gt;::type&gt;</a>
+<a name="217"><span class="lineNum">     217 </span>            : {</a>
+<a name="218"><span class="lineNum">     218 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = two_props);</a>
+<a name="219"><span class="lineNum">     219 </span>            : </a>
+<a name="220"><span class="lineNum">     220 </span>            :   ASIO_STATIC_CONSTEXPR(bool, is_noexcept =</a>
+<a name="221"><span class="lineNum">     221 </span>            :     (</a>
+<a name="222"><span class="lineNum">     222 </span>            :       call_traits&lt;T, void(P0)&gt;::is_noexcept</a>
+<a name="223"><span class="lineNum">     223 </span>            :       &amp;&amp;</a>
+<a name="224"><span class="lineNum">     224 </span>            :       call_traits&lt;</a>
+<a name="225"><span class="lineNum">     225 </span>            :         typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="226"><span class="lineNum">     226 </span>            :         void(P1)</a>
+<a name="227"><span class="lineNum">     227 </span>            :       &gt;::is_noexcept</a>
+<a name="228"><span class="lineNum">     228 </span>            :     ));</a>
+<a name="229"><span class="lineNum">     229 </span>            : </a>
+<a name="230"><span class="lineNum">     230 </span>            :   typedef typename decay&lt;</a>
+<a name="231"><span class="lineNum">     231 </span>            :     typename call_traits&lt;</a>
+<a name="232"><span class="lineNum">     232 </span>            :       typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="233"><span class="lineNum">     233 </span>            :       void(P1)</a>
+<a name="234"><span class="lineNum">     234 </span>            :     &gt;::result_type</a>
+<a name="235"><span class="lineNum">     235 </span>            :   &gt;::type result_type;</a>
+<a name="236"><span class="lineNum">     236 </span>            : };</a>
+<a name="237"><span class="lineNum">     237 </span>            : </a>
+<a name="238"><span class="lineNum">     238 </span>            : template &lt;typename T, typename P0, typename P1, typename ASIO_ELLIPSIS PN&gt;</a>
+<a name="239"><span class="lineNum">     239 </span>            : struct call_traits&lt;T, void(P0, P1, PN ASIO_ELLIPSIS),</a>
+<a name="240"><span class="lineNum">     240 </span>            :   typename enable_if&lt;</a>
+<a name="241"><span class="lineNum">     241 </span>            :     call_traits&lt;T, void(P0)&gt;::overload != ill_formed</a>
+<a name="242"><span class="lineNum">     242 </span>            :     &amp;&amp;</a>
+<a name="243"><span class="lineNum">     243 </span>            :     call_traits&lt;</a>
+<a name="244"><span class="lineNum">     244 </span>            :       typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="245"><span class="lineNum">     245 </span>            :       void(P1, PN ASIO_ELLIPSIS)</a>
+<a name="246"><span class="lineNum">     246 </span>            :     &gt;::overload != ill_formed</a>
+<a name="247"><span class="lineNum">     247 </span>            :   &gt;::type&gt;</a>
+<a name="248"><span class="lineNum">     248 </span>            : {</a>
+<a name="249"><span class="lineNum">     249 </span>            :   ASIO_STATIC_CONSTEXPR(overload_type, overload = n_props);</a>
+<a name="250"><span class="lineNum">     250 </span>            : </a>
+<a name="251"><span class="lineNum">     251 </span>            :   ASIO_STATIC_CONSTEXPR(bool, is_noexcept =</a>
+<a name="252"><span class="lineNum">     252 </span>            :     (</a>
+<a name="253"><span class="lineNum">     253 </span>            :       call_traits&lt;T, void(P0)&gt;::is_noexcept</a>
+<a name="254"><span class="lineNum">     254 </span>            :       &amp;&amp;</a>
+<a name="255"><span class="lineNum">     255 </span>            :       call_traits&lt;</a>
+<a name="256"><span class="lineNum">     256 </span>            :         typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="257"><span class="lineNum">     257 </span>            :         void(P1, PN ASIO_ELLIPSIS)</a>
+<a name="258"><span class="lineNum">     258 </span>            :       &gt;::is_noexcept</a>
+<a name="259"><span class="lineNum">     259 </span>            :     ));</a>
+<a name="260"><span class="lineNum">     260 </span>            : </a>
+<a name="261"><span class="lineNum">     261 </span>            :   typedef typename decay&lt;</a>
+<a name="262"><span class="lineNum">     262 </span>            :     typename call_traits&lt;</a>
+<a name="263"><span class="lineNum">     263 </span>            :       typename call_traits&lt;T, void(P0)&gt;::result_type,</a>
+<a name="264"><span class="lineNum">     264 </span>            :       void(P1, PN ASIO_ELLIPSIS)</a>
+<a name="265"><span class="lineNum">     265 </span>            :     &gt;::result_type</a>
+<a name="266"><span class="lineNum">     266 </span>            :   &gt;::type result_type;</a>
+<a name="267"><span class="lineNum">     267 </span>            : };</a>
+<a name="268"><span class="lineNum">     268 </span>            : </a>
+<a name="269"><span class="lineNum">     269 </span>            : struct impl</a>
+<a name="270"><span class="lineNum">     270 </span>            : {</a>
+<a name="271"><span class="lineNum">     271 </span>            :   template &lt;typename T, typename Property&gt;</a>
+<a name="272"><span class="lineNum">     272 </span>            :   ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if&lt;</a>
+<a name="273"><span class="lineNum">     273 </span>            :     call_traits&lt;T, void(Property)&gt;::overload == identity,</a>
+<a name="274"><span class="lineNum">     274 </span>            :     typename call_traits&lt;T, void(Property)&gt;::result_type</a>
+<a name="275"><span class="lineNum">     275 </span>            :   &gt;::type</a>
+<a name="276"><span class="lineNum">     276 </span>            :   operator()(</a>
+<a name="277"><span class="lineNum">     277 </span>            :       ASIO_MOVE_ARG(T) t,</a>
+<a name="278"><span class="lineNum">     278 </span>            :       ASIO_MOVE_ARG(Property)) const</a>
+<a name="279"><span class="lineNum">     279 </span>            :     ASIO_NOEXCEPT_IF((</a>
+<a name="280"><span class="lineNum">     280 </span>            :       call_traits&lt;T, void(Property)&gt;::is_noexcept))</a>
+<a name="281"><span class="lineNum">     281 </span>            :   {</a>
+<a name="282"><span class="lineNum">     282 </span>            :     return ASIO_MOVE_CAST(T)(t);</a>
+<a name="283"><span class="lineNum">     283 </span>            :   }</a>
+<a name="284"><span class="lineNum">     284 </span>            : </a>
+<a name="285"><span class="lineNum">     285 </span>            :   template &lt;typename T, typename Property&gt;</a>
+<a name="286"><span class="lineNum">     286 </span>            :   ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if&lt;</a>
+<a name="287"><span class="lineNum">     287 </span>            :     call_traits&lt;T, void(Property)&gt;::overload == call_member,</a>
+<a name="288"><span class="lineNum">     288 </span>            :     typename call_traits&lt;T, void(Property)&gt;::result_type</a>
+<a name="289"><span class="lineNum">     289 </span>            :   &gt;::type</a>
+<a name="290"><span class="lineNum">     290 </span><span class="lineCov">         25 :   operator()(</span></a>
+<a name="291"><span class="lineNum">     291 </span>            :       ASIO_MOVE_ARG(T) t,</a>
+<a name="292"><span class="lineNum">     292 </span>            :       ASIO_MOVE_ARG(Property) p) const</a>
+<a name="293"><span class="lineNum">     293 </span>            :     ASIO_NOEXCEPT_IF((</a>
+<a name="294"><span class="lineNum">     294 </span>            :       call_traits&lt;T, void(Property)&gt;::is_noexcept))</a>
+<a name="295"><span class="lineNum">     295 </span>            :   {</a>
+<a name="296"><span class="lineNum">     296 </span>            :     return ASIO_MOVE_CAST(T)(t).require(</a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">         25 :         ASIO_MOVE_CAST(Property)(p));</span></a>
+<a name="298"><span class="lineNum">     298 </span>            :   }</a>
+<a name="299"><span class="lineNum">     299 </span>            : </a>
+<a name="300"><span class="lineNum">     300 </span>            :   template &lt;typename T, typename Property&gt;</a>
+<a name="301"><span class="lineNum">     301 </span>            :   ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if&lt;</a>
+<a name="302"><span class="lineNum">     302 </span>            :     call_traits&lt;T, void(Property)&gt;::overload == call_free,</a>
+<a name="303"><span class="lineNum">     303 </span>            :     typename call_traits&lt;T, void(Property)&gt;::result_type</a>
+<a name="304"><span class="lineNum">     304 </span>            :   &gt;::type</a>
+<a name="305"><span class="lineNum">     305 </span>            :   operator()(</a>
+<a name="306"><span class="lineNum">     306 </span>            :       ASIO_MOVE_ARG(T) t,</a>
+<a name="307"><span class="lineNum">     307 </span>            :       ASIO_MOVE_ARG(Property) p) const</a>
+<a name="308"><span class="lineNum">     308 </span>            :     ASIO_NOEXCEPT_IF((</a>
+<a name="309"><span class="lineNum">     309 </span>            :       call_traits&lt;T, void(Property)&gt;::is_noexcept))</a>
+<a name="310"><span class="lineNum">     310 </span>            :   {</a>
+<a name="311"><span class="lineNum">     311 </span>            :     return require(</a>
+<a name="312"><span class="lineNum">     312 </span>            :         ASIO_MOVE_CAST(T)(t),</a>
+<a name="313"><span class="lineNum">     313 </span>            :         ASIO_MOVE_CAST(Property)(p));</a>
+<a name="314"><span class="lineNum">     314 </span>            :   }</a>
+<a name="315"><span class="lineNum">     315 </span>            : </a>
+<a name="316"><span class="lineNum">     316 </span>            :   template &lt;typename T, typename P0, typename P1&gt;</a>
+<a name="317"><span class="lineNum">     317 </span>            :   ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if&lt;</a>
+<a name="318"><span class="lineNum">     318 </span>            :     call_traits&lt;T, void(P0, P1)&gt;::overload == two_props,</a>
+<a name="319"><span class="lineNum">     319 </span>            :     typename call_traits&lt;T, void(P0, P1)&gt;::result_type</a>
+<a name="320"><span class="lineNum">     320 </span>            :   &gt;::type</a>
+<a name="321"><span class="lineNum">     321 </span>            :   operator()(</a>
+<a name="322"><span class="lineNum">     322 </span>            :       ASIO_MOVE_ARG(T) t,</a>
+<a name="323"><span class="lineNum">     323 </span>            :       ASIO_MOVE_ARG(P0) p0,</a>
+<a name="324"><span class="lineNum">     324 </span>            :       ASIO_MOVE_ARG(P1) p1) const</a>
+<a name="325"><span class="lineNum">     325 </span>            :     ASIO_NOEXCEPT_IF((</a>
+<a name="326"><span class="lineNum">     326 </span>            :       call_traits&lt;T, void(P0, P1)&gt;::is_noexcept))</a>
+<a name="327"><span class="lineNum">     327 </span>            :   {</a>
+<a name="328"><span class="lineNum">     328 </span>            :     return (*this)(</a>
+<a name="329"><span class="lineNum">     329 </span>            :         (*this)(</a>
+<a name="330"><span class="lineNum">     330 </span>            :           ASIO_MOVE_CAST(T)(t),</a>
+<a name="331"><span class="lineNum">     331 </span>            :           ASIO_MOVE_CAST(P0)(p0)),</a>
+<a name="332"><span class="lineNum">     332 </span>            :         ASIO_MOVE_CAST(P1)(p1));</a>
+<a name="333"><span class="lineNum">     333 </span>            :   }</a>
+<a name="334"><span class="lineNum">     334 </span>            : </a>
+<a name="335"><span class="lineNum">     335 </span>            :   template &lt;typename T, typename P0, typename P1,</a>
+<a name="336"><span class="lineNum">     336 </span>            :     typename ASIO_ELLIPSIS PN&gt;</a>
+<a name="337"><span class="lineNum">     337 </span>            :   ASIO_NODISCARD ASIO_CONSTEXPR typename enable_if&lt;</a>
+<a name="338"><span class="lineNum">     338 </span>            :     call_traits&lt;T, void(P0, P1, PN ASIO_ELLIPSIS)&gt;::overload == n_props,</a>
+<a name="339"><span class="lineNum">     339 </span>            :     typename call_traits&lt;T, void(P0, P1, PN ASIO_ELLIPSIS)&gt;::result_type</a>
+<a name="340"><span class="lineNum">     340 </span>            :   &gt;::type</a>
+<a name="341"><span class="lineNum">     341 </span>            :   operator()(</a>
+<a name="342"><span class="lineNum">     342 </span>            :       ASIO_MOVE_ARG(T) t,</a>
+<a name="343"><span class="lineNum">     343 </span>            :       ASIO_MOVE_ARG(P0) p0,</a>
+<a name="344"><span class="lineNum">     344 </span>            :       ASIO_MOVE_ARG(P1) p1,</a>
+<a name="345"><span class="lineNum">     345 </span>            :       ASIO_MOVE_ARG(PN) ASIO_ELLIPSIS pn) const</a>
+<a name="346"><span class="lineNum">     346 </span>            :     ASIO_NOEXCEPT_IF((</a>
+<a name="347"><span class="lineNum">     347 </span>            :       call_traits&lt;T, void(P0, P1, PN ASIO_ELLIPSIS)&gt;::is_noexcept))</a>
+<a name="348"><span class="lineNum">     348 </span>            :   {</a>
+<a name="349"><span class="lineNum">     349 </span>            :     return (*this)(</a>
+<a name="350"><span class="lineNum">     350 </span>            :         (*this)(</a>
+<a name="351"><span class="lineNum">     351 </span>            :           ASIO_MOVE_CAST(T)(t),</a>
+<a name="352"><span class="lineNum">     352 </span>            :           ASIO_MOVE_CAST(P0)(p0)),</a>
+<a name="353"><span class="lineNum">     353 </span>            :         ASIO_MOVE_CAST(P1)(p1),</a>
+<a name="354"><span class="lineNum">     354 </span>            :         ASIO_MOVE_CAST(PN)(pn) ASIO_ELLIPSIS);</a>
+<a name="355"><span class="lineNum">     355 </span>            :   }</a>
+<a name="356"><span class="lineNum">     356 </span>            : };</a>
+<a name="357"><span class="lineNum">     357 </span>            : </a>
+<a name="358"><span class="lineNum">     358 </span>            : template &lt;typename T = impl&gt;</a>
+<a name="359"><span class="lineNum">     359 </span>            : struct static_instance</a>
+<a name="360"><span class="lineNum">     360 </span>            : {</a>
+<a name="361"><span class="lineNum">     361 </span>            :   static const T instance;</a>
+<a name="362"><span class="lineNum">     362 </span>            : };</a>
+<a name="363"><span class="lineNum">     363 </span>            : </a>
+<a name="364"><span class="lineNum">     364 </span>            : template &lt;typename T&gt;</a>
+<a name="365"><span class="lineNum">     365 </span>            : const T static_instance&lt;T&gt;::instance = {};</a>
+<a name="366"><span class="lineNum">     366 </span>            : </a>
+<a name="367"><span class="lineNum">     367 </span>            : } // namespace asio_require_fn</a>
+<a name="368"><span class="lineNum">     368 </span>            : namespace asio {</a>
+<a name="369"><span class="lineNum">     369 </span>            : namespace {</a>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<a name="371"><span class="lineNum">     371 </span>            : static ASIO_CONSTEXPR const asio_require_fn::impl&amp;</a>
+<a name="372"><span class="lineNum">     372 </span>            :   require = asio_require_fn::static_instance&lt;&gt;::instance;</a>
+<a name="373"><span class="lineNum">     373 </span>            : </a>
+<a name="374"><span class="lineNum">     374 </span>            : } // namespace</a>
+<a name="375"><span class="lineNum">     375 </span>            : </a>
+<a name="376"><span class="lineNum">     376 </span>            : #if defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="377"><span class="lineNum">     377 </span>            : </a>
+<a name="378"><span class="lineNum">     378 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="379"><span class="lineNum">     379 </span>            : struct can_require :</a>
+<a name="380"><span class="lineNum">     380 </span>            :   integral_constant&lt;bool,</a>
+<a name="381"><span class="lineNum">     381 </span>            :     asio_require_fn::call_traits&lt;T, void(Properties...)&gt;::overload</a>
+<a name="382"><span class="lineNum">     382 </span>            :       != asio_require_fn::ill_formed&gt;</a>
+<a name="383"><span class="lineNum">     383 </span>            : {</a>
+<a name="384"><span class="lineNum">     384 </span>            : };</a>
+<a name="385"><span class="lineNum">     385 </span>            : </a>
+<a name="386"><span class="lineNum">     386 </span>            : #else // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="387"><span class="lineNum">     387 </span>            : </a>
+<a name="388"><span class="lineNum">     388 </span>            : template &lt;typename T, typename P0 = void,</a>
+<a name="389"><span class="lineNum">     389 </span>            :     typename P1 = void, typename P2 = void&gt;</a>
+<a name="390"><span class="lineNum">     390 </span>            : struct can_require :</a>
+<a name="391"><span class="lineNum">     391 </span>            :   integral_constant&lt;bool,</a>
+<a name="392"><span class="lineNum">     392 </span>            :     asio_require_fn::call_traits&lt;T, void(P0, P1, P2)&gt;::overload</a>
+<a name="393"><span class="lineNum">     393 </span>            :       != asio_require_fn::ill_formed&gt;</a>
+<a name="394"><span class="lineNum">     394 </span>            : {</a>
+<a name="395"><span class="lineNum">     395 </span>            : };</a>
+<a name="396"><span class="lineNum">     396 </span>            : </a>
+<a name="397"><span class="lineNum">     397 </span>            : template &lt;typename T, typename P0, typename P1&gt;</a>
+<a name="398"><span class="lineNum">     398 </span>            : struct can_require&lt;T, P0, P1&gt; :</a>
+<a name="399"><span class="lineNum">     399 </span>            :   integral_constant&lt;bool,</a>
+<a name="400"><span class="lineNum">     400 </span>            :     asio_require_fn::call_traits&lt;T, void(P0, P1)&gt;::overload</a>
+<a name="401"><span class="lineNum">     401 </span>            :       != asio_require_fn::ill_formed&gt;</a>
+<a name="402"><span class="lineNum">     402 </span>            : {</a>
+<a name="403"><span class="lineNum">     403 </span>            : };</a>
+<a name="404"><span class="lineNum">     404 </span>            : </a>
+<a name="405"><span class="lineNum">     405 </span>            : template &lt;typename T, typename P0&gt;</a>
+<a name="406"><span class="lineNum">     406 </span>            : struct can_require&lt;T, P0&gt; :</a>
+<a name="407"><span class="lineNum">     407 </span>            :   integral_constant&lt;bool,</a>
+<a name="408"><span class="lineNum">     408 </span>            :     asio_require_fn::call_traits&lt;T, void(P0)&gt;::overload</a>
+<a name="409"><span class="lineNum">     409 </span>            :       != asio_require_fn::ill_formed&gt;</a>
+<a name="410"><span class="lineNum">     410 </span>            : {</a>
+<a name="411"><span class="lineNum">     411 </span>            : };</a>
+<a name="412"><span class="lineNum">     412 </span>            : </a>
+<a name="413"><span class="lineNum">     413 </span>            : template &lt;typename T&gt;</a>
+<a name="414"><span class="lineNum">     414 </span>            : struct can_require&lt;T&gt; :</a>
+<a name="415"><span class="lineNum">     415 </span>            :   false_type</a>
+<a name="416"><span class="lineNum">     416 </span>            : {</a>
+<a name="417"><span class="lineNum">     417 </span>            : };</a>
+<a name="418"><span class="lineNum">     418 </span>            : </a>
+<a name="419"><span class="lineNum">     419 </span>            : #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="420"><span class="lineNum">     420 </span>            : </a>
+<a name="421"><span class="lineNum">     421 </span>            : #if defined(ASIO_HAS_VARIABLE_TEMPLATES)</a>
+<a name="422"><span class="lineNum">     422 </span>            : </a>
+<a name="423"><span class="lineNum">     423 </span>            : template &lt;typename T, typename ASIO_ELLIPSIS Properties&gt;</a>
+<a name="424"><span class="lineNum">     424 </span>            : constexpr bool can_require_v</a>
+<a name="425"><span class="lineNum">     425 </span>            :   = can_require&lt;T, Properties ASIO_ELLIPSIS&gt;::value;</a>
+<a name="426"><span class="lineNum">     426 </span>            : </a>
+<a name="427"><span class="lineNum">     427 </span>            : #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)</a>
+<a name="428"><span class="lineNum">     428 </span>            : </a>
+<a name="429"><span class="lineNum">     429 </span>            : #if defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="430"><span class="lineNum">     430 </span>            : </a>
+<a name="431"><span class="lineNum">     431 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="432"><span class="lineNum">     432 </span>            : struct is_nothrow_require :</a>
+<a name="433"><span class="lineNum">     433 </span>            :   integral_constant&lt;bool,</a>
+<a name="434"><span class="lineNum">     434 </span>            :     asio_require_fn::call_traits&lt;T, void(Properties...)&gt;::is_noexcept&gt;</a>
+<a name="435"><span class="lineNum">     435 </span>            : {</a>
+<a name="436"><span class="lineNum">     436 </span>            : };</a>
+<a name="437"><span class="lineNum">     437 </span>            : </a>
+<a name="438"><span class="lineNum">     438 </span>            : #else // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="439"><span class="lineNum">     439 </span>            : </a>
+<a name="440"><span class="lineNum">     440 </span>            : template &lt;typename T, typename P0 = void,</a>
+<a name="441"><span class="lineNum">     441 </span>            :     typename P1 = void, typename P2 = void&gt;</a>
+<a name="442"><span class="lineNum">     442 </span>            : struct is_nothrow_require :</a>
+<a name="443"><span class="lineNum">     443 </span>            :   integral_constant&lt;bool,</a>
+<a name="444"><span class="lineNum">     444 </span>            :     asio_require_fn::call_traits&lt;T, void(P0, P1, P2)&gt;::is_noexcept&gt;</a>
+<a name="445"><span class="lineNum">     445 </span>            : {</a>
+<a name="446"><span class="lineNum">     446 </span>            : };</a>
+<a name="447"><span class="lineNum">     447 </span>            : </a>
+<a name="448"><span class="lineNum">     448 </span>            : template &lt;typename T, typename P0, typename P1&gt;</a>
+<a name="449"><span class="lineNum">     449 </span>            : struct is_nothrow_require&lt;T, P0, P1&gt; :</a>
+<a name="450"><span class="lineNum">     450 </span>            :   integral_constant&lt;bool,</a>
+<a name="451"><span class="lineNum">     451 </span>            :     asio_require_fn::call_traits&lt;T, void(P0, P1)&gt;::is_noexcept&gt;</a>
+<a name="452"><span class="lineNum">     452 </span>            : {</a>
+<a name="453"><span class="lineNum">     453 </span>            : };</a>
+<a name="454"><span class="lineNum">     454 </span>            : </a>
+<a name="455"><span class="lineNum">     455 </span>            : template &lt;typename T, typename P0&gt;</a>
+<a name="456"><span class="lineNum">     456 </span>            : struct is_nothrow_require&lt;T, P0&gt; :</a>
+<a name="457"><span class="lineNum">     457 </span>            :   integral_constant&lt;bool,</a>
+<a name="458"><span class="lineNum">     458 </span>            :     asio_require_fn::call_traits&lt;T, void(P0)&gt;::is_noexcept&gt;</a>
+<a name="459"><span class="lineNum">     459 </span>            : {</a>
+<a name="460"><span class="lineNum">     460 </span>            : };</a>
+<a name="461"><span class="lineNum">     461 </span>            : </a>
+<a name="462"><span class="lineNum">     462 </span>            : template &lt;typename T&gt;</a>
+<a name="463"><span class="lineNum">     463 </span>            : struct is_nothrow_require&lt;T&gt; :</a>
+<a name="464"><span class="lineNum">     464 </span>            :   false_type</a>
+<a name="465"><span class="lineNum">     465 </span>            : {</a>
+<a name="466"><span class="lineNum">     466 </span>            : };</a>
+<a name="467"><span class="lineNum">     467 </span>            : </a>
+<a name="468"><span class="lineNum">     468 </span>            : #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="469"><span class="lineNum">     469 </span>            : </a>
+<a name="470"><span class="lineNum">     470 </span>            : #if defined(ASIO_HAS_VARIABLE_TEMPLATES)</a>
+<a name="471"><span class="lineNum">     471 </span>            : </a>
+<a name="472"><span class="lineNum">     472 </span>            : template &lt;typename T, typename ASIO_ELLIPSIS Properties&gt;</a>
+<a name="473"><span class="lineNum">     473 </span>            : constexpr bool is_nothrow_require_v</a>
+<a name="474"><span class="lineNum">     474 </span>            :   = is_nothrow_require&lt;T, Properties ASIO_ELLIPSIS&gt;::value;</a>
+<a name="475"><span class="lineNum">     475 </span>            : </a>
+<a name="476"><span class="lineNum">     476 </span>            : #endif // defined(ASIO_HAS_VARIABLE_TEMPLATES)</a>
+<a name="477"><span class="lineNum">     477 </span>            : </a>
+<a name="478"><span class="lineNum">     478 </span>            : #if defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="479"><span class="lineNum">     479 </span>            : </a>
+<a name="480"><span class="lineNum">     480 </span>            : template &lt;typename T, typename... Properties&gt;</a>
+<a name="481"><span class="lineNum">     481 </span>            : struct require_result</a>
+<a name="482"><span class="lineNum">     482 </span>            : {</a>
+<a name="483"><span class="lineNum">     483 </span>            :   typedef typename asio_require_fn::call_traits&lt;</a>
+<a name="484"><span class="lineNum">     484 </span>            :       T, void(Properties...)&gt;::result_type type;</a>
+<a name="485"><span class="lineNum">     485 </span>            : };</a>
+<a name="486"><span class="lineNum">     486 </span>            : </a>
+<a name="487"><span class="lineNum">     487 </span>            : #else // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="488"><span class="lineNum">     488 </span>            : </a>
+<a name="489"><span class="lineNum">     489 </span>            : template &lt;typename T, typename P0 = void,</a>
+<a name="490"><span class="lineNum">     490 </span>            :     typename P1 = void, typename P2 = void&gt;</a>
+<a name="491"><span class="lineNum">     491 </span>            : struct require_result</a>
+<a name="492"><span class="lineNum">     492 </span>            : {</a>
+<a name="493"><span class="lineNum">     493 </span>            :   typedef typename asio_require_fn::call_traits&lt;</a>
+<a name="494"><span class="lineNum">     494 </span>            :       T, void(P0, P1, P2)&gt;::result_type type;</a>
+<a name="495"><span class="lineNum">     495 </span>            : };</a>
+<a name="496"><span class="lineNum">     496 </span>            : </a>
+<a name="497"><span class="lineNum">     497 </span>            : template &lt;typename T, typename P0, typename P1&gt;</a>
+<a name="498"><span class="lineNum">     498 </span>            : struct require_result&lt;T, P0, P1&gt;</a>
+<a name="499"><span class="lineNum">     499 </span>            : {</a>
+<a name="500"><span class="lineNum">     500 </span>            :   typedef typename asio_require_fn::call_traits&lt;</a>
+<a name="501"><span class="lineNum">     501 </span>            :       T, void(P0, P1)&gt;::result_type type;</a>
+<a name="502"><span class="lineNum">     502 </span>            : };</a>
+<a name="503"><span class="lineNum">     503 </span>            : </a>
+<a name="504"><span class="lineNum">     504 </span>            : template &lt;typename T, typename P0&gt;</a>
+<a name="505"><span class="lineNum">     505 </span>            : struct require_result&lt;T, P0&gt;</a>
+<a name="506"><span class="lineNum">     506 </span>            : {</a>
+<a name="507"><span class="lineNum">     507 </span>            :   typedef typename asio_require_fn::call_traits&lt;</a>
+<a name="508"><span class="lineNum">     508 </span>            :       T, void(P0)&gt;::result_type type;</a>
+<a name="509"><span class="lineNum">     509 </span>            : };</a>
+<a name="510"><span class="lineNum">     510 </span>            : </a>
+<a name="511"><span class="lineNum">     511 </span>            : template &lt;typename T&gt;</a>
+<a name="512"><span class="lineNum">     512 </span>            : struct require_result&lt;T&gt;</a>
+<a name="513"><span class="lineNum">     513 </span>            : {</a>
+<a name="514"><span class="lineNum">     514 </span>            : };</a>
+<a name="515"><span class="lineNum">     515 </span>            : </a>
+<a name="516"><span class="lineNum">     516 </span>            : #endif // defined(ASIO_HAS_VARIADIC_TEMPLATES)</a>
+<a name="517"><span class="lineNum">     517 </span>            : </a>
+<a name="518"><span class="lineNum">     518 </span>            : } // namespace asio</a>
+<a name="519"><span class="lineNum">     519 </span>            : </a>
+<a name="520"><span class="lineNum">     520 </span>            : #endif // defined(GENERATING_DOCUMENTATION)</a>
+<a name="521"><span class="lineNum">     521 </span>            : </a>
+<a name="522"><span class="lineNum">     522 </span>            : #include &quot;asio/detail/pop_options.hpp&quot;</a>
+<a name="523"><span class="lineNum">     523 </span>            : </a>
+<a name="524"><span class="lineNum">     524 </span>            : #endif // ASIO_REQUIRE_HPP</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
